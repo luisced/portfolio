@@ -1,6 +1,6 @@
 .home {
 	position: relative;
-	height: 100vh; /* Full height of the viewport */
+	height: 95vh; /* Full height of the viewport */
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
@@ -77,5 +77,225 @@
 	}
 	50% {
 		transform: translateY(-10px);
+	}
+}
+
+/* Tablets [601px -> 1200px] */
+@media only screen and (max-width: 1200px) {
+	.home {
+		height: 95vh; /* Adjust height for tablets */
+	}
+
+	.horizontal-container {
+		flex-direction: column; /* Stack elements vertically */
+		align-items: center; /* Center align items */
+	}
+
+	.spline-container {
+		width: 100%;
+		height: 100vh; /* Adjust height for tablets */
+	}
+
+	.bio {
+		width: 90%; /* Adjust width for tablets */
+		margin: 20px 0; /* Adjust margins */
+		padding-right: 20px; /* Adjust padding */
+	}
+
+	.presentation {
+		padding-left: 10px; /* Adjust padding for tablets */
+	}
+
+	.name {
+		font-size: 4rem; /* Adjust font size for tablets */
+	}
+
+	.description {
+		font-size: 1.5rem; /* Adjust font size for tablets */
+	}
+
+	.social-icons a {
+		margin-right: 20px; /* Adjust margin for tablets */
+		font-size: 2rem; /* Adjust font size for tablets */
+	}
+
+	.scroll-indicator {
+		bottom: 10px;
+	}
+}
+
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+	.home {
+		height: 135vh; /* Adjust height for big smartphones */
+	}
+
+	.horizontal-container {
+		flex-direction: column; /* Stack elements vertically */
+		align-items: center; /* Center align items */
+	}
+
+	.spline-container {
+		width: 100%;
+		height: 80vh; /* Adjust height for big smartphones */
+	}
+
+	.bio {
+		width: 90%; /* Adjust width for big smartphones */
+		margin: 20px 0; /* Adjust margins */
+		padding-right: 20px; /* Adjust padding */
+	}
+
+	.presentation {
+		padding-left: 10px; /* Adjust padding for big smartphones */
+	}
+
+	.name {
+		font-size: 3rem; /* Adjust font size for big smartphones */
+	}
+
+	.description {
+		font-size: 1.2rem; /* Adjust font size for big smartphones */
+	}
+
+	.social-icons a {
+		margin-right: 15px; /* Adjust margin for big smartphones */
+		font-size: 1.8rem; /* Adjust font size for big smartphones */
+	}
+
+	.scroll-indicator {
+		bottom: 10px;
+	}
+}
+
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+	.home {
+		height: 150vh; /* Adjust height for medium smartphones */
+	}
+
+	.horizontal-container {
+		flex-direction: column; /* Stack elements vertically */
+		align-items: center; /* Center align items */
+	}
+
+	.spline-container {
+		width: 100%;
+		height: 70vh; /* Adjust height for medium smartphones */
+	}
+
+	.bio {
+		width: 90%; /* Adjust width for medium smartphones */
+		margin: 20px 0; /* Adjust margins */
+		padding-right: 20px; /* Adjust padding */
+	}
+
+	.presentation {
+		padding-left: 10px; /* Adjust padding for medium smartphones */
+	}
+
+	.name {
+		font-size: 2.5rem; /* Adjust font size for medium smartphones */
+	}
+
+	.description {
+		font-size: 1rem; /* Adjust font size for medium smartphones */
+	}
+
+	.social-icons a {
+		margin-right: 10px; /* Adjust margin for medium smartphones */
+		font-size: 1.5rem; /* Adjust font size for medium smartphones */
+	}
+
+	.scroll-indicator {
+		bottom: 10px;
+	}
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+	.home {
+		height: 185vh; /* Adjust height for small smartphones */
+	}
+
+	.horizontal-container {
+		flex-direction: column; /* Stack elements vertically */
+		align-items: center; /* Center align items */
+	}
+
+	.spline-container {
+		width: 100%;
+		height: 60vh; /* Adjust height for small smartphones */
+	}
+
+	.bio {
+		width: 90%; /* Adjust width for small smartphones */
+		margin: 20px 0; /* Adjust margins */
+		padding-right: 10px; /* Adjust padding */
+	}
+
+	.presentation {
+		padding-left: 10px; /* Adjust padding for small smartphones */
+	}
+
+	.name {
+		font-size: 2.5rem; /* Adjust font size for small smartphones */
+	}
+
+	.description {
+		font-size: 1rem; /* Adjust font size for small smartphones */
+	}
+
+	.social-icons a {
+		margin-right: 10px; /* Adjust margin for small smartphones */
+		font-size: 1.5rem; /* Adjust font size for small smartphones */
+	}
+
+	.scroll-indicator {
+		bottom: 10px;
+	}
+}
+
+/* iPad Air Landscape [1180px -> 820px] */
+@media only screen and (max-width: 1180px) and (orientation: landscape) {
+	.home {
+		height: 100vh; /* Adjust height for iPad in landscape */
+	}
+
+	.horizontal-container {
+		flex-direction: row; /* Keep elements side by side */
+		padding-top: 5vh;
+	}
+
+	.spline-container {
+		width: 50%;
+		height: 110vh; /* Full height for iPad in landscape */
+	}
+
+	.bio {
+		width: 50%;
+		margin: 20px;
+		padding-right: 20px;
+	}
+
+	.presentation {
+		padding-left: 5vh;
+	}
+
+	.name {
+		font-size: 4rem;
+	}
+
+	.description {
+		font-size: 1.5rem;
+	}
+
+	.social-icons a {
+		margin-right: 20px;
+		font-size: 2rem;
+	}
+
+	.scroll-indicator {
+		bottom: 20px;
 	}
 }
