@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { FaGithub, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -26,16 +26,6 @@ const Navbar = () => {
 				</li>
 				<li>
 					<a href="#contact">.contact()</a>
-				</li>
-				<li className="navbar-contact">
-					<a href="https://github.com/luisced">
-						<FaGithub className="icon" />
-					</a>
-				</li>
-				<li>
-					<a href="https://linkedin.com/in/luisced">
-						<FaLinkedin className="icon" />
-					</a>
 				</li>
 			</ul>
 		</nav>

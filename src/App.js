@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "./components/Navbar/Navbar";
-// import Home from "./components/Home";
+import Home from "./components/Home/Home";
 // import About from "./components/About";
 // import Ideas from "./components/Ideas";
 // import CV from "./components/CV";
@@ -14,7 +14,8 @@ function App() {
 		<div className="App">
 			<Navbar />
 			<main>
-				{/* <Home />
+				<Home />
+				{/* <
 				<About />
 				<Ideas />
 				<CV />

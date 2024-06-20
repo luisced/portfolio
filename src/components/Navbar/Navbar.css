@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between; /* Ensures space between the logo and links */
 	align-items: center; /* Aligns items vertically */
-	padding: 10px 20px;
+	padding: 10px 3.5vh;
 	background-color: transparent;
 	color: var(--color-text);
 	font-family: var(--font-family-mono);
@@ -31,16 +31,6 @@
 
 .navbar-links li a:hover {
 	color: var(--color-primary);
-}
-
-.icon {
-	width: 24px;
-	height: 24px;
-	transition: transform 0.3s;
-}
-
-.icon:hover {
-	transform: scale(1.1);
 }
 
 .navbar-contact {
