@@ -1,13 +1,28 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Spline from "@splinetool/react-spline";
+import React from "react";
+import Navbar from "./components/Navbar/Navbar";
+// import Home from "./components/Home";
+// import About from "./components/About";
+// import Ideas from "./components/Ideas";
+// import CV from "./components/CV";
+// import Backend from "./components/Backend";
+// import Web from "./components/Web";
+// import Mobile from "./components/Mobile";
+// import Contact from "./components/Contact";
 
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
-				<Spline scene="https://prod.spline.design/dwWtMM1K2vIrJTSP/scene.splinecode" />
-			</header>
+			<Navbar />
+			<main>
+				{/* <Home />
+				<About />
+				<Ideas />
+				<CV />
+				<Backend />
+				<Web />
+				<Mobile />
+				<Contact /> */}
+			</main>
 		</div>
 	);
 }

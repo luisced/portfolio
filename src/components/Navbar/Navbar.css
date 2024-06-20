@@ -1,0 +1,53 @@
+.navbar {
+	display: flex;
+	justify-content: space-between; /* Ensures space between the logo and links */
+	align-items: center; /* Aligns items vertically */
+	padding: 10px 20px;
+	background-color: #d2a679; /* Update to your desired background color */
+	color: var(--color-text);
+	font-family: var(--font-family-mono);
+}
+
+.navbar-links {
+	list-style: none;
+	display: flex;
+	align-items: center; /* Ensures the items are aligned vertically */
+	margin: 0;
+	padding: 0;
+}
+
+.navbar-links li {
+	margin: 0 15px;
+}
+
+.navbar-links li a {
+	text-decoration: none;
+	color: var(--color-text);
+	font-size: 1rem;
+	transition: color 0.3s;
+	display: flex;
+	padding: 0;
+}
+
+.navbar-links li a:hover {
+	color: var(--color-primary);
+}
+
+.icon {
+	width: 24px;
+	height: 24px;
+	transition: transform 0.3s;
+}
+
+.icon:hover {
+	transform: scale(1.1);
+}
+
+.navbar-contact {
+	display: flex;
+	align-items: center;
+}
+
+.navbar-contact img {
+	margin-left: 10px; /* Adjust margin as needed */
+}
