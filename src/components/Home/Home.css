@@ -1,5 +1,5 @@
 .home {
-	height: 93vh; /* Full height of the viewport */
+	height: 95vh; /* Full height of the viewport */
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;

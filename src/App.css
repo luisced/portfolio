@@ -1,3 +1,5 @@
+/* App.css */
+
 :root {
 	--font-family-mono: "Roboto Mono", monospace;
 	--font-family-sans: "Roboto", sans-serif;
@@ -7,6 +9,7 @@
 	--color-secondary-text: #aaa;
 	--color-link-hover: #007bff;
 	--border-radius: 5px;
+	--background-gradient-happy-mac: linear-gradient(to bottom, #222, #dcf7ff);
 }
 
 * {
@@ -61,4 +64,11 @@ button {
 button:hover {
 	background-color: var(--color-primary);
 	color: var(--color-text);
+}
+
+.transition {
+	height: 160vh;
+	background: var(--background-gradient-happy-mac);
+	position: relative;
+	z-index: 1;
 }
