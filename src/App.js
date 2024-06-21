@@ -1,7 +1,8 @@
 import React from "react";
+import ParallaxWrapper from "./ParallaxWrapper";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
-// import About from "./components/About";
+import About from "./components/About/About";
 // import Ideas from "./components/Ideas";
 // import CV from "./components/CV";
 // import Backend from "./components/Backend";
@@ -15,14 +16,8 @@ function App() {
 			<Navbar />
 			<main>
 				<Home />
-				{/* <
+
 				<About />
-				<Ideas />
-				<CV />
-				<Backend />
-				<Web />
-				<Mobile />
-				<Contact /> */}
 			</main>
 		</div>
 	);

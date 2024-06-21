@@ -18,40 +18,37 @@ const Home = () => {
 							wrapper="span"
 						/>
 					</h3>
-
-					<div className="social-icons">
-						<a
-							href="https://github.com/luisced"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<FaGithub />
-						</a>
-						<a
-							href="https://linkedin.com/in/luisced"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<FaLinkedin />
-						</a>
-					</div>
 				</div>
 			</div>
 			<div className="horizontal-container">
+				<p className="bio">
+					Luis Cedillo Maldonado, a backend developer and frontend enthusiast
+					from Mexico City, specializes in custom CRM solutions and Twilio
+					WhatsApp chatbots. Currently leading at iOS Development Lab,
+					Universidad Panamericana, he mentors junior developers and manages
+					agile projects. He's pursuing a degree in Data Intelligence and
+					Cybersecurity.
+				</p>
 				<div className="spline-container">
 					<Spline scene="https://prod.spline.design/dwWtMM1K2vIrJTSP/scene.splinecode" />
 				</div>
-				<p className="bio">
-					Luis Cedillo Maldonado is a dedicated backend developer and frontend
-					enthusiast from Mexico City. With experience at Zenco Mexico, he has
-					delivered custom CRM solutions using Python, Flask, MySQL, and AWS,
-					significantly improving data management and operational efficiency. As
-					a freelance developer, he developed and deployed a Twilio WhatsApp
-					chatbot to enhance customer interactions. Currently, as a development
-					leader at iOS Development Lab at Universidad Panamericana, he mentors
-					junior developers and manages projects using agile methodologies. Luis
-					is also pursuing a degree in Data Intelligence and Cybersecurity.
-				</p>
+			</div>
+
+			<div className="social-icons">
+				<a
+					href="https://github.com/luisced"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaGithub />
+				</a>
+				<a
+					href="https://linkedin.com/in/luisced"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<FaLinkedin />
+				</a>
 			</div>
 			<div className="scroll-indicator">
 				<span>&#x25BC;</span>
