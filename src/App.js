@@ -6,13 +6,21 @@ import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import Spline from "@splinetool/react-spline";
 import "./App.css";
-
 function App() {
 	const [background, setBackground] = useState("--color-background");
+	const [presentationOpacity, setPresentationOpacity] = useState(1);
 
 	const handleScroll = () => {
-		const homeHeight = document.getElementById("home").clientHeight;
+		const homeElement = document.getElementById("home");
+		const homeHeight = homeElement.clientHeight;
 		const scrollPosition = window.scrollY;
+
+		if (scrollPosition < homeHeight) {
+			const opacity = 1 - (scrollPosition / homeHeight) * 2; // Corrected formula
+			setPresentationOpacity(opacity);
+		} else {
+			setPresentationOpacity(0);
+		}
 	};
 
 	useEffect(() => {
@@ -31,7 +39,7 @@ function App() {
 			<Navbar />
 			<main>
 				<div id="home">
-					<Home />
+					<Home presentationOpacity={presentationOpacity} />
 				</div>
 				<div className="transition"></div>
 				<Spline scene="https://prod.spline.design/gh5W8uTjkvs-oVuN/scene.splinecode" />

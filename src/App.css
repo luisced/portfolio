@@ -9,7 +9,13 @@
 	--color-secondary-text: #aaa;
 	--color-link-hover: #007bff;
 	--border-radius: 5px;
-	--background-gradient-happy-mac: linear-gradient(to bottom, #222, #dcf7ff);
+	--background-gradient-happy-mac: linear-gradient(
+		to bottom,
+		#222 0%,
+		#444 30%,
+		#666 60%,
+		#dcf7ff 100%
+	);
 }
 
 * {
@@ -67,7 +73,7 @@ button:hover {
 }
 
 .transition {
-	height: 160vh;
+	height: 180vh;
 	background: var(--background-gradient-happy-mac);
 	position: relative;
 	z-index: 1;

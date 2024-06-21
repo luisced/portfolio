@@ -1,3 +1,5 @@
+/* Home.css */
+
 .home {
 	height: 95vh; /* Full height of the viewport */
 	display: flex;
@@ -5,12 +7,15 @@
 	justify-content: space-between;
 	text-align: center;
 	overflow: hidden;
+	position: relative;
 }
 
 .presentation {
 	flex: 1;
 	color: white;
 	text-align: center;
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out; /* Added transition for opacity */
 }
 
 .name {
@@ -65,7 +70,9 @@
 	50% {
 		transform: translateY(-10px);
 	}
-} /* Tablets [601px -> 1200px] */
+}
+
+/* Tablets [601px -> 1200px] */
 @media only screen and (max-width: 1200px) {
 	.home {
 		flex-direction: column;

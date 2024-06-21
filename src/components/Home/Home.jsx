@@ -4,10 +4,10 @@ import { FaTerminal, FaGithub, FaLinkedin } from "react-icons/fa";
 import Spline from "@splinetool/react-spline";
 import "./Home.css";
 
-const Home = () => {
+const Home = ({ presentationOpacity }) => {
 	return (
-		<div className="home">
-			<div className="presentation">
+		<div className="home" id="home">
+			<div className="presentation" style={{ opacity: presentationOpacity }}>
 				<h1 className="name">Luis Cedillo Maldonado</h1>
 				<h3 className="description">
 					<FaTerminal />
