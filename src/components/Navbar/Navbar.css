@@ -27,6 +27,7 @@
 
 .navbar-links li {
 	margin: 0 15px;
+	background-color: transparent;
 }
 
 .navbar-links li a {
@@ -42,38 +43,35 @@
 	color: var(--color-primary);
 }
 
-.navbar-contact {
-	display: flex;
-	align-items: center;
-}
-
-.navbar-contact img {
-	margin-left: 10px;
+.navbar-links li a:active {
+	background: none; /* Remove blue background on click */
 }
 
 .hamburger {
 	display: none;
 	cursor: pointer;
 	font-size: 2rem;
+	z-index: 11; /* Ensure it's above the overlay and navbar links */
+	position: relative; /* Ensure it stays in the right place */
 }
 
-/* Define the fade-in animation */
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(-10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7); /* Dark overlay */
+	z-index: 5; /* Ensure it's behind the navbar */
 }
 
-.navbar-links.active li {
-	animation: fadeIn 0.5s ease-in-out;
-}
+/* Media Queries */
 
 @media only screen and (max-width: 1200px) {
+	.navbar {
+		background-color: transparent;
+	}
+
 	.hamburger {
 		display: block; /* Show hamburger menu on tablets and smaller screens */
 	}
@@ -82,35 +80,39 @@
 		display: none; /* Hide links by default */
 		flex-direction: column;
 		width: 100%;
-		background-color: rgba(
-			255,
-			255,
-			255,
-			0.1
-		); /* Keep background color transparent */
-		backdrop-filter: blur(10px); /* Acrylic effect */
-		position: absolute;
-		top: 60px; /* Adjust based on navbar height */
+		height: 100vh; /* Full height for the hamburger menu */
+		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
+		background-color: rgba(255, 255, 255, 0.1); /* Background color */
+		position: fixed;
+		top: 0; /* Start from the top */
 		left: 0;
 		padding: 10px 20px;
+		align-items: center;
+		justify-content: center;
+		z-index: 10; /* Ensure it's above the overlay */
 	}
 
 	.navbar-links.active {
 		display: flex; /* Show links when active */
 	}
 
-	.navbar-links.active li {
-		animation: fadeIn 0.5s ease-in-out; /* Apply fade-in animation */
-	}
-
 	.navbar-links li {
 		width: 100%;
-		margin: 10px 0;
-		text-align: left;
+		margin: 25px 0; /* Add more margin for better spacing */
+		text-align: center;
+	}
+
+	.navbar-links li a {
+		color: var(--color-text); /* Explicitly set text color */
+		font-size: 1.5rem; /* Make link text bigger */
 	}
 }
 
 @media only screen and (max-width: 600px) {
+	.navbar {
+		background-color: transparent;
+	}
+
 	.hamburger {
 		display: block; /* Show hamburger menu on big smartphones and smaller screens */
 	}
@@ -119,35 +121,39 @@
 		display: none; /* Hide links by default */
 		flex-direction: column;
 		width: 100%;
-		background-color: rgba(
-			255,
-			255,
-			255,
-			0.1
-		); /* Keep background color transparent */
-		backdrop-filter: blur(10px); /* Acrylic effect */
-		position: absolute;
-		top: 60px; /* Adjust based on navbar height */
+		height: 100vh; /* Full height for the hamburger menu */
+		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
+		background-color: rgba(255, 255, 255, 0.1); /* Background color */
+		position: fixed;
+		top: 0; /* Start from the top */
 		left: 0;
 		padding: 10px 20px;
+		align-items: center;
+		justify-content: center;
+		z-index: 10; /* Ensure it's above the overlay */
 	}
 
 	.navbar-links.active {
 		display: flex; /* Show links when active */
 	}
 
-	.navbar-links.active li {
-		animation: fadeIn 0.5s ease-in-out; /* Apply fade-in animation */
-	}
-
 	.navbar-links li {
 		width: 100%;
-		margin: 10px 0;
-		text-align: left;
+		margin: 25px 0; /* Add more margin for better spacing */
+		text-align: center;
+	}
+
+	.navbar-links li a {
+		color: var(--color-text); /* Explicitly set text color */
+		font-size: 1.5rem; /* Make link text bigger */
 	}
 }
 
 @media only screen and (max-width: 425px) {
+	.navbar {
+		background-color: transparent;
+	}
+
 	.hamburger {
 		display: block; /* Show hamburger menu on small smartphones */
 	}
@@ -156,30 +162,30 @@
 		display: none; /* Hide links by default */
 		flex-direction: column;
 		width: 100%;
-		background-color: rgba(
-			255,
-			255,
-			255,
-			0.1
-		); /* Keep background color transparent */
-		backdrop-filter: blur(10px); /* Acrylic effect */
-		position: absolute;
-		top: 60px; /* Adjust based on navbar height */
+		height: 100vh; /* Full height for the hamburger menu */
+		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
+		background-color: rgba(255, 255, 255, 0.1); /* Background color */
+		position: fixed;
+		top: 0; /* Start from the top */
 		left: 0;
 		padding: 10px 20px;
+		align-items: center;
+		justify-content: center;
+		z-index: 10; /* Ensure it's above the overlay */
 	}
 
 	.navbar-links.active {
 		display: flex; /* Show links when active */
 	}
 
-	.navbar-links.active li {
-		animation: fadeIn 0.5s ease-in-out; /* Apply fade-in animation */
-	}
-
 	.navbar-links li {
 		width: 100%;
-		margin: 10px 0;
-		text-align: left;
+		margin: 25px 0; /* Add more margin for better spacing */
+		text-align: center;
+	}
+
+	.navbar-links li a {
+		color: var(--color-text); /* Explicitly set text color */
+		font-size: 1.5rem; /* Make link text bigger */
 	}
 }
