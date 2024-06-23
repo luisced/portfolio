@@ -1,7 +1,8 @@
 .about {
 	color: var(--color-text);
 	font-family: var(--font-family-mono);
-	padding: 20px;
+	padding: 50px;
+	padding-top: 11vh;
 }
 
 .intro {

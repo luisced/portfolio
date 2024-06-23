@@ -1,6 +1,6 @@
 import React from "react";
 import "./About.css";
-import { FaDownload } from "react-icons/fa";
+import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa";
 
 const About = () => {
 	return (
@@ -12,6 +12,20 @@ const About = () => {
 					</h1>
 					<div className="links">
 						<a
+							href="https://github.com/luisced"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<FaGithub />
+						</a>
+						<a
+							href="https://linkedin.com/in/luisced"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<FaLinkedin />
+						</a>
+						<a
 							href="path-to-your-cv.pdf"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -19,6 +33,7 @@ const About = () => {
 							Download my CV <FaDownload />
 						</a>
 					</div>
+
 					<p>
 						Backend developer heavily influenced by Frontend development, Cloud
 						Computing, and security. Addicted to coding, problem-solving, and{" "}

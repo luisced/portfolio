@@ -20,7 +20,10 @@
 
 .name {
 	padding-top: 15vh;
-	font-size: 3rem;
+	font-size: 4rem;
+	display: inline-block;
+	animation: outer-left 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both,
+		text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
 }
 
 .description {
@@ -29,48 +32,78 @@
 }
 
 .bio {
-	font-size: 1rem; /* Adjust font size for better readability */
+	font-size: 1rem;
 	line-height: 3;
 	color: white;
-	margin: 100px; /* Add margin for better spacing */
+	margin: 100px;
 	text-align: justify;
+	opacity: 0;
+	animation: fade-in 1s forwards;
+	animation-delay: 3s;
 }
 
-.social-icons a {
-	color: white;
-	margin-right: 35px;
-	font-size: 2.5rem;
-	transition: color 0.3s;
-}
-
-.social-icons a:hover {
-	color: var(--color-primary);
+.about-me {
+	font-size: 1.5rem;
+	opacity: 0; /* Start hidden */
+	animation: fade-in 1s forwards;
+	animation-delay: 3s; /* Delay to start after spline-container animation */
 }
 
 .spline-container {
 	flex: 1;
 	background: linear-gradient(180deg, #ead5c0 0%, #ffff 100%);
+	animation: image-in 1s cubic-bezier(0.5, 0, 0.1, 1) 2s backwards;
 }
 
-.scroll-indicator {
-	position: absolute;
-	bottom: 50px;
-	left: 50%;
-	transform: translateX(-50%);
-	font-size: 1.5rem;
-	color: white;
-	animation: bounce 2s infinite;
+/* ANIMATIONS */
+
+@keyframes text-clip {
+	from {
+		clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+	}
+	to {
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	}
 }
 
-@keyframes bounce {
-	0%,
-	100% {
-		transform: translateY(0);
+@keyframes outer-left {
+	from {
+		transform: translateX(100%);
 	}
-	50% {
-		transform: translateY(-10px);
+	to {
+		transform: none;
 	}
 }
+
+@keyframes inner-left {
+	from {
+		transform: translateX(-50%);
+	}
+	to {
+		transform: none;
+	}
+}
+
+@keyframes image-in {
+	/* Spline animation */
+	from {
+		clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+	}
+	to {
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* MEDIA QUERIES */
 
 /* Tablets [601px -> 1200px] */
 @media only screen and (max-width: 1200px) {
@@ -107,10 +140,6 @@
 		margin-right: 20px; /* Adjust margin for tablets */
 		font-size: 2rem; /* Adjust font size for tablets */
 	}
-
-	.scroll-indicator {
-		bottom: 10px;
-	}
 }
 
 /* Big smartphones [426px -> 600px] */
@@ -144,10 +173,6 @@
 		margin-right: 15px; /* Adjust margin for big smartphones */
 		font-size: 1.8rem; /* Adjust font size for big smartphones */
 	}
-
-	.scroll-indicator {
-		bottom: 10px;
-	}
 }
 
 /* Medium Smartphones */
@@ -180,10 +205,6 @@
 		margin-right: 10px; /* Adjust margin for medium smartphones */
 		font-size: 1.5rem; /* Adjust font size for medium smartphones */
 	}
-
-	.scroll-indicator {
-		bottom: 10px;
-	}
 }
 
 /* Small smartphones [325px -> 425px] */
@@ -215,10 +236,6 @@
 	.social-icons a {
 		margin-right: 10px; /* Adjust margin for small smartphones */
 		font-size: 1.5rem; /* Adjust font size for small smartphones */
-	}
-
-	.scroll-indicator {
-		bottom: 10px;
 	}
 }
 
@@ -262,9 +279,5 @@
 	.social-icons a {
 		margin-right: 20px;
 		font-size: 2rem;
-	}
-
-	.scroll-indicator {
-		bottom: 20px;
 	}
 }
