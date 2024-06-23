@@ -1,0 +1,11 @@
+/* HappyMac.css */
+
+.happy-mac {
+	height: 100vh;
+	width: 100%;
+	background-color: #dcf7ff; /* Set the background color */
+	display: flex;
+	background: transparent;
+	justify-content: center;
+	align-items: center;
+}

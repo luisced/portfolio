@@ -11,7 +11,7 @@ COPY package*.json yarn.lock* ./
 RUN npm install
 
 # Install additional dependencies using --legacy-peer-deps
-RUN npm install axios @splinetool/react-spline react-icons react-scroll-parallax react-typical --legacy-peer-deps --save
+RUN npm install axios @splinetool/react-spline@latest react-icons react-scroll-parallax react-typical @splinetool/runtime@latest  --save --legacy-peer-deps
 
 # Copy the rest of the application
 COPY . .

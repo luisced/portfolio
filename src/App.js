@@ -1,22 +1,25 @@
-// App.js
-
+// File: App.js
 import React, { useEffect, useState } from "react";
+import { ParallaxProvider } from "react-scroll-parallax";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
-import Spline from "@splinetool/react-spline";
+import HappyMac from "./components/HappyMac/HappyMac";
+import HelloAnimation from "./components/Hello/HelloAnimation";
 import "./App.css";
+
 function App() {
-	const [background, setBackground] = useState("--color-background");
+	const [background] = useState("--color-background");
 	const [presentationOpacity, setPresentationOpacity] = useState(1);
+	const [progress] = useState(0);
 
 	const handleScroll = () => {
 		const homeElement = document.getElementById("home");
 		const homeHeight = homeElement.clientHeight;
 		const scrollPosition = window.scrollY;
 
-		if (scrollPosition < homeHeight) {
-			const opacity = 1 - (scrollPosition / homeHeight) * 2; // Corrected formula
+		if (scrollPosition < homeHeight && progress === 0) {
+			const opacity = 1 - (scrollPosition / homeHeight) * 2;
 			setPresentationOpacity(opacity);
 		} else {
 			setPresentationOpacity(0);
@@ -28,7 +31,7 @@ function App() {
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
-	}, []);
+	}, [progress]);
 
 	useEffect(() => {
 		document.body.style.backgroundColor = `var(${background})`;
@@ -42,7 +45,9 @@ function App() {
 					<Home presentationOpacity={presentationOpacity} />
 				</div>
 				<div className="transition"></div>
-				<Spline scene="https://prod.spline.design/gh5W8uTjkvs-oVuN/scene.splinecode" />
+				<HappyMac />
+				<HelloAnimation />
+
 				<About />
 			</main>
 		</div>

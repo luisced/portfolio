@@ -1,7 +1,6 @@
 import React from "react";
 import "./About.css";
 import { FaDownload } from "react-icons/fa";
-import { PiLessThan, PiGreaterThan } from "react-icons/pi";
 
 const About = () => {
 	return (

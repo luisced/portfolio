@@ -1,0 +1,35 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.new__bg {
+	position: relative;
+	height: 200vh; /* Increase height to enable scrolling */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.hello__div {
+	position: sticky;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	width: 100%;
+	max-width: 600px;
+}
+
+.hello__svg {
+	fill: none;
+	stroke: #fff;
+	stroke-linecap: round;
+	stroke-miterlimit: 10;
+	stroke-width: 48px;
+	stroke-dasharray: 5800px;
+	stroke-dashoffset: 5800px;
+	width: 100%;
+}
