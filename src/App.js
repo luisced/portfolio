@@ -43,9 +43,12 @@ function App() {
 		<div className="App">
 			<Navbar />
 			<main>
-				<div id="home">
+				<section id="home">
 					<Home presentationOpacity={presentationOpacity} />
-				</div>
+				</section>
+				<section id="about">
+					<About />
+				</section>
 				<BackgroundTransition
 					gradient="linear-gradient(
 	  to bottom,
@@ -53,11 +56,9 @@ function App() {
 	  #dcf7ff)"
 				/>
 				<HappyMac />
-				<BackgroundTransition gradient="linear-gradient(to bottom, #dcf7ff, #ffffff)" />
-
-				<HelloAnimation />
-
-				<About />
+				<section id="portfolio">
+					<HelloAnimation />
+				</section>
 			</main>
 		</div>
 	);

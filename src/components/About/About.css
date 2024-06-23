@@ -1,7 +1,6 @@
 .about {
-	color: white;
+	color: var(--color-text);
 	font-family: var(--font-family-mono);
-	background-color: #1a1a1a; /* Adjust background color as needed */
 	padding: 20px;
 }
 

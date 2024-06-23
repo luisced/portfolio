@@ -4,9 +4,9 @@ body {
 }
 
 .new__bg {
-	height: 200vh; /* Increase height to enable scrolling */
-	min-height: 500px;
-	background-color: #fff;
+	height: 210vh;
+	/* linear gradient */
+	background: linear-gradient(to bottom, #dcf7ff, #ffffff);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -22,15 +22,4 @@ body {
 	text-align: center;
 	width: 100%;
 	max-width: 600px;
-}
-
-.hello__svg {
-	fill: none;
-	stroke: #000;
-	stroke-linecap: round;
-	stroke-miterlimit: 10;
-	stroke-width: 48px;
-	stroke-dasharray: 5800px;
-	stroke-dashoffset: 5800px;
-	width: 100%;
 }
