@@ -8,10 +8,11 @@ const HelloAnimation = () => {
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrollPosition = window.scrollY;
-			const maxScroll =
-				document.documentElement.scrollHeight - window.innerHeight;
+			const newBgHeight = newBgRef.current.clientHeight;
+			const maxScroll = newBgHeight - window.innerHeight;
 			const scrollFraction = scrollPosition / maxScroll;
 			const dashOffset = 5800 * (1 - scrollFraction);
+
 			if (svgPathRef.current) {
 				svgPathRef.current.style.strokeDashoffset = dashOffset;
 			}
@@ -35,7 +36,7 @@ const HelloAnimation = () => {
 						transform="translate(311.08 476.02)"
 						style={{
 							fill: "none",
-							stroke: "#fff",
+							stroke: "#000",
 							strokeLinecap: "round",
 							strokeMiterlimit: 10,
 							strokeWidth: "35px",

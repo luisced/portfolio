@@ -4,8 +4,9 @@ body {
 }
 
 .new__bg {
-	position: relative;
 	height: 200vh; /* Increase height to enable scrolling */
+	min-height: 500px;
+	background-color: #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,7 +26,7 @@ body {
 
 .hello__svg {
 	fill: none;
-	stroke: #fff;
+	stroke: #000;
 	stroke-linecap: round;
 	stroke-miterlimit: 10;
 	stroke-width: 48px;
