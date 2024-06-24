@@ -1,5 +1,4 @@
-// File: App.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -10,57 +9,68 @@ import BackgroundTransition from "./components/BackgroundTransition/BackgroundTr
 import "./App.css";
 
 function App() {
-	const [background] = useState("--color-background");
 	const [presentationOpacity, setPresentationOpacity] = useState(1);
-	const [progress] = useState(0);
 
-	const handleScroll = () => {
+	const handleScroll = useCallback(() => {
 		const homeElement = document.getElementById("home");
-		const homeHeight = homeElement.clientHeight;
-		const scrollPosition = window.scrollY;
-
-		if (scrollPosition < homeHeight && progress === 0) {
-			const opacity = 1 - (scrollPosition / homeHeight) * 2;
+		if (homeElement) {
+			const homeHeight = homeElement.clientHeight;
+			const scrollPosition = window.scrollY;
+			const opacity =
+				scrollPosition < homeHeight ? 1 - (scrollPosition / homeHeight) * 2 : 0;
 			setPresentationOpacity(opacity);
-		} else {
-			setPresentationOpacity(0);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+		const handleScrollThrottled = throttle(handleScroll, 100);
+		window.addEventListener("scroll", handleScrollThrottled);
 		return () => {
-			window.removeEventListener("scroll", handleScroll);
+			window.removeEventListener("scroll", handleScrollThrottled);
 		};
-	}, [progress]);
-
-	useEffect(() => {
-		document.body.style.backgroundColor = `var(${background})`;
-	}, [background]);
+	}, [handleScroll]);
 
 	return (
-		<div className="App">
-			<Navbar />
-			<main>
-				<section id="home">
-					<Home presentationOpacity={presentationOpacity} />
-				</section>
-				<section id="about">
-					<About />
-				</section>
-				<BackgroundTransition
-					gradient="linear-gradient(
-	  to bottom,
-	  #222,
-	  #dcf7ff)"
-				/>
-				<HappyMac />
-				<section id="portfolio">
-					<HelloAnimation />
-				</section>
-			</main>
-		</div>
+		<ParallaxProvider>
+			<div className="App">
+				<Navbar />
+				<main>
+					<section id="home">
+						<Home presentationOpacity={presentationOpacity} />
+					</section>
+					<section id="about">
+						<About />
+					</section>
+					<BackgroundTransition gradient="linear-gradient(to bottom, #222, #dcf7ff)" />
+					<HappyMac />
+					<section id="portfolio">
+						<HelloAnimation />
+					</section>
+				</main>
+			</div>
+		</ParallaxProvider>
 	);
+}
+
+function throttle(func, limit) {
+	let lastFunc;
+	let lastRan;
+	return function () {
+		const context = this;
+		const args = arguments;
+		if (!lastRan) {
+			func.apply(context, args);
+			lastRan = Date.now();
+		} else {
+			clearTimeout(lastFunc);
+			lastFunc = setTimeout(function () {
+				if (Date.now() - lastRan >= limit) {
+					func.apply(context, args);
+					lastRan = Date.now();
+				}
+			}, limit - (Date.now() - lastRan));
+		}
+	};
 }
 
 export default App;
