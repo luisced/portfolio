@@ -1,18 +1,14 @@
-body {
-	padding: 0;
-	margin: 0;
-}
+/* HelloAnimation.css */
 
-.new__bg {
-	height: 210vh;
-	/* linear gradient */
+.hello-container {
+	height: 225vh;
 	background: linear-gradient(to bottom, #dcf7ff, #ffffff);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.hello__div {
+.sticky-div {
 	position: sticky;
 	top: 50%;
 	transform: translateY(-50%);
@@ -22,4 +18,19 @@ body {
 	text-align: center;
 	width: 100%;
 	max-width: 600px;
+}
+
+.hello-svg {
+	width: 100%;
+	height: auto;
+}
+
+.path-style {
+	fill: none;
+	stroke: #000;
+	stroke-linecap: round;
+	stroke-miterlimit: 10;
+	stroke-width: 35px;
+	stroke-dasharray: 5800px;
+	stroke-dashoffset: 5800px;
 }
