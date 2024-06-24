@@ -2,12 +2,21 @@
 	--font-family-mono: "Roboto Mono", monospace;
 	--font-family-sans: "Roboto", sans-serif;
 	--color-primary: #007bff;
+	--color-card-background: #333;
 	--color-background: #222;
 	--color-text: #fff;
 	--color-secondary-text: #333;
 	--color-link-hover: #6e26e2;
 	--color-highlight: #29ae80;
 	--border-radius: 5px;
+	--box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	--max-width-content: 800px;
+	--font-size-large: 4rem;
+	--font-size-medium: 1.5rem;
+	--font-size-small: 1.2rem;
+	--spacing-small: 1rem;
+	--spacing-medium: 2.5rem;
+	--spacing-large: 5.5rem;
 }
 
 * {
