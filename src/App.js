@@ -7,7 +7,6 @@ import About from "./components/About/About";
 import HappyMac from "./components/HappyMac/HappyMac";
 import HelloAnimation from "./components/Hello/HelloAnimation";
 import BackgroundTransition from "./components/BackgroundTransition/BackgroundTransition";
-
 import "./App.css";
 
 function App() {

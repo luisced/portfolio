@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Typical from "react-typical";
 import { FaTerminal } from "react-icons/fa";
-import Spline from "@splinetool/react-spline";
 import "./Home.css";
+import Spline from "@splinetool/react-spline";
 
 const Home = ({ presentationOpacity }) => {
 	return (
@@ -34,7 +34,9 @@ const Home = ({ presentationOpacity }) => {
 				</button>
 			</div>
 			<div className="spline-container">
-				<Spline scene="https://prod.spline.design/dwWtMM1K2vIrJTSP/scene.splinecode" />
+				<Suspense fallback={<div>Loading...</div>}>
+					<Spline scene="https://prod.spline.design/dwWtMM1K2vIrJTSP/scene.splinecode" />
+				</Suspense>
 			</div>
 		</div>
 	);
