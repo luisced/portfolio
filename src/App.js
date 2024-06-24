@@ -6,6 +6,7 @@ import About from "./components/About/About";
 import HappyMac from "./components/HappyMac/HappyMac";
 import HelloAnimation from "./components/Hello/HelloAnimation";
 import BackgroundTransition from "./components/BackgroundTransition/BackgroundTransition";
+import Portfolio from "./components/Portfolio/Portfolio";
 import "./App.css";
 
 function App() {
@@ -43,8 +44,9 @@ function App() {
 					</section>
 					<BackgroundTransition gradient="linear-gradient(to bottom, #222, #dcf7ff)" />
 					<HappyMac />
+					<HelloAnimation />
 					<section id="portfolio">
-						<HelloAnimation />
+						<Portfolio />
 					</section>
 				</main>
 			</div>

@@ -5,6 +5,10 @@ import "./Home.css";
 import Spline from "@splinetool/react-spline";
 
 const Home = ({ presentationOpacity }) => {
+	const scrollToAbout = () => {
+		document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+	};
+
 	return (
 		<div className="home" id="home">
 			<div className="presentation" style={{ opacity: presentationOpacity }}>
@@ -25,11 +29,7 @@ const Home = ({ presentationOpacity }) => {
 					manage agile projects. I am also pursuing a degree in Data
 					Intelligence and Cybersecurity.
 				</p>
-				<button
-					className="about-me"
-					role="button"
-					onClick={() => (window.location.href = "#about")}
-				>
+				<button className="about-me" role="button" onClick={scrollToAbout}>
 					ABOUT ME
 				</button>
 			</div>

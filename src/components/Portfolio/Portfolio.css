@@ -1,0 +1,13 @@
+/* src/components/Portfolio.css */
+.portfolio {
+	width: 100%;
+	background-color: #fff;
+}
+
+.portfolio h2 {
+	text-align: center;
+	color: var(--color-secondary-text);
+	font-weight: 400;
+	font-size: 3.8rem;
+	margin-bottom: var(--spacing-medium);
+}

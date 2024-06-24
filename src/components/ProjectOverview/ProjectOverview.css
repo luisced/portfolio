@@ -1,0 +1,47 @@
+/* src/components/ProjectOverview/ProjectOverview.css */
+.project-overview {
+	margin: 40px 0;
+	padding: 20px;
+}
+
+.project-header {
+	display: flex;
+	align-items: center;
+}
+
+.project-header h3 {
+	margin-right: 20px;
+	font-size: 1.2rem;
+	color: #333;
+}
+
+.project-header h2 {
+	font-size: 2rem;
+	color: #333;
+}
+
+.project-details {
+	margin-top: 20px;
+}
+
+.project-details h4 {
+	font-size: 1rem;
+	font-weight: bold;
+	color: #555;
+}
+
+.project-details p {
+	font-size: 1rem;
+	color: #555;
+	margin: 10px 0;
+}
+
+.project-category {
+	margin-top: 20px;
+}
+
+.project-category h4 {
+	font-size: 1rem;
+	font-weight: bold;
+	color: #333;
+}
