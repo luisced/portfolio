@@ -1,4 +1,3 @@
-// src/components/ProjectOverview/ProjectOverview.js
 import React from "react";
 import PropTypes from "prop-types";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
@@ -15,23 +14,24 @@ const ProjectOverview = ({
 	return (
 		<ParallaxProvider>
 			<div className="project-overview">
-				<div className="project-header">
-					<h3>{projectNumber}</h3>
-					<h2>{title}</h2>
+				<div className="project-content">
+					<div className="project-header">
+						<h3>{projectNumber}</h3>
+						<h2>{title}</h2>
+					</div>
+					<div className="project-details">
+						<h4>{role}</h4>
+						<p>{description}</p>
+					</div>
+					<div className="project-category">
+						<h4>{category}</h4>
+					</div>
 				</div>
-				<div className="project-details">
-					<h4>{role}</h4>
-					<p>{description}</p>
-				</div>
-				<div className="project-category">
-					<h4>{category}</h4>
-				</div>
-				<div className="mobile-portfolio">
+				<div className="project-images">
 					{images.map((image, index) => (
 						<Parallax
 							key={index}
 							className="parallax-image"
-							tagOuter="figure"
 							translateX={image.x}
 							translateY={image.y}
 						>

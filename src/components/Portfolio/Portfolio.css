@@ -4,10 +4,10 @@
 	background-color: #fff;
 }
 
-.portfolio h2 {
-	text-align: center;
+.portfolio-category {
+	padding-top: 5vh;
+	margin-left: 3rem;
+	font-size: 5rem;
 	color: var(--color-secondary-text);
-	font-weight: 400;
-	font-size: 3.8rem;
-	margin-bottom: var(--spacing-medium);
+	text-align: center;
 }

@@ -3,23 +3,22 @@ import React from "react";
 import ProjectOverview from "../ProjectOverview/ProjectOverview";
 import genesis1 from "../../assets/genesis/genesis1.png";
 import genesis2 from "../../assets/genesis/genesis2.png";
+import genesis3 from "../../assets/genesis/genesis3.png";
+import genesis4 from "../../assets/genesis/genesis4.png";
 import "./Portfolio.css";
 
 const Portfolio = () => {
 	const geneis = [
 		{ src: genesis1, alt: "Genesis Dashboard", y: [-20, 20], x: [20, -20] },
 		{ src: genesis2, alt: "Geneis Login", y: [20, -20], x: [-20, 20] },
-	];
-
-	const project2Images = [
-		{ src: genesis1, alt: "Mobile 1", y: [-20, 20], x: [20, -20] },
-		{ src: genesis2, alt: "Mobile 2", y: [20, -20], x: [-20, 20] },
+		{ src: genesis3, alt: "Genesis Profile", y: [-20, 20], x: [20, -20] },
+		{ src: genesis4, alt: "Genesis Chat", y: [20, -20], x: [-20, 20] },
 	];
 
 	return (
 		<div className="portfolio">
 			<section id="mobile-portfolio">
-				<h2>Mobile Portfolio</h2>
+				<h2 className="portfolio-category">Mobile Portfolio</h2>
 				<ProjectOverview
 					projectNumber="01"
 					title="Dermaware - Genesis"
