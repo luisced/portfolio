@@ -50,12 +50,8 @@
 	text-align: justify;
 }
 
-.project-category {
-	margin-top: 20px;
-}
-
 .project-category h4 {
-	margin-top: 20rem;
+	margin-top: 13rem;
 	font-size: 3rem;
 	font-weight: bold;
 	color: #333;
@@ -63,15 +59,14 @@
 
 .project-images {
 	flex: 1;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
+	position: relative; /* Make this container a positioning context */
+	height: 500px; /* Adjust height as needed */
 }
 
 .parallax-image {
-	width: 300px;
-	margin: 20px 0;
-	position: relative;
+	position: absolute;
+	width: 230px; /* Phone Size */
+	transition: transform 0.3s ease;
 }
 
 .parallax-image img {
@@ -80,15 +75,48 @@
 	display: block;
 }
 
-/* Adjust flex basis for responsiveness */
-@media (max-width: 768px) {
+/* Specific positions for each image */
+.parallax-image:nth-child(1) {
+	top: 8%;
+	left: 0;
+	z-index: 4;
+}
+
+.parallax-image:nth-child(2) {
+	top: 30%;
+	left: 35%;
+	z-index: 3;
+}
+
+.parallax-image:nth-child(3) {
+	top: 65%;
+	left: 10%;
+	z-index: 2;
+}
+
+.parallax-image:nth-child(4) {
+	top: 90%;
+	left: 40%;
+	z-index: 1;
+}
+
+/* Adjust layout for responsiveness */
+@media (max-width: 1200px) {
 	.project-overview {
 		flex-direction: column;
 	}
 
 	.project-content,
 	.project-images {
-		flex: unset;
 		padding-right: 0;
+	}
+
+	.project-images {
+		height: auto; /* Adjust height for mobile layout */
+	}
+
+	.parallax-image {
+		position: static; /* Reset to normal flow for mobile */
+		margin: 10px 0;
 	}
 }

@@ -34,6 +34,7 @@ const ProjectOverview = ({
 							className="parallax-image"
 							translateX={image.x}
 							translateY={image.y}
+							speed={image.speed}
 						>
 							<img src={image.src} alt={image.alt} />
 						</Parallax>
@@ -56,6 +57,7 @@ ProjectOverview.propTypes = {
 			alt: PropTypes.string.isRequired,
 			y: PropTypes.arrayOf(PropTypes.number).isRequired,
 			x: PropTypes.arrayOf(PropTypes.number).isRequired,
+			speed: PropTypes.number.isRequired, // Add speed prop type
 		})
 	).isRequired,
 };
