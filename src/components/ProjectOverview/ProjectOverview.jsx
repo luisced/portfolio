@@ -1,6 +1,7 @@
 // src/components/ProjectOverview/ProjectOverview.js
 import React from "react";
 import PropTypes from "prop-types";
+import { Parallax, ParallaxProvider } from "react-scroll-parallax";
 import "./ProjectOverview.css";
 
 const ProjectOverview = ({
@@ -9,21 +10,37 @@ const ProjectOverview = ({
 	role,
 	description,
 	category,
+	images,
 }) => {
 	return (
-		<div className="project-overview">
-			<div className="project-header">
-				<h3>{projectNumber}</h3>
-				<h2>{title}</h2>
+		<ParallaxProvider>
+			<div className="project-overview">
+				<div className="project-header">
+					<h3>{projectNumber}</h3>
+					<h2>{title}</h2>
+				</div>
+				<div className="project-details">
+					<h4>{role}</h4>
+					<p>{description}</p>
+				</div>
+				<div className="project-category">
+					<h4>{category}</h4>
+				</div>
+				<div className="mobile-portfolio">
+					{images.map((image, index) => (
+						<Parallax
+							key={index}
+							className="parallax-image"
+							tagOuter="figure"
+							translateX={image.x}
+							translateY={image.y}
+						>
+							<img src={image.src} alt={image.alt} />
+						</Parallax>
+					))}
+				</div>
 			</div>
-			<div className="project-details">
-				<h4>{role}</h4>
-				<p>{description}</p>
-			</div>
-			<div className="project-category">
-				<h4>{category}</h4>
-			</div>
-		</div>
+		</ParallaxProvider>
 	);
 };
 
@@ -33,6 +50,14 @@ ProjectOverview.propTypes = {
 	role: PropTypes.string.isRequired,
 	description: PropTypes.string.isRequired,
 	category: PropTypes.string.isRequired,
+	images: PropTypes.arrayOf(
+		PropTypes.shape({
+			src: PropTypes.string.isRequired,
+			alt: PropTypes.string.isRequired,
+			y: PropTypes.arrayOf(PropTypes.number).isRequired,
+			x: PropTypes.arrayOf(PropTypes.number).isRequired,
+		})
+	).isRequired,
 };
 
 export default ProjectOverview;

@@ -1,7 +1,7 @@
 /* Home.css */
 
 .home {
-	height: 95vh; /* Full height of the viewport */
+	height: 100vh; /* Full height of the viewport */
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -19,7 +19,7 @@
 }
 
 .name {
-	padding-top: 15vh;
+	padding-top: 8vh;
 	font-size: 4rem;
 	display: inline-block;
 	animation: outer-left 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both,
@@ -37,7 +37,7 @@
 	font-size: 1rem;
 	line-height: 3;
 	color: white;
-	margin: 100px;
+	margin: 50px;
 	text-align: justify;
 	opacity: 0;
 	animation: fade-in 1s forwards;
@@ -51,6 +51,8 @@
 	opacity: 0; /* Start hidden */
 	animation: fade-in 1s forwards;
 	animation-delay: 3s; /* Delay to start after spline-container animation */
+	background-color: var(--color-highlight);
+	color: var(--color-text);
 }
 
 .spline-container {

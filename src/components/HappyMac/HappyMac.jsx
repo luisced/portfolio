@@ -6,7 +6,7 @@ import "./HappyMac.css";
 const HappyMac = () => {
 	return (
 		<div className="happy-mac">
-			<Spline scene="https://prod.spline.design/gh5W8uTjkvs-oVuN/scene.splinecode" />
+			<Spline scene="https://prod.spline.design/ydA5FKFEx0760sDJ/scene.splinecode" />
 		</div>
 	);
 };
