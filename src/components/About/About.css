@@ -107,6 +107,35 @@ section {
 	margin-bottom: var(--spacing-medium);
 }
 
+.scroll-cta {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	cursor: pointer;
+}
+
+.bounce {
+	font-size: 2rem;
+	animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+		transform: translateY(0);
+	}
+	40% {
+		transform: translateY(-20px);
+	}
+	60% {
+		transform: translateY(-10px);
+	}
+}
+
 .skills-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

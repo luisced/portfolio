@@ -43,7 +43,9 @@ function App() {
 						<About />
 					</section>
 					<BackgroundTransition gradient="linear-gradient(to bottom, #222, #dcf7ff)" />
-					<HappyMac />
+					<section id="happy-mac">
+						<HappyMac />
+					</section>
 					<HelloAnimation />
 					<section id="portfolio">
 						<Portfolio />

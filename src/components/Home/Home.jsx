@@ -35,7 +35,7 @@ const Home = ({ presentationOpacity }) => {
 			</div>
 			<div className="spline-container">
 				<Suspense fallback={<div>Loading...</div>}>
-					<Spline scene="https://prod.spline.design/dwWtMM1K2vIrJTSP/scene.splinecode" />
+					<Spline scene="https://prod.spline.design/teYlWA7w9rFfaaLK/scene.splinecode" />
 				</Suspense>
 			</div>
 		</div>

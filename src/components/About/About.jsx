@@ -3,12 +3,23 @@ import "./About.css";
 import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa";
 import profilePic from "../../assets/pfp.jpg";
 import cv from "../../assets/Luis Cedillo Maldonado CV.pdf";
+import { FaArrowDown } from "react-icons/fa";
 
 const About = () => {
+	const handleScrollToPortfolio = () => {
+		const portfolioElement = document.getElementById("happy-mac");
+		if (portfolioElement) {
+			portfolioElement.scrollIntoView({ behavior: "smooth" });
+		}
+	};
+
 	return (
 		<section className="about">
 			<Intro />
 			<Details />
+			<div className="scroll-cta" onClick={handleScrollToPortfolio}>
+				<FaArrowDown className="bounce" />
+			</div>{" "}
 		</section>
 	);
 };
@@ -63,7 +74,7 @@ const Details = () => (
 	<div className="details">
 		<Skills />
 		<Experience />
-		<LanguagesAndBusy />
+		<ExtraInfo />
 	</div>
 );
 
@@ -90,7 +101,7 @@ const Experience = () => (
 	</section>
 );
 
-const LanguagesAndBusy = () => (
+const ExtraInfo = () => (
 	<div className="languages-and-busy">
 		<section>
 			<h2>Languages</h2>
@@ -172,7 +183,9 @@ const busyWith = [
 ];
 
 const education = [
-	"Universidad Panamericana, Bachelor's in Data Intelligence and Cybersecurity, Current",
+	"Universidad Panamericana, Bachelor's in Data Intelligence and Cybersecurity, Current - 2025 (Expected)",
+	"AWS Academy Graduate - AWS Academy Cloud Foundations - 2023",
+	"App Development with Swift Associate - 2023",
 ];
 
 export default About;
