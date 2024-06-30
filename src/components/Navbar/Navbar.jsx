@@ -46,7 +46,7 @@ const Navbar = () => {
 				<ul className={`navbar-links ${isOpen ? "active" : ""}`}>
 					<li>
 						<a
-							href="#home"
+							href="/#home"
 							className={activeSection === "home" ? "active-link" : ""}
 						>
 							.home()
@@ -54,7 +54,7 @@ const Navbar = () => {
 					</li>
 					<li>
 						<a
-							href="#about"
+							href="/#about"
 							className={activeSection === "about" ? "active-link" : ""}
 						>
 							.about()
@@ -62,7 +62,7 @@ const Navbar = () => {
 					</li>
 					<li>
 						<a
-							href="#portfolio"
+							href="/portfolio"
 							className={activeSection === "portfolio" ? "active-link" : ""}
 						>
 							.portfolio()

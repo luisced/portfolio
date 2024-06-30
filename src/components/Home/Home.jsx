@@ -29,7 +29,7 @@ const Home = ({ presentationOpacity }) => {
 					manage agile projects. I am also pursuing a degree in Data
 					Intelligence and Cybersecurity.
 				</p>
-				<button className="about-me" role="button" onClick={scrollToAbout}>
+				<button className="about-me" onClick={scrollToAbout}>
 					ABOUT ME
 				</button>
 			</div>

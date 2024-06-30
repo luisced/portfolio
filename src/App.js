@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -33,25 +34,31 @@ function App() {
 
 	return (
 		<ParallaxProvider>
-			<div className="App">
-				<Navbar />
-				<main>
-					<section id="home">
-						<Home presentationOpacity={presentationOpacity} />
-					</section>
-					<section id="about">
-						<About />
-					</section>
-					<BackgroundTransition gradient="linear-gradient(to bottom, #222, #dcf7ff)" />
-					<section id="happy-mac">
-						<HappyMac />
-					</section>
-					<HelloAnimation />
-					<section id="portfolio">
-						<Portfolio />
-					</section>
-				</main>
-			</div>
+			<Router>
+				<div className="App">
+					<Navbar />
+					<Routes>
+						<Route
+							path="/"
+							element={
+								<main>
+									<section id="home">
+										<Home presentationOpacity={presentationOpacity} />
+									</section>
+									<section id="about">
+										<About />
+									</section>
+									<BackgroundTransition gradient="linear-gradient(to bottom, #222, #dcf7ff)" />
+									<section id="happy-mac">
+										<HappyMac />
+									</section>
+								</main>
+							}
+						/>
+						<Route path="/portfolio" element={<Portfolio />} />
+					</Routes>
+				</div>
+			</Router>
 		</ParallaxProvider>
 	);
 }
