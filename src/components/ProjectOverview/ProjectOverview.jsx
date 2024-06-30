@@ -3,6 +3,33 @@ import PropTypes from "prop-types";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
 import "./ProjectOverview.css";
 
+const defaultImages = [
+	// Image 1
+	{
+		y: [0, -130],
+		x: [0, 0],
+		speed: 100,
+	},
+	// Image 2
+	{
+		y: [20, -135],
+		x: [0, 0],
+		speed: 90,
+	},
+	// Image 3
+	{
+		y: [50, -100],
+		x: [0, 0],
+		speed: -30,
+	},
+	// Image 4
+	{
+		y: [0, -100],
+		x: [0, 0],
+		speed: -20,
+	},
+];
+
 const ProjectOverview = ({
 	projectNumber,
 	title,
@@ -11,6 +38,12 @@ const ProjectOverview = ({
 	category,
 	images,
 }) => {
+	// Merge images with default properties
+	const adjustedImages = images.map((image, index) => ({
+		...defaultImages[index % defaultImages.length],
+		...image,
+	}));
+
 	return (
 		<ParallaxProvider>
 			<div className="project-overview">
@@ -28,7 +61,7 @@ const ProjectOverview = ({
 					</div>
 				</div>
 				<div className="project-images">
-					{images.map((image, index) => (
+					{adjustedImages.map((image, index) => (
 						<Parallax
 							key={index}
 							className="parallax-image"
@@ -55,9 +88,9 @@ ProjectOverview.propTypes = {
 		PropTypes.shape({
 			src: PropTypes.string.isRequired,
 			alt: PropTypes.string.isRequired,
-			y: PropTypes.arrayOf(PropTypes.number).isRequired,
-			x: PropTypes.arrayOf(PropTypes.number).isRequired,
-			speed: PropTypes.number.isRequired, // Add speed prop type
+			y: PropTypes.arrayOf(PropTypes.number),
+			x: PropTypes.arrayOf(PropTypes.number),
+			speed: PropTypes.number,
 		})
 	).isRequired,
 };

@@ -1,10 +1,10 @@
 .project-overview {
-	margin: 40px 0;
 	padding: 20px;
 	display: flex;
 	flex-direction: row; /* Align items side by side */
 	justify-content: space-between;
 	align-items: flex-start;
+	height: 85vh;
 }
 
 .project-content {
@@ -28,7 +28,7 @@
 .project-header h3 {
 	margin-right: 10px;
 	margin-bottom: 2.5vh;
-	font-size: 1.8rem;
+	font-size: 3rem;
 	color: #333;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .project-details h4 {
-	font-size: 1.8rem;
+	font-size: 2rem;
 	font-weight: bold;
 	color: #555;
 }
@@ -46,7 +46,7 @@
 	font-size: 1.5rem;
 	color: #555;
 	margin: 10px 0;
-	max-width: 670px;
+	max-width: 750px;
 	text-align: justify;
 }
 
@@ -77,26 +77,30 @@
 
 /* Specific positions for each image */
 .parallax-image:nth-child(1) {
-	top: 8%;
+	top: 95%;
 	left: 0;
+	width: 400px;
 	z-index: 4;
 }
 
 .parallax-image:nth-child(2) {
-	top: 30%;
-	left: 35%;
+	top: 70%;
+	left: 40%;
+	width: 350px;
 	z-index: 3;
 }
 
 .parallax-image:nth-child(3) {
-	top: 65%;
-	left: 10%;
+	top: 120%;
+	left: 12%;
+	width: 250px;
 	z-index: 2;
 }
 
 .parallax-image:nth-child(4) {
-	top: 90%;
+	top: 140%;
 	left: 40%;
+	width: 280px;
 	z-index: 1;
 }
 
