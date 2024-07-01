@@ -79,14 +79,14 @@
 .parallax-image:nth-child(1) {
 	top: 95%;
 	left: 0;
-	width: 400px;
+	width: 500px;
 	z-index: 4;
 }
 
 .parallax-image:nth-child(2) {
 	top: 70%;
-	left: 40%;
-	width: 350px;
+	left: 50%;
+	width: 450px;
 	z-index: 3;
 }
 

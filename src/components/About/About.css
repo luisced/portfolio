@@ -17,6 +17,7 @@
 	flex: 1;
 	max-width: var(--max-width-content);
 	margin-right: var(--spacing-large);
+	font-size: 1.3rem;
 }
 
 .profile-pic {

@@ -6,15 +6,15 @@ import "./ProjectOverview.css";
 const defaultImages = [
 	// Image 1
 	{
-		y: [0, -130],
+		y: [10, -150],
 		x: [0, 0],
-		speed: 100,
+		speed: 10,
 	},
 	// Image 2
 	{
-		y: [20, -135],
+		y: [50, -150],
 		x: [0, 0],
-		speed: 90,
+		speed: 20,
 	},
 	// Image 3
 	{
@@ -38,7 +38,6 @@ const ProjectOverview = ({
 	category,
 	images,
 }) => {
-	// Merge images with default properties
 	const adjustedImages = images.map((image, index) => ({
 		...defaultImages[index % defaultImages.length],
 		...image,
