@@ -73,33 +73,33 @@
 	width: 100%;
 	height: auto;
 	display: block;
+	width: 250px;
 }
 
 /* Specific positions for each image */
 .parallax-image:nth-child(1) {
-	top: 95%;
+	top: 90%;
 	left: 0;
-	width: 500px;
 	z-index: 4;
 }
 
 .parallax-image:nth-child(2) {
-	top: 70%;
-	left: 50%;
+	top: 75%;
+	left: 40%;
 	width: 450px;
 	z-index: 3;
 }
 
 .parallax-image:nth-child(3) {
-	top: 120%;
-	left: 12%;
+	top: 100%;
+	left: 10%;
 	width: 250px;
 	z-index: 2;
 }
 
 .parallax-image:nth-child(4) {
-	top: 140%;
-	left: 40%;
+	top: 95%;
+	left: 45%;
 	width: 280px;
 	z-index: 1;
 }

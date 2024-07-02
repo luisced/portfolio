@@ -1,6 +1,6 @@
-/* src/components/Portfolio.css */
 .portfolio {
 	width: 100%;
+	height: 350vh;
 	background-color: #fff;
 }
 
@@ -10,4 +10,20 @@
 	font-size: 5rem;
 	color: var(--color-secondary-text);
 	text-align: left;
+}
+
+.project-wrapper {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.project-wrapper.visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.project-wrapper.hidden {
+	opacity: 0;
+	transform: translateY(20px);
 }
