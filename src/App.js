@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -11,27 +11,6 @@ import Portfolio from "./components/Portfolio/Portfolio";
 import "./App.css";
 
 function App() {
-	const [presentationOpacity, setPresentationOpacity] = useState(1);
-
-	const handleScroll = useCallback(() => {
-		const homeElement = document.getElementById("home");
-		if (homeElement) {
-			const homeHeight = homeElement.clientHeight;
-			const scrollPosition = window.scrollY;
-			const opacity =
-				scrollPosition < homeHeight ? 1 - (scrollPosition / homeHeight) * 2 : 0;
-			setPresentationOpacity(opacity);
-		}
-	}, []);
-
-	useEffect(() => {
-		const handleScrollThrottled = throttle(handleScroll, 100);
-		window.addEventListener("scroll", handleScrollThrottled);
-		return () => {
-			window.removeEventListener("scroll", handleScrollThrottled);
-		};
-	}, [handleScroll]);
-
 	return (
 		<ParallaxProvider>
 			<Router>
@@ -43,7 +22,7 @@ function App() {
 							element={
 								<main>
 									<section id="home">
-										<Home presentationOpacity={presentationOpacity} />
+										<Home />
 									</section>
 									<section id="about">
 										<About />

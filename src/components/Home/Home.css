@@ -8,20 +8,32 @@
 	text-align: center;
 	overflow: hidden;
 	position: relative;
+	color: #fff; /* Set the text color */
+	background-color: transparent;
 }
 
 .presentation {
 	flex: 1;
 	color: white;
 	text-align: center;
+	justify-content: center;
 	opacity: 1;
 	transition: opacity 0.5s ease-in-out; /* Added transition for opacity */
+	position: relative;
+	overflow: hidden;
 }
 
 .name {
 	padding-top: 8vh;
 	font-size: 4rem;
+	font-weight: 900;
+	font-style: bold;
 	display: inline-block;
+	background: #126ec4;
+	background: linear-gradient(to right, #0d9165 0%, #0dcfbf 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
 	animation: outer-left 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both,
 		text-clip 1s 0s cubic-bezier(0.5, 0, 0.1, 1) both;
 	will-change: transform, clip-path;
@@ -46,6 +58,28 @@
 	transform: translateZ(0);
 }
 
+.glassbox {
+	display: flex;
+	box-sizing: border-box;
+	width: 55%;
+	max-width: 800px;
+	/* center div */
+	margin: 4vh auto 4vh auto;
+	background: rgba(255, 255, 255, 0.1);
+	box-shadow: 0px 10px 50px 0 rgb(31 38 135 / 20%);
+	/* CHANGE THIS TO CHANGE THE BLUR AMOUNT */
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(25px);
+	border-radius: 10px;
+	border: 1px solid rgb(255 255 255 / 15%);
+	text-align: center;
+	opacity: 0;
+	will-change: opacity;
+	animation: fade-in 1s forwards;
+	animation-delay: 3s;
+	transform: translateZ(0);
+}
+
 .about-me {
 	font-size: 1.5rem;
 	opacity: 0; /* Start hidden */
@@ -62,8 +96,116 @@
 	will-change: clip-path;
 }
 
-/* ANIMATIONS */
+/* Blob styles */
+.blob-1,
+.blob-2,
+.blob-3,
+.blob-4,
+.blob-5,
+.blob-6 {
+	content: "";
+	position: absolute;
+	border-radius: 8vw;
+	mix-blend-mode: lighten;
+	filter: blur(150px);
+}
 
+.blob-1 {
+	width: 880px;
+	height: 850px;
+	left: 800px;
+	top: 50px;
+	background: linear-gradient(120deg, #000a6b 0%, #000a6b 35%, #e8e6ff 100%);
+}
+
+.blob-2 {
+	width: 200px;
+	height: 200px;
+	background: linear-gradient(90deg, #000a6b 0%, #000a6b 35%, #000a6b 100%);
+	filter: blur(80px);
+	z-index: -2;
+}
+
+.blob-3 {
+	width: 500px;
+	height: 100px;
+	background: linear-gradient(90deg, #000a6b 0%, #000a6b 35%, #000a6b 100%);
+	filter: blur(80px);
+	z-index: -2;
+}
+
+.blob-4 {
+	width: 300px;
+	height: 300px;
+	background: linear-gradient(120deg, #800080 0%, #8a2be2 35%, #e8e6ff 100%);
+	filter: blur(100px);
+	z-index: -3;
+	left: 0;
+	bottom: 0;
+}
+
+.blob-5 {
+	width: 150px;
+	height: 150px;
+	background: linear-gradient(120deg, #ff69b4 0%, #ff1493 35%, #ffd700 100%);
+	filter: blur(70px);
+	z-index: -1;
+	pointer-events: none;
+}
+
+.blob-6 {
+	width: 200px;
+	height: 200px;
+	top: 20px;
+	left: 20px;
+	background: linear-gradient(120deg, #000a6b 0%, #000a6b 35%, #e8e6ff 100%);
+	filter: blur(80px);
+	z-index: -2;
+}
+
+.noise-bg {
+	position: absolute;
+	background: url("https://thumbs.dreamstime.com/b/white-noise-background-effect-sound-effect-grain-distress-overlay-texture-your-design-grainy-gradient-background-145456887.jpg");
+	background-position: center;
+	background-size: 600px auto;
+	mix-blend-mode: screen;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: -1;
+	opacity: 0.1;
+}
+
+/* Animation styles */
+.blob-1,
+.blob-2,
+.blob-3,
+.blob-4,
+.blob-6 {
+	animation: rotation 6s infinite, scale1 6s infinite;
+	animation-direction: alternate;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes scale1 {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(2);
+	}
+}
+
+/* Existing animations */
 @keyframes text-clip {
 	from {
 		clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
@@ -76,15 +218,6 @@
 @keyframes outer-left {
 	from {
 		transform: translateX(100%);
-	}
-	to {
-		transform: none;
-	}
-}
-
-@keyframes inner-left {
-	from {
-		transform: translateX(-50%);
 	}
 	to {
 		transform: none;
@@ -111,7 +244,6 @@
 }
 
 /* MEDIA QUERIES */
-
 /* Tablets [601px -> 1200px] */
 @media only screen and (max-width: 1200px) {
 	.home {
