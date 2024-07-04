@@ -163,26 +163,43 @@
 	z-index: -2;
 }
 
-.noise-bg {
+.blob-7 {
+	width: 300px;
+	height: 300px;
+	background: linear-gradient(120deg, #00bfff 0%, #1e90ff 35%, #87cefa 100%);
+	filter: blur(100px);
+	z-index: -1;
+	pointer-events: none;
 	position: absolute;
+	right: 0%; /* Adjust this value to position it at the center right */
+	top: 50%;
+	transform: translateY(-50%); /* Center vertically */
+}
+
+.noise-bg,
+.anim-blobs {
+	position: fixed; /* Cover the entire screen */
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+}
+
+.noise-bg {
 	background: url("https://thumbs.dreamstime.com/b/white-noise-background-effect-sound-effect-grain-distress-overlay-texture-your-design-grainy-gradient-background-145456887.jpg");
 	background-position: center;
 	background-size: 600px auto;
 	mix-blend-mode: screen;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: -1;
 	opacity: 0.1;
 }
-
 /* Animation styles */
 .blob-1,
 .blob-2,
 .blob-3,
 .blob-4,
-.blob-6 {
+.blob-6,
+.blob-7 {
 	animation: rotation 6s infinite, scale1 6s infinite;
 	animation-direction: alternate;
 }

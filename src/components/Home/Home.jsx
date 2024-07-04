@@ -57,6 +57,7 @@ const Home = ({ presentationOpacity }) => {
 					<div className="blob-4"></div>
 					<div className="blob-5" id="mouse-blob"></div>
 					<div className="blob-6"></div>
+					<div className="blob-7"></div>
 				</div>
 			</div>
 			<div className="spline-container">
