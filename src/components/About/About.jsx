@@ -1,26 +1,39 @@
 import React from "react";
 import "./About.css";
-import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaDownload, FaGithub, FaLinkedin, FaArrowDown } from "react-icons/fa";
 import profilePic from "../../assets/pfp.jpg";
 import cv from "../../assets/Luis Cedillo Maldonado CV.pdf";
-import { FaArrowDown } from "react-icons/fa";
 
 const About = () => {
+	return (
+		<>
+			<div className="app-window" id="app-window">
+				<div className="header">
+					<div className="menu-circle"></div>
+					<div className="header-menu"></div>
+				</div>
+				<section className="about-content">
+					<Intro />
+					<Details />
+				</section>
+			</div>
+
+			<ScrollCta />
+		</>
+	);
+};
+
+const ScrollCta = () => {
 	const handleScrollToPortfolio = () => {
 		const portfolioElement = document.getElementById("happy-mac");
 		if (portfolioElement) {
 			portfolioElement.scrollIntoView({ behavior: "smooth" });
 		}
 	};
-
 	return (
-		<section className="about">
-			<Intro />
-			<Details />
-			<div className="scroll-cta" onClick={handleScrollToPortfolio}>
-				<FaArrowDown className="bounce" />
-			</div>{" "}
-		</section>
+		<div className="scroll-cta" onClick={handleScrollToPortfolio}>
+			<FaArrowDown className="bounce" />
+		</div>
 	);
 };
 
@@ -112,7 +125,7 @@ const ExtraInfo = () => (
 			</ul>
 		</section>
 		<section>
-			<h2>Also busy with...</h2>
+			<h2>Also Busy With</h2>
 			<ul>
 				{busyWith.map((activity, index) => (
 					<li key={index}>{activity}</li>

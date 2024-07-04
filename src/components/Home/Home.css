@@ -65,7 +65,7 @@
 	max-width: 800px;
 	/* center div */
 	margin: 4vh auto 4vh auto;
-	background: rgba(255, 255, 255, 0.1);
+	background: var(--color-glass-card-background);
 	box-shadow: 0px 10px 50px 0 rgb(31 38 135 / 20%);
 	/* CHANGE THIS TO CHANGE THE BLUR AMOUNT */
 	backdrop-filter: blur(20px);

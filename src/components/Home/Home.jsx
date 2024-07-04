@@ -6,7 +6,9 @@ import Spline from "@splinetool/react-spline";
 
 const Home = ({ presentationOpacity }) => {
 	const scrollToAbout = () => {
-		document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+		document
+			.getElementById("app-window")
+			.scrollIntoView({ behavior: "smooth" });
 	};
 
 	useEffect(() => {

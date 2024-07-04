@@ -1,8 +1,9 @@
 :root {
 	--font-family-mono: "Roboto Mono", monospace;
 	--font-family-sans: "Roboto", sans-serif;
-	--color-card-background: #333;
-	--color-background: #222;
+	--color-card-background: rgba(16 18 27 / 40%);
+	--color-glass-card-background: rgba(113 119 144 / 25%);
+	--color-background: #000000;
 	--color-text: #fff;
 	--color-secondary-text: #000;
 	--color-link-hover: #1ccabc;
@@ -23,6 +24,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	scroll-behavior: smooth;
+	outline: none;
 }
 
 body {
