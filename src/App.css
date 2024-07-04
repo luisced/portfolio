@@ -3,12 +3,13 @@
 	--font-family-sans: "Roboto", sans-serif;
 	--color-card-background: rgba(16 18 27 / 40%);
 	--color-glass-card-background: rgba(113 119 144 / 25%);
+	--color-glass-content-background: rgb(146 151 179 / 13%);
 	--color-background: #000000;
 	--color-text: #fff;
 	--color-secondary-text: #000;
 	--color-link-hover: #1ccabc;
 	--color-highlight: #29ae80;
-	--border-radius: 5px;
+	--border-radius: 15px;
 	--box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	--max-width-content: 800px;
 	--font-size-large: 4rem;

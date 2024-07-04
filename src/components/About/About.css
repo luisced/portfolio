@@ -9,7 +9,7 @@
 	overflow: hidden;
 	position: relative;
 	width: 90%;
-	border-radius: 14px;
+	border-radius: var(--border-radius);
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
 	font-size: 15px;
@@ -61,6 +61,29 @@
 	max-width: var(--max-width-content);
 	margin-right: var(--spacing-large);
 	font-size: 1.3rem;
+	background: var(--color-card-background);
+	padding: var(--spacing-medium);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+}
+
+.download-cv {
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
+	background-color: var(--color-glass-content-background);
+	padding: var(--spacing-small) var(--spacing-small);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+}
+
+.download-cv svg {
+	margin-left: var(--spacing-small);
+}
+
+.download-cv:hover {
+	background-color: rgba(6, 6, 7, 0.4);
+	color: var(--color-link-hover);
 }
 
 .profile-pic {
@@ -144,6 +167,7 @@ li {
 	margin-bottom: var(--spacing-small);
 	padding: var(--spacing-small);
 	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
 	max-width: 100%;
 }
 

@@ -17,7 +17,6 @@ const About = () => {
 					<Details />
 				</section>
 			</div>
-
 			<ScrollCta />
 		</>
 	);
@@ -60,28 +59,36 @@ const Intro = () => (
 	</div>
 );
 
-const SocialLinks = () => (
-	<div className="links">
-		{socialLinks.map(({ href, icon: Icon, title }) => (
-			<a
-				key={href}
-				href={href}
-				target="_blank"
-				rel="noopener noreferrer"
-				title={title}
+const SocialLinks = () => {
+	const handleDownloadCV = () => {
+		const link = document.createElement("a");
+		link.href = cv;
+		link.download = "Luis_Cedillo_Maldonado_CV.pdf";
+		link.click();
+	};
+	return (
+		<div className="links">
+			{socialLinks.map(({ href, icon: Icon, title }) => (
+				<a
+					key={href}
+					href={href}
+					target="_blank"
+					rel="noopener noreferrer"
+					title={title}
+				>
+					<Icon />
+				</a>
+			))}
+			<button
+				onClick={handleDownloadCV}
+				title="Download my CV"
+				className="download-cv"
 			>
-				<Icon />
-			</a>
-		))}
-		<a
-			href={cv}
-			download="Luis_Cedillo_Maldonado_CV.pdf"
-			title="Download my CV"
-		>
-			Download my CV <FaDownload />
-		</a>
-	</div>
-);
+				Download my CV <FaDownload />
+			</button>
+		</div>
+	);
+};
 
 const Details = () => (
 	<div className="details">

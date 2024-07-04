@@ -63,14 +63,12 @@
 	box-sizing: border-box;
 	width: 55%;
 	max-width: 800px;
-	/* center div */
 	margin: 4vh auto 4vh auto;
 	background: var(--color-glass-card-background);
-	box-shadow: 0px 10px 50px 0 rgb(31 38 135 / 20%);
-	/* CHANGE THIS TO CHANGE THE BLUR AMOUNT */
+	box-shadow: var(--box-shadow);
 	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(25px);
-	border-radius: 10px;
+	border-radius: var(--border-radius);
 	border: 1px solid rgb(255 255 255 / 15%);
 	text-align: center;
 	opacity: 0;
