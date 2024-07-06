@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./About.css";
-import { FaDownload, FaGithub, FaLinkedin, FaArrowDown } from "react-icons/fa";
+import {
+	FaDownload,
+	FaGithub,
+	FaLinkedin,
+	FaArrowDown,
+	FaInfoCircle,
+} from "react-icons/fa";
 import profilePic from "../../assets/pfp.jpg";
 import cv from "../../assets/Luis Cedillo Maldonado CV.pdf";
 
@@ -100,7 +106,7 @@ const Details = () => (
 				skills={databasesAndCloudSkills}
 			/>
 		</div>
-		<Experience />
+		<Timeline items={timelineItems} />
 		<ExtraInfo />
 	</div>
 );
@@ -156,6 +162,71 @@ const Experience = () => (
 		))}
 	</section>
 );
+const Timeline = ({ items }) => {
+	return (
+		<div className="timeline-box">
+			<div className="line-box">
+				{items.map((item, index) => (
+					<div key={index} className={`text-circle ${item.status}`}>
+						<div className="circle">
+							<h4>{item.title}</h4>
+							<p>{item.date}</p>
+						</div>
+						{item.info && (
+							<Popover title={item.info.title} content={item.info.content}>
+								<a href="javascript:void(0)" className="shape">
+									<FaInfoCircle />
+								</a>
+							</Popover>
+						)}
+					</div>
+				))}
+			</div>
+		</div>
+	);
+};
+
+const Popover = ({ title, content, children }) => {
+	const [visible, setVisible] = useState(false);
+	const popoverRef = useRef();
+
+	const handleMouseEnter = () => {
+		setVisible(true);
+	};
+
+	const handleMouseLeave = () => {
+		setVisible(false);
+	};
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+				setVisible(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [popoverRef]);
+
+	return (
+		<div
+			className="popover-wrapper"
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			ref={popoverRef}
+		>
+			{children}
+			{visible && (
+				<div className="popover-content">
+					<div className="popover-title">{title}</div>
+					<div className="popover-body">{content}</div>
+				</div>
+			)}
+		</div>
+	);
+};
 
 const ExtraInfo = () => (
 	<div className="languages-and-busy">
@@ -185,6 +256,59 @@ const ExtraInfo = () => (
 		</section>
 	</div>
 );
+
+const timelineItems = [
+	{
+		title: "Jr. Backend Developer @ Zenco Mexico",
+		date: "Feb 2021 - Feb 2022",
+		status: "done",
+		info: {
+			title: "Zenco Mexico",
+			content:
+				"Delivered custom CRM solutions with Python, Flask, MySQL, and AWS. Implemented an automated data synchronization system, reducing manual data entry by 75% and boosting data accuracy. Collaborated with the development team to design a scalable and robust system architecture.",
+		},
+	},
+	{
+		title: "Freelance Developer",
+		date: "Jun 2022 - Nov 2022",
+		status: "",
+		info: {
+			title: "Freelance",
+			content:
+				"Developed and deployed a Twilio WhatsApp chatbot for Airbnb reservations, enhancing customer convenience and streamlining the booking process. Implemented an automated message tracking system, boosting operational efficiency.",
+		},
+	},
+	{
+		title: "Development Leader @ iOS Development Lab",
+		date: "Jan 2023 - Present",
+		status: "",
+		info: {
+			title: "iOS Development Lab",
+			content:
+				"Mentored junior developers, organized and managed projects using agile methodologies. Deployed and managed services like Mattermost, Wazuh, and self-hosted platforms.",
+		},
+	},
+	{
+		title: "DermAware Project @ iOS Development Lab",
+		date: "Jul 2023 - Nov 2023",
+		status: "",
+		info: {
+			title: "DermAware",
+			content:
+				"Led the full-stack development of a mobile app for dermatologic disease tracking. Integrated Apple's CO-ML model, optimizing the CI/CD pipeline using GitHub workflows and Docker.",
+		},
+	},
+	{
+		title: "Homecare Project @ Universidad Panamericana",
+		date: "Jan 2023 - Present",
+		status: "",
+		info: {
+			title: "Homecare",
+			content:
+				"Designed and implemented a robust backend architecture for a platform serving over 15,000 students. Developed a scheduling feature using graph algorithms and created an interactive school map with React.",
+		},
+	},
+];
 
 const socialLinks = [
 	{

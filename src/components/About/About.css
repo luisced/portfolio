@@ -89,12 +89,13 @@
 .profile-pic {
 	border-radius: 50%;
 	box-shadow: var(--box-shadow);
+	border: 5px solid #fff;
 	width: 100%;
 	max-width: 550px;
 	height: auto;
 	object-fit: cover;
-	align-self: center; /* Centers the image vertically within the flex container */
-	margin: var(--spacing-medium) auto; /* Adds vertical and horizontal centering within the remaining space */
+	align-self: center;
+	margin: var(--spacing-medium) auto;
 }
 
 .intro-text h1 {
@@ -228,6 +229,150 @@ section {
 	transform: translateX(50%) rotate(45deg);
 	border-radius: 2px;
 }
+.timeline-box {
+	display: flex;
+	flex-direction: column;
+	margin: 40px 0;
+}
+
+.line-box {
+	display: flex;
+	margin-bottom: 40px;
+}
+
+.text-circle {
+	flex: 1;
+	text-align: center;
+	position: relative;
+}
+
+.text-circle:after {
+	background-color: grey;
+	bottom: 1.25em;
+	content: "";
+	display: block;
+	height: 3px;
+	position: absolute;
+	right: 0;
+	width: 50%;
+	z-index: -1;
+}
+
+.line-box h4 {
+	color: #189599;
+	font-weight: bold;
+}
+
+.line-box h4,
+.line-box p {
+	font-size: 12px;
+	margin-bottom: 0;
+	padding: 0 5px;
+}
+
+.subline {
+	position: absolute;
+	right: -25px;
+	bottom: -43%;
+}
+
+.subline:before {
+	content: "";
+	position: absolute;
+	height: 15px;
+	width: 15px;
+	bottom: 14px;
+	right: 15px;
+	background-color: #189599;
+	border-radius: 50%;
+	top: -25px;
+}
+
+.subline h6 {
+	margin-bottom: 0;
+}
+
+.timeline {
+	margin: 40px 0;
+}
+
+.text-circle.done:after,
+.text-circle.done + .text-circle:before {
+	background-color: #189599;
+}
+
+.text-circle.sub:after {
+	background-color: #189599;
+}
+
+.text-circle:not(:first-child):before {
+	bottom: 1.25em;
+	content: "";
+	display: block;
+	height: 3px;
+	position: absolute;
+	left: 0;
+	width: 50%;
+	z-index: -1;
+	background-color: grey;
+}
+
+.text-circle:last-child:after {
+	width: 0;
+}
+
+.circle {
+	height: 100%;
+}
+
+.shape {
+	height: 40px;
+	width: 40px;
+	border: 2px solid #189599;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	border-radius: 50%;
+	top: -43px;
+	margin: 3px auto;
+	background-color: #fff;
+	color: #189599;
+}
+
+.popover-wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.popover-content {
+	position: absolute;
+	top: -50px; /* Adjust based on your needs */
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+}
+
+.popover-title {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.popover-body {
+	font-size: 14px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+	.subline:before {
+		top: -30px;
+	}
+}
 
 .scroll-cta {
 	display: flex;
@@ -335,5 +480,35 @@ section {
 	.languages-and-busy {
 		flex-direction: column;
 		align-items: flex-start;
+	}
+}
+
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+	.subline:before {
+		top: -43px;
+	}
+}
+/* iPad portrait ----------------------------------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+	.subline:before {
+		top: -29px;
+	}
+}
+/* mobile width till 767px ----------------------------------- */
+@media (max-width: 767px) {
+	.subline:before {
+		top: -30px;
+	}
+}
+/* Portrait iPad Pro */
+@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
+	.subline:before {
+		top: -23px;
+	}
+}
+/* mobile width till 480px ----------------------------------- */
+@media (max-width: 480px) {
+	.subline:before {
+		top: -43px;
 	}
 }
