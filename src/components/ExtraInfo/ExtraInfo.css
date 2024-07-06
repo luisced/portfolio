@@ -1,0 +1,16 @@
+.languages-and-busy {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--spacing-medium);
+	flex-wrap: wrap;
+}
+
+.languages-and-busy section {
+	flex: 1;
+	min-width: 250px;
+}
+
+.languages-and-busy ul {
+	width: 90%;
+	max-width: 400px;
+}

@@ -1,0 +1,104 @@
+.timeline-box {
+	display: flex;
+	flex-direction: column;
+	margin: 40px 0;
+}
+
+.line-box {
+	display: flex;
+	margin-bottom: 40px;
+}
+
+.text-circle {
+	flex: 1;
+	text-align: center;
+	position: relative;
+}
+
+.text-circle:after {
+	background-color: grey;
+	bottom: 1.25em;
+	content: "";
+	display: block;
+	height: 3px;
+	position: absolute;
+	right: 0;
+	width: 50%;
+	z-index: -1;
+}
+
+.line-box h4 {
+	color: #189599;
+	font-weight: bold;
+}
+
+.line-box h4,
+.line-box p {
+	font-size: 12px;
+	margin-bottom: 0;
+	padding: 0 5px;
+}
+
+.text-circle.done:after,
+.text-circle.done + .text-circle:before {
+	background-color: #189599;
+}
+
+.text-circle:not(:first-child):before {
+	bottom: 1.25em;
+	content: "";
+	display: block;
+	height: 3px;
+	position: absolute;
+	left: 0;
+	width: 50%;
+	z-index: -1;
+	background-color: grey;
+}
+
+.text-circle:last-child:after {
+	width: 0;
+}
+
+.circle {
+	height: 100%;
+}
+
+.shape {
+	height: 40px;
+	width: 40px;
+	border: 2px solid #189599;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	border-radius: 50%;
+	top: -43px;
+	margin: 3px auto;
+	background-color: #fff;
+	color: #189599;
+}
+
+.subline:before {
+	content: "";
+	position: absolute;
+	height: 15px;
+	width: 15px;
+	bottom: 14px;
+	right: 15px;
+	background-color: #189599;
+	border-radius: 50%;
+	top: -25px;
+}
+
+@media (max-width: 767px) {
+	.subline:before {
+		top: -30px;
+	}
+}
+
+@media (max-width: 480px) {
+	.subline:before {
+		top: -43px;
+	}
+}
