@@ -90,7 +90,7 @@
 	border-radius: 50%;
 	box-shadow: var(--box-shadow);
 	width: 100%;
-	max-width: 450px;
+	max-width: 550px;
 	height: auto;
 	object-fit: cover;
 	align-self: center; /* Centers the image vertically within the flex container */
@@ -131,6 +131,8 @@
 
 .details {
 	margin-top: var(--spacing-medium);
+	display: flex;
+	flex-direction: column;
 }
 
 .section {
@@ -175,6 +177,58 @@ section {
 	margin-bottom: var(--spacing-medium);
 }
 
+.skills-container {
+	display: flex;
+	width: 100%;
+	gap: 100px;
+}
+
+.skill-section {
+	margin-bottom: 40px;
+}
+.skill-name {
+	font-size: 18px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin: 20px 0;
+}
+.skill-bar {
+	height: 20px;
+	background: #cacaca;
+	border-radius: 8px;
+}
+.skill-per {
+	height: 20px;
+	background-color: #f05a48;
+	border-radius: 8px;
+	width: 0;
+	position: relative;
+	transition: 1s linear;
+}
+.skill-per::before {
+	content: attr(per);
+	position: absolute;
+	padding: 4px 6px;
+	background-color: #000;
+	color: #fff;
+	font-size: 12px;
+	border-radius: 4px;
+	top: -35px;
+	right: 0;
+	transform: translateX(50%);
+}
+.skill-per::after {
+	content: "";
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background-color: #000;
+	top: -16px;
+	right: 0;
+	transform: translateX(50%) rotate(45deg);
+	border-radius: 2px;
+}
+
 .scroll-cta {
 	display: flex;
 	justify-content: center;
@@ -205,20 +259,6 @@ section {
 	}
 }
 
-.skills-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-	gap: var(--spacing-small);
-}
-
-.skills-grid li {
-	background: var(--color-card-background);
-	padding: var(--spacing-small);
-	border-radius: var(--border-radius);
-	box-shadow: var(--box-shadow);
-	text-align: justify;
-}
-
 .languages-and-busy {
 	display: flex;
 	justify-content: space-between;
@@ -232,8 +272,54 @@ section {
 }
 
 .languages-and-busy ul {
+	width: 90%;
+	max-width: 400px;
+}
+
+.skills-card {
+	background: var(--color-card-background);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	width: 100%;
-	max-width: 450px;
+	max-width: 600px;
+	margin: 20px 0;
+}
+
+.skills {
+	width: 100%;
+}
+
+#skills li {
+	margin: 20px 0;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.bar_container {
+	height: 20px;
+	background: #d4d0d0;
+	border-radius: 8px;
+	margin-top: 5px;
+	overflow: hidden;
+}
+
+.bar {
+	display: block;
+	height: 100%;
+	width: 0;
+	border-radius: 8px;
+	position: relative;
+	transition: width 1s linear;
+}
+
+.pct {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	color: white;
+	font-size: 14px;
+	line-height: 20px;
 }
 
 @media (max-width: 768px) {
