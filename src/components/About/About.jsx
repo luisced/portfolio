@@ -1,14 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./About.css";
-import {
-	FaDownload,
-	FaGithub,
-	FaLinkedin,
-	FaArrowDown,
-	FaInfoCircle,
-} from "react-icons/fa";
+import { FaArrowDown, FaInfoCircle } from "react-icons/fa";
 import profilePic from "../../assets/pfp.jpg";
 import cv from "../../assets/Luis Cedillo Maldonado CV.pdf";
+import Intro from "../Intro/Intro";
 
 const About = () => {
 	return (
@@ -38,60 +33,6 @@ const ScrollCta = () => {
 	return (
 		<div className="scroll-cta" onClick={handleScrollToPortfolio}>
 			<FaArrowDown className="bounce" />
-		</div>
-	);
-};
-
-const Intro = () => (
-	<div className="intro">
-		<div className="intro-text">
-			<h1>
-				.about(<span className="highlight">luis</span>)
-			</h1>
-			<SocialLinks />
-			<p className="experience-description">
-				I am Luis Cedillo Maldonado, a backend developer and frontend enthusiast
-				from Mexico City. I specialize in custom CRM solutions and Twilio
-				WhatsApp chatbots. Currently, I lead at the iOS Development Lab at
-				Universidad Panamericana, where I mentor junior developers and manage
-				agile projects. I am also pursuing a degree in Data Intelligence and
-				Cybersecurity.
-			</p>
-			<p>
-				<br /># Development Leader @ iOS Development Lab
-			</p>
-		</div>
-		<img src={profilePic} alt="Luis Cedillo" className="profile-pic" />
-	</div>
-);
-
-const SocialLinks = () => {
-	const handleDownloadCV = () => {
-		const link = document.createElement("a");
-		link.href = cv;
-		link.download = "Luis_Cedillo_Maldonado_CV.pdf";
-		link.click();
-	};
-	return (
-		<div className="links">
-			{socialLinks.map(({ href, icon: Icon, title }) => (
-				<a
-					key={href}
-					href={href}
-					target="_blank"
-					rel="noopener noreferrer"
-					title={title}
-				>
-					<Icon />
-				</a>
-			))}
-			<button
-				onClick={handleDownloadCV}
-				title="Download my CV"
-				className="download-cv"
-			>
-				Download my CV <FaDownload />
-			</button>
 		</div>
 	);
 };
@@ -310,18 +251,6 @@ const timelineItems = [
 	},
 ];
 
-const socialLinks = [
-	{
-		href: "https://github.com/luisced",
-		icon: FaGithub,
-		title: "Check out my GitHub",
-	},
-	{
-		href: "https://linkedin.com/in/luisced",
-		icon: FaLinkedin,
-		title: "Connect with me on LinkedIn",
-	},
-];
 const backendSkills = [
 	{
 		name: "Python",

@@ -1,0 +1,36 @@
+.links {
+	display: flex;
+	gap: var(--spacing-small);
+	margin-top: var(--spacing-small);
+	font-size: 1.4rem;
+}
+
+.links a {
+	color: var(--color-highlight);
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+}
+
+.links a:hover {
+	text-decoration: underline;
+}
+
+.download-cv {
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
+	background-color: var(--color-glass-content-background);
+	padding: var(--spacing-small) var(--spacing-small);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+}
+
+.download-cv svg {
+	margin-left: var(--spacing-small);
+}
+
+.download-cv:hover {
+	background-color: rgba(6, 6, 7, 0.4);
+	color: var(--color-link-hover);
+}
