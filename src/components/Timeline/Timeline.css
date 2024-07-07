@@ -10,7 +10,7 @@
 
 .line-box {
 	display: flex;
-	margin-bottom: 60px; /* Increased margin */
+	margin-bottom: 40px;
 }
 
 .text-circle {
@@ -28,6 +28,7 @@
 	right: 0;
 	width: 50%;
 	z-index: -1;
+	background-color: grey;
 }
 
 .line-box h4 {
@@ -57,6 +58,7 @@
 	left: 0;
 	width: 50%;
 	z-index: -1;
+	background-color: grey;
 }
 
 .text-circle:last-child:after {

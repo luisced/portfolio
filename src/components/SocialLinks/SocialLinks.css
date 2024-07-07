@@ -34,3 +34,55 @@
 	background-color: rgba(6, 6, 7, 0.4);
 	color: var(--color-link-hover);
 }
+
+@media only screen and (max-width: 1200px) {
+	.links {
+		flex-direction: row;
+		align-items: center;
+		margin-top: var(--spacing-medium);
+	}
+}
+
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+	.links {
+		flex-direction: row;
+		align-items: center;
+		margin-top: var(--spacing-medium);
+	}
+}
+
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+	.links {
+		flex-direction: row;
+		align-items: center;
+		margin-top: var(--spacing-medium);
+	}
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+	.links {
+		flex-direction: row;
+		align-items: center;
+		margin-top: var(--spacing-medium);
+	}
+}
+
+/* Extra Small smartphones [320px and below] */
+@media only screen and (max-width: 320px) {
+	.links {
+		flex-direction: row;
+		align-items: center;
+		margin-top: var(--spacing-medium);
+	}
+}
+
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
+}
+
+/* Big Tablets */
+
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
+}

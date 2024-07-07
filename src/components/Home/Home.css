@@ -45,7 +45,7 @@
 }
 
 .bio {
-	font-size: 1rem;
+	font-size: var(--responsive-font-size-small);
 	line-height: 3;
 	color: white;
 	margin: 50px;
@@ -330,7 +330,7 @@
 	}
 
 	.description {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin-bottom: 2rem;
 	}
 
@@ -343,7 +343,7 @@
 	}
 
 	.bio {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin: 0;
 		padding: 0;
 	}
@@ -372,7 +372,7 @@
 	}
 
 	.description {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin-bottom: 2rem;
 	}
 
@@ -385,7 +385,7 @@
 	}
 
 	.bio {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin: 0;
 		padding: 0;
 	}
@@ -414,7 +414,7 @@
 	}
 
 	.description {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin-bottom: 2rem;
 	}
 
@@ -427,7 +427,7 @@
 	}
 
 	.bio {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin: 0;
 		padding: 0;
 	}
@@ -456,7 +456,7 @@
 	}
 
 	.description {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin-bottom: 2rem;
 	}
 
@@ -469,7 +469,7 @@
 	}
 
 	.bio {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin: 0;
 		padding: 0;
 	}
@@ -498,7 +498,7 @@
 	}
 
 	.description {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin-bottom: 2rem;
 	}
 
@@ -511,7 +511,7 @@
 	}
 
 	.bio {
-		font-size: 1rem;
+		font-size: var(--responsive-font-size-small);
 		margin: 0;
 		padding: 0;
 	}

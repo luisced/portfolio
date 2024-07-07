@@ -12,10 +12,8 @@ const About = () => {
 					<div className="menu-circle"></div>
 					<div className="header-menu"></div>
 				</div>
-				<section className="about-content">
-					<Intro />
-					<Details />
-				</section>
+				<Intro />
+				<Details />
 			</div>
 			<ScrollCta />
 		</>

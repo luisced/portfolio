@@ -1,3 +1,15 @@
+/* About.css */
+
+.about {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--color-text);
+	font-family: var(--font-family-mono);
+	padding: var(--spacing-large);
+	width: 100%;
+}
+
 .app-window {
 	margin: 0 auto;
 	margin-top: 18vh;
@@ -41,14 +53,6 @@
 	flex-shrink: 0;
 }
 
-.about {
-	display: flex;
-	flex-direction: column;
-	color: var(--color-text);
-	font-family: var(--font-family-mono);
-	padding: var(--spacing-large) var(--spacing-large) var(--spacing-large);
-}
-
 .intro {
 	display: flex;
 	flex-wrap: wrap;
@@ -65,25 +69,7 @@
 	padding: var(--spacing-medium);
 	border-radius: var(--border-radius);
 	box-shadow: var(--box-shadow);
-}
-
-.download-cv {
-	display: flex;
-	align-items: center;
-	font-size: 1rem;
-	background-color: var(--color-glass-content-background);
-	padding: var(--spacing-small) var(--spacing-small);
-	border-radius: var(--border-radius);
-	box-shadow: var(--box-shadow);
-}
-
-.download-cv svg {
-	margin-left: var(--spacing-small);
-}
-
-.download-cv:hover {
-	background-color: rgba(6, 6, 7, 0.4);
-	color: var(--color-link-hover);
+	text-align: justify;
 }
 
 .profile-pic {
@@ -98,280 +84,13 @@
 	margin: var(--spacing-medium) auto;
 }
 
-.intro-text h1 {
-	font-size: var(--font-size-large);
-	font-weight: 600;
-}
-
 .highlight {
 	color: var(--color-highlight);
-}
-
-.links {
-	display: flex;
-	gap: var(--spacing-small);
-	margin-top: var(--spacing-small);
-	font-size: 1.4rem;
-}
-
-.links a {
-	color: var(--color-highlight);
-	text-decoration: none;
-	display: flex;
-	align-items: center;
-}
-
-.links a:hover {
-	text-decoration: underline;
 }
 
 .experience-description {
 	padding-top: var(--spacing-medium);
 	text-align: justify;
-}
-
-.details {
-	margin-top: var(--spacing-medium);
-	display: flex;
-	flex-direction: column;
-}
-
-.section {
-	margin-bottom: var(--spacing-small);
-}
-
-.section h2 {
-	font-size: var(--font-size-medium);
-	margin-bottom: var(--spacing-small);
-}
-
-.experience-item {
-	margin-bottom: var(--spacing-small);
-}
-
-.experience-item h3 {
-	margin: 0;
-	font-size: var(--font-size-small);
-	color: var(--color-highlight);
-}
-
-.experience-item p {
-	margin: var(--spacing-small) 0 0 0;
-}
-
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-li {
-	background: var(--color-card-background);
-	margin-bottom: var(--spacing-small);
-	padding: var(--spacing-small);
-	border-radius: var(--border-radius);
-	box-shadow: var(--box-shadow);
-	max-width: 100%;
-}
-
-section {
-	margin-bottom: var(--spacing-medium);
-}
-
-.skills-container {
-	display: flex;
-	width: 100%;
-	gap: 100px;
-}
-
-.skill-section {
-	margin-bottom: 40px;
-}
-.skill-name {
-	font-size: 18px;
-	font-weight: 700;
-	text-transform: uppercase;
-	margin: 20px 0;
-}
-.skill-bar {
-	height: 20px;
-	background: #cacaca;
-	border-radius: 8px;
-}
-.skill-per {
-	height: 20px;
-	background-color: #f05a48;
-	border-radius: 8px;
-	width: 0;
-	position: relative;
-	transition: 1s linear;
-}
-.skill-per::before {
-	content: attr(per);
-	position: absolute;
-	padding: 4px 6px;
-	background-color: #000;
-	color: #fff;
-	font-size: 12px;
-	border-radius: 4px;
-	top: -35px;
-	right: 0;
-	transform: translateX(50%);
-}
-.skill-per::after {
-	content: "";
-	position: absolute;
-	width: 10px;
-	height: 10px;
-	background-color: #000;
-	top: -16px;
-	right: 0;
-	transform: translateX(50%) rotate(45deg);
-	border-radius: 2px;
-}
-.timeline-box {
-	display: flex;
-	flex-direction: column;
-	margin: 40px 0;
-}
-
-.line-box {
-	display: flex;
-	margin-bottom: 40px;
-}
-
-.text-circle {
-	flex: 1;
-	text-align: center;
-	position: relative;
-}
-
-.text-circle:after {
-	background-color: grey;
-	bottom: 1.25em;
-	content: "";
-	display: block;
-	height: 3px;
-	position: absolute;
-	right: 0;
-	width: 50%;
-	z-index: -1;
-}
-
-.line-box h4 {
-	color: #189599;
-	font-weight: bold;
-}
-
-.line-box h4,
-.line-box p {
-	font-size: 12px;
-	margin-bottom: 0;
-	padding: 0 5px;
-}
-
-.subline {
-	position: absolute;
-	right: -25px;
-	bottom: -43%;
-}
-
-.subline:before {
-	content: "";
-	position: absolute;
-	height: 15px;
-	width: 15px;
-	bottom: 14px;
-	right: 15px;
-	background-color: #189599;
-	border-radius: 50%;
-	top: -25px;
-}
-
-.subline h6 {
-	margin-bottom: 0;
-}
-
-.timeline {
-	margin: 40px 0;
-}
-
-.text-circle.done:after,
-.text-circle.done + .text-circle:before {
-	background-color: #189599;
-}
-
-.text-circle.sub:after {
-	background-color: #189599;
-}
-
-.text-circle:not(:first-child):before {
-	bottom: 1.25em;
-	content: "";
-	display: block;
-	height: 3px;
-	position: absolute;
-	left: 0;
-	width: 50%;
-	z-index: -1;
-	background-color: grey;
-}
-
-.text-circle:last-child:after {
-	width: 0;
-}
-
-.circle {
-	height: 100%;
-}
-
-.shape {
-	height: 40px;
-	width: 40px;
-	border: 2px solid #189599;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	border-radius: 50%;
-	top: -43px;
-	margin: 3px auto;
-	background-color: #fff;
-	color: #189599;
-}
-
-.popover-wrapper {
-	position: relative;
-	display: inline-block;
-}
-
-.popover-content {
-	position: absolute;
-	top: -50px; /* Adjust based on your needs */
-	left: 50%;
-	transform: translateX(-50%);
-	background: white;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	padding: 10px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-	z-index: 1000;
-}
-
-.popover-title {
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-
-.popover-body {
-	font-size: 14px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 767px) {
-	.subline:before {
-		top: -30px;
-	}
 }
 
 .scroll-cta {
@@ -388,127 +107,46 @@ section {
 	animation: bounce 2s infinite;
 }
 
-@keyframes bounce {
-	0%,
-	20%,
-	50%,
-	80%,
-	100% {
-		transform: translateY(0);
-	}
-	40% {
-		transform: translateY(-20px);
-	}
-	60% {
-		transform: translateY(-10px);
+/* Responsive Design */
+
+@media only screen and (max-width: 1200px) {
+	.app-window {
+		margin-top: 5rem;
 	}
 }
 
-.languages-and-busy {
-	display: flex;
-	justify-content: space-between;
-	gap: var(--spacing-medium);
-	flex-wrap: wrap;
-}
-
-.languages-and-busy section {
-	flex: 1;
-	min-width: 250px;
-}
-
-.languages-and-busy ul {
-	width: 90%;
-	max-width: 400px;
-}
-
-.skills-card {
-	background: var(--color-card-background);
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	width: 100%;
-	max-width: 600px;
-	margin: 20px 0;
-}
-
-.skills {
-	width: 100%;
-}
-
-#skills li {
-	margin: 20px 0;
-	font-size: 18px;
-	font-weight: 700;
-}
-
-.bar_container {
-	height: 20px;
-	background: #d4d0d0;
-	border-radius: 8px;
-	margin-top: 5px;
-	overflow: hidden;
-}
-
-.bar {
-	display: block;
-	height: 100%;
-	width: 0;
-	border-radius: 8px;
-	position: relative;
-	transition: width 1s linear;
-}
-
-.pct {
-	position: absolute;
-	top: 0;
-	right: 10px;
-	color: white;
-	font-size: 14px;
-	line-height: 20px;
-}
-
-@media (max-width: 768px) {
-	.intro-text {
-		margin-right: 0;
-	}
-
-	.profile-pic {
-		margin-right: 0;
-		margin-bottom: var(--spacing-medium);
-	}
-
-	.languages-and-busy {
-		flex-direction: column;
-		align-items: flex-start;
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+	.app-window {
+		margin-top: 5rem;
 	}
 }
 
-@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
-	.subline:before {
-		top: -43px;
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+	.app-window {
+		margin-top: 5rem;
 	}
 }
-/* iPad portrait ----------------------------------- */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
-	.subline:before {
-		top: -29px;
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+	.app-window {
+		margin-top: 5rem;
 	}
 }
-/* mobile width till 767px ----------------------------------- */
-@media (max-width: 767px) {
-	.subline:before {
-		top: -30px;
+
+/* Extra Small smartphones [320px and below] */
+@media only screen and (max-width: 320px) {
+	.app-window {
+		margin-top: 5rem;
 	}
 }
-/* Portrait iPad Pro */
-@media only screen and (min-width: 1024px) and (max-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
-	.subline:before {
-		top: -23px;
-	}
+
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
 }
-/* mobile width till 480px ----------------------------------- */
-@media (max-width: 480px) {
-	.subline:before {
-		top: -43px;
-	}
+
+/* Big Tablets */
+
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
 }
