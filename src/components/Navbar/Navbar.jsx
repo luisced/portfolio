@@ -20,7 +20,6 @@ const Navbar = () => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
 					setActiveSection(entry.target.id);
-					console.log(entry.target.id);
 				}
 			});
 		}, options);

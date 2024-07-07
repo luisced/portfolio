@@ -87,6 +87,10 @@ section {
 	margin: 0;
 }
 
+ul {
+	list-style: none;
+}
+
 .happy-mac {
 	height: 100vh;
 	width: 100%;
