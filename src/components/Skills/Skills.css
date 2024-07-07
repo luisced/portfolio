@@ -51,3 +51,28 @@
 	font-size: 14px;
 	line-height: 20px;
 }
+
+@media only screen and (max-width: 1200px) {
+}
+
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+}
+
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+}
+
+/* Extra Small smartphones [320px and below] */
+@media only screen and (max-width: 320px) {
+}
+
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
+}
+
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
+}

@@ -1,4 +1,5 @@
 .navbar {
+	height: 5rem;
 	position: sticky;
 	top: 0;
 	display: flex;
@@ -47,7 +48,8 @@
 .navbar-links li a {
 	text-decoration: none;
 	color: var(--color-text);
-	font-size: 1.2rem;
+	font-size: 1.3rem;
+	font-weight: 600;
 	transition: color 0.3s;
 	display: flex;
 	padding: 0;
@@ -65,49 +67,8 @@
 	display: none;
 	cursor: pointer;
 	font-size: 2rem;
-	z-index: 11; /* Ensure it's above the overlay and navbar links */
+	z-index: 15; /* Ensure it's above the overlay and navbar links */
 	position: relative; /* Ensure it stays in the right place */
-}
-
-@media only screen and (max-width: 1200px) {
-	.navbar {
-		background-color: transparent;
-	}
-
-	.hamburger {
-		display: block; /* Show hamburger menu on tablets and smaller screens */
-	}
-
-	.navbar-links {
-		display: none; /* Hide links by default */
-		flex-direction: column;
-		width: 100%;
-		height: 100vh; /* Full height for the hamburger menu */
-		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
-		background-color: rgba(255, 255, 255, 0.1); /* Background color */
-		position: fixed;
-		top: 0; /* Start from the top */
-		left: 0;
-		padding: 10px 20px;
-		align-items: center;
-		justify-content: center;
-		z-index: 10; /* Ensure it's above the overlay */
-	}
-
-	.navbar-links.active {
-		display: flex; /* Show links when active */
-	}
-
-	.navbar-links li {
-		width: 100%;
-		margin: 25px 0; /* Add more margin for better spacing */
-		text-align: center;
-	}
-
-	.navbar-links li a {
-		color: var(--color-text); /* Explicitly set text color */
-		font-size: 1.5rem; /* Make link text bigger */
-	}
 }
 
 @media only screen and (max-width: 600px) {
@@ -125,7 +86,7 @@
 		width: 100%;
 		height: 100vh; /* Full height for the hamburger menu */
 		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
-		background-color: rgba(255, 255, 255, 0.1); /* Background color */
+		background-color: rgba(0, 0, 0, 0.7); /* Background color */
 		position: fixed;
 		top: 0; /* Start from the top */
 		left: 0;
@@ -166,7 +127,7 @@
 		width: 100%;
 		height: 100vh; /* Full height for the hamburger menu */
 		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
-		background-color: rgba(255, 255, 255, 0.1); /* Background color */
+		background-color: rgba(0, 0, 0, 0.7); /* Background color */
 		position: fixed;
 		top: 0; /* Start from the top */
 		left: 0;
