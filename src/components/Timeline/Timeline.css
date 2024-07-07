@@ -100,15 +100,256 @@
 .shape:hover {
 	background-color: var(--color-highlight);
 }
+/* Responsive Design */
 
-@media (max-width: 767px) {
-	.subline:before {
-		top: -30px;
+/* Tablets */
+
+@media only screen and (max-width: 1200px) {
+	.line-box {
+		flex-direction: column; /* Stack items vertically */
+		align-items: flex-start;
+		position: relative; /* Ensure .shape is positioned relative to .line-box */
+	}
+
+	.text-circle {
+		text-align: left;
+		padding-left: 40px; /* Adjust padding to make room for the shape */
+		position: relative; /* Ensure .shape is positioned relative to .text-circle */
+		margin: 0;
+	}
+
+	.text-circle:after,
+	.text-circle:not(:first-child):before {
+		left: 20px; /* Align with circle */
+		top: 50%; /* Center the line vertically */
+		transform: translateY(-50%); /* Adjusted position */
+		height: 100%;
+		width: 5px; /* Increased width */
+		background-color: var(--color-highlight);
+		z-index: -1;
+	}
+
+	/* First shape (top of the first line) */
+	.text-circle:first-child .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -75px; /* Align with the top of the text-circle */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+
+	/* Subsequent shapes (in the gap between lines) */
+	.text-circle:not(:first-child) .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -75px; /* Center in the gap between lines */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
 	}
 }
 
-@media (max-width: 480px) {
-	.subline:before {
-		top: -43px;
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+	.line-box {
+		flex-direction: column; /* Stack items vertically */
+		align-items: flex-start;
+		position: relative; /* Ensure .shape is positioned relative to .line-box */
 	}
+
+	.text-circle {
+		text-align: left;
+		padding-left: 40px; /* Adjust padding to make room for the shape */
+		position: relative; /* Ensure .shape is positioned relative to .text-circle */
+		margin: 0;
+	}
+
+	.text-circle:after,
+	.text-circle:not(:first-child):before {
+		left: 20px; /* Align with circle */
+		top: 50%; /* Center the line vertically */
+		transform: translateY(-50%); /* Adjusted position */
+		height: 100%;
+		width: 5px; /* Increased width */
+		background-color: var(--color-highlight);
+		z-index: -1;
+	}
+
+	/* First shape (top of the first line) */
+	.text-circle:first-child .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -100px; /* Align with the top of the text-circle */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+
+	/* Subsequent shapes (in the gap between lines) */
+	.text-circle:not(:first-child) .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -85px; /* Center in the gap between lines */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+}
+
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+	.line-box {
+		flex-direction: column; /* Stack items vertically */
+		align-items: flex-start;
+		position: relative; /* Ensure .shape is positioned relative to .line-box */
+	}
+
+	.text-circle {
+		text-align: left;
+		padding-left: 40px; /* Adjust padding to make room for the shape */
+		position: relative; /* Ensure .shape is positioned relative to .text-circle */
+		margin: 0;
+	}
+
+	.text-circle:after,
+	.text-circle:not(:first-child):before {
+		left: 20px; /* Align with circle */
+		top: 50%; /* Center the line vertically */
+		transform: translateY(-50%); /* Adjusted position */
+		height: 100%;
+		width: 5px; /* Increased width */
+		background-color: var(--color-highlight);
+		z-index: -1;
+	}
+
+	/* First shape (top of the first line) */
+	.text-circle:first-child .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -160px; /* Align with the top of the text-circle */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+
+	/* Subsequent shapes (in the gap between lines) */
+	.text-circle:not(:first-child) .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -155px; /* Center in the gap between lines */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+	.line-box {
+		flex-direction: column; /* Stack items vertically */
+		align-items: flex-start;
+		position: relative; /* Ensure .shape is positioned relative to .line-box */
+	}
+
+	.text-circle {
+		text-align: left;
+		padding-left: 40px; /* Adjust padding to make room for the shape */
+		position: relative; /* Ensure .shape is positioned relative to .text-circle */
+		margin: 0;
+	}
+
+	.text-circle:after,
+	.text-circle:not(:first-child):before {
+		left: 20px; /* Align with circle */
+		top: 50%; /* Center the line vertically */
+		transform: translateY(-50%); /* Adjusted position */
+		height: 100%;
+		width: 5px; /* Increased width */
+		background-color: var(--color-highlight);
+		z-index: -1;
+	}
+
+	/* First shape (top of the first line) */
+	.text-circle:first-child .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -160px; /* Align with the top of the text-circle */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+
+	/* Subsequent shapes (in the gap between lines) */
+	.text-circle:not(:first-child) .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -150px; /* Center in the gap between lines */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+}
+
+/* Extra Small smartphones [320px and below] */
+@media only screen and (max-width: 360px) {
+	.line-box {
+		flex-direction: column; /* Stack items vertically */
+		align-items: flex-start;
+		position: relative; /* Ensure .shape is positioned relative to .line-box */
+	}
+
+	.text-circle {
+		text-align: left;
+		padding-left: 40px; /* Adjust padding to make room for the shape */
+		position: relative; /* Ensure .shape is positioned relative to .text-circle */
+		margin: 0;
+	}
+
+	.text-circle:after,
+	.text-circle:not(:first-child):before {
+		left: 20px; /* Align with circle */
+		top: 50%; /* Center the line vertically */
+		transform: translateY(-50%); /* Adjusted position */
+		height: 100%;
+		width: 5px; /* Increased width */
+		background-color: var(--color-highlight);
+		z-index: -1;
+	}
+
+	/* First shape (top of the first line) */
+	.text-circle:first-child .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -180px; /* Align with the top of the text-circle */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+
+	/* Subsequent shapes (in the gap between lines) */
+	.text-circle:not(:first-child) .shape {
+		height: 40px; /* Reduced height */
+		width: 40px; /* Reduced width */
+		font-size: 20px; /* Reduced icon size */
+		left: -37px; /* Position in the gap between lines */
+		top: -155px; /* Center in the gap between lines */
+		transform: translateY(-50%); /* Center the circle */
+		position: absolute; /* Ensure it stays within the parent container */
+	}
+}
+
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
+}
+
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
 }

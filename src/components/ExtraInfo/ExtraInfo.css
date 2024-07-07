@@ -23,6 +23,7 @@
 	padding: 1rem; /* Increase padding inside items */
 	margin-bottom: 1rem;
 	border-radius: var(--border-radius);
+	background: var(--color-card-background);
 }
 
 .languages-and-busy h2 {
