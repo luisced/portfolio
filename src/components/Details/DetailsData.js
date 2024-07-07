@@ -6,27 +6,27 @@ export const timelineItems = [
 		info: {
 			title: "Zenco Mexico",
 			content:
-				"Delivered custom CRM solutions with Python, Flask, MySQL, and AWS. Implemented an automated data synchronization system, reducing manual data entry by 75% and boosting data accuracy. Collaborated with the development team to design a scalable and robust system architecture.",
+				"Delivered custom CRM solutions with Python, Flask, MySQL, and AWS. Implemented automated data sync, reducing manual entry by 75%. Designed scalable system architecture.",
 		},
 	},
 	{
 		title: "Freelance Developer",
 		date: "Jun 2022 - Nov 2022",
-		status: "",
+		status: "done",
 		info: {
 			title: "Freelance",
 			content:
-				"Developed and deployed a Twilio WhatsApp chatbot for Airbnb reservations, enhancing customer convenience and streamlining the booking process. Implemented an automated message tracking system, boosting operational efficiency.",
+				"Developed a Twilio WhatsApp chatbot for Airbnb bookings, enhancing customer convenience. Implemented automated message tracking.",
 		},
 	},
 	{
 		title: "Development Leader @ iOS Development Lab",
 		date: "Jan 2023 - Present",
-		status: "",
+		status: "done",
 		info: {
 			title: "iOS Development Lab",
 			content:
-				"Mentored junior developers, organized and managed projects using agile methodologies. Deployed and managed services like Mattermost, Wazuh, and self-hosted platforms.",
+				"Mentored junior developers and managed projects using agile methodologies. Deployed and managed services like Mattermost and Wazuh.",
 		},
 	},
 	{
@@ -36,7 +36,7 @@ export const timelineItems = [
 		info: {
 			title: "DermAware",
 			content:
-				"Led the full-stack development of a mobile app for dermatologic disease tracking. Integrated Apple's CO-ML model, optimizing the CI/CD pipeline using GitHub workflows and Docker.",
+				"Led development of a dermatologic disease tracking app. Integrated Apple's CO-ML model, optimized CI/CD with GitHub and Docker.",
 		},
 	},
 	{
@@ -46,7 +46,7 @@ export const timelineItems = [
 		info: {
 			title: "Homecare",
 			content:
-				"Designed and implemented a robust backend architecture for a platform serving over 15,000 students. Developed a scheduling feature using graph algorithms and created an interactive school map with React.",
+				"Designed backend architecture for a platform serving 15,000+ students. Developed scheduling feature using graph algorithms, and an interactive school map with React.",
 		},
 	},
 ];
@@ -141,30 +141,6 @@ export const databasesAndCloudSkills = [
 		color:
 			"linear-gradient(90deg, rgba(13,183,237,1) 26%, rgba(30,144,255,1) 59%)",
 		delay: 600,
-	},
-];
-
-export const experiences = [
-	{
-		role: "Development Leader",
-		company: "iOS Development Lab",
-		period: "2023 - Current",
-		description:
-			"Lead development teams and created mobile apps with SwiftUI and Django",
-	},
-	{
-		role: "Freelance Developer",
-		company: "",
-		period: "Jun 2022 - Nov 2022",
-		description:
-			"Developed and deployed Twilio WhatsApp chatbot to automate Airbnb guest bookings",
-	},
-	{
-		role: "Backend Developer",
-		company: "Zenco Mexico",
-		period: "2021-2022",
-		description:
-			"Delivered custom CRM solutions using Python, Flask, MySQL, and AWS",
 	},
 ];
 

@@ -10,7 +10,7 @@
 	--color-link-hover: #1ccabc;
 	--color-highlight: #29ae80;
 	--border-radius: 15px;
-	--box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	--box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	--max-width-content: 800px;
 	--font-size-large: 4rem;
 	--font-size-medium: 1.5rem;
@@ -18,6 +18,7 @@
 	--spacing-small: 1rem;
 	--spacing-medium: 2.5rem;
 	--spacing-large: 5.5rem;
+	--popup-background: rgb(31, 31, 31, 0.8);
 }
 
 * {

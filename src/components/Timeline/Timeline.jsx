@@ -2,6 +2,7 @@ import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
 import Popover from "../Popover/Popover";
 import "./Timeline.css";
+
 const Timeline = ({ items }) => {
 	return (
 		<div className="timeline-box">

@@ -1,12 +1,16 @@
 .timeline-box {
 	display: flex;
 	flex-direction: column;
-	margin: 40px 0;
+	margin: 70px 0;
+	padding: 20px;
+	background-color: var(--color-card-background);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
 }
 
 .line-box {
 	display: flex;
-	margin-bottom: 40px;
+	margin-bottom: 60px; /* Increased margin */
 }
 
 .text-circle {
@@ -16,11 +20,10 @@
 }
 
 .text-circle:after {
-	background-color: grey;
-	bottom: 1.25em;
+	bottom: 2em; /* Adjusted for larger size */
 	content: "";
 	display: block;
-	height: 3px;
+	height: 5px; /* Increased height */
 	position: absolute;
 	right: 0;
 	width: 50%;
@@ -28,32 +31,32 @@
 }
 
 .line-box h4 {
-	color: #189599;
+	color: var(--color-highlight);
 	font-weight: bold;
+	font-size: 20px; /* Increased font size */
 }
 
 .line-box h4,
 .line-box p {
-	font-size: 12px;
+	font-size: 18px; /* Increased font size */
 	margin-bottom: 0;
-	padding: 0 5px;
+	padding: 0 10px; /* Adjusted padding */
 }
 
 .text-circle.done:after,
 .text-circle.done + .text-circle:before {
-	background-color: #189599;
+	background-color: var(--color-highlight);
 }
 
 .text-circle:not(:first-child):before {
-	bottom: 1.25em;
+	bottom: 2em; /* Adjusted for larger size */
 	content: "";
 	display: block;
-	height: 3px;
+	height: 5px; /* Increased height */
 	position: absolute;
 	left: 0;
 	width: 50%;
 	z-index: -1;
-	background-color: grey;
 }
 
 .text-circle:last-child:after {
@@ -65,30 +68,35 @@
 }
 
 .shape {
-	height: 40px;
-	width: 40px;
-	border: 2px solid #189599;
+	height: 60px; /* Increased height */
+	width: 60px; /* Increased width */
+	border: 3px solid var(--color-highlight); /* Adjusted border */
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	position: relative;
 	border-radius: 50%;
-	top: -43px;
-	margin: 3px auto;
+	top: -65px;
+	margin: 5px auto; /* Adjusted margin */
 	background-color: #fff;
-	color: #189599;
+	color: var(--color-highlight);
+	font-size: 30px; /* Increased icon size */
 }
 
 .subline:before {
 	content: "";
 	position: absolute;
-	height: 15px;
-	width: 15px;
+	height: 20px; /* Increased size */
+	width: 20px; /* Increased size */
 	bottom: 14px;
 	right: 15px;
-	background-color: #189599;
+	background-color: var(--color-highlight);
 	border-radius: 50%;
 	top: -25px;
+}
+
+.shape:hover {
+	background-color: var(--color-highlight);
 }
 
 @media (max-width: 767px) {

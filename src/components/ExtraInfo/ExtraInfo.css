@@ -3,6 +3,7 @@
 	justify-content: space-between;
 	gap: var(--spacing-medium);
 	flex-wrap: wrap;
+	margin-top: var(--spacing-small);
 }
 
 .languages-and-busy section {
