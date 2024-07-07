@@ -3,34 +3,26 @@
 	position: sticky;
 	top: 0;
 	display: flex;
-	justify-content: space-between; /* Ensures space between the logo and links */
-	align-items: center; /* Aligns items vertically */
+	justify-content: space-between;
+	align-items: center;
 	padding: 10px 3.5vh;
-	background-color: rgba(
-		255,
-		255,
-		255,
-		0.1
-	); /* Slightly transparent background */
-	backdrop-filter: blur(10px); /* Acrylic effect */
+	background-color: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
 	color: var(--color-text);
 	font-family: var(--font-family-mono);
-	z-index: 10; /* Ensure navbar stays on top */
+	z-index: 10;
 }
 
 .navbar-links {
 	list-style: none;
 	display: flex;
-	align-items: center; /* Ensures the items are aligned vertically */
+	align-items: center;
 	margin: 0;
 	padding: 0;
 }
 
 .navbar-links li {
 	margin: 0 15px;
-	background-color: transparent;
-	box-shadow: none;
-	border: 0;
 }
 
 .navbar-links li a {
@@ -43,12 +35,9 @@
 	padding: 0;
 }
 
-.navbar-links li a:hover {
+.navbar-links li a:hover,
+.navbar-links li a:focus {
 	color: var(--color-link-hover);
-}
-
-.navbar-links li a:active {
-	background: none;
 }
 
 .hamburger {
@@ -59,84 +48,42 @@
 	position: relative;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px), only screen and (max-width: 425px) {
 	.navbar {
 		background-color: transparent;
 	}
 
 	.hamburger {
-		display: block; /* Show hamburger menu on big smartphones and smaller screens */
+		display: block;
 	}
 
 	.navbar-links {
-		display: none; /* Hide links by default */
+		display: none;
 		flex-direction: column;
 		width: 100%;
-		height: 100vh; /* Full height for the hamburger menu */
-		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
-		background-color: rgba(0, 0, 0, 0.7); /* Background color */
+		height: 100vh;
+		backdrop-filter: blur(10px) saturate(180%);
+		background-color: rgba(0, 0, 0, 0.7);
 		position: fixed;
-		top: 0; /* Start from the top */
+		top: 0;
 		left: 0;
 		padding: 10px 20px;
 		align-items: center;
 		justify-content: center;
-		z-index: 10; /* Ensure it's above the overlay */
+		z-index: 10;
 	}
 
 	.navbar-links.active {
-		display: flex; /* Show links when active */
+		display: flex;
 	}
 
 	.navbar-links li {
 		width: 100%;
-		margin: 25px 0; /* Add more margin for better spacing */
+		margin: 25px 0;
 		text-align: center;
 	}
 
 	.navbar-links li a {
-		color: var(--color-text); /* Explicitly set text color */
-		font-size: 1.5rem; /* Make link text bigger */
-	}
-}
-
-@media only screen and (max-width: 425px) {
-	.navbar {
-		background-color: transparent;
-	}
-
-	.hamburger {
-		display: block; /* Show hamburger menu on small smartphones */
-	}
-
-	.navbar-links {
-		display: none; /* Hide links by default */
-		flex-direction: column;
-		width: 100%;
-		height: 100vh; /* Full height for the hamburger menu */
-		backdrop-filter: blur(10px) saturate(180%); /* Acrylic effect */
-		background-color: rgba(0, 0, 0, 0.7); /* Background color */
-		position: fixed;
-		top: 0; /* Start from the top */
-		left: 0;
-		padding: 10px 20px;
-		align-items: center;
-		justify-content: center;
-		z-index: 10; /* Ensure it's above the overlay */
-	}
-
-	.navbar-links.active {
-		display: flex; /* Show links when active */
-	}
-
-	.navbar-links li {
-		width: 100%;
-		margin: 25px 0; /* Add more margin for better spacing */
-		text-align: center;
-	}
-
-	.navbar-links li a {
-		color: var(--color-text); /* Explicitly set text color */
-		font-size: 1.5rem; /* Make link text bigger */
+		font-size: 1.5rem;
 	}
 }
