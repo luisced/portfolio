@@ -18,18 +18,6 @@
 	z-index: 10; /* Ensure navbar stays on top */
 }
 
-.navbar.home .navbar-links li a {
-	color: var(--color-text);
-}
-
-.navbar.about .navbar-links li a {
-	color: var(--color-secondary-text);
-}
-
-.navbar.portfolio .navbar-links li a {
-	color: var(--color-secondary-text);
-}
-
 .navbar-links {
 	list-style: none;
 	display: flex;
@@ -60,15 +48,15 @@
 }
 
 .navbar-links li a:active {
-	background: none; /* Remove blue background on click */
+	background: none;
 }
 
 .hamburger {
 	display: none;
 	cursor: pointer;
 	font-size: 2rem;
-	z-index: 15; /* Ensure it's above the overlay and navbar links */
-	position: relative; /* Ensure it stays in the right place */
+	z-index: 15;
+	position: relative;
 }
 
 @media only screen and (max-width: 600px) {
