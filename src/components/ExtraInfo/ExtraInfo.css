@@ -9,9 +9,36 @@
 .languages-and-busy section {
 	flex: 1;
 	min-width: 250px;
+	padding: 1rem;
 }
 
 .languages-and-busy ul {
+	list-style: none;
 	width: 90%;
 	max-width: 400px;
+	padding: 0;
+}
+
+.languages-and-busy li {
+	padding: 1rem; /* Increase padding inside items */
+	margin-bottom: 1rem;
+	border-radius: var(--border-radius);
+}
+
+.languages-and-busy h2 {
+	font-size: 1.5rem; /* Consistent font size for headers */
+	margin-bottom: 1rem; /* Space below headers */
+	color: var(--color-highlight); /* Highlight color for headers */
+}
+
+.languages-and-busy p {
+	margin: 0;
+	font-size: 2rem;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+	.languages-and-busy {
+		flex-direction: column;
+	}
 }
