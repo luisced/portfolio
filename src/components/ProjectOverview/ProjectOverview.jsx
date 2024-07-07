@@ -6,27 +6,27 @@ import "./ProjectOverview.css";
 const defaultImages = [
 	// Image 1
 	{
-		y: [0, -250],
+		y: [0, -210],
 		x: [0, 0],
-		speed: 10,
+		speed: 20,
 	},
 	// Image 2
 	{
-		y: [50, -250],
+		y: [50, -200],
 		x: [0, 0],
-		speed: 10,
+		speed: 20,
 	},
 	// Image 3
 	{
-		y: [90, -250],
+		y: [90, -210],
 		x: [0, 0],
-		speed: -5,
+		speed: 5,
 	},
 	// Image 4
 	{
-		y: [100, -250],
+		y: [100, -190],
 		x: [0, 0],
-		speed: -9,
+		speed: 9,
 	},
 ];
 

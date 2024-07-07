@@ -1,3 +1,4 @@
+/* General Styles */
 .project-overview {
 	padding: 20px;
 	display: flex;
@@ -108,11 +109,13 @@
 @media (max-width: 1200px) {
 	.project-overview {
 		flex-direction: column;
+		height: auto; /* Adjust height for better responsiveness */
 	}
 
 	.project-content,
 	.project-images {
 		padding-right: 0;
+		margin-left: 0;
 	}
 
 	.project-images {
@@ -121,6 +124,48 @@
 
 	.parallax-image {
 		position: static; /* Reset to normal flow for mobile */
+		width: 100%; /* Full width */
 		margin: 10px 0;
+	}
+}
+
+@media (max-width: 768px) {
+	.project-header h2 {
+		font-size: 3rem;
+	}
+
+	.project-header h3 {
+		font-size: 2.5rem;
+	}
+
+	.project-details h4 {
+		font-size: 1.5rem;
+	}
+
+	.project-details p {
+		font-size: 1.2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.project-header h2 {
+		font-size: 2rem;
+	}
+
+	.project-header h3 {
+		font-size: 2rem;
+	}
+
+	.project-details h4 {
+		font-size: 1.2rem;
+	}
+
+	.project-details p {
+		font-size: 1rem;
+	}
+
+	.parallax-image {
+		width: 100%; /* Full width for smaller screens */
+		margin: 5px 0; /* Adjust margin for spacing */
 	}
 }

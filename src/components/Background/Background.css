@@ -1,0 +1,129 @@
+/* Background.css */
+
+/* Blob styles */
+.blob-1,
+.blob-2,
+.blob-3,
+.blob-4,
+.blob-5,
+.blob-6,
+.blob-7 {
+	content: "";
+	position: absolute;
+	border-radius: 8vw;
+	mix-blend-mode: lighten;
+	filter: blur(150px);
+}
+
+.blob-1 {
+	width: 880px;
+	height: 850px;
+	left: 800px;
+	top: 50px;
+	background: linear-gradient(120deg, #000a6b 0%, #000a6b 35%, #e8e6ff 100%);
+}
+
+.blob-2 {
+	width: 200px;
+	height: 200px;
+	background: linear-gradient(90deg, #000a6b 0%, #000a6b 35%, #000a6b 100%);
+	filter: blur(80px);
+	z-index: -2;
+}
+
+.blob-3 {
+	width: 500px;
+	height: 100px;
+	background: linear-gradient(90deg, #000a6b 0%, #000a6b 35%, #000a6b 100%);
+	filter: blur(80px);
+	z-index: -2;
+}
+
+.blob-4 {
+	width: 300px;
+	height: 300px;
+	background: linear-gradient(120deg, #800080 0%, #8a2be2 35%, #e8e6ff 100%);
+	filter: blur(100px);
+	z-index: -3;
+	left: 0;
+	bottom: 0;
+}
+
+.blob-5 {
+	width: 150px;
+	height: 150px;
+	background: linear-gradient(120deg, #ff69b4 0%, #ff1493 35%, #ffd700 100%);
+	filter: blur(70px);
+	z-index: -1;
+	pointer-events: none;
+}
+
+.blob-6 {
+	width: 200px;
+	height: 200px;
+	top: 20px;
+	left: 20px;
+	background: linear-gradient(120deg, #000a6b 0%, #000a6b 35%, #e8e6ff 100%);
+	filter: blur(80px);
+	z-index: -2;
+}
+
+.blob-7 {
+	width: 300px;
+	height: 300px;
+	background: linear-gradient(120deg, #00bfff 0%, #1e90ff 35%, #87cefa 100%);
+	filter: blur(100px);
+	z-index: -1;
+	pointer-events: none;
+	position: absolute;
+	right: 0%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.noise-bg,
+.anim-blobs {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+}
+
+.noise-bg {
+	background: url("https://thumbs.dreamstime.com/b/white-noise-background-effect-sound-effect-grain-distress-overlay-texture-your-design-grainy-gradient-background-145456887.jpg");
+	background-position: center;
+	background-size: 600px auto;
+	mix-blend-mode: screen;
+	opacity: 0.1;
+}
+
+/* Animation styles */
+.blob-1,
+.blob-2,
+.blob-3,
+.blob-4,
+.blob-6,
+.blob-7 {
+	animation: rotation 6s infinite, scale1 6s infinite;
+	animation-direction: alternate;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes scale1 {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(2);
+	}
+}
