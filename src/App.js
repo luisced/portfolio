@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import HappyMac from "./components/HappyMac/HappyMac";
 import Portfolio from "./components/Portfolio/Portfolio";
+import Contact from "./components/Contact/Contact";
 
 import "./App.css";
 
@@ -33,6 +34,7 @@ function App() {
 							}
 						/>
 						<Route path="/portfolio" element={<Portfolio />} />
+						<Route path="/contact" element={<Contact />} />
 					</Routes>
 				</div>
 			</Router>

@@ -48,7 +48,7 @@ const Navbar = () => {
 						</a>
 					</li>
 					<li>
-						<a href="#contact" style={{ color: linkColor }}>
+						<a href="/contact" style={{ color: linkColor }}>
 							.contact()
 						</a>
 					</li>
