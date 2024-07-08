@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     ports:
-      - "80:80" # Expose port 80 for production
+      - "8008:80" # Expose port 80 for production
     networks:
       - app_network
 
