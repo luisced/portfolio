@@ -6,30 +6,31 @@ import { FaBars, FaTimes } from "react-icons/fa";
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [linkColor, setLinkColor] = useState("var(--color-text)");
-	const [navbarBg, setNavbarBg] = useState("rgba(255, 255, 255, 0.1)");
+	const [iconColorClass, setIconColorClass] = useState("");
 
 	const location = useLocation();
 
 	useEffect(() => {
 		if (location.pathname === "/portfolio") {
 			setLinkColor("var(--color-secondary-text)");
-			setNavbarBg("rgba(31, 31, 31, 0.1)"); // Dark background for contrast
+			setIconColorClass("black-icon");
 		} else {
 			setLinkColor("var(--color-text)"); // Default color
-			setNavbarBg("background-color: rgba(255, 255, 255, 0.1)"); // Dark background for contrast
+			setIconColorClass("");
 		}
 	}, [location.pathname]);
 
 	const toggleNavbar = () => {
+		setLinkColor("var(--color-text)");
 		setIsOpen((prev) => !prev);
 	};
 
 	return (
 		<>
 			{isOpen && <div className="overlay" onClick={toggleNavbar}></div>}
-			<nav className="navbar" style={{ backgroundColor: navbarBg }}>
+			<nav className="navbar">
 				<div
-					className="hamburger"
+					className={`hamburger ${iconColorClass}`}
 					onClick={toggleNavbar}
 					aria-label={isOpen ? "Close menu" : "Open menu"}
 				>

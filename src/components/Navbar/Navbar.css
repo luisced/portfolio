@@ -48,9 +48,14 @@
 	position: relative;
 }
 
+.hamburger.black-icon svg {
+	color: black; /* Change the icon color to black */
+}
+
 @media only screen and (max-width: 600px), only screen and (max-width: 425px) {
 	.navbar {
 		background-color: transparent;
+		backdrop-filter: blur(0px);
 	}
 
 	.hamburger {
@@ -63,7 +68,7 @@
 		width: 100%;
 		height: 100vh;
 		backdrop-filter: blur(10px) saturate(180%);
-		background-color: rgba(0, 0, 0, 0.7);
+		background-color: rgba(0, 0, 0, 0.8);
 		position: fixed;
 		top: 0;
 		left: 0;
