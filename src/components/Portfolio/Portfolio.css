@@ -59,10 +59,10 @@
 	}
 
 	.project-wrapper {
+		height: 110vh;
 		padding: 0 1rem;
 	}
 }
-
 /* Screens up to 480px */
 @media (max-width: 480px) {
 	.portfolio-category {
@@ -73,6 +73,8 @@
 	}
 
 	.project-wrapper {
+		height: 110vh;
+
 		padding: 0 0.5rem;
 	}
 }

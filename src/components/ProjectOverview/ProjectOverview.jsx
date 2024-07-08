@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Parallax, ParallaxProvider } from "react-scroll-parallax";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import "./ProjectOverview.css";
 
 const defaultImages = [
@@ -38,10 +40,43 @@ const ProjectOverview = ({
 	category,
 	images,
 }) => {
+	const [isPortrait, setIsPortrait] = useState(false);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsPortrait(
+				window.innerWidth <= 1024 && window.innerHeight > window.innerWidth
+			);
+		};
+
+		handleResize(); // Check the initial window size
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
 	const adjustedImages = images.map((image, index) => ({
 		...defaultImages[index % defaultImages.length],
 		...image,
 	}));
+
+	const responsive = {
+		superLargeDesktop: {
+			breakpoint: { max: 4000, min: 3000 },
+			items: 5,
+		},
+		desktop: {
+			breakpoint: { max: 3000, min: 1024 },
+			items: 3,
+		},
+		tablet: {
+			breakpoint: { max: 1024, min: 464 },
+			items: 2,
+		},
+		mobile: {
+			breakpoint: { max: 464, min: 0 },
+			items: 1,
+		},
+	};
 
 	return (
 		<ParallaxProvider>
@@ -58,20 +93,33 @@ const ProjectOverview = ({
 					<div className="project-category">
 						<h4>{category}</h4>
 					</div>
+					{isPortrait && (
+						<div className="carousel-container">
+							<Carousel responsive={responsive}>
+								{adjustedImages.map((image, index) => (
+									<div key={index}>
+										<img src={image.src} alt={image.alt} />
+									</div>
+								))}
+							</Carousel>
+						</div>
+					)}
 				</div>
-				<div className="project-images">
-					{adjustedImages.map((image, index) => (
-						<Parallax
-							key={index}
-							className="parallax-image"
-							translateX={image.x}
-							translateY={image.y}
-							speed={image.speed}
-						>
-							<img src={image.src} alt={image.alt} />
-						</Parallax>
-					))}
-				</div>
+				{!isPortrait && (
+					<div className="project-images">
+						{adjustedImages.map((image, index) => (
+							<Parallax
+								key={index}
+								className="parallax-image"
+								translateX={image.x}
+								translateY={image.y}
+								speed={image.speed}
+							>
+								<img src={image.src} alt={image.alt} />
+							</Parallax>
+						))}
+					</div>
+				)}
 			</div>
 		</ParallaxProvider>
 	);

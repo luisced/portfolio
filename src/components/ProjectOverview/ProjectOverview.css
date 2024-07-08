@@ -6,12 +6,15 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	height: 85vh;
+	max-width: 100%; /* Ensure the container does not grow beyond the viewport */
 }
 
 .project-content {
 	flex: 1;
 	padding-right: 20px;
 	margin-left: 3rem;
+	max-width: 50%; /* Set a maximum width */
+	box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 .project-header {
@@ -62,6 +65,8 @@
 	flex: 1;
 	position: relative; /* Make this container a positioning context */
 	height: 500px; /* Adjust height as needed */
+	max-width: 50%; /* Set a maximum width */
+	box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 .parallax-image {
@@ -106,6 +111,65 @@
 }
 
 /* Adjust layout for responsiveness */
+@media (max-width: 1024px) and (orientation: portrait) {
+	.project-overview {
+		flex-direction: column;
+		align-items: center;
+		height: auto; /* Adjust height for better responsiveness */
+		padding-bottom: 50px; /* Add padding to create more space between projects */
+	}
+
+	.project-header {
+		display: flex;
+		flex-direction: row; /* Align h3 and h2 side by side */
+		align-items: center; /* Vertically center the items */
+	}
+
+	.project-header h2 {
+		font-size: 1.5rem;
+		margin: 0;
+		margin-left: 10px; /* Add space between h2 and h3 */
+		flex: none; /* Prevent flex-grow */
+	}
+
+	.project-header h3 {
+		font-size: 1.3rem;
+		margin: 0;
+		flex: none; /* Prevent flex-grow */
+	}
+
+	.project-details h4 {
+		font-size: 1rem;
+	}
+
+	.project-category h4 {
+		margin-top: 0;
+		font-size: 2rem;
+		font-weight: bold;
+		color: #333;
+	}
+
+	.project-details p {
+		font-size: 1.2rem;
+	}
+
+	.project-images {
+		display: none; /* Hide images on smaller screens */
+	}
+
+	.carousel-container {
+		width: 100%;
+		margin-top: 20px; /* Adjust spacing as needed */
+	}
+
+	.carousel-container img {
+		width: 150px; /* Adjust the width as needed */
+		height: auto;
+		margin: 0 auto;
+		display: block;
+	}
+}
+
 @media (max-width: 1200px) {
 	.project-overview {
 		flex-direction: column;
@@ -116,10 +180,12 @@
 	.project-images {
 		padding-right: 0;
 		margin-left: 0;
+		max-width: 100%;
 	}
 
 	.project-images {
 		height: auto; /* Adjust height for mobile layout */
+		padding-bottom: 15vh;
 	}
 
 	.parallax-image {
@@ -128,44 +194,114 @@
 		margin: 10px 0;
 	}
 }
-
 @media (max-width: 768px) {
+	/* align h3 and h2 on the same block */
+	.project-header {
+		display: flex;
+		flex-direction: row; /* Align h3 and h2 side by side */
+		align-items: center; /* Vertically center the items */
+	}
+
 	.project-header h2 {
-		font-size: 3rem;
-	}
-
-	.project-header h3 {
-		font-size: 2.5rem;
-	}
-
-	.project-details h4 {
 		font-size: 1.5rem;
-	}
-
-	.project-details p {
-		font-size: 1.2rem;
-	}
-}
-
-@media (max-width: 480px) {
-	.project-header h2 {
-		font-size: 2rem;
+		margin: 0;
+		margin-left: 10px; /* Add space between h2 and h3 */
+		flex: none; /* Prevent flex-grow */
 	}
 
 	.project-header h3 {
-		font-size: 2rem;
+		font-size: 1.3rem;
+		margin: 0;
+		flex: none; /* Prevent flex-grow */
 	}
 
 	.project-details h4 {
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 	}
 
 	.project-details p {
 		font-size: 1rem;
 	}
 
+	.project-images {
+		height: auto; /* Adjust height for mobile layout */
+	}
+}
+
+/* Landscape devices */
+
+@media (max-width: 1200px) and (orientation: landscape) {
+	.project-overview {
+		flex-direction: row;
+		height: 100vh;
+	}
+
+	.project-content {
+		max-width: 50%;
+	}
+
+	.project-header h2 {
+		font-size: 2.5rem;
+	}
+	.project-header h3 {
+		font-size: 1.5rem;
+	}
+
+	.project-details h4 {
+		font-size: 1.4rem;
+	}
+
+	.project-details p {
+		font-size: 1.2rem;
+	}
+
+	.project-category h4 {
+		margin: 0;
+		padding-top: 1rem;
+		font-size: 2.5rem;
+	}
+
+	.project-images {
+		max-width: 50%;
+	}
+
 	.parallax-image {
-		width: 100%; /* Full width for smaller screens */
-		margin: 5px 0; /* Adjust margin for spacing */
+		position: absolute;
+		width: 120px; /* Phone Size */
+		transition: transform 0.3s ease;
+	}
+
+	.parallax-image img {
+		width: 100%;
+		height: auto;
+		display: block;
+		width: 140px;
+	}
+
+	.parallax-image:nth-child(1) {
+		top: 90%;
+		left: 0;
+		z-index: 4;
+	}
+
+	.parallax-image:nth-child(2) {
+		top: 75%;
+		left: 40%;
+		width: 450px;
+		z-index: 3;
+	}
+
+	.parallax-image:nth-child(3) {
+		top: 100%;
+		left: 10%;
+		width: 250px;
+		z-index: 2;
+	}
+
+	.parallax-image:nth-child(4) {
+		top: 95%;
+		left: 45%;
+		width: 280px;
+		z-index: 1;
 	}
 }
