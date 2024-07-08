@@ -1,11 +1,12 @@
 version: "3.8"
 services:
   react-app:
+    container_name: portfolio-react-app
     build:
       context: .
       dockerfile: Dockerfile.prod
     ports:
-      - "8008:8008" # Expose port 8008 for production
+      - "8080:80"
     networks:
       - app_network
 
