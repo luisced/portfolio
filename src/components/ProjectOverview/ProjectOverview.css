@@ -229,7 +229,7 @@
 }
 
 /* Landscape devices */
-
+/* Landscape mode for iPad Air */
 @media (max-width: 1200px) and (orientation: landscape) {
 	.project-overview {
 		flex-direction: row;
@@ -243,6 +243,7 @@
 	.project-header h2 {
 		font-size: 2.5rem;
 	}
+
 	.project-header h3 {
 		font-size: 1.5rem;
 	}
@@ -267,7 +268,7 @@
 
 	.parallax-image {
 		position: absolute;
-		width: 120px; /* Phone Size */
+		width: 120px;
 		transition: transform 0.3s ease;
 	}
 
@@ -279,28 +280,105 @@
 	}
 
 	.parallax-image:nth-child(1) {
-		top: 90%;
-		left: 0;
+		top: 200%;
+		left: 15%;
 		z-index: 4;
 	}
 
 	.parallax-image:nth-child(2) {
-		top: 75%;
-		left: 40%;
+		top: 155%;
+		left: 60%;
 		width: 450px;
 		z-index: 3;
 	}
 
 	.parallax-image:nth-child(3) {
-		top: 100%;
-		left: 10%;
+		top: 225%;
+		left: 25%;
 		width: 250px;
 		z-index: 2;
 	}
 
 	.parallax-image:nth-child(4) {
-		top: 95%;
-		left: 45%;
+		top: 215%;
+		left: 65%;
+		width: 280px;
+		z-index: 1;
+	}
+}
+
+/* Landscape mode for iPad Pro */
+@media (min-width: 1201px) and (max-width: 1400px) and (orientation: landscape) {
+	.project-overview {
+		flex-direction: row;
+		height: 100vh;
+	}
+
+	.project-content {
+		max-width: 50%;
+	}
+
+	.project-header h2 {
+		font-size: 3rem;
+	}
+
+	.project-header h3 {
+		font-size: 1.7rem;
+	}
+
+	.project-details h4 {
+		font-size: 1.4rem;
+	}
+
+	.project-details p {
+		font-size: 1.5rem;
+	}
+
+	.project-category h4 {
+		margin: 0;
+		padding-top: 1rem;
+		font-size: 2.5rem;
+	}
+
+	.project-images {
+		max-width: 50%;
+	}
+
+	.parallax-image {
+		position: absolute;
+		transition: transform 0.3s ease;
+	}
+
+	.parallax-image img {
+		width: 100%;
+		height: auto;
+		display: block;
+		width: 180px;
+	}
+
+	.parallax-image:nth-child(1) {
+		top: 75%;
+		left: 15%;
+		z-index: 4;
+	}
+
+	.parallax-image:nth-child(2) {
+		top: 70%;
+		left: 60%;
+		width: 450px;
+		z-index: 3;
+	}
+
+	.parallax-image:nth-child(3) {
+		top: 80%;
+		left: 20%;
+		width: 250px;
+		z-index: 2;
+	}
+
+	.parallax-image:nth-child(4) {
+		top: 85%;
+		left: 65%;
 		width: 280px;
 		z-index: 1;
 	}
