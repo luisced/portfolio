@@ -1,0 +1,32 @@
+# Stage 1: Build the React application
+FROM node:16-alpine AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json yarn.lock* ./
+
+# Install dependencies
+RUN npm install react-helmet react-router-dom axios react-multi-carousel @splinetool/react-spline@latest react-icons react-scroll-parallax react-typical @splinetool/runtime@latest @lottiefiles/dotlottie-react  --save --legacy-peer-deps
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the React application
+RUN npm run build
+
+# Stage 2: Serve the application with nginx
+FROM nginx:alpine
+
+# Copy the build output to the nginx html directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy the nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Command to run nginx
+CMD ["nginx", "-g", "daemon off;"]
