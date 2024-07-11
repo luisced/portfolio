@@ -107,7 +107,9 @@ const ContactForm = () => {
 								required
 							></textarea>
 						</label>
-						<button type="submit">Send</button>
+						<button type="submit" arial-label="Send">
+							Send
+						</button>
 					</form>
 				</div>
 				{!isMobile && (

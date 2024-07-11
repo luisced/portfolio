@@ -22,12 +22,11 @@ FROM nginx:alpine
 # Copy the build output to the Nginx html directory
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Copy a custom Nginx configuration file
+# Copy the main Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy SSL certificates (ensure they exist in the build context)
-COPY luiscedillo.com.pem /etc/ssl/luiscedillo.com.pem
-COPY luiscedillo.com.key /etc/ssl/luiscedillo.com.key
+# Copy the server configuration file
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Expose the ports the app runs on
 EXPOSE 80

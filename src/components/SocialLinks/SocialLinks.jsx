@@ -40,6 +40,7 @@ const SocialLinks = () => {
 				onClick={handleDownloadCV}
 				title="Download my CV"
 				className="download-cv"
+				aria-label="Download my CV"
 			>
 				Download my CV <FaDownload />
 			</button>

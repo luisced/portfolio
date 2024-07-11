@@ -15,7 +15,7 @@ const Timeline = ({ items }) => {
 						</div>
 						{item.info && (
 							<Popover title={item.info.title} content={item.info.content}>
-								<button className="shape">
+								<button className="shape" aria-label="More info">
 									<FaInfoCircle />
 								</button>
 							</Popover>

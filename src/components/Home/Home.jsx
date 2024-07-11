@@ -31,14 +31,14 @@ const Home = ({ presentationOpacity }) => {
 		<div className="home" id="home">
 			<div className="presentation" style={{ opacity: presentationOpacity }}>
 				<h1 className="name">Luis Cedillo Maldonado</h1>
-				<h3 className="description">
+				<h2 className="description">
 					<FaTerminal />
 					<Typical
 						steps={[" Backend Developer and Frontend Enthusiast.", 90]}
 						loop={1}
 						wrapper="span"
 					/>
-				</h3>
+				</h2>
 				<div className="glassbox">
 					<p className="bio">
 						I am Luis Cedillo Maldonado, a backend developer and frontend
@@ -49,7 +49,11 @@ const Home = ({ presentationOpacity }) => {
 						Data Intelligence and Cybersecurity.
 					</p>
 				</div>
-				<button className="about-me" onClick={scrollToAbout}>
+				<button
+					className="about-me"
+					onClick={scrollToAbout}
+					aria-label="About Me"
+				>
 					ABOUT ME
 				</button>
 				<div className="noise-bg"></div>

@@ -4,12 +4,24 @@ services:
     container_name: portfolio-react-app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./certificates:/etc/nginx/certificates
+      - ./nginx.conf:/etc/nginx/nginx.conf
     networks:
       - app_network
+  cloudflared:
+    image: cloudflare/cloudflared
+    container_name: cloudflare-tunnel
+    restart: unless-stopped
+    command: tunnel run
+    depends_on:
+      - react-app
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiNjdjZTAxMDRiOWY4YjAxMzhiMWVhMWRlNDhhOGViNGQiLCJ0IjoiODBkZjVkMTgtYWFhNy00ZDc4LWE1MTAtODc5MTRjZDNjNjNkIiwicyI6IlptVTJZMkptT1dZdFpqQXhaQzAwTVdRMExXRXdOVGd0Wm1abVlUZ3dZV1pqT1dObSJ9
 
 networks:
   app_network:
