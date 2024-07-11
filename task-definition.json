@@ -1,0 +1,23 @@
+{
+    "family": "luisced-portfolio",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "name": "web",
+            "image": "430032500926.dkr.ecr.us-east-2.amazonaws.com/portfolio:latest",
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}

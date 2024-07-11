@@ -1,37 +1,37 @@
-# Use an official Node.js runtime as a parent image
+# Stage 1: Build the React application
 FROM node:16-alpine AS build
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock)
+# Copy package.json and yarn.lock separately to leverage Docker cache
 COPY package*.json yarn.lock* ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
-# Install additional dependencies using --legacy-peer-deps
-RUN npm install react-helmet react-router-dom axios react-multi-carousel @splinetool/react-spline@latest react-icons react-scroll-parallax react-typical @splinetool/runtime@latest @lottiefiles/dotlottie-react  --save --legacy-peer-deps
-
-# Copy the rest of the application
+# Copy the rest of the application code
 COPY . .
 
-# Build the application
+# Build the React application
 RUN npm run build
 
-# Production image
-FROM node:16-alpine
+# Stage 2: Serve the application with Nginx
+FROM nginx:alpine
 
-# Set the working directory in the container
-WORKDIR /app
+# Copy the build output to the Nginx html directory
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Copy only the build output from the build stage
-COPY --from=build /app/build /app/build
-COPY --from=build /app/package.json /app/package.json
-COPY --from=build /app/node_modules /app/node_modules
+# Copy a custom Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Copy SSL certificates (ensure they exist in the build context)
+COPY luiscedillo.com.pem /etc/ssl/luiscedillo.com.pem
+COPY luiscedillo.com.key /etc/ssl/luiscedillo.com.key
 
-# Define the command to run the app using npm start
-CMD ["npm", "start"]
+# Expose the ports the app runs on
+EXPOSE 80
+EXPOSE 443
+
+# Command to run Nginx
+CMD ["nginx", "-g", "daemon off;"]
