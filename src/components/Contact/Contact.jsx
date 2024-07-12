@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { Turnstile } from "@marsidev/react-turnstile";
 import "./Contact.css";
 import Background from "../Background/Background";
 
@@ -11,9 +12,15 @@ const ContactForm = () => {
 		subject: "",
 		message: "",
 	});
-
+	const [turnstileToken, setTurnstileToken] = useState("");
 	const [status, setStatus] = useState("");
 	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+
+	useEffect(() => {
+		const handleResize = () => setIsMobile(window.innerWidth <= 1024);
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -22,8 +29,40 @@ const ContactForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (
+			!formData.name ||
+			!formData.email ||
+			!formData.subject ||
+			!formData.message
+		) {
+			setStatus("All fields are required.");
+			return;
+		}
+
+		if (!turnstileToken) {
+			setStatus("Please complete the Turnstile challenge.");
+			return;
+		}
+
+		const sanitizedData = {
+			name: formData.name.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+			email: formData.email.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+			subject: formData.subject.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+			message: formData.message.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+			"cf-turnstile-response": turnstileToken,
+		};
+
 		try {
-			await axios.post("/api/contact", formData);
+			await axios.post(
+				"https://mail.luishomeserver.com/api/contact",
+				sanitizedData,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
 			setStatus("Message sent successfully!");
 			setFormData({
 				name: "",
@@ -31,33 +70,11 @@ const ContactForm = () => {
 				subject: "",
 				message: "",
 			});
+			setTurnstileToken("");
 		} catch (error) {
 			setStatus("There was an error sending your message. Please try again.");
 		}
 	};
-
-	useEffect(() => {
-		const handleResize = () => {
-			setIsMobile(window.innerWidth <= 1024);
-		};
-
-		window.addEventListener("resize", handleResize);
-
-		const mouseBlob = document.getElementById("mouse-blob");
-		const handleMouseMove = (e) => {
-			const offsetX = mouseBlob.offsetWidth / 2;
-			const offsetY = mouseBlob.offsetHeight / 2;
-			mouseBlob.style.left = `${e.clientX - offsetX}px`;
-			mouseBlob.style.top = `${e.clientY - offsetY}px`;
-		};
-
-		document.addEventListener("mousemove", handleMouseMove);
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-			document.removeEventListener("mousemove", handleMouseMove);
-		};
-	}, []);
 
 	return (
 		<>
@@ -76,6 +93,7 @@ const ContactForm = () => {
 								value={formData.name}
 								onChange={handleChange}
 								required
+								aria-label="Name"
 							/>
 						</label>
 						<label htmlFor="email">
@@ -87,6 +105,7 @@ const ContactForm = () => {
 								value={formData.email}
 								onChange={handleChange}
 								required
+								aria-label="Email"
 							/>
 						</label>
 						<label htmlFor="subject">
@@ -97,6 +116,7 @@ const ContactForm = () => {
 								name="subject"
 								value={formData.subject}
 								onChange={handleChange}
+								aria-label="Subject"
 							/>
 						</label>
 						<label htmlFor="message">
@@ -107,9 +127,14 @@ const ContactForm = () => {
 								value={formData.message}
 								onChange={handleChange}
 								required
+								aria-label="Message"
 							></textarea>
 						</label>
-						<button type="submit" arial-label="Send">
+						<Turnstile
+							siteKey={process.env.REACT_APP_TURNSTILE_SITE_KEY}
+							onSuccess={(token) => setTurnstileToken(token)}
+						/>
+						<button type="submit" aria-label="Send">
 							Send
 						</button>
 					</form>

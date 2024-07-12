@@ -73,7 +73,7 @@
 	opacity: 0;
 	will-change: opacity;
 	animation: fade-in 1s forwards;
-	animation-delay: 3s;
+	animation-delay: 2.5s;
 	transform: translateZ(0);
 }
 
@@ -185,7 +185,12 @@
 	.name {
 		padding: 2vh 0 0 0;
 		font-size: 2.3rem;
+		margin-top: 2vh;
 		margin-bottom: 1rem;
+	}
+
+	.spline-container {
+		animation: none;
 	}
 }
 
@@ -222,12 +227,10 @@
 		padding: 0;
 	}
 
-	.about-me {
-		display: none;
-	}
-
 	.spline-container {
 		width: 100%;
+		margin-top: 2vh;
+
 		padding: 10vh 0 10vh 0;
 	}
 }
@@ -264,12 +267,9 @@
 		padding: 0;
 	}
 
-	.about-me {
-		display: none;
-	}
-
 	.spline-container {
 		width: 100%;
+		margin-top: 2vh;
 		padding: 10vh 0 10vh 0;
 	}
 }
@@ -306,14 +306,11 @@
 		padding: 0;
 	}
 
-	.about-me {
-		display: none;
-	}
-
 	.spline-container {
-		width: 120%;
-		height: 50vh;
+		width: 100%;
 		padding: 10vh 0 10vh 0;
+		margin-top: 2vh;
+		animation: none;
 	}
 }
 
@@ -349,13 +346,11 @@
 		padding: 0;
 	}
 
-	.about-me {
-		display: none;
-	}
-
 	.spline-container {
 		width: 100%;
+		margin-top: 2vh;
 		padding: 10vh 0 10vh 0;
+		animation: none;
 	}
 }
 
@@ -391,83 +386,33 @@
 		padding: 0;
 	}
 
-	.about-me {
-		display: none;
-	}
-
 	.spline-container {
 		width: 100%;
+		margin-top: 2vh;
 		padding: 10vh 0 10vh 0;
+		animation: none;
 	}
 }
 
 /* iPad Air Landscape [1180px -> 820px] */
 
-@media only screen and (max-width: 1200px) and (orientation: landscape) {
-	.home {
-		height: auto;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.presentation {
-		flex: 1;
-		color: white;
-		text-align: center;
-	}
-
-	.name {
-		padding: 0;
-		font-size: 3rem;
-	}
-	.glassbox {
-		width: 85%;
-		height: auto;
-		margin: 4vh auto;
-		padding: 15px;
-		justify-content: center;
-	}
-
-	.description {
-		font-size: 1.2rem;
-	}
-	.about-me {
-		display: inline-block;
-		text-align: center;
-		font-size: 1.5rem;
-	}
-
-	.spline-container {
-		flex: 1;
-		height: 100vh; /* Full height for iPad in landscape */
-		width: 80vh;
-	}
-}
-
-/* Big Tablets */
-
 @media only screen and (max-width: 1400px) and (orientation: landscape) {
 	.home {
-		height: auto;
-		display: flex;
 		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 4vh;
-	}
-
-	.presentation {
-		flex: 1;
-		color: white;
-		text-align: center;
+		height: auto;
 	}
 
 	.name {
-		padding: 0;
-		font-size: 3rem;
+		padding: 2vh 0 0 0;
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
 	}
+
+	.description {
+		font-size: var(--responsive-font-size-small);
+		margin-bottom: 2rem;
+	}
+
 	.glassbox {
 		width: 85%;
 		height: auto;
@@ -476,17 +421,15 @@
 		justify-content: center;
 	}
 
-	.description {
-		font-size: 1.2rem;
+	.bio {
+		font-size: var(--responsive-font-size-small);
+		margin: 0;
+		padding: 0;
 	}
-	.about-me {
-		display: inline-block;
-		text-align: center;
-		font-size: 1.5rem;
-	}
+
 	.spline-container {
-		flex: 1;
-		height: 120vh; /* Full height for iPad in landscape */
-		width: 80vh;
+		width: 100%;
+		margin-top: 2vh;
+		padding: 10vh 0 10vh 0;
 	}
 }
