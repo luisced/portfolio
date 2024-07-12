@@ -22,6 +22,7 @@
 	position: relative;
 	overflow: hidden;
 }
+
 .name {
 	flex: 1;
 	padding-top: 8vh;

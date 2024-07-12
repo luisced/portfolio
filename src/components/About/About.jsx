@@ -3,6 +3,8 @@ import "./About.css";
 import { FaArrowDown } from "react-icons/fa";
 import Intro from "../Intro/Intro";
 import Details from "../Details/Details";
+import Loading from "../Loading/Loading";
+const HappyMac = React.lazy(() => import("../HappyMac/HappyMac"));
 
 const About = () => {
 	return (
@@ -16,6 +18,9 @@ const About = () => {
 				<Details />
 			</div>
 			<ScrollCta />
+			<React.Suspense fallback={<Loading />}>
+				<HappyMac />
+			</React.Suspense>
 		</>
 	);
 };

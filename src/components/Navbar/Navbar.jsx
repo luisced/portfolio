@@ -43,6 +43,11 @@ const Navbar = () => {
 						</a>
 					</li>
 					<li>
+						<a href="/about" style={{ color: linkColor }}>
+							.about()
+						</a>
+					</li>
+					<li>
 						<a href="/portfolio" style={{ color: linkColor }}>
 							.portfolio()
 						</a>

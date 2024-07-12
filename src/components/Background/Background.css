@@ -1,4 +1,12 @@
-/* Background.css */
+.background-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: #000; /* Ensure the background is black */
+	z-index: -1;
+}
 
 /* Blob styles */
 .blob-1,
@@ -81,17 +89,13 @@
 	transform: translateY(-50%);
 }
 
-.noise-bg,
-.anim-blobs {
+.noise-bg {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100vw;
 	height: 100vh;
 	z-index: -1;
-}
-
-.noise-bg {
 	background: url("https://thumbs.dreamstime.com/b/white-noise-background-effect-sound-effect-grain-distress-overlay-texture-your-design-grainy-gradient-background-145456887.jpg");
 	background-position: center;
 	background-size: 600px auto;

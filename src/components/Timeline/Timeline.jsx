@@ -10,7 +10,7 @@ const Timeline = ({ items }) => {
 				{items.map((item, index) => (
 					<div key={index} className={`text-circle ${item.status}`}>
 						<div className="circle">
-							<h4>{item.title}</h4>
+							<h3>{item.title}</h3>
 							<p>{item.date}</p>
 						</div>
 						{item.info && (

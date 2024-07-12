@@ -22,7 +22,13 @@ const Intro = () => (
 				<br /># Development Leader @ iOS Development Lab
 			</p>
 		</div>
-		<img src={profilePic} alt="Luis Cedillo" className="profile-pic" />
+		<img
+			src={profilePic}
+			alt="Luis Cedillo"
+			className="profile-pic"
+			width="550"
+			height="550"
+		/>
 	</div>
 );
 

@@ -1,15 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense, useCallback, useMemo } from "react";
 import Typical from "react-typical";
 import { FaTerminal } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Background from "../Background/Background"; // Import the Background component
 import "./Home.css";
-import Spline from "@splinetool/react-spline";
+
+const Spline = lazy(() => import("@splinetool/react-spline"));
+
+// Debounce function outside the component
+const debounce = (func, delay) => {
+	let inDebounce;
+	return function () {
+		const context = this;
+		const args = arguments;
+		clearTimeout(inDebounce);
+		inDebounce = setTimeout(() => func.apply(context, args), delay);
+	};
+};
 
 const Home = ({ presentationOpacity }) => {
-	const scrollToAbout = () => {
-		document
-			.getElementById("app-window")
-			.scrollIntoView({ behavior: "smooth" });
-	};
+	const navigate = useNavigate();
+
+	const goToAbout = useCallback(() => {
+		navigate("/about");
+	}, [navigate]);
 
 	useEffect(() => {
 		const mouseBlob = document.getElementById("mouse-blob");
@@ -20,24 +34,28 @@ const Home = ({ presentationOpacity }) => {
 			mouseBlob.style.top = `${e.clientY - offsetY}px`;
 		};
 
-		document.addEventListener("mousemove", handleMouseMove);
+		const debouncedHandleMouseMove = debounce(handleMouseMove, 10);
+
+		document.addEventListener("mousemove", debouncedHandleMouseMove);
 
 		return () => {
-			document.removeEventListener("mousemove", handleMouseMove);
+			document.removeEventListener("mousemove", debouncedHandleMouseMove);
 		};
 	}, []);
 
+	const steps = useMemo(
+		() => [" Backend Developer and Frontend Enthusiast.", 90],
+		[]
+	);
+
 	return (
 		<div className="home" id="home">
+			<Background /> {/* Include the Background component */}
 			<div className="presentation" style={{ opacity: presentationOpacity }}>
 				<h1 className="name">Luis Cedillo Maldonado</h1>
 				<h2 className="description">
 					<FaTerminal />
-					<Typical
-						steps={[" Backend Developer and Frontend Enthusiast.", 90]}
-						loop={1}
-						wrapper="span"
-					/>
+					<Typical steps={steps} loop={1} wrapper="span" />
 				</h2>
 				<div className="glassbox">
 					<p className="bio">
@@ -49,25 +67,14 @@ const Home = ({ presentationOpacity }) => {
 						Data Intelligence and Cybersecurity.
 					</p>
 				</div>
-				<button
-					className="about-me"
-					onClick={scrollToAbout}
-					aria-label="About Me"
-				>
+				<button className="about-me" onClick={goToAbout} aria-label="About Me">
 					ABOUT ME
 				</button>
-				<div className="noise-bg"></div>
-				<div className="anim-blobs">
-					<div className="blob-2"></div>
-					<div className="blob-3"></div>
-					<div className="blob-4"></div>
-					<div className="blob-5" id="mouse-blob"></div>
-					<div className="blob-6"></div>
-					<div className="blob-7"></div>
-				</div>
 			</div>
 			<div className="spline-container">
-				<Spline scene="https://prod.spline.design/teYlWA7w9rFfaaLK/scene.splinecode" />
+				<Suspense fallback={<div className="loading">Loading...</div>}>
+					<Spline scene="https://prod.spline.design/teYlWA7w9rFfaaLK/scene.splinecode" />
+				</Suspense>
 			</div>
 		</div>
 	);

@@ -44,14 +44,9 @@ const Portfolio = () => {
 						/>
 					</div>
 				))}
-				<MobilePortfolioExperience />
 			</section>
 		</div>
 	);
-};
-
-const MobilePortfolioExperience = () => {
-	return <div className="mobile-experience">Hello</div>;
 };
 
 export default Portfolio;

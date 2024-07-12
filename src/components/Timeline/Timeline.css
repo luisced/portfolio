@@ -31,13 +31,13 @@
 	background-color: grey;
 }
 
-.line-box h4 {
+.line-box h3 {
 	color: var(--color-highlight);
 	font-weight: bold;
 	font-size: 20px; /* Increased font size */
 }
 
-.line-box h4,
+.line-box h3,
 .line-box p {
 	font-size: 18px; /* Increased font size */
 	margin-bottom: 0;
