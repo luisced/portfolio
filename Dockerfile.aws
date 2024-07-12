@@ -37,9 +37,6 @@ RUN wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/c
 EXPOSE 80
 EXPOSE 443
 
-# Environment variables for Cloudflared
-ENV TUNNEL_TOKEN=eyJhIjoiNjdjZTAxMDRiOWY4YjAxMzhiMWVhMWRlNDhhOGViNGQiLCJ0IjoiODBkZjVkMTgtYWFhNy00ZDc4LWE1MTAtODc5MTRjZDNjNjNkIiwicyI6IlptVTJZMkptT1dZdFpqQXhaQzAwTVdRMExXRXdOVGd0Wm1abVlUZ3dZV1pqT1dObSJ9
-ENV NO_AUTOUPDATE=true
 
 # Command to run Nginx and Cloudflared
 CMD ["sh", "-c", "nginx -g 'daemon off;' & cloudflared tunnel run --token $TUNNEL_TOKEN"]
