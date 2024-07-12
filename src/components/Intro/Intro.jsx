@@ -11,12 +11,12 @@ const Intro = () => (
 			</h1>
 			<SocialLinks />
 			<p className="experience-description">
-				I am Luis Cedillo Maldonado, a backend developer and frontend enthusiast
-				from Mexico City. I specialize in custom CRM solutions and Twilio
-				WhatsApp chatbots. Currently, I lead at the iOS Development Lab at
-				Universidad Panamericana, where I mentor junior developers and manage
-				agile projects. I am also pursuing a degree in Data Intelligence and
-				Cybersecurity.
+				I am a backend developer with experience in creating custom CRM
+				solutions, implementing automated systems, and leading development
+				teams. My work includes developing chatbots, managing iOS development
+				projects, and designing scalable backend architectures. I have a strong
+				foundation in Python, Flask, Django, and AWS, and I am passionate about
+				improving operational efficiency and data accuracy.
 			</p>
 			<p>
 				<br /># Development Leader @ iOS Development Lab
