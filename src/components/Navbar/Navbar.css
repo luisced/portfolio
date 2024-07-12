@@ -27,7 +27,6 @@
 
 .navbar-links li a {
 	text-decoration: none;
-	color: var(--color-text);
 	font-size: 1.3rem;
 	font-weight: 600;
 	transition: color 0.3s;
@@ -35,9 +34,20 @@
 	padding: 0;
 }
 
-.navbar-links li a:hover,
-.navbar-links li a:focus {
-	color: var(--color-link-hover);
+.default-link {
+	color: var(--color-text);
+}
+
+.default-link:hover {
+	color: var(--color-highlight);
+}
+
+.portfolio-link {
+	color: var(--color-secondary-text);
+}
+
+.portfolio-link:hover {
+	color: var(--color-secondary-highlight);
 }
 
 .hamburger {
@@ -53,11 +63,6 @@
 }
 
 @media only screen and (max-width: 600px), only screen and (max-width: 425px) {
-	.navbar {
-		background-color: transparent;
-		backdrop-filter: blur(0px);
-	}
-
 	.hamburger {
 		display: block;
 	}

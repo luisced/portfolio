@@ -1,22 +1,11 @@
-import React, { useEffect, lazy, Suspense, useCallback, useMemo } from "react";
+import React, { lazy, Suspense, useCallback, useMemo } from "react";
 import Typical from "react-typical";
 import { FaTerminal } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Background from "../Background/Background"; // Import the Background component
+import Background from "../Background/Background";
 import "./Home.css";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
-
-// Debounce function outside the component
-const debounce = (func, delay) => {
-	let inDebounce;
-	return function () {
-		const context = this;
-		const args = arguments;
-		clearTimeout(inDebounce);
-		inDebounce = setTimeout(() => func.apply(context, args), delay);
-	};
-};
 
 const Home = ({ presentationOpacity }) => {
 	const navigate = useNavigate();
@@ -24,24 +13,6 @@ const Home = ({ presentationOpacity }) => {
 	const goToAbout = useCallback(() => {
 		navigate("/about");
 	}, [navigate]);
-
-	useEffect(() => {
-		const mouseBlob = document.getElementById("mouse-blob");
-		const handleMouseMove = (e) => {
-			const offsetX = mouseBlob.offsetWidth / 2;
-			const offsetY = mouseBlob.offsetHeight / 2;
-			mouseBlob.style.left = `${e.clientX - offsetX}px`;
-			mouseBlob.style.top = `${e.clientY - offsetY}px`;
-		};
-
-		const debouncedHandleMouseMove = debounce(handleMouseMove, 10);
-
-		document.addEventListener("mousemove", debouncedHandleMouseMove);
-
-		return () => {
-			document.removeEventListener("mousemove", debouncedHandleMouseMove);
-		};
-	}, []);
 
 	const steps = useMemo(
 		() => [" Backend Developer and Frontend Enthusiast.", 90],

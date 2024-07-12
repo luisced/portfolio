@@ -61,7 +61,7 @@ export const backendSkills = [
 	},
 	{
 		name: "C++",
-		percent: 50,
+		percent: 40,
 		color:
 			"linear-gradient(90deg, rgba(180,108,215,1) 44%, rgba(20,117,218,1) 81%)",
 		delay: 200,
@@ -75,7 +75,7 @@ export const backendSkills = [
 	},
 	{
 		name: "Bash",
-		percent: 40,
+		percent: 50,
 		color:
 			"linear-gradient(90deg, rgba(46,139,87,1) 26%, rgba(60,179,113,1) 59%)",
 		delay: 600,

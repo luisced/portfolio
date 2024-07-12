@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import "./Contact.css";
+import Background from "../Background/Background";
 
 const ContactForm = () => {
 	const [formData, setFormData] = useState({
@@ -60,6 +61,7 @@ const ContactForm = () => {
 
 	return (
 		<>
+			<Background />
 			<div className="contact-form-container">
 				<div className="contact-form-column">
 					<h2>Contact Me</h2>
@@ -122,15 +124,6 @@ const ContactForm = () => {
 						/>
 					</div>
 				)}
-			</div>
-			<div className="noise-bg"></div>
-			<div className="anim-blobs">
-				<div className="blob-2"></div>
-				<div className="blob-3"></div>
-				<div className="blob-4"></div>
-				<div className="blob-5" id="mouse-blob"></div>
-				<div className="blob-6"></div>
-				<div className="blob-7"></div>
 			</div>
 		</>
 	);

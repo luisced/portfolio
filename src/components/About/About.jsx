@@ -4,11 +4,13 @@ import { FaArrowDown } from "react-icons/fa";
 import Intro from "../Intro/Intro";
 import Details from "../Details/Details";
 import Loading from "../Loading/Loading";
+import Background from "../Background/Background";
 const HappyMac = React.lazy(() => import("../HappyMac/HappyMac"));
 
 const About = () => {
 	return (
 		<>
+			<Background />
 			<div className="app-window" id="app-window">
 				<div className="header">
 					<div className="menu-circle"></div>
@@ -19,7 +21,9 @@ const About = () => {
 			</div>
 			<ScrollCta />
 			<React.Suspense fallback={<Loading />}>
-				<HappyMac />
+				<section id="happy-mac">
+					<HappyMac />
+				</section>
 			</React.Suspense>
 		</>
 	);

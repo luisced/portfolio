@@ -1,18 +1,18 @@
 // src/data/projectData.js
-import genesis1 from "../../assets/genesis/genesis1.png";
-import genesis2 from "../../assets/genesis/genesis2.png";
-import genesis3 from "../../assets/genesis/genesis3.png";
-import genesis4 from "../../assets/genesis/genesis4.png";
+import genesis1 from "../../assets/genesis/genesis1.webp";
+import genesis2 from "../../assets/genesis/genesis2.webp";
+import genesis3 from "../../assets/genesis/genesis3.webp";
+import genesis4 from "../../assets/genesis/genesis4.webp";
 
-import homecare1 from "../../assets/homecare/homecare1.png";
-import homecare2 from "../../assets/homecare/homecare2.png";
-import homecare3 from "../../assets/homecare/homecare3.png";
-import homecare4 from "../../assets/homecare/homecare4.png";
+import homecare1 from "../../assets/homecare/homecare1.webp";
+import homecare2 from "../../assets/homecare/homecare2.webp";
+import homecare3 from "../../assets/homecare/homecare3.webp";
+import homecare4 from "../../assets/homecare/homecare4.webp";
 
-import oxxocorner1 from "../../assets/oxxocorner/oxxocorner1.png";
-import oxxocorner2 from "../../assets/oxxocorner/oxxocorner2.png";
-import oxxocorner3 from "../../assets/oxxocorner/oxxocorner3.png";
-import oxxocorner4 from "../../assets/oxxocorner/oxxocorner4.png";
+import oxxocorner1 from "../../assets/oxxocorner/oxxocorner1.webp";
+import oxxocorner2 from "../../assets/oxxocorner/oxxocorner2.webp";
+import oxxocorner3 from "../../assets/oxxocorner/oxxocorner3.webp";
+import oxxocorner4 from "../../assets/oxxocorner/oxxocorner4.webp";
 
 export const projects = [
 	{

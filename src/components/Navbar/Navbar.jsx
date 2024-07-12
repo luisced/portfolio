@@ -5,23 +5,22 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [linkColor, setLinkColor] = useState("var(--color-text)");
+	const [linkClass, setLinkClass] = useState("default-link");
 	const [iconColorClass, setIconColorClass] = useState("");
 
 	const location = useLocation();
 
 	useEffect(() => {
 		if (location.pathname === "/portfolio") {
-			setLinkColor("var(--color-secondary-text)");
+			setLinkClass("portfolio-link");
 			setIconColorClass("black-icon");
 		} else {
-			setLinkColor("var(--color-text)"); // Default color
+			setLinkClass("default-link");
 			setIconColorClass("");
 		}
 	}, [location.pathname]);
 
 	const toggleNavbar = () => {
-		setLinkColor("var(--color-text)");
 		setIsOpen((prev) => !prev);
 	};
 
@@ -38,22 +37,22 @@ const Navbar = () => {
 				</div>
 				<ul className={`navbar-links ${isOpen ? "active" : ""}`}>
 					<li>
-						<a href="/#home" style={{ color: linkColor }}>
+						<a href="/#home" className={linkClass}>
 							.home()
 						</a>
 					</li>
 					<li>
-						<a href="/about" style={{ color: linkColor }}>
+						<a href="/about" className={linkClass}>
 							.about()
 						</a>
 					</li>
 					<li>
-						<a href="/portfolio" style={{ color: linkColor }}>
+						<a href="/portfolio" className={linkClass}>
 							.portfolio()
 						</a>
 					</li>
 					<li>
-						<a href="/contact" style={{ color: linkColor }}>
+						<a href="/contact" className={linkClass}>
 							.contact()
 						</a>
 					</li>

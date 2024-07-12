@@ -9,6 +9,7 @@
 	--color-secondary-text: #000;
 	--color-link-hover: #1ccabc;
 	--color-highlight: #29ae80;
+	--color-secondary-highlight: #55a68a;
 	--border-radius: 15px;
 	--box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	--max-width-content: 800px;
@@ -19,6 +20,7 @@
 	--spacing-medium: 2.5rem;
 	--spacing-large: 5.5rem;
 	--popup-background: rgb(31, 31, 31, 0.8);
+	--link-color: var(--color-text);
 
 	/* Responsive */
 	--responsive-font-size-small: 1.1rem;
@@ -47,9 +49,8 @@ a {
 	text-decoration: none;
 	transition: color 0.3s;
 }
-
 a:hover {
-	color: var(--color-link-hover);
+	color: var(--color-highlight);
 }
 
 h1,
@@ -89,13 +90,4 @@ section {
 
 ul {
 	list-style: none;
-}
-
-.happy-mac {
-	height: 100vh;
-	width: 100%;
-	display: flex;
-	background-color: transparent;
-	justify-content: center;
-	align-items: center;
 }

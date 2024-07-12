@@ -1,5 +1,5 @@
 import React from "react";
-import profilePic from "../../assets/pfp.jpg";
+import profilePic from "../../assets/pfp.webp";
 import SocialLinks from "../SocialLinks/SocialLinks";
 import "./Intro.css";
 
