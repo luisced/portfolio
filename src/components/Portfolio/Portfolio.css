@@ -1,11 +1,11 @@
 .portfolio {
 	width: 100%;
-	height: auto;
+	height: auto; /* auto height ensures it grows as needed */
 	margin: 0;
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	overflow-x: hidden; /* Allows scrolling vertically */
 	position: relative;
 	bottom: 100px;
 }
@@ -54,15 +54,15 @@
 		font-size: 3rem;
 		margin-left: 1rem;
 		padding-top: 12vh;
-
 		text-align: center; /* Center align for smaller screens */
 	}
 
 	.project-wrapper {
-		height: 110vh;
+		height: auto; /* Instead of fixed 110vh */
 		padding: 0 1rem;
 	}
 }
+
 /* Screens up to 480px */
 @media (max-width: 480px) {
 	.portfolio-category {
@@ -73,8 +73,7 @@
 	}
 
 	.project-wrapper {
-		height: 110vh;
-
+		height: auto; /* Set to auto height instead of 110vh */
 		padding: 0 0.5rem;
 	}
 }

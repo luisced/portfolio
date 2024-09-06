@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import axios from "axios";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import "./Contact.css";
 import Background from "../Background/Background";
@@ -14,13 +13,7 @@ const ContactForm = () => {
 	});
 	const [turnstileToken, setTurnstileToken] = useState("");
 	const [status, setStatus] = useState("");
-	const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
-	useEffect(() => {
-		const handleResize = () => setIsMobile(window.innerWidth <= 1024);
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -130,25 +123,27 @@ const ContactForm = () => {
 								aria-label="Message"
 							></textarea>
 						</label>
+                        <div className="turnstile-container">
+
 						<Turnstile
 							siteKey="0x4AAAAAAAe671W_yalogCcB"
 							onSuccess={(token) => setTurnstileToken(token)}
+                            size="flexible"
+
+
+
 						/>
-						<button type="submit" aria-label="Send">
+                        </div>
+                        <div className="button-container">
+
+						<button type="submit" aria-label="Send" className="send-form-btn">
 							Send
 						</button>
+                        </div>
 					</form>
 				</div>
-				{!isMobile && (
-					<div className="contact-form-column lottie-container">
-						<DotLottieReact
-							src="https://lottie.host/5c41e79d-7c62-427c-921b-cf1edb4ead19/4TtZhQb154.json"
-							loop
-							autoplay
-							autoResizeCanvas
-						/>
-					</div>
-				)}
+
+
 			</div>
 		</>
 	);

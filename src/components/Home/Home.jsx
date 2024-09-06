@@ -7,7 +7,7 @@ import "./Home.css";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
-const Home = ({ presentationOpacity }) => {
+const Home = React.memo(({ presentationOpacity }) => {
 	const navigate = useNavigate();
 
 	const goToAbout = useCallback(() => {
@@ -15,13 +15,13 @@ const Home = ({ presentationOpacity }) => {
 	}, [navigate]);
 
 	const steps = useMemo(
-		() => [" Backend Developer and Frontend Enthusiast.", 90],
+		() => [" Backend Developer and Frontend Enthusiast.", 150],
 		[]
 	);
 
 	return (
 		<div className="home" id="home">
-			<Background /> {/* Include the Background component */}
+			<Background />
 			<div className="presentation" style={{ opacity: presentationOpacity }}>
 				<h1 className="name">Luis Cedillo Maldonado</h1>
 				<h2 className="description">
@@ -30,9 +30,8 @@ const Home = ({ presentationOpacity }) => {
 				</h2>
 				<div className="glassbox">
 					<p className="bio">
-						I am Luis Cedillo Maldonado, a backend developer and frontend
-						enthusiast from Mexico City. I specialize in custom CRM solutions
-						and Twilio WhatsApp chatbots. Currently, I lead at the iOS
+						My name is Luis Cedillo Maldonado, a backend developer and frontend
+						enthusiast from Mexico City. I specialize in Backend solutions. Currently, I lead at the iOS
 						Development Lab at Universidad Panamericana, where I mentor junior
 						developers and manage agile projects. I am also pursuing a degree in
 						Data Intelligence and Cybersecurity.
@@ -43,12 +42,12 @@ const Home = ({ presentationOpacity }) => {
 				</button>
 			</div>
 			<div className="spline-container">
-				<Suspense fallback={<div className="loading">Loading...</div>}>
+				<Suspense fallback={<div className="loading-spinner"></div>}>
 					<Spline scene="https://prod.spline.design/teYlWA7w9rFfaaLK/scene.splinecode" />
 				</Suspense>
 			</div>
 		</div>
 	);
-};
+});
 
 export default Home;

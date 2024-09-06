@@ -44,6 +44,7 @@
 	font-size: 1.2rem;
 }
 
+
 .bio {
 	font-size: var(--responsive-font-size-small);
 	line-height: 3;
@@ -52,7 +53,7 @@
 	text-align: justify;
 	opacity: 0;
 	animation: fade-in 1s forwards;
-	animation-delay: 3s;
+	animation-delay: 1s;
 	will-change: opacity;
 	transform: translateZ(0);
 }
@@ -65,15 +66,15 @@
 	margin: 4vh auto;
 	background: var(--color-glass-card-background);
 	box-shadow: var(--box-shadow);
-	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(25px);
+	backdrop-filter: blur(20px);
 	border-radius: var(--border-radius);
 	border: 1px solid rgb(255 255 255 / 15%);
 	text-align: center;
 	opacity: 0;
 	will-change: opacity;
 	animation: fade-in 1s forwards;
-	animation-delay: 2.5s;
+	animation-delay: 1s;
 	transform: translateZ(0);
 }
 
@@ -104,13 +105,14 @@
 	text-align: left;
 	text-decoration: none;
 	transition: box-shadow 0.15s, transform 0.15s;
+    -webkit-user-select: none;
 	user-select: none;
 	white-space: nowrap;
 	will-change: box-shadow, transform;
 	font-size: 18px;
 	opacity: 0;
 	animation: fade-in 1s forwards;
-	animation-delay: 3s;
+	animation-delay: 1s;
 }
 
 .about-me:focus {
@@ -131,9 +133,39 @@
 
 .spline-container {
 	flex: 1;
-	background: linear-gradient(180deg, #ead5c0 0%, #ffff 100%);
-	animation: image-in 0.5s cubic-bezier(0.5, 0, 0.1, 1) 2s backwards;
+    position: relative;
+	animation: image-in 0.4s cubic-bezier(0.5, 0, 0.1, 1) 1.8s backwards;
 	will-change: clip-path;
+}
+.loading-spinner {
+    height: 50px;
+    width: 50px;
+    position: absolute; /* Absolutely position the spinner inside the spline-container */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the spinner */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: progress;
+
+    border-radius: 50%;
+    border-top: 5px solid gold;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid gold;
+    border-right: 5px solid transparent;
+
+    animation: loading 1s linear infinite;
+    z-index: 1000; /* Ensure the spinner is on top */
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes outer-top {

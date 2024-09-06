@@ -1,11 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import "./About.css";
 import { FaArrowDown } from "react-icons/fa";
 import Intro from "../Intro/Intro";
 import Details from "../Details/Details";
-import Loading from "../Loading/Loading";
 import Background from "../Background/Background";
-const HappyMac = React.lazy(() => import("../HappyMac/HappyMac"));
+const Spline = lazy(() => import("@splinetool/react-spline"));
 
 const About = () => {
 	return (
@@ -20,11 +19,11 @@ const About = () => {
 				<Details />
 			</div>
 			<ScrollCta />
-			<React.Suspense fallback={<Loading />}>
-				<section id="happy-mac">
-					<HappyMac />
+            <Suspense fallback={<div className="loading-spinner"></div>}>
+            <section id="happy-mac">
+			<Spline scene="https://prod.spline.design/ydA5FKFEx0760sDJ/scene.splinecode" />
 				</section>
-			</React.Suspense>
+            </Suspense>
 		</>
 	);
 };

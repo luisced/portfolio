@@ -21,8 +21,8 @@
 	position: relative;
 	width: 90%;
 	border-radius: var(--border-radius);
-	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
 	font-size: 15px;
 	font-weight: 500;
 }
@@ -81,7 +81,16 @@
 	object-fit: cover;
 	align-self: center;
 	margin: var(--spacing-medium) auto;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    will-change: transform, box-shadow;
+
 }
+
+.profile-pic:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Bigger shadow on hover */
+  }
+
 
 .highlight {
 	color: var(--color-highlight);

@@ -1,250 +1,195 @@
-.contact-form {
-	display: flex;
-	flex-direction: column;
-	align-items: center; /* Centering the button horizontally */
-	width: 100%;
-}
-
+/* General Styles */
 .contact-form-container {
-	display: flex;
-	flex-direction: row;
-	align-items: stretch; /* Ensure columns stretch to fill the container height */
-	justify-content: center;
-	padding: var(--spacing-large);
-	width: 70%;
-	background-color: var(--color-glass-card-background);
-	border-radius: var(--border-radius);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	box-shadow: var(--box-shadow);
-	margin: 5rem auto;
-	height: 80vh; /* Set a height for the container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;  /* Ensure the form takes full screen height */
+    box-sizing: border-box;
 }
 
 .contact-form-column {
-	flex: 1;
-	padding: var(--spacing-medium);
-	background-color: var(--color-card-background);
-	border-radius: var(--border-radius);
-	box-shadow: var(--box-shadow);
-	margin: 0 var(--spacing-medium);
-	height: 100%; /* Set height to 100% to match the container */
-	display: flex;
-	flex-direction: column;
-}
-.contact-form-column h2 {
-	margin-bottom: var(--spacing-medium);
-	font-size: var(--font-size-large);
+    width: 100%;
+    max-width: 500px; /* Max width to avoid stretching on larger screens */
+    padding: 20px;
+    margin: 0 auto;
+    background: var(--color-glass-card-background);
+    box-shadow: var(--box-shadow);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border-radius: var(--border-radius);
+    border: 1px solid rgb(255 255 255 / 15%);
+    text-align: left;
 }
 
-.contact-form label {
-	margin-bottom: var(--spacing-small);
-	font-weight: bold;
-	font-size: 1.1rem;
-	display: block;
-	width: 100%;
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.contact-form input,
-.contact-form textarea {
-	width: 100%;
-	padding: var(--spacing-small);
-	margin-bottom: var(--spacing-medium);
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-	background-color: rgba(207, 202, 202, 0.3);
-	margin-top: var(--spacing-small);
-	box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+.status-message {
+    font-size: 1.2rem;
+    color: greenyellow;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-	border-color: var(--color-primary);
-	outline: none;
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%; /* Ensure form takes full width */
 }
 
-.contact-form input:not(:placeholder-shown),
-.contact-form textarea:not(:placeholder-shown) {
-	font-size: 1.1rem; /* Increase font size when filled */
-	color: #fff; /* Ensure text remains white when filled */
+label {
+    font-size: 1rem;
+    margin-bottom: 5px;
 }
 
-.contact-form button {
-	align-items: center;
-	appearance: none;
-	background-image: radial-gradient(
-		100% 100% at 100% 0,
-		#14efdc 0,
-		#0d9165 100%
-	);
-	border: 0;
-	border-radius: 6px;
-	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
-		rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
-	box-sizing: border-box;
-	color: #fff;
-	cursor: pointer;
-	display: inline-flex;
-	height: 60px; /* Reduced height */
-	width: 150px; /* Reduced width */
-	justify-content: center;
-	line-height: 1;
-	list-style: none;
-	overflow: hidden;
-	padding-left: 16px;
-	padding-right: 16px;
-	position: relative;
-	text-align: center; /* Centering text inside the button */
-	text-decoration: none;
-	transition: box-shadow 0.15s, transform 0.15s;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	white-space: nowrap;
-	will-change: box-shadow, transform;
-	font-size: 20px; /* Reduced font size */
-
-	margin-bottom: var(--spacing-small);
+input[type="text"],
+input[type="email"],
+textarea {
+    font-family: var(--font-family-mono);
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: var(--color-card-background);
+    resize: none;
+    color: white;
 }
 
-.contact-form button:hover {
-	box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
-		rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #26c895 0 -3px 0 inset;
-	transform: translateY(-2px);
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+textarea::placeholder {
+
+    color: rgba(255, 255, 255, 0.7); /* Set placeholder text to a lighter white color */
 }
 
-/* click */
-.contact-form button:active {
-	box-shadow: #198361 0 3px 7px inset;
-	transform: translateY(2px);
+.turnstile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.lottie-container {
-	flex: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: var(--border-radius);
-	height: 100%; /* Set height to 100% to match the container */
-	background: linear-gradient(
-		65deg,
-		rgba(180, 108, 215, 1) 18%,
-		rgba(200, 121, 156, 1) 46%,
-		rgba(66, 149, 235, 1) 77%
-	);
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Extra small devices (phones, 600px and down) */
-@media (max-width: 600px) {
-	.contact-form-container {
-		flex-direction: column;
-		width: 90%;
-		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
-		height: auto; /* Allow height to adjust based on content */
-	}
 
-	.contact-form-column {
-		margin-bottom: var(--spacing-medium); /* Add spacing between columns */
-		height: auto; /* Allow height to adjust based on content */
-		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
-		width: 100%;
-		margin-left: 0;
-	}
+.send-form-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 60px;
+    padding: 0 16px;
+    font-size: 18px;
+    line-height: 1;
+    color: #fff;
+    background-image: radial-gradient(100% 100% at 100% 0, #14efdc 0, #0d9165 100%) !important;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+                rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+                rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    text-align: center;
 
-	.contact-form-column h2 {
-		font-size: 2rem;
-	}
-
-	.contact-form {
-		width: 100%; /* Ensure the form takes full width */
-	}
-
-	.contact-form label,
-	.contact-form input,
-	.contact-form textarea {
-		font-size: 1rem; /* Adjust font size for better readability */
-	}
-
-	.contact-form button {
-		width: 100%; /* Make the button full width on smaller screens */
-		font-size: 16px; /* Increase font size for better readability on smaller screens */
-	}
-
-	.lottie-container {
-		display: none; /* Hide the lottie container on smaller screens */
-	}
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media (min-width: 600px) and (max-width: 768px) {
-	.contact-form-container {
-		flex-direction: column;
-		width: 90%;
-		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
-		height: auto; /* Allow height to adjust based on content */
-	}
-
-	.contact-form-column {
-		margin-bottom: var(--spacing-medium); /* Add spacing between columns */
-		height: auto; /* Allow height to adjust based on content */
-		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
-		width: 100%;
-		margin-left: 0;
-	}
-
-	.contact-form {
-		width: 100%; /* Ensure the form takes full width */
-	}
-
-	.contact-form label,
-	.contact-form input,
-	.contact-form textarea {
-		font-size: 1rem; /* Adjust font size for better readability */
-	}
-
-	.contact-form button {
-		width: 100%; /* Make the button full width on smaller screens */
-		font-size: 16px; /* Increase font size for better readability on smaller screens */
-	}
-
-	.lottie-container {
-		display: none; /* Hide the lottie container on smaller screens */
-	}
+.send-form-btn:focus {
+    box-shadow: #26c895 0 0 0 1.5px inset,
+                rgba(45, 35, 66, 0.4) 0 2px 4px,
+                rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+                #26c895 0 -3px 0 inset;
 }
-/* Medium devices (landscape tablets, 768px and up) */
 
-@media only screen and (max-width: 1400px) and (orientation: landscape) {
-	.contact-form-container {
-		flex-direction: column;
-		width: 90%;
-		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
-		height: auto; /* Allow height to adjust based on content */
-	}
+.send-form-btn:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+                rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+                #26c895 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
 
-	.contact-form-column {
-		margin-bottom: var(--spacing-medium); /* Add spacing between columns */
-		height: auto; /* Allow height to adjust based on content */
-		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
-		width: 100%;
-		margin-left: 0;
-	}
+.send-form-btn:active {
+    box-shadow: #26c895 0 3px 7px inset;
+    transform: translateY(2px);
+}
 
-	.contact-form {
-		width: 100%; /* Ensure the form takes full width */
-	}
 
-	.contact-form label,
-	.contact-form input,
-	.contact-form textarea {
-		font-size: 1rem; /* Adjust font size for better readability */
-	}
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .contact-form-container {
+        padding: 20px;
+    }
 
-	.contact-form button {
-		width: 100%; /* Make the button full width on smaller screens */
-		font-size: 16px; /* Increase font size for better readability on smaller screens */
-	}
+    h2 {
+        font-size: 1.5rem;
+    }
 
-	.lottie-container {
-		display: none; /* Hide the lottie container on smaller screens */
-	}
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+
+    button {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+
+    .contact-form-container {
+        padding: 15px;
+    }
+
+    .contact-form-column {
+        padding: 15px;
+    }
 }

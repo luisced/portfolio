@@ -1,47 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import "./Background.css";
 
-const debounce = (func, delay) => {
-	let inDebounce;
-	return function () {
-		const context = this;
-		const args = arguments;
-		clearTimeout(inDebounce);
-		inDebounce = setTimeout(() => func.apply(context, args), delay);
-	};
-};
-
 const Background = () => {
-	useEffect(() => {
-		const mouseBlob = document.getElementById("mouse-blob");
-		const handleMouseMove = (e) => {
-			const offsetX = mouseBlob.offsetWidth / 2;
-			const offsetY = mouseBlob.offsetHeight / 2;
-			mouseBlob.style.left = `${e.clientX - offsetX}px`;
-			mouseBlob.style.top = `${e.clientY - offsetY}px`;
-		};
+  const mouseBlobRef = useRef(null);
 
-		const debouncedHandleMouseMove = debounce(handleMouseMove, 10);
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const offsetX = mouseBlobRef.current.offsetWidth / 2;
+      const offsetY = mouseBlobRef.current.offsetHeight / 2;
+      mouseBlobRef.current.style.transform = `translate(${e.clientX - offsetX}px, ${e.clientY - offsetY}px)`;
+    };
 
-		document.addEventListener("mousemove", debouncedHandleMouseMove);
+    // Use requestAnimationFrame for optimized performance
+    let animationFrameId;
+    const optimizedMouseMove = (e) => {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => handleMouseMove(e));
+    };
 
-		return () => {
-			document.removeEventListener("mousemove", debouncedHandleMouseMove);
-		};
-	}, []);
+    // Add event listener to the document
+    document.addEventListener("mousemove", optimizedMouseMove);
 
-	return (
-		<div className="background-wrapper">
-			<div className="blob-1"></div>
-			<div className="blob-2"></div>
-			<div className="blob-3"></div>
-			<div className="blob-4"></div>
-			<div className="blob-5" id="mouse-blob"></div>
-			<div className="blob-6"></div>
-			<div className="blob-7"></div>
-			<div className="noise-bg"></div>
-		</div>
-	);
+    // Cleanup on unmount
+    return () => {
+      document.removeEventListener("mousemove", optimizedMouseMove);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <div className="background-wrapper">
+      <div className="blob-1"></div>
+      <div className="blob-2"></div>
+      <div className="blob-4"></div>
+      <div className="blob-5" ref={mouseBlobRef}></div> {/* The interactive mouse blob */}
+      <div className="noise-bg"></div> {/* Noise effect background */}
+    </div>
+  );
 };
 
 export default Background;
