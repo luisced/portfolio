@@ -28,6 +28,8 @@ const Intro = () => (
 			className="profile-pic"
 			width="550"
 			height="550"
+            rel="preload"
+
 		/>
 	</div>
 );

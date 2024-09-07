@@ -14,31 +14,22 @@ import oxxocorner2 from "../../assets/oxxocorner/oxxocorner2.webp";
 import oxxocorner3 from "../../assets/oxxocorner/oxxocorner3.webp";
 import oxxocorner4 from "../../assets/oxxocorner/oxxocorner4.webp";
 
+import test from "../../assets/test/phone.jpg";
+
 export const projects = [
 	{
 		id: "01",
 		title: "Dermaware - Genesis",
 		role: "Development lead • Full-stack developer",
 		description:
-			"Dermaware is a mobile application that allows users to track their skin health and receive personalized recommendations. Genesis is the first version of the app, which includes a skin health tracker, an integrated chat system, and a community forum. I led a team of 5 developers to build the app using SwiftUI and Flask.",
+			"Dermaware is a mobile application that allows users to track their skin health and receive personalized recommendations.",
 		category: "Mobile - iOS",
+		projectCategory: "Mobile",
 		images: [
-			{
-				src: genesis1,
-				alt: "Genesis Dashboard",
-			},
-			{
-				src: genesis4,
-				alt: "Genesis Chat",
-			},
-			{
-				src: genesis3,
-				alt: "Genesis Profile",
-			},
-			{
-				src: genesis2,
-				alt: "Genesis Login",
-			},
+			{ src: genesis1, alt: "Genesis Dashboard" , platform: "Mobile"},
+			{ src: genesis4, alt: "Genesis Chat" , platform: "Mobile"},
+			{ src: genesis3, alt: "Genesis Profile", platform: "Mobile"},
+			{ src: genesis2, alt: "Genesis Login", platform: "Mobile" },
 		],
 	},
 	{
@@ -46,25 +37,14 @@ export const projects = [
 		title: "Homecare - Nemesis",
 		role: "Team lead • Backend developer",
 		description:
-			"Homecare is a mobile a applications that allows users to measure their energy consumption through computasional vision in order to provide personalized recommendations. Nemesis is the first version of the app, which includes a energy consumption tracker, and a generative AI. I led a team of 5 developers to build the app using SwiftUI and Django.",
+			"Homecare is a mobile application that allows users to measure their energy consumption through computer vision.",
 		category: "Mobile - iOS",
+		projectCategory: "Mobile",
 		images: [
-			{
-				src: homecare1,
-				alt: "homecare Dashboard",
-			},
-			{
-				src: homecare2,
-				alt: "homecare Energy Chart",
-			},
-			{
-				src: homecare3,
-				alt: "homecare Room Energy Consumption",
-			},
-			{
-				src: homecare4,
-				alt: "Homecare profile settings",
-			},
+			{ src: homecare1, alt: "Homecare Dashboard" , platform: "Mobile"},
+			{ src: homecare2, alt: "Homecare Energy Chart" , platform: "Mobile"},
+			{ src: homecare3, alt: "Homecare Room Energy Consumption" , platform: "Mobile"},
+			{ src: homecare4, alt: "Homecare Profile Settings" , platform: "Mobile"},
 		],
 	},
 	{
@@ -72,25 +52,45 @@ export const projects = [
 		title: "Oxxo Corner - Femsa",
 		role: "Product Owner • Full-stack developer",
 		description:
-			"Oxxo Corner is a mobile application that allows users to interact with Oxxo stores in a new way, by providing an augmented reality experience in order to receive personalized recommendations. This is the first version of the app, which includes a AR experience, a image filtering by generative AI, and a community forum. I led a team of 4 developers to build the app using SwiftUI and Flask.",
+			"Oxxo Corner is a mobile application that allows users to interact with Oxxo stores using augmented reality.",
 		category: "Mobile - iOS",
+		projectCategory: "Mobile",
 		images: [
-			{
-				src: oxxocorner1,
-				alt: "Genesis Dashboard",
-			},
-			{
-				src: oxxocorner2,
-				alt: "Genesis Chat",
-			},
-			{
-				src: oxxocorner3,
-				alt: "Genesis Profile",
-			},
-			{
-				src: oxxocorner4,
-				alt: "Genesis Login",
-			},
+			{ src: oxxocorner1, alt: "Oxxo Corner Dashboard" , platform: "Mobile"},
+			{ src: oxxocorner2, alt: "Oxxo Corner AR" , platform: "Mobile"},
+			{ src: oxxocorner3, alt: "Oxxo Corner Profile" , platform: "Mobile"},
+			{ src: oxxocorner4, alt: "Oxxo Corner Login" , platform: "Mobile"},
 		],
 	},
+    {
+		id: "04",
+		title: "Stackup - Nyx",
+		role: "Team lead • Backend Developer",
+		description:
+			"Sackup is a mobile application made for Marriot hotels that allows hotel staff to unify platforms like Expedia, Booking, Pricetravel, etc. in one place.",
+		category: "Web - FastAPI",
+		projectCategory: "Web",
+		images: [
+			{ src: test, alt: "Oxxo Corner Dashboard" , platform: "Desktop"},
+			{ src: test, alt: "Oxxo Corner AR" , platform: "Desktop"},
+			{ src: test, alt: "Oxxo Corner Profile" , platform: "Desktop"},
+			{ src: test, alt: "Oxxo Corner Login" , platform: "Desktop"},
+		],
+	},
+    {
+        id: "05",
+        title: "Phoenix - UP",
+        role: "Development lead • Full-stack developer",
+        description:
+            "Phoenix is a cross-platform app for UP that allows students to check their grades, schedules, maps and more.",
+        category: "Mobile/Web - iOS/Rust",
+        projectCategory: "Web",
+        images: [
+            { src: test, alt: "Oxxo Corner Dashboard" , platform: "Desktop"},
+            { src: test, alt: "Oxxo Corner AR" , platform: "Desktop"},
+            { src: test, alt: "Oxxo Corner Profile" , platform: "Desktop"},
+            { src: test, alt: "Oxxo Corner Login" , platform: "Desktop"},
+        ],
+    }
+
 ];

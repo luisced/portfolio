@@ -19,11 +19,11 @@ const About = () => {
 				<Details />
 			</div>
 			<ScrollCta />
-            <Suspense fallback={<div className="loading-spinner"></div>}>
-            <section id="happy-mac">
-			<Spline scene="https://prod.spline.design/ydA5FKFEx0760sDJ/scene.splinecode" />
-				</section>
-            </Suspense>
+            <section className="happy-mac">
+                <Suspense fallback={<div className="loading-spinner"></div>}>
+			        <Spline scene="https://prod.spline.design/ydA5FKFEx0760sDJ/scene.splinecode" />
+                </Suspense>
+			</section>
 		</>
 	);
 };

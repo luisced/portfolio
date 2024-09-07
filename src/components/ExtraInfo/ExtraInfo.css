@@ -4,6 +4,9 @@
 	gap: var(--spacing-medium);
 	flex-wrap: wrap;
 	margin-top: var(--spacing-small);
+    align-items: center;
+    text-align: center;
+
 }
 
 .languages-and-busy section {
@@ -11,6 +14,8 @@
 	min-width: 250px;
 	padding: 1rem;
 }
+
+
 
 .languages-and-busy ul {
 	list-style: none;
@@ -20,16 +25,19 @@
 }
 
 .languages-and-busy li {
-	padding: 1rem; /* Increase padding inside items */
+	padding: 1rem;
 	margin-bottom: 1rem;
 	border-radius: var(--border-radius);
 	background: var(--color-card-background);
 }
 
+
+
 .languages-and-busy h2 {
-	font-size: 1.5rem; /* Consistent font size for headers */
+    display:flex;
+	font-size: 1.5rem;
 	margin-bottom: 1rem; /* Space below headers */
-	color: var(--color-highlight); /* Highlight color for headers */
+	color: var(--color-highlight);
 }
 
 .languages-and-busy p {

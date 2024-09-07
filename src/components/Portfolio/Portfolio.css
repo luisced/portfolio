@@ -1,11 +1,11 @@
 .portfolio {
 	width: 100%;
-	height: auto; /* auto height ensures it grows as needed */
+	height: auto;
 	margin: 0;
 	background-color: #fff;
 	display: flex;
 	flex-direction: column;
-	overflow-x: hidden; /* Allows scrolling vertically */
+	overflow: hidden;
 	position: relative;
 	bottom: 100px;
 }
@@ -19,19 +19,9 @@
 }
 
 .project-wrapper {
-	opacity: 0;
-	transform: translateY(20px);
-	transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.project-wrapper.visible {
-	opacity: 1;
+	opacity: 1; /* Ensure all projects are fully visible */
 	transform: translateY(0);
-}
-
-.project-wrapper.hidden {
-	opacity: 0;
-	transform: translateY(20px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 /* Responsive Styles */
@@ -54,11 +44,11 @@
 		font-size: 3rem;
 		margin-left: 1rem;
 		padding-top: 12vh;
-		text-align: center; /* Center align for smaller screens */
+		text-align: center;
 	}
 
 	.project-wrapper {
-		height: auto; /* Instead of fixed 110vh */
+		height: auto;
 		padding: 0 1rem;
 	}
 }
@@ -69,11 +59,11 @@
 		font-size: 2rem;
 		margin-left: 1rem;
 		padding-top: 15vh;
-		text-align: center; /* Center align for smaller screens */
+		text-align: center;
 	}
 
 	.project-wrapper {
-		height: auto; /* Set to auto height instead of 110vh */
+		height: auto;
 		padding: 0 0.5rem;
 	}
 }

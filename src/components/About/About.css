@@ -115,6 +115,13 @@
 	animation: bounce 2s infinite;
 }
 
+.happy-mac{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
 @keyframes bounce {
 	0%,
 	20%,

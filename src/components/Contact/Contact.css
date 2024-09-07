@@ -1,17 +1,16 @@
-/* General Styles */
 .contact-form-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    min-height: 100vh;  /* Ensure the form takes full screen height */
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
 .contact-form-column {
     width: 100%;
-    max-width: 500px; /* Max width to avoid stretching on larger screens */
+    max-width: 700px;
     padding: 20px;
     margin: 0 auto;
     background: var(--color-glass-card-background);
@@ -39,18 +38,23 @@ h2 {
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 100%; /* Ensure form takes full width */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 label {
     font-size: 1rem;
     margin-bottom: 5px;
+    font-family: var(--font-family-mono);
+    width: 60%;
 }
 
 input[type="text"],
 input[type="email"],
 textarea {
+    display: flex;
+    justify-content: center;
     font-family: var(--font-family-mono);
     width: 100%;
     padding: 10px;
@@ -66,7 +70,7 @@ input[type="text"]::placeholder,
 input[type="email"]::placeholder,
 textarea::placeholder {
 
-    color: rgba(255, 255, 255, 0.7); /* Set placeholder text to a lighter white color */
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .turnstile-container {
@@ -74,20 +78,17 @@ textarea::placeholder {
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
 .send-form-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 80%;
+    margin-top: 20px;
+    width: 50%;
     height: 60px;
     padding: 0 16px;
     font-size: 18px;

@@ -6,11 +6,13 @@ const busyWith = [
 	"Coding new projects",
 	"Playing video games",
 	"Going to the Gym",
+    "Being president of the Ingeenering Student Council",
 ];
 const education = [
-	"Universidad Panamericana, Bachelor's in Data Intelligence and Cybersecurity, Current - 2025 (Expected)",
-	"AWS Academy Graduate - AWS Academy Cloud Foundations - 2023",
+	"Universidad Panamericana, Bachelor's in Data Intelligence and Cybersecurity, Current - 2026 (Expected)",
+	"AWS Academy Cloud Foundations - 2023",
 	"App Development with Swift Associate - 2023",
+    "Apple Teacher - 2024",
 ];
 
 const ExtraInfo = () => (

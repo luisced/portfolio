@@ -134,12 +134,10 @@ const ContactForm = () => {
 
 						/>
                         </div>
-                        <div className="button-container">
 
 						<button type="submit" aria-label="Send" className="send-form-btn">
 							Send
 						</button>
-                        </div>
 					</form>
 				</div>
 

@@ -18,7 +18,7 @@
 }
 
 .project-header {
-	align-items: center;
+	align-items: left;
 	color: var(--color-text);
 	margin-right: 20px;
 }
@@ -26,6 +26,8 @@
 .project-header h2 {
 	color: #333;
 	font-size: 4rem;
+    text-align: left;
+
 	font-weight: 900;
 }
 
