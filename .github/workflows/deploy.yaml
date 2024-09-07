@@ -40,7 +40,7 @@ jobs:
       # Update ECS Service with the new image
       - name: Deploy to ECS
         run: |
-          aws ecs update-service \
-            --cluster luisced-portfolio-cluster \
-            --service luisced-portfolio-service \
+            aws ecs update-service \
+            --cluster PortfolioCluster \
+            --service prod-web-portfolio-01 \
             --force-new-deployment
