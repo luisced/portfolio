@@ -27,7 +27,8 @@ jobs:
       # Build and push the Docker image to DockerHu
       - name: Build and Push Docker Image
         run: |
-           docker build -t luisced/portfolio:latest --platform linux/amd64 -f Dockerfile.aws .
+           docker build -t luisced/portfolio:latest --platform linux/amd64 -f Dockerfile.aws \
+           docker push luisced/portfolio:latest
 
       # Set up AWS CLI - to deploy to ECS
       - name: Configure AWS credentials
