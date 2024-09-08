@@ -3,7 +3,7 @@ name: Build and Deploy to ECS
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -24,11 +24,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Build and push the Docker image to DockerHu
+      # Build and push the Docker image to DockerHub
       - name: Build and Push Docker Image
         run: |
-           docker build -t luisced/portfolio:latest --platform linux/amd64 -f Dockerfile.aws \
-           docker push luisced/portfolio:latest
+           docker build -t luisced/portfolio:latest --platform linux/amd64 -f Dockerfile.aws .
+              docker push luisced/portfolio:latest
 
       # Set up AWS CLI - to deploy to ECS
       - name: Configure AWS credentials
