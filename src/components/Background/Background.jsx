@@ -11,17 +11,14 @@ const Background = () => {
       mouseBlobRef.current.style.transform = `translate(${e.clientX - offsetX}px, ${e.clientY - offsetY}px)`;
     };
 
-    // Use requestAnimationFrame for optimized performance
     let animationFrameId;
     const optimizedMouseMove = (e) => {
       cancelAnimationFrame(animationFrameId);
       animationFrameId = requestAnimationFrame(() => handleMouseMove(e));
     };
 
-    // Add event listener to the document
     document.addEventListener("mousemove", optimizedMouseMove);
 
-    // Cleanup on unmount
     return () => {
       document.removeEventListener("mousemove", optimizedMouseMove);
       cancelAnimationFrame(animationFrameId);
