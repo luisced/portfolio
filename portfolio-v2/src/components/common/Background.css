@@ -1,0 +1,134 @@
+/* Background component styles with theme support */
+.background-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: var(--background-primary);
+	z-index: -1;
+	overflow: hidden;
+	transition: background-color var(--transition-normal);
+}
+
+/* Blob styles */
+.blob-1,
+.blob-2,
+.blob-4,
+.blob-5 {
+	content: "";
+	position: absolute;
+	border-radius: 8vw;
+	mix-blend-mode: lighten;
+	filter: blur(120px);
+	will-change: transform; /* Use this sparingly for performance */
+    pointer-events: none;
+	transition: background var(--transition-normal), opacity var(--transition-normal);
+}
+
+.blob-1 {
+	width: 80vw;
+	height: 80vh;
+	left: 800px;
+	top: 50px;
+	background: linear-gradient(120deg, #000a6b 0%, #000a6b 35%, #e8e6ff 100%);
+}
+
+.blob-2 {
+	width: 20vw;
+	height: 20vh;
+	background: linear-gradient(90deg, #000a6b 0%, #000a6b 35%, #000a6b 100%);
+}
+
+.blob-4 {
+	width: 30vw;
+	height: 30vh;
+	background: linear-gradient(120deg, #800080 0%, #8a2be2 35%, #e8e6ff 100%);
+	left: 0;
+	bottom: 0;
+}
+
+.blob-5 {
+	width: 150px;
+	height: 150px;
+	background: linear-gradient(120deg, #ff69b4 0%, #ff1493 35%, #ffd700 100%);
+	filter: blur(70px);
+	z-index: -1;
+	pointer-events: none;
+}
+
+.noise-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+	background: url("https://thumbs.dreamstime.com/b/white-noise-background-effect-sound-effect-grain-distress-overlay-texture-your-design-grainy-gradient-background-145456887.jpg");
+	background-position: center;
+	background-size: 600px auto;
+	mix-blend-mode: screen;
+	opacity: 0.1;
+	transition: opacity var(--transition-normal);
+}
+
+/* Animation styles */
+.blob-1,
+.blob-2,
+.blob-4 {
+	animation: rotation 10s infinite, scale1 10s infinite;
+	transform: translateZ(0);
+	backface-visibility: hidden; /* Ensure smoother animations */
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(359deg);
+	}
+}
+
+@keyframes scale1 {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.02); /* Slight scaling */
+	}
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .background-wrapper {
+	background: #ffffff;
+}
+
+[data-theme="light"] .blob-1 {
+	background: linear-gradient(120deg, #e0e0ff 0%, #c0c0ff 35%, #a0a0ff 100%);
+	opacity: 0.7;
+	mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .blob-2 {
+	background: linear-gradient(90deg, #d0d0ff 0%, #b0b0ff 35%, #9090ff 100%);
+	opacity: 0.7;
+	mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .blob-4 {
+	background: linear-gradient(120deg, #ffe0ff 0%, #ffc0ff 35%, #ffa0ff 100%);
+	opacity: 0.7;
+	mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .blob-5 {
+	background: linear-gradient(120deg, #8fd1f0 0%, #90ebd6 35%, #607094 100%);
+	opacity: 0.7;
+	mix-blend-mode: multiply;
+}
+
+[data-theme="light"] .noise-bg {
+	opacity: 0.05;
+	mix-blend-mode: multiply;
+}

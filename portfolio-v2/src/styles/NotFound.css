@@ -1,0 +1,126 @@
+/* NotFound page styles */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
+.not-found-content {
+  background: var(--color-glass-card-background);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  max-width: 600px;
+  width: 100%;
+  box-shadow: var(--box-shadow);
+  animation: fade-in 0.5s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.not-found h1 {
+  font-size: 8rem;
+  margin: 0;
+  background: linear-gradient(270deg, #0d9165, #14efdc, #0d9165);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 10s infinite linear;
+}
+
+.not-found h2 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.not-found p {
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.home-link {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-image: radial-gradient(
+    100% 100% at 100% 0,
+    #14efdc 0,
+    #0d9165 100%
+  );
+  color: white;
+  text-decoration: none;
+  border-radius: var(--border-radius-md);
+  font-weight: bold;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+}
+
+.home-link:hover {
+  transform: translateY(-2px);
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #26c895 0 -3px 0 inset;
+}
+
+.home-link:active {
+  transform: translateY(2px);
+  box-shadow: #26c895 0 3px 7px inset;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .not-found-content {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .not-found h1 {
+    font-size: 6rem;
+  }
+  
+  .not-found h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found h1 {
+    font-size: 4rem;
+  }
+  
+  .not-found h2 {
+    font-size: 1.5rem;
+  }
+  
+  .not-found-content {
+    padding: var(--spacing-md);
+  }
+}

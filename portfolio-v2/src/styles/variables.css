@@ -1,0 +1,117 @@
+/**
+ * Global CSS variables for theming
+ * Preserving original portfolio styling
+ */
+
+:root {
+  /* Base colors - from original portfolio */
+  --color-primary: #29ae80;
+  --color-secondary: #55a68a;
+  --color-highlight: #29ae80;
+  --color-link-hover: #1ccabc;
+  
+  /* Status colors */
+  --color-success: #28a745;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+  
+  --icon-size: 60px;
+  --content-offset: 30px; 
+  --accent-rgb: 41,174,128;
+
+  /* Theme colors */
+  --color-background: #000000;
+  --color-card-background: rgba(16, 18, 27, 0.4);
+  --color-glass-card-background: rgba(113, 119, 144, 0.25);
+  --color-glass-content-background: rgb(146 151 179 / 13%);
+  --color-text: #fff;
+  --color-secondary-text: #000;
+  
+  /* Light theme (default) */
+  --background-primary: var(--color-background);
+  --background-secondary: #1e1e1e;
+  --text-primary: var(--color-text);
+  --text-secondary: #adb5bd;
+  --border-color: #343a40;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --link-color: var(--color-text);
+  --accent-primary: var(--color-highlight);
+  --accent-secondary: var(--color-secondary);
+  --color-link-hover: #1ccabc;
+  
+  /* Spacing - from original portfolio */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2.5rem;
+  --spacing-lg: 3.5rem;
+  --spacing-xl: 4.5rem;
+  --spacing-xxl: 5.5rem;
+  
+  /* Typography - from original portfolio */
+  --font-family-base: "Roboto", sans-serif;
+  --font-family-code: "Roboto Mono", monospace;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 1rem;
+  --font-size-md: 1.2rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-xxl: 2.5rem;
+  --font-size-xxxl: 3rem;
+  
+  /* Border radius */
+  --border-radius: 8px; /* Added for compatibility with original code */
+  --border-radius-sm: 5px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 15px;
+  --border-radius-full: 9999px;
+  
+  /* Box shadow */
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Z-index */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+  
+  /* Popup */
+  --popup-background: rgba(31, 31, 31, 0.8);
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --background-primary: #ffffff;
+  --background-secondary: #f8f9fa;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --color-background: #ffffff;
+  /* Lighter glass backgrounds for light theme */
+  --color-card-background: rgba(255, 255, 255, 0.7);
+  --color-glass-card-background: rgba(255, 255, 255, 0.5);
+  --color-glass-content-background: rgba(255, 255, 255, 0.3);
+}
+
+/* Media queries - from original portfolio */
+@media (max-width: 576px) {
+  :root {
+    --font-size-xxxl: var(--responsive-font-size-large, 2rem);
+    --font-size-xxl: 1.75rem;
+    --font-size-xl: 1.5rem;
+    --font-size-lg: var(--responsive-font-size-small, 1.1rem);
+    --spacing-xxl: var(--responsive-spacing-large, 1.5rem);
+    --spacing-xl: var(--responsive-spacing-medium, 1rem);
+    --spacing-lg: var(--responsive-spacing-small, 0.5rem);
+  }
+}

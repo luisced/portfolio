@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Character encoding: ensures proper text rendering -->
+  <meta charset="UTF-8" />
+  
+  <!-- Favicon: browser tab icon -->
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Responsive viewport settings -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+  <!-- Primary page title shown in search results and browser tab -->
+  <title>Luis Cedillo | Full‑Stack Developer</title>
+  <!-- Meta description: used by search engines under the title -->
+  <meta name="description" content="Luis Cedillo Maldonado — Full‑Stack Developer specializing in Kubernetes, AWS, and FastAPI." />
+  <!-- Canonical URL: tells engines the preferred URL to index -->
+  <link rel="canonical" href="https://luiscedillo.com/" />
+
+  <!-- Open Graph metadata: controls link previews on social platforms -->
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Luis Cedillo Maldonado" />
+  <meta property="og:title" content="Luis Cedillo Maldonado | Full‑Stack Developer" />
+  <meta property="og:description" content="Explore my portfolio, projects, and experience in backend, DevOps, and cloud native." />
+  <meta property="og:image" content="https://luiscedillo.com/meta-cover.webp" />
+  <meta property="og:url" content="https://luiscedillo.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Structured Data (JSON‑LD): tells search engines about the person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Luis Cedillo Maldonado",
+    "url": "https://luiscedillo.com",
+    "sameAs": [
+      "https://github.com/luismcedillo",
+      "https://linkedin.com/in/luismcedillo"
+    ],
+    "jobTitle": "Full‑Stack / DevOps Developer"
+    /* image removed because we're not preloading the profile picture here */
+  }
+  </script>
+
+  <!-- Font loading optimizations -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload the most critical font weight for first paint -->
+  <link rel="preload"
+        href="https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2"
+        as="font" type="font/woff2" crossorigin />
+  <!-- Load the remaining Roboto font weights -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet" />
+
+  <!-- Preload the Open Graph preview image to speed up social crawlers -->
+  <link rel="preload" href="/meta-cover.webp" as="image" />
+
+  <!-- Preload the main JavaScript bundle (Vite) for faster hydration -->
+  <link rel="modulepreload" href="/src/main.tsx" />
+</head>
+
+<body>
+  <!-- Hidden H1 for SEO: your name and title -->
+  <h1 class="visually-hidden">Luis Cedillo Maldonado — Full‑Stack & DevOps Developer</h1>
+
+  <!-- React root: your app will render here -->
+  <div id="root"></div>
+
+  <!-- Main entrypoint script -->
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

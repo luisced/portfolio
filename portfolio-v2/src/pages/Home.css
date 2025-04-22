@@ -1,0 +1,323 @@
+/* Home.css - Updated for more impactful design with transitions removed */
+
+.home {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  color: var(--text-primary);
+  background-color: transparent;
+}
+
+.presentation {
+  flex: 1;
+  color: var(--text-primary);
+  text-align: center;
+  padding: 0 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.name {
+  font-size: 5.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #14efdc; /* Use solid color instead of gradient for better performance */
+  font-display: swap; /* Ensure text is visible while fonts load */
+  contain: content; /* Improve paint performance */
+}
+
+.description {
+  padding-top: 10px;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.tagline {
+  margin-bottom: 2rem;
+  text-align: center;
+  opacity: 1;
+}
+
+.tagline-text {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.dynamic-word {
+  color: #14efdc;
+  font-weight: 900;
+  display: inline-block;
+  min-width: 250px;
+  text-align: center;
+  margin-left: 8px;
+}
+
+.bio {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0 auto 3rem auto;
+  text-align: center;
+  max-width: 600px;
+  opacity: 1;
+}
+
+.about-me {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(
+    100% 100% at 100% 0,
+    #14efdc 0,
+    #0d9165 100%
+  );
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  height: 60px;
+  width: 180px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding: 0 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  font-size: 18px;
+  opacity: 1;
+  align-self: center;
+  margin: 0 auto;
+}
+
+.about-me:focus {
+  box-shadow: #26c895 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #26c895 0 -3px 0 inset;
+}
+
+.about-me:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #26c895 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.about-me:active {
+  box-shadow: #26c895 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.spline-container {
+  flex: 1;
+  position: relative;
+}
+
+.loading-spinner {
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: progress;
+  border-radius: 50%;
+  border-top: 5px solid gold;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid gold;
+  border-right: 5px solid transparent;
+  z-index: 1000;
+}
+
+/* Responsive font sizes */
+@media only screen and (max-width: 1500px) {
+  .home {
+    flex-direction: row;
+    height: auto;
+  }
+
+  .name {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tagline-text {
+    font-size: 2rem;
+  }
+}
+
+/* MEDIA QUERIES */
+/* Tablets [601px -> 1200px] */
+@media only screen and (max-width: 1200px) {
+  .home {
+    flex-direction: row;
+    height: auto;
+    align-items: center;
+  }
+
+  .presentation {
+    padding: 3vh 3vw;
+    text-align: center;
+    flex: 0.6;
+  }
+
+  .spline-container {
+    flex: 0.4;
+  }
+
+  .name {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .description {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .tagline-text {
+    font-size: 1.8rem;
+  }
+
+  .bio {
+    font-size: 1rem;
+    margin: 0 auto 1.5rem auto;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .about-me {
+    align-self: center;
+  }
+
+  .spline-container {
+    width: 100%;
+    margin-top: 2vh;
+  }
+}
+
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+  .home {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+
+  .presentation {
+    flex: 1;
+    padding: 2vh 2vw;
+    width: 100%;
+  }
+
+  .spline-container {
+    flex: 1;
+    width: 100%;
+    height: 50vh;
+    touch-action: none;
+  }
+
+  .name {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tagline-text {
+    font-size: 1.5rem;
+  }
+  
+  .dynamic-word {
+    min-width: 150px;
+    font-size: 1.2rem;
+  }
+
+  .bio {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+
+  }
+
+  .spline-container {
+    width: 100%;
+    margin-top: 2vh;
+  }
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+  .home {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+  }
+
+  .presentation {
+    flex: 1;
+    padding: 1vh 1vw;
+    width: 100%;
+  }
+
+  .spline-container {
+    flex: 1;
+    width: 100%;
+    height: 40vh;
+    touch-action: none;
+  }
+
+  .name {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tagline-text {
+    font-size: 1.3rem;
+  }
+  
+  .dynamic-word {
+    min-width: 120px;
+    font-size: 1rem;
+    display: block;
+    margin: 0.5rem auto 0;
+    text-align: center;
+  }
+
+ 
+  .spline-container {
+    width: 100%;
+    margin-top: 2vh;
+  }
+}
