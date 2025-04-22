@@ -18,7 +18,7 @@ The latest version of my portfolio website built with React, TypeScript, and Vit
 
 This version is located in the `portfolio-v2` directory.
 
-## Getting Starte
+## Getting Started
 
 ### Portfolio V2 (Latest Version)
 
