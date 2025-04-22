@@ -20,7 +20,7 @@ const SimpleSplineRoom: React.FC<SimpleSplineRoomProps> = ({ className }) => {
 
     checkMobile();
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(checkMobile, 200);
