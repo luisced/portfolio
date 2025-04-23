@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [react()],
   server: {
     cors: {
@@ -13,9 +13,7 @@ export default defineConfig({
     }
   },
   build: {
-    // Target modern browsers for smaller bundle size
     target: 'es2018',
-    // Optimize chunks
     rollupOptions: {
       output: {
         manualChunks: {
@@ -24,11 +22,9 @@ export default defineConfig({
         }
       }
     },
-    // Optimize asset handling
-    assetsInlineLimit: 4096, // 4kb - smaller assets will be inlined
-    chunkSizeWarningLimit: 1000, // Increase warning limit for chunks
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000
   },
-  // Optimize asset handling
   optimizeDeps: {
     include: ['react', 'react-dom', '@splinetool/react-spline']
   }
