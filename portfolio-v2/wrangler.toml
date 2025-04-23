@@ -1,14 +1,11 @@
-name = "portfolio"
-type = "webpack"
-account_id = ""
-workers_dev = true
-route = ""
-zone_id = ""
-
-[site]
-bucket = "./dist"
-entry-point = "workers-site"
+name = "my-site"
+type = "javascript"
 
 [build]
 command = "npm run build"
 upload.format = "service-worker"
+upload.main = "./dist/assets/index-XXXX.js" # ← this must match actual output
+
+[site]
+bucket = "./dist"
+entry-point = "workers-site"
