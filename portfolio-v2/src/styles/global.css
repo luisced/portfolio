@@ -223,18 +223,6 @@ code {
   border: 0;
 }
 
-/* Font loading optimizations */
-/* Apply a system font stack before custom fonts load to prevent layout shifts */
-html:not(.fonts-loaded) {
-  /* Use system fonts with similar metrics to Inter */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-/* Once fonts are loaded, apply the custom font */
-html.fonts-loaded {
-  font-family: var(--font-family-base);
-}
-
 /* Optimize font rendering */
 html {
   text-rendering: optimizeLegibility;

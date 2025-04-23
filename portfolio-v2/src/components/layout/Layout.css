@@ -16,7 +16,6 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: var(--spacing-sm) 0;
-  margin-top: var(--spacing-lg);
   color: var(--text-primary);
   font-size: var(--font-size-sm);
   font-family: var(--font-family-code);

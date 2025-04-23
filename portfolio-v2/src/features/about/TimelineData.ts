@@ -16,7 +16,7 @@ export const experiences: TimelineExperience[] = [
   {
     title: "President – Engineering Student Council",
     company: "Universidad Panamericana",
-    icon: "https://img.icons8.com/external-smashingstocks-outline-color-smashing-stocks/64/external-leader-university-smashingstocks-outline-color-smashing-stocks.png",
+    icon: "/assets/images/logos/up_logo.webp",
     start: "2024-01",
     end: "Present", // End date set to "Present"
     location: "Mexico City",
@@ -30,8 +30,7 @@ export const experiences: TimelineExperience[] = [
   {
     title: "Tech Lead – Nyx Technology",
     company: "Nyx Technology",
-    // Using a generic tech/leadership icon
-    icon: "https://img.icons8.com/fluency/48/server.png",
+    icon: "/assets/images/logos/nyx_logo.webp",
     start: "2024-01",
     end: "2025-01",
     location: "Mexico City",
@@ -46,7 +45,7 @@ export const experiences: TimelineExperience[] = [
   {
     title: "Asst. Manager – iOS Lab",
     company: "Universidad Panamericana",
-    icon: "https://upload.wikimedia.org/wikipedia/commons/6/66/UPanamericana.png",
+    icon: "/assets/images/logos/ioslab_logo.webp",
     start: "2023-01",
     end: "Present", // End date set to "Present"
     location: "Mexico City",

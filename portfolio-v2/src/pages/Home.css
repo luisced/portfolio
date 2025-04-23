@@ -1,7 +1,7 @@
 /* Home.css - Updated for more impactful design with transitions removed */
 
 .home {
-  height: 100vh;
+  height: 80vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
