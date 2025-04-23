@@ -10,6 +10,6 @@ echo "Copying configuration files to dist folder..."
 
 # Deploy to Cloudflare Pages
 echo "Deploying to Cloudflare Pages..."
-npx wrangler pages deploy dist --project-name=portfolio
+npx wrangler pages deploy dist --project-name=portfolio --branch=main
 
 echo "Deployment complete!"

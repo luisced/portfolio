@@ -1,11 +1,14 @@
-name = "my-site"
-type = "javascript"
+name = "portfolio"
+compatibility_date = "2023-04-23"
 
 [build]
 command = "npm run build"
-upload.format = "service-worker"
-upload.main = "./dist/assets/index-XXXX.js" # ← this must match actual output
 
 [site]
 bucket = "./dist"
-entry-point = "workers-site"
+
+[env.production]
+name = "portfolio"
+
+[env.staging]
+name = "portfolio-staging"
