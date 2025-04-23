@@ -4,6 +4,14 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    cors: {
+      origin: ['https://luiscedillo.com', 'http://luiscedillo.com'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: true
+    }
+  },
   build: {
     // Target modern browsers for smaller bundle size
     target: 'es2018',
