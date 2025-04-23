@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
 
   // Update link style based on current route
   useEffect(() => {
-    if (location.pathname === '/portfolio') {
+    if (location.pathname === '/portfolio' || location.pathname === '/about') {
       setLinkClass('portfolio-link');
     } else {
       setLinkClass('default-link');
@@ -90,16 +90,9 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
             </Link>
           </li>
           <li>
-            <a 
-              href="#about-section" 
-              className={linkClass} 
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('about-section');
-              }}
-            >
+            <Link to="/about" className={linkClass} onClick={closeNavbar}>
               .about()
-            </a>
+            </Link>
           </li>
           <li>
             <Link to="/portfolio" className={linkClass} onClick={closeNavbar}>

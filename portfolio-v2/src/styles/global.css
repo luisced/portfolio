@@ -3,6 +3,10 @@
  * Preserving original portfolio styling
  */
 
+/* Import fonts first */
+@import './fonts.css';
+
+/* Import variables */
 @import './variables.css';
 
 /* Reset and base styles */
@@ -217,4 +221,23 @@ code {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Font loading optimizations */
+/* Apply a system font stack before custom fonts load to prevent layout shifts */
+html:not(.fonts-loaded) {
+  /* Use system fonts with similar metrics to Inter */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Once fonts are loaded, apply the custom font */
+html.fonts-loaded {
+  font-family: var(--font-family-base);
+}
+
+/* Optimize font rendering */
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

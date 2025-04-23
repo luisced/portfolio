@@ -48,9 +48,9 @@
   --spacing-xl: 4.5rem;
   --spacing-xxl: 5.5rem;
   
-  /* Typography - from original portfolio */
-  --font-family-base: "Roboto", sans-serif;
-  --font-family-code: "Roboto Mono", monospace;
+  /* Typography */
+  --font-family-base: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-code: "Inter", monospace;
   
   --font-size-xs: 0.75rem;
   --font-size-sm: 1rem;

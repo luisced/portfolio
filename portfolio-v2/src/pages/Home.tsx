@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useCallback, useRef, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { FaTerminal } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import Background from '../components/common/Background';
 import './Home.css';
@@ -33,11 +33,11 @@ const HomePage: React.FC = () => {
     }
   }, [location.state]);
   
+  const navigate = useNavigate();
+  
   const goToAbout = useCallback(() => {
-    if (aboutRef.current) {
-      aboutRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
+    navigate('/about');
+  }, [navigate]);
 
   // Static text for developer title
   const developerTitle = " Full Stack Developer.";
@@ -79,7 +79,6 @@ const HomePage: React.FC = () => {
         <h1 className="name">Luis Cedillo Maldonado</h1>
 
           <h2 className="description">
-            <FaTerminal />
             <span>{developerTitle}</span>
           </h2>
           
@@ -117,9 +116,7 @@ const HomePage: React.FC = () => {
       </div>
       
       <div ref={aboutRef}>
-        <Suspense fallback={<div className="loading">Loading...</div>}>
-          <About id="about-section" />
-        </Suspense>
+        {/* This div is kept as a reference but no longer contains the About component */}
       </div>
     </>
   );

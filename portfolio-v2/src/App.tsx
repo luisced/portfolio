@@ -7,7 +7,7 @@ import './App.css';
 
 // Lazy-loaded pages for better performance
 const Home = lazy(() => import('./pages/Home'));
-// About page is no longer needed
+const About = lazy(() => import('./pages/About'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -21,6 +21,11 @@ function App() {
             <Route index element={
               <Suspense fallback={<Loading />}>
                 <Home />
+              </Suspense>
+            } />
+            <Route path="about" element={
+              <Suspense fallback={<Loading />}>
+                <About />
               </Suspense>
             } />
             <Route path="portfolio" element={

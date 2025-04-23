@@ -43,14 +43,8 @@
   </script>
 
   <!-- Font loading optimizations -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Preload the most critical font weight for first paint -->
-  <link rel="preload"
-        href="https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4.woff2"
-        as="font" type="font/woff2" crossorigin />
-  <!-- Load the remaining Roboto font weights -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-        rel="stylesheet" />
+  <!-- Preload the variable font for better performance -->
+  <link rel="preload" href="/src/assets/fonts/Inter/Inter-VariableFont_opsz,wght.ttf" as="font" type="font/ttf" crossorigin />
 
   <!-- Preload the Open Graph preview image to speed up social crawlers -->
   <link rel="preload" href="/meta-cover.webp" as="image" />
