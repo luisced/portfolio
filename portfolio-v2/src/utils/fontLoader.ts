@@ -4,6 +4,15 @@
  */
 
 /**
+ * Adds a class to the HTML element to indicate fonts are loaded
+ */
+const addFontsLoadedClass = (): void => {
+  // Use a type assertion to tell TypeScript that document.documentElement is an HTMLElement
+  const htmlElement = document.documentElement as HTMLHtmlElement;
+  htmlElement.classList.add('fonts-loaded');
+};
+
+/**
  * Loads the Inter font and adds a class to the document when loaded
  * This can be used to prevent layout shifts and implement progressive enhancement
  */
@@ -17,16 +26,16 @@ export const loadFonts = (): void => {
       document.fonts.load('italic 1em Inter')
     ]).then(() => {
       // Add a class to the document when fonts are loaded
-      document.documentElement.classList.add('fonts-loaded');
+      addFontsLoadedClass();
     }).catch((error) => {
       console.warn('Font loading failed:', error);
       // Still add the class to prevent waiting indefinitely
-      document.documentElement.classList.add('fonts-loaded');
+      addFontsLoadedClass();
     });
   } else {
     // Fallback for browsers that don't support the Font Loading API
     // Just add the class immediately
-    document.documentElement.classList.add('fonts-loaded');
+    addFontsLoadedClass();
   }
 };
 

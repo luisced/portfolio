@@ -1,13 +1,11 @@
 import React, { lazy, Suspense, useCallback, useRef, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
-import { FaTerminal } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import Background from '../components/common/Background';
 import './Home.css';
 
 // Lazy load components for better performance
-const About = lazy(() => import('../features/about/About'));
 const LazySplineRoom = lazy(() => import('../components/common/SimpleSplineRoom'));
 
 const HomePage: React.FC = () => {

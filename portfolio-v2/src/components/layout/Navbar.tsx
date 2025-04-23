@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaMoon, FaSun } from 'react-icons/fa';
 import { NavbarProps } from '../../types/components';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -11,7 +11,6 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
   const [scrolled, setScrolled] = useState(false);
   
   const location = useLocation();
-  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
   // Handle scroll effect
@@ -39,21 +38,6 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
 
   const closeNavbar = () => {
     setIsOpen(false);
-  };
-  
-  const scrollToSection = (sectionId: string) => {
-    closeNavbar();
-    
-    // If we're already on the home page, scroll to the section
-    if (location.pathname === '/') {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // If we're on another page, navigate to home and then scroll
-      navigate('/', { state: { scrollTo: sectionId } });
-    }
   };
 
   return (
