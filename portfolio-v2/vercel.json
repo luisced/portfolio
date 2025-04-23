@@ -6,21 +6,15 @@
   "headers": [
     {
       "source": "/(.*)\\.js$",
-      "headers": [
-        { "key": "Content-Type", "value": "text/javascript" }
-      ]
+      "headers": [{ "key": "Content-Type", "value": "text/javascript" }]
     },
     {
       "source": "/(.*)\\.css$",
-      "headers": [
-        { "key": "Content-Type", "value": "text/css" }
-      ]
+      "headers": [{ "key": "Content-Type", "value": "text/css" }]
     },
     {
       "source": "/(.*)\\.html$",
-      "headers": [
-        { "key": "Content-Type", "value": "text/html" }
-      ]
+      "headers": [{ "key": "Content-Type", "value": "text/html" }]
     },
     {
       "source": "/(.*)\\.(js|css|json|xml|svg|txt|webp|png|jpg|jpeg|gif|ico|woff|woff2|ttf|otf)$",
@@ -44,4 +38,3 @@
     }
   ]
 }
-
