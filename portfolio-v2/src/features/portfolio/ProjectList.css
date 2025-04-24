@@ -20,6 +20,19 @@
   margin-bottom: var(--spacing-sm);
 }
 
+.filter-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.filter-toggle-icon {
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+}
+
 .filter-header h3 {
   margin: 0;
   font-size: var(--font-size-md);
@@ -182,6 +195,22 @@
     overflow-x: auto;
     justify-content: flex-start;
     padding-bottom: var(--spacing-xs);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  
+  .filter-container.expanded {
+    max-height: 300px;
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    overflow-y: auto;
+  }
+  
+  .filter-container.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   
   .filter-button {
@@ -194,13 +223,20 @@
   }
   
   .filter-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-xs);
+    cursor: pointer;
+    padding: 8px 0;
+  }
+  
+  .filter-header.mobile-toggle {
+    user-select: none;
   }
   
   .clear-filters-button {
-    align-self: flex-end;
+    z-index: 2; /* Ensure it's clickable */
   }
 }
 

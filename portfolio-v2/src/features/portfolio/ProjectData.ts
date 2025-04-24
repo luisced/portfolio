@@ -22,6 +22,12 @@ import upocket2 from "../../assets/images/upocket/upocket2.webp";
 import upocket3 from "../../assets/images/upocket/upocket3.webp";
 import upocket4 from "../../assets/images/upocket/upocket4.webp";
 
+import stackup_preview from "../../assets/images/stackup/stackup_preview.webp";
+import stackup1 from "../../assets/images/stackup/stackup1.webp";
+import stackup2 from "../../assets/images/stackup/stackup2.webp";
+import stackup3 from "../../assets/images/stackup/stackup3.webp";
+import stackup4 from "../../assets/images/stackup/stackup4.webp";
+
 
 import { Project } from "../../types/project";
 
@@ -199,7 +205,50 @@ export const projects: Project[] = [
     ],
     url: "https://example.com/upocket",
     github: "https://github.com/yourusername/upocket"
+  },
+  {
+    id: "05",
+    title: "StackUp - Channel Manager",
+    role: "Full-stack developer",
+    description: "StackUp is a web-based Channel Manager that automates hotel inventory, pricing, and promotion management across multiple OTAs like Booking.com, Expedia, and more. Designed for hotel admins, it simplifies complex configurations through a unified dashboard, saving time and reducing manual errors.",
+    shortDescription: "Web platform for managing hotel listings, pricing, and availability across multiple travel agencies like Booking and Expedia.",
+    category: "Web - Admin System",
+    projectCategory: "Web",
+    previewImage: stackup_preview,
+    images: [
+      {
+        src: stackup1,
+        alt: "StackUp Hotel Selection Interface",
+        platform: "Web"
+      },
+      {
+        src: stackup2,
+        alt: "StackUp Room Pricing Editor",
+        platform: "Web"
+      },
+      {
+        src: stackup3,
+        alt: "StackUp Hotel Configuration View",
+        platform: "Web"
+      },
+      {
+        src: stackup4,
+        alt: "StackUp Promotion Management",
+        platform: "Web"
+      }
+    ],
+    technologies: ["Svelte", "Javascript", "FastAPI", "PostgreSQL", "Docker", "AWS"],
+    featuresList: [
+      "Multi-hotel channel synchronization",
+      "Inventory and pricing automation",
+      "Promotion and discount rule engine",
+      "Role-based access and audit logs",
+      "Responsive admin dashboard"
+    ],
+    url: "https://example.com/stackup",
+    github: "https://github.com/yourusername/stackup"
   }
+  
   
   
   

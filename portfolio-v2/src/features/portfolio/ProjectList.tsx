@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { projects } from './ProjectData';
 import ProjectCard from './ProjectCard';
 import TechIcon from '../../components/common/TechIcon';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import './ProjectList.css';
 
 interface ProjectListProps {
@@ -12,6 +12,7 @@ interface ProjectListProps {
 const ProjectList: React.FC<ProjectListProps> = ({ className }) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
   
   // Extract all unique technologies from projects
   const allTechnologies = React.useMemo(() => {
@@ -59,12 +60,24 @@ const ProjectList: React.FC<ProjectListProps> = ({ className }) => {
   return (
     <div className={`project-list ${className || ''}`}>
       <div className="filter-section">
-        <div className="filter-header">
-          <h3>Filter by Technology</h3>
+        <div 
+          className="filter-header mobile-toggle"
+          onClick={() => setIsFilterExpanded(!isFilterExpanded)}
+        >
+          <div className="filter-title-container">
+            <h3>Filter by Technology</h3>
+            <div className="filter-toggle-icon">
+              {isFilterExpanded ? <FaChevronUp /> : <FaChevronDown />}
+            </div>
+          </div>
+          
           {selectedFilters.length > 0 && (
             <button 
               className="clear-filters-button"
-              onClick={clearFilters}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent toggle when clicking clear button
+                clearFilters();
+              }}
               title="Clear all filters"
             >
               Clear All <FaTimes />
@@ -72,12 +85,15 @@ const ProjectList: React.FC<ProjectListProps> = ({ className }) => {
           )}
         </div>
         
-        <div className="filter-container">
+        <div className={`filter-container ${isFilterExpanded ? 'expanded' : 'collapsed'}`}>
           {allTechnologies.map(tech => (
             <button
               key={tech}
               className={`filter-button ${selectedFilters.includes(tech) ? 'active' : ''}`}
-              onClick={() => toggleFilter(tech)}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFilter(tech);
+              }}
               title={selectedFilters.includes(tech) ? `Remove ${tech} filter` : `Add ${tech} filter`}
             >
               <div className="filter-button-content">

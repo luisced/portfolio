@@ -178,7 +178,7 @@
 /* Responsive styles */
 @media (max-width: 768px) {
   .project-card-content {
-    flex-direction: column-reverse;
+    flex-direction: column; /* Keep image at the top */
   }
   
   .project-image-container {
