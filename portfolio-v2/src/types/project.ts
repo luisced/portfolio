@@ -5,7 +5,7 @@
 export interface ProjectImage {
   src: string;
   alt: string;
-  platform: 'Mobile' | 'Desktop' | 'Tablet';
+  platform: 'Mobile' | 'Desktop' | 'Tablet' | 'Web';
 }
 
 export interface Project {

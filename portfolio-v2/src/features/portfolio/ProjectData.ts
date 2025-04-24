@@ -209,7 +209,7 @@ export const projects: Project[] = [
   {
     id: "05",
     title: "StackUp - Channel Manager",
-    role: "Full-stack developer",
+    role: "Backend developer",
     description: "StackUp is a web-based Channel Manager that automates hotel inventory, pricing, and promotion management across multiple OTAs like Booking.com, Expedia, and more. Designed for hotel admins, it simplifies complex configurations through a unified dashboard, saving time and reducing manual errors.",
     shortDescription: "Web platform for managing hotel listings, pricing, and availability across multiple travel agencies like Booking and Expedia.",
     category: "Web - Admin System",
