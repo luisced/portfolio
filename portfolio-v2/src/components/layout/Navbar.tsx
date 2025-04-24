@@ -69,22 +69,38 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
         
         <ul className={`navbar-links ${isOpen ? 'active' : ''}`}>
           <li>
-            <Link to="/" className={linkClass} onClick={closeNavbar}>
+            <Link 
+              to="/" 
+              className={`${linkClass} ${location.pathname === '/' ? 'active' : ''}`} 
+              onClick={closeNavbar}
+            >
               .home()
             </Link>
           </li>
           <li>
-            <Link to="/about" className={linkClass} onClick={closeNavbar}>
+            <Link 
+              to="/about" 
+              className={`${linkClass} ${location.pathname === '/about' ? 'active' : ''}`} 
+              onClick={closeNavbar}
+            >
               .about()
             </Link>
           </li>
           <li>
-            <Link to="/portfolio" className={linkClass} onClick={closeNavbar}>
+            <Link 
+              to="/portfolio" 
+              className={`${linkClass} ${location.pathname === '/portfolio' ? 'active' : ''}`} 
+              onClick={closeNavbar}
+            >
               .portfolio()
             </Link>
           </li>
           <li>
-            <Link to="/contact" className={linkClass} onClick={closeNavbar}>
+            <Link 
+              to="/contact" 
+              className={`${linkClass} ${location.pathname === '/contact' ? 'active' : ''}`} 
+              onClick={closeNavbar}
+            >
               .contact()
             </Link>
           </li>

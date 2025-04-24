@@ -130,6 +130,25 @@
   color: var(--color-highlight);
 }
 
+/* Active link styling */
+.default-link.active,
+.portfolio-link.active {
+  color: var(--color-primary);
+  position: relative;
+}
+
+.default-link.active::after,
+.portfolio-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
 [data-theme="light"] .portfolio-link {
   color: var(--text-primary);
 }
