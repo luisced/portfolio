@@ -114,13 +114,17 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: var(--box-shadow);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gallery-main {
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 50%; /* Reduced from 56.25% for less height */
+  max-height: 500px;
   overflow: hidden;
   border-radius: var(--border-radius-md);
   margin-bottom: var(--spacing-sm);
@@ -132,7 +136,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Changed from cover to maintain aspect ratio */
+  background-color: rgba(0, 0, 0, 0.05); /* Subtle background for transparent areas */
+  transition: opacity 0.3s ease; /* Smooth transition when changing images */
 }
 
 .gallery-nav {
@@ -169,7 +175,8 @@
   display: flex;
   gap: var(--spacing-xs);
   overflow-x: auto;
-  padding-bottom: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  justify-content: center;
 }
 
 .gallery-thumbnail {
@@ -179,8 +186,9 @@
   overflow: hidden;
   cursor: pointer;
   opacity: 0.6;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
   flex-shrink: 0;
+  border: 2px solid transparent;
 }
 
 .gallery-thumbnail.active {
@@ -337,6 +345,10 @@
   .project-detail-stats {
     grid-template-columns: 1fr;
     gap: var(--spacing-sm);
+  }
+  
+  .gallery-main {
+    padding-bottom: 60%; /* Slightly taller on mobile for better visibility */
   }
   
   .gallery-thumbnail {

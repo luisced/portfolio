@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { projects } from '../features/portfolio/ProjectData';
 import { FaArrowLeft, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import Background from '../components/common/Background';
+import TechIcon from '../components/common/TechIcon';
 import './ProjectDetailPage.css';
 
 const ProjectDetailPage: React.FC = () => {
@@ -123,7 +124,7 @@ const ProjectDetailPage: React.FC = () => {
           <h3>Technologies Used</h3>
           <div className="tech-tags">
             {technologies.map((tech, index) => (
-              <span key={index} className="tech-tag">{tech}</span>
+              <TechIcon key={index} tech={tech} size="md" />
             ))}
           </div>
         </div>
