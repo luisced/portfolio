@@ -3,6 +3,7 @@ import { Project } from '../../types/project';
 import './ProjectCard.css';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import TechIcon from '../../components/common/TechIcon';
 
 interface ProjectCardProps {
   project: Project;
@@ -36,15 +37,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           <p className="project-role">{project.role}</p>
           <div className="project-category">{project.category}</div>
           <p className="project-description-preview">
-            {project.description.length > 150 
-              ? `${project.description.substring(0, 150)}...` 
-              : project.description}
+            {project.shortDescription || 
+              (project.description.length > 150 
+                ? `${project.description.substring(0, 150)}...` 
+                : project.description)}
           </p>
           
           {technologies && technologies.length > 0 && (
             <div className="project-tech">
               {technologies.slice(0, 3).map((tech, index) => (
-                <span key={index} className="tech-tag">{tech}</span>
+                <TechIcon key={index} tech={tech} size="sm" showName={false} />
               ))}
               {technologies.length > 3 && (
                 <span className="tech-tag">+{technologies.length - 3}</span>

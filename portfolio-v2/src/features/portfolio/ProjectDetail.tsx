@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Project } from '../../types/project';
 import './ProjectDetail.css';
 import { FaArrowLeft, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import TechIcon from '../../components/common/TechIcon';
 
 interface ProjectDetailProps {
   project: Project;
@@ -100,7 +101,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
           <h3>Technologies Used</h3>
           <div className="tech-tags">
             {technologies.map((tech, index) => (
-              <span key={index} className="tech-tag">{tech}</span>
+              <TechIcon key={index} tech={tech} size="md" />
             ))}
           </div>
         </div>

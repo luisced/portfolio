@@ -13,6 +13,7 @@ export interface Project {
   title: string;
   role: string;
   description: string;
+  shortDescription?: string; // Short description for project cards
   category: string;
   projectCategory: string;
   images: ProjectImage[];

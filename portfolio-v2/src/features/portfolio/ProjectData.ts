@@ -16,6 +16,13 @@ import oxxocorner2 from "../../assets/images/oxxocorner/oxxocorner2.webp";
 import oxxocorner3 from "../../assets/images/oxxocorner/oxxocorner3.webp";
 import oxxocorner4 from "../../assets/images/oxxocorner/oxxocorner4.webp";
 
+import upocket_preview from "../../assets/images/upocket/upocket_preview.webp";
+import upocket1 from "../../assets/images/upocket/upocket1.webp";
+import upocket2 from "../../assets/images/upocket/upocket2.webp";
+import upocket3 from "../../assets/images/upocket/upocket3.webp";
+import upocket4 from "../../assets/images/upocket/upocket4.webp";
+
+
 import { Project } from "../../types/project";
 
 export const projects: Project[] = [
@@ -25,6 +32,7 @@ export const projects: Project[] = [
     role: "Development lead • Full-stack developer",
     description:
       "Dermaware is a mobile application that allows users to track their skin health and receive personalized recommendations. Genesis is the first version of the app, which includes a skin health tracker, an integrated chat system, and a community forum. I led a team of 5 developers to build the app using SwiftUI and Flask.",
+    shortDescription: "Mobile app for skin health tracking with AI-powered recommendations and dermatologist consultations.",
     category: "Mobile - iOS",
     projectCategory: "Mobile",
     previewImage: genesis_preview,
@@ -67,6 +75,7 @@ export const projects: Project[] = [
     role: "Team lead • Backend developer",
     description:
       "Homecare is a mobile application that allows users to measure their energy consumption through computational vision in order to provide personalized recommendations. Nemesis is the first version of the app, which includes an energy consumption tracker, and a generative AI. I led a team of 5 developers to build the app using SwiftUI and Django.",
+    shortDescription: "Energy monitoring app using computer vision to analyze consumption and provide AI-powered saving recommendations.",
     category: "Mobile - iOS",
     projectCategory: "Mobile",
     previewImage: homecare_preview,
@@ -110,6 +119,7 @@ export const projects: Project[] = [
     role: "Product Owner • Full-stack developer",
     description:
       "Oxxo Corner is a mobile application that allows users to interact with Oxxo stores in a new way, by providing an augmented reality experience in order to receive personalized recommendations. This is the first version of the app, which includes an AR experience, image filtering by generative AI, and a community forum. I led a team of 4 developers to build the app using SwiftUI and Flask.",
+    shortDescription: "Augmented reality retail app enhancing the shopping experience with AR navigation and AI product recommendations.",
     category: "Mobile - iOS",
     projectCategory: "Mobile",
     previewImage: oxxocorner_preview,
@@ -148,4 +158,49 @@ export const projects: Project[] = [
     url: "https://example.com/oxxocorner",
     github: "https://github.com/example/oxxocorner"
   },
+  {
+    id: "04",
+    title: "UPocket",
+    role: "Full-stack developer",
+    description: "UPocket is an all-in-one mobile application designed to streamline and enhance the academic experience for university students. With a modern and intuitive interface, the app centralizes key academic data—allowing students to view their class schedules, track attendance, monitor academic performance, and access relevant academic links all in one place.",
+    shortDescription: "UPocket is a student-focused mobile app that centralizes academic information like class schedules, grades, and attendance in a sleek, user-friendly interface.",
+    category: "Mobile - Frontend",
+    projectCategory: "Mobile",
+    previewImage: upocket_preview,
+    images: [
+      {
+        src: upocket1,
+        alt: "UPocket Dashboard with academic overview",
+        platform: "Mobile"
+      },
+      {
+        src: upocket2,
+        alt: "UPocket Schedule View",
+        platform: "Mobile"
+      },
+      {
+        src: upocket3,
+        alt: "UPocket Attendance Tracking",
+        platform: "Mobile"
+      },
+      {
+        src: upocket4,
+        alt: "UPocket Grade Summary Screen",
+        platform: "Mobile"
+      }
+    ],
+    technologies: ["FastAPI", "Python", "PostgreSQL", "SwiftUI", "Kubernetes", "Docker"],
+    featuresList: [
+      "Personalized student dashboard",
+      "Attendance and grade tracking",
+      "Interactive class schedule view",
+      "Dark mode support",
+      "Mobile-optimized performance"
+    ],
+    url: "https://example.com/upocket",
+    github: "https://github.com/yourusername/upocket"
+  }
+  
+  
+  
 ];
