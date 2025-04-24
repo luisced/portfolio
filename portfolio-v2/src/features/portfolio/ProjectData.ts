@@ -72,8 +72,8 @@ export const projects: Project[] = [
       "Community forum for sharing experiences",
       "User profile management"
     ],
-    url: "https://example.com/dermaware",
-    github: "https://github.com/example/dermaware"
+    url: "",
+    github: "https://github.com/ios-lab-up/Genesis-API"
   },
   {
     id: "02",
@@ -116,8 +116,8 @@ export const projects: Project[] = [
       "User profile and settings management",
       "Historical data visualization"
     ],
-    url: "https://example.com/homecare",
-    github: "https://github.com/example/homecare"
+    url: "",
+    github: "https://github.com/ios-lab-up/Homecare-Back"
   },
   {
     id: "03",
@@ -161,7 +161,7 @@ export const projects: Project[] = [
       "User profile management",
       "Store locator with AR directions"
     ],
-    url: "https://example.com/oxxocorner",
+    url: "",
     github: "https://github.com/example/oxxocorner"
   },
   {
@@ -203,8 +203,8 @@ export const projects: Project[] = [
       "Dark mode support",
       "Mobile-optimized performance"
     ],
-    url: "https://example.com/upocket",
-    github: "https://github.com/yourusername/upocket"
+    url: "",
+    github: "https://github.com/ios-lab-up/UPOCKET"
   },
   {
     id: "05",
@@ -245,8 +245,8 @@ export const projects: Project[] = [
       "Role-based access and audit logs",
       "Responsive admin dashboard"
     ],
-    url: "https://example.com/stackup",
-    github: "https://github.com/yourusername/stackup"
+    url: "https://flowlink.stack-up.com/",
+    github: "https://github.com/NyxTech/stackup-backend"
   }
   
   

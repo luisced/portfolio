@@ -13,10 +13,13 @@ const ProjectDetailPage: React.FC = () => {
   // Find the project with the matching ID
   const project = projects.find(p => p.id === id);
   
-  // Scroll to top when component mounts
+  // Reset state and scroll to top when component or project ID changes
   useEffect(() => {
+    // Reset current image index when project changes
+    setCurrentImageIndex(0);
+    // Scroll to top
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
   
   // If project not found, show error message
   if (!project) {
@@ -93,6 +96,7 @@ const ProjectDetailPage: React.FC = () => {
               src={project.images[currentImageIndex].src} 
               alt={project.images[currentImageIndex].alt} 
               className="gallery-main-image"
+              key={`${project.id}-${currentImageIndex}`} // Add key to force re-render
             />
             <button className="gallery-nav prev" onClick={prevImage} aria-label="Previous image">
               &lt;
