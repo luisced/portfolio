@@ -107,7 +107,7 @@ export const projects: Project[] = [
         platform: "Mobile"
       },
     ],
-    technologies: ["SwiftUI", "Django", "Python", "PostgreSQL", "Computer Vision", "AI"],
+    technologies: ["SwiftUI", "Django", "Python", "PostgreSQL", "Computer Vision", "AI", "Docker"],
     featuresList: [
       "Energy consumption tracking with computer vision",
       "Personalized recommendations for energy saving",
@@ -151,7 +151,7 @@ export const projects: Project[] = [
         platform: "Mobile"
       },
     ],
-    technologies: ["SwiftUI", "Flask", "Python", "ARKit", "CoreML", "Generative AI"],
+    technologies: ["SwiftUI", "Flask", "Python", "ARKit", "CoreML", "Generative AI", "Docker"],
     featuresList: [
       "Augmented reality store navigation",
       "Personalized product recommendations",
