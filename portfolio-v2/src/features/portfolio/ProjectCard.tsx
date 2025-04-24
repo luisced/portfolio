@@ -1,67 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Project } from '../../types/project';
 import './ProjectCard.css';
+import { FaArrowRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface ProjectCardProps {
   project: Project;
-  onClick: (project: Project) => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  // Function to handle image navigation
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
-  };
-  
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
-  };
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  // Extract technologies from the project
+  const technologies = project.technologies || [];
 
   return (
-    <div className="project-card" onClick={() => onClick(project)}>
-      <div className="project-image-container">
-        <img 
-          src={project.images[currentImageIndex].src} 
-          alt={project.images[currentImageIndex].alt} 
-          className="project-image"
-        />
-        <div className="image-navigation">
-          <button className="nav-button prev" onClick={prevImage} aria-label="Previous image">
-            &lt;
-          </button>
-          <div className="image-indicator">
-            {project.images.map((_, index) => (
-              <span 
-                key={index} 
-                className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
-              />
-            ))}
-          </div>
-          <button className="nav-button next" onClick={nextImage} aria-label="Next image">
-            &gt;
-          </button>
+    <article className="project-card">
+      <div className="project-card-content">
+        <div className="project-image-container">
+          {project.previewImage ? (
+            <img 
+              src={project.previewImage} 
+              alt={`${project.title} preview`} 
+              className="project-image"
+            />
+          ) : (
+            <div className="project-image-placeholder">
+              <span className="placeholder-text">{project.title.charAt(0)}</span>
+            </div>
+          )}
+        </div>
+        
+        <div className="project-info">
+          <h3 className="project-title">
+            <span className="metal">{project.title}</span>
+          </h3>
+          <p className="project-role">{project.role}</p>
+          <div className="project-category">{project.category}</div>
+          <p className="project-description-preview">
+            {project.description.length > 150 
+              ? `${project.description.substring(0, 150)}...` 
+              : project.description}
+          </p>
+          
+          {technologies && technologies.length > 0 && (
+            <div className="project-tech">
+              {technologies.slice(0, 3).map((tech, index) => (
+                <span key={index} className="tech-tag">{tech}</span>
+              ))}
+              {technologies.length > 3 && (
+                <span className="tech-tag">+{technologies.length - 3}</span>
+              )}
+            </div>
+          )}
+          
+          <Link to={`/portfolio/${project.id}`} className="see-project-button">
+            See Project <FaArrowRight className="arrow-icon" />
+          </Link>
         </div>
       </div>
-      <div className="project-info">
-        <h3 className="project-title">{project.title}</h3>
-        <p className="project-role">{project.role}</p>
-        <div className="project-category">{project.category}</div>
-        <p className="project-description-preview">
-          {project.description.length > 120 
-            ? `${project.description.substring(0, 120)}...` 
-            : project.description}
-        </p>
-        <div className="project-tech">
-          {project.technologies?.map((tech, index) => (
-            <span key={index} className="tech-tag">{tech}</span>
-          ))}
-        </div>
-      </div>
-    </div>
+    </article>
   );
 };
 

@@ -16,7 +16,9 @@ export interface Project {
   category: string;
   projectCategory: string;
   images: ProjectImage[];
-  technologies?: string[];  // New field to display tech stack
-  url?: string;             // New field for live demo links
-  github?: string;          // New field for repository links
+  previewImage?: string;    // Optional special preview image
+  technologies?: string[];  // Technologies used in the project
+  featuresList?: string[];  // List of key features
+  url?: string;             // Live demo URL
+  github?: string;          // GitHub repository URL
 }

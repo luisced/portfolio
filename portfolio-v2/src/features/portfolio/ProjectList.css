@@ -14,7 +14,7 @@
 }
 
 .filter-button {
-  background-color: var(--background-secondary);
+  background-color: var(--color-card-background);
   color: var(--text-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-full);
@@ -22,17 +22,21 @@
   font-size: var(--font-size-sm);
   cursor: pointer;
   transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 .filter-button:hover {
   background-color: var(--color-primary);
   color: white;
+  border-color: var(--color-primary);
 }
 
 .filter-button.active {
   background-color: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(41, 174, 128, 0.5);
 }
 
 .projects-grid {
@@ -47,11 +51,18 @@
   padding: var(--spacing-xl) 0;
   color: var(--text-secondary);
   font-size: var(--font-size-lg);
+  grid-column: 1 / -1;
+  background-color: var(--color-glass-card-background);
+  border-radius: var(--border-radius-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 /* Animation for cards */
 .projects-grid > * {
-  animation: fadeIn 0.5s ease forwards;
+  animation-fill-mode: forwards;
   opacity: 0;
 }
 
@@ -62,29 +73,46 @@
 .projects-grid > *:nth-child(5) { animation-delay: 0.5s; }
 .projects-grid > *:nth-child(6) { animation-delay: 0.6s; }
 
+/* Hidden filtered animation */
+.project-card.hidden-filtered {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+  position: absolute;
+}
+
 /* Responsive styles */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .projects-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--spacing-md);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .projects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: var(--spacing-md);
-    padding: 0 var(--spacing-sm);
   }
   
   .filter-container {
     padding: 0 var(--spacing-sm);
-    justify-content: flex-start;
     overflow-x: auto;
+    justify-content: flex-start;
     padding-bottom: var(--spacing-xs);
   }
   
   .filter-button {
     flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-grid {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .filter-button {
+    padding: 6px 12px;
+    font-size: var(--font-size-xs);
   }
 }

@@ -1,0 +1,89 @@
+/* AppWindow.css */
+.app-window {
+  margin: 5vh auto;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  width: 90%;
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.app-window > *:not(.header):not(.menu-circle):not(.bento-container) {
+  padding: 50px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 58px;
+  width: 100%;
+  border-bottom: 1px solid rgba(113, 119, 144, 0.25);
+  padding: 0 30px;
+  white-space: nowrap;
+}
+
+.menu-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #f96057; /* Red close button */
+  border-radius: 50%;
+  box-shadow: 24px 0 0 0 #f8ce52, /* Yellow minimize button */
+              48px 0 0 0 #5fcf65; /* Green maximize button */
+  margin-right: 195px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Add hover effect for the menu circles */
+.menu-circle::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .app-window {
+    margin-top: 5rem;
+    width: 95%;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-window {
+    margin-top: 3rem;
+    width: 100%;
+    border-radius: 12px; /* Ensure border-radius is maintained on mobile */
+  }
+  
+  .app-window > *:not(.header):not(.menu-circle) {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 425px) {
+  .app-window {
+    margin-top: 2rem;
+    border-radius: 12px; /* Ensure border-radius is maintained on smaller mobile */
+  }
+  
+  .app-window > *:not(.header):not(.menu-circle) {
+    padding: 20px;
+  }
+}

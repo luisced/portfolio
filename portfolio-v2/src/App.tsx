@@ -9,6 +9,7 @@ import './App.css';
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -31,6 +32,11 @@ function App() {
             <Route path="portfolio" element={
               <Suspense fallback={<Loading />}>
                 <Portfolio />
+              </Suspense>
+            } />
+            <Route path="portfolio/:id" element={
+              <Suspense fallback={<Loading />}>
+                <ProjectDetailPage />
               </Suspense>
             } />
             <Route path="contact" element={

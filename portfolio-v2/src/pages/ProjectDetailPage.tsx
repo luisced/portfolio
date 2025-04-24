@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
-import { Project } from '../../types/project';
-import './ProjectDetail.css';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { projects } from '../features/portfolio/ProjectData';
 import { FaArrowLeft, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import Background from '../components/common/Background';
+import './ProjectDetailPage.css';
 
-interface ProjectDetailProps {
-  project: Project;
-  onClose: () => void;
-}
-
-const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
+const ProjectDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Find the project with the matching ID
+  const project = projects.find(p => p.id === id);
+  
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  // If project not found, show error message
+  if (!project) {
+    return (
+      <div className="project-not-found">
+        <Background />
+        <div className="page-container">
+          <h2>Project Not Found</h2>
+          <p>The project you're looking for doesn't exist.</p>
+          <Link to="/portfolio" className="back-link">
+            <FaArrowLeft /> Back to Portfolio
+          </Link>
+        </div>
+      </div>
+    );
+  }
   
   // Extract technologies and features
   const technologies = project.technologies || [];
@@ -25,11 +47,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   };
 
   return (
-    <div className="project-detail-overlay" onClick={onClose}>
-      <div className="project-detail-content" onClick={(e) => e.stopPropagation()}>
-        <button className="back-button" onClick={onClose} aria-label="Back to projects">
-          <FaArrowLeft /> Back
-        </button>
+    <div className="project-detail-page">
+      <Background />
+      <div className="page-container">
+        <Link to="/portfolio" className="back-link">
+          <FaArrowLeft /> Back to Portfolio
+        </Link>
         
         <h2 className="project-detail-title">
           <span className="metal">{project.title}</span>
@@ -133,4 +156,4 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onClose }) => {
   );
 };
 
-export default ProjectDetail;
+export default ProjectDetailPage;

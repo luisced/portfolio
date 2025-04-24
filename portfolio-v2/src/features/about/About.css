@@ -11,54 +11,8 @@
   scroll-margin-top: 70px; /* Accounts for navbar height */
 }
 
-.app-window {
-  margin: 5vh auto;
-  padding: 0;
-  background-color: rgba(255, 255, 255, 0.05);
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  width: 90%;
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  font-size: 15px;
-  font-weight: 500;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
+/* App window styles moved to AppWindow.css and SectionContainer.css */
 
-.app-window > *:not(.header):not(.menu-circle):not(.bento-container) {
-  padding: 50px;
-}
-
-.section-title {
-  text-align: left; 
-  align-self: flex-start;
-  width: 90%;
-  margin: 0 auto 30px;
-  font-size: var(--font-size-xxl);
-  color: var(--text-primary);
-  font-weight: 600;
-  word-wrap: break-word;
-  max-width: 100%;
-}
-
-/* Style for the code tags in section titles */
-.section-title {
-  color: var(--text-primary);
-  font-family: var(--font-family-code);
-  font-weight: 600;
-}
-
-/* Style for the angle brackets in the titles */
-.section-title .code-tag {
-  color: var(--color-primary);
-  font-weight: 700;
-  opacity: 0.9;
-}
 
 
 .bento-container {
@@ -225,10 +179,7 @@
 
 /* Responsive Design */
 @media only screen and (max-width: 1200px) {
-  .app-window {
-    margin-top: 5rem;
-    width: 95%;
-  }
+  /* App window styles moved to AppWindow.css and SectionContainer.css */
   
   .intro {
     flex-direction: column;
@@ -241,15 +192,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .app-window {
-    margin-top: 3rem;
-    width: 100%;
-    border-radius: 12px; /* Ensure border-radius is maintained on mobile */
-  }
-  
-  .app-window > *:not(.header):not(.menu-circle) {
-    padding: 30px;
-  }
+  /* App window styles moved to AppWindow.css and SectionContainer.css */
   
   .profile-pic {
     max-width: 300px;
@@ -263,23 +206,11 @@
     padding: 10px 0;
   }
   
-  .section-title {
-    width: 100%;
-    font-size: var(--font-size-xl);
-    margin-bottom: 25px;
-    padding: 0 30px;
-  }
+  /* Section title styles moved to SectionTitle.css and SectionContainer.css */
 }
 
 @media only screen and (max-width: 425px) {
-  .app-window {
-    margin-top: 2rem;
-    border-radius: 12px; /* Ensure border-radius is maintained on smaller mobile */
-  }
-  
-  .app-window > *:not(.header):not(.menu-circle) {
-    padding: 20px;
-  }
+  /* App window styles moved to AppWindow.css and SectionContainer.css */
   
   .profile-pic {
     max-width: 250px;
@@ -293,23 +224,9 @@
     padding: 5px 0;
   }
   
-  .section-title {
-    font-size: var(--font-size-lg);
-    margin-bottom: 20px;
-    line-height: 1.3;
-    padding: 0 20px;
-  }
-  
-  .timeline-section .section-title {
-    font-size: var(--font-size-lg);
-    margin-bottom: 20px;
-  }
+  /* Section title styles moved to SectionTitle.css and SectionContainer.css */
 }
 
 @media only screen and (max-width: 375px) {
-  .section-title {
-    font-size: var(--font-size-md);
-    margin-bottom: 15px;
-    padding: 0 15px;
-  }
+  /* Section title styles moved to SectionTitle.css and SectionContainer.css */
 }

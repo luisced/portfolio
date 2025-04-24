@@ -24,35 +24,15 @@
   margin-top: 0; /* Override the margin-top from the About component */
 }
 
-/* Make the app-window take full width */
-.page-container .app-window {
-  width: 100%;
-  max-width: 1400px; /* Limit max width for very large screens */
-  margin: 0 auto;
-}
-
-/* Ensure the section title is properly aligned */
-.page-container .section-title {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto 30px;
-  padding: 0 1rem;
-}
+/* App window and section title styles moved to SectionContainer.css */
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .page-container .about-section {
     padding: 1rem 0.5rem;
   }
-  
-  .page-container .app-window {
-    width: 95%;
-  }
 }
 
 @media (max-width: 480px) {
-  .page-container .app-window {
-    width: 100%;
-    border-radius: 12px; /* Maintain border-radius on mobile */
-  }
+  /* App window styles moved to SectionContainer.css */
 }

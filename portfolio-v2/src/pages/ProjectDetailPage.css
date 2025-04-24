@@ -1,50 +1,31 @@
-.project-detail-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: var(--spacing-md);
-  overflow-y: auto;
-  animation: fadeIn 0.3s ease;
-}
-
-.project-detail-content {
-  background-color: var(--color-glass-card-background);
-  border-radius: var(--border-radius-lg);
+.project-detail-page {
   width: 100%;
-  max-width: 1000px;
-  max-height: 90vh;
-  overflow-y: auto;
+  min-height: 100vh;
   position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.4s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: var(--spacing-lg);
+  overflow-x: hidden;
 }
 
-.back-button {
+.page-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) 0;
+  position: relative;
+  z-index: 1;
+}
+
+.back-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: none;
-  border: none;
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
-  cursor: pointer;
-  padding: 0;
+  text-decoration: none;
   margin-bottom: var(--spacing-md);
   transition: color 0.2s ease;
 }
 
-.back-button:hover {
+.back-link:hover {
   color: var(--text-primary);
 }
 
@@ -80,12 +61,16 @@
 }
 
 .stat-card {
-  background-color: var(--color-card-background);
+  background-color: var(--color-glass-card-background);
   border-radius: var(--border-radius-md);
   padding: var(--spacing-sm);
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .stat-icon {
@@ -122,6 +107,13 @@
 
 .project-detail-gallery {
   margin-bottom: var(--spacing-lg);
+  background-color: var(--color-glass-card-background);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .gallery-main {
@@ -211,6 +203,13 @@
 .project-detail-tech,
 .project-detail-features {
   margin-bottom: var(--spacing-lg);
+  background-color: var(--color-glass-card-background);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .project-detail-description h3,
@@ -234,10 +233,16 @@
   gap: 10px;
 }
 
-.project-detail-features {
+.tech-tag {
   background-color: var(--color-card-background);
-  border-radius: var(--border-radius-md);
-  padding: var(--spacing-md);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .features-list {
@@ -300,22 +305,29 @@
   transform: translateY(-2px);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.project-not-found {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-@keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+.metal {
+  background: var(--metallic-gradient, linear-gradient(120deg, #f7f7f7 0%, #cfcfcf 25%, #9e9e9e 45%, #e5e5e5 65%, #b8b8b8 85%, #efefef 100%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .project-detail-content {
-    padding: var(--spacing-md);
-    max-height: 95vh;
+  .page-container {
+    width: 95%;
+    padding: var(--spacing-md) 0;
   }
   
   .project-detail-title {
@@ -343,13 +355,9 @@
 }
 
 @media (max-width: 480px) {
-  .project-detail-overlay {
-    padding: var(--spacing-xs);
-  }
-  
-  .project-detail-content {
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-md);
+  .page-container {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-sm);
   }
   
   .project-detail-title {
