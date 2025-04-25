@@ -362,6 +362,106 @@
 }
 
 /* Responsive Design */
+/* Large screens to medium screens transition */
+@media (max-width: 1600px) and (min-width: 1081px) {
+  /* Improve text wrapping and prevent overflow for specific cards */
+  .grid-impact .list-item,
+  .grid-online .social-link,
+  .grid-contact .contact-card,
+  .grid-workflow .list-item {
+    font-size: 0.75rem;  
+    padding: 0.45rem 0.65rem;  
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word; 
+    hyphens: auto; 
+    line-height: 1.3; 
+  }
+  
+  /* Ensure all content stays within card boundaries */
+  .card {
+    overflow: hidden;  
+    padding: 1.5rem 1.3rem;  
+  }
+  
+  /* Adjust heading sizes for better fit */
+  .card h2 {
+    font-size: 1.4rem;
+    padding-right: 32px;  
+    margin-bottom: 0.8rem;  
+  }
+  
+  /* Ensure icons don't take too much space */
+  .icon-circle {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    font-size: 0.7rem;  
+  }
+  
+  /* Adjust list spacing */
+  .list {
+    gap: 0.4rem;
+  }
+  
+  /* Ensure social links wrap properly */
+  .social-link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  /* Specific fixes for Impact Highlights card */
+  .grid-impact .list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    font-size: 0.9rem;  
+    line-height: 1.2;  
+    padding: 0.4rem 0.6rem;  
+  }
+  
+  .grid-impact .list-item .icon-circle {
+    margin-top: 0.15rem;  
+    width: 18px;  
+    height: 18px;
+    min-width: 18px;  
+  }
+  
+  /* Make strong text slightly smaller */
+  .grid-impact .list-item strong {
+    font-size: 0.7rem;
+  }
+  
+  /* Specific fixes for Online Presence card */
+  .grid-online .social-link {
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .grid-online .social-link svg {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  
+  /* Specific fixes for Let's Work Together card */
+  .grid-contact .contact-card h2 {
+    font-size: 1rem;
+  }
+  
+  .grid-contact .contact-text {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .grid-contact .primary-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
+
+
+/* Responsive Design */
 @media (max-width: 1080px) {
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -427,10 +527,33 @@
   .big {
     font-size: 3.5rem; /* Reduce font size for very small screens */
   }
+  
+  /* Replace column layout with grid for skill badges */
   .skill-badges {
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    align-items: stretch;
   }
+  
+  /* Adjust badge styling for better fit */
+  .skill-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    height: 100%;
+    justify-content: flex-start;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Ensure icons align properly */
+  .skill-badge .icon {
+    font-size: 0.9rem;
+    margin-right: 0.3rem;
+    flex-shrink: 0;
+  }
+  
   /* Ensure all content is properly contained */
   .list-item, .social-link, .org-tag, .skill-badge {
     max-width: 100%;

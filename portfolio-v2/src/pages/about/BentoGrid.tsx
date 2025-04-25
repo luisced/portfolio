@@ -121,8 +121,8 @@ const BentoGrid: React.FC = () => {
           <span className="metal">Impact Highlights</span>
         </h2>
         <div className="list">
-          <div className="list-item"><span className="icon-circle"><FaHotel /></span> Reduced manual processing time by <strong>120%</strong> for Marriott/City Express.</div>
-          <div className="list-item"><span className="icon-circle"><FaMobile /></span> UPocket app serves <strong>15,000+ students</strong>, cutting schedule conflicts by 80%.</div>
+          <div className="list-item"><span className="icon-circle"><FaHotel /></span> Reduced manual processing time by 120% for Marriott/City Express.</div>
+          <div className="list-item"><span className="icon-circle"><FaMobile /></span> UPocket app serves 15,000+ students, cutting schedule conflicts by 80%.</div>
           <div className="list-item"><span className="icon-circle"><FaRobot /></span> WhatsApp bot shortened Airbnb response time from 5 min → 30 sec.</div>
         </div>
       </div>
