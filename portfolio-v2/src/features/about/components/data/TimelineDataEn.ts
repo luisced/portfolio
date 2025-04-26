@@ -11,7 +11,7 @@ export interface TimelineExperience {
   color?: string; // Optional color for gradient effect
 }
 
-// Array containing experience data
+// Array containing experience data in English
 export const experiences: TimelineExperience[] = [
   {
     title: "President – Engineering Student Council",

@@ -1,0 +1,218 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "retry": "Reintentar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "clear": "Limpiar",
+    "reset": "Restablecer",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK",
+    "confirm": "Confirmar",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "about": "yo",
+    "portfolio": "Portafolio",
+    "contact": "Contacto",
+    "blog": "Blog",
+    "resume": "Currículum"
+  },
+  "home": {
+    "title": "Luis Cedillo",
+    "subtitle": "Ingeniero de Software & Desarrollador Full-Stack",
+    "description": "Construyo aplicaciones web modernas y resuelvo problemas complejos con código limpio y eficiente.",
+    "cta": "Ver Mi Trabajo",
+    "contact": "Contactarme",
+    "fullName": "Luis Cedillo Maldonado",
+    "buildingCleanCode": "Construyendo Código Limpio",
+    "and": "y",
+    "bio": "Soy Luis, un desarrollador de la Ciudad de México que crea sistemas backend escalables y experiencias de usuario intuitivas.",
+    "aboutMe": "SOBRE MÍ",
+    "dynamicPhrases": {
+      "beautifulInterfaces": "Interfaces Hermosas",
+      "robustAPIs": "APIs Robustas",
+      "scalableProducts": "Productos Escalables",
+      "intelligentSolutions": "Soluciones Inteligentes",
+      "powerfulTools": "Herramientas Potentes"
+    }
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "Ingeniero de Software & Desarrollador Full-Stack",
+    "description": "Soy un ingeniero de software apasionado con experiencia en la construcción de aplicaciones web modernas. Me encanta resolver problemas complejos y crear soluciones elegantes y eficientes.",
+    "experience": "Experiencia Profesional",
+    "education": "Educación",
+    "skills": "Habilidades",
+    "interests": "Intereses",
+    "downloadResume": "Descargar Currículum",
+    "portfolioLink": "Haz clic para visitar mi Portafolio",
+    "timeline": {
+      "responsibilities": "Responsabilidades",
+      "present": "Presente",
+      "dateFormat": "MMM yyyy"
+    },
+    "bentoGrid": {
+      "stats": {
+        "yearsExperience": "AÑOS DE EXPERIENCIA",
+        "projects": "PROYECTOS"
+      },
+      "sections": {
+        "githubContributions": "Contribuciones de GitHub",
+        "impactHighlights": "Logros Destacados",
+        "workflowHighlights": "Flujo de Trabajo",
+        "onlinePresence": "Presencia en Línea",
+        "workTogether": "Trabajemos Juntos",
+        "organizations": "Organizaciones",
+        "solutionsSuite": "Conjunto de Soluciones"
+      },
+      "profile": {
+        "name": "LUIS CEDILLO M.",
+        "available": "Disponible para trabajar",
+        "bio": "Desarrollador backend e ingeniero de nube apasionado por construir soluciones escalables y mantenibles.",
+        "tags": {
+          "mexico": "México",
+          "languages": "Inglés y Español",
+          "role": "Ingeniero de Software",
+          "timezone": "CST -6",
+          "university": "Universidad Panamericana"
+        },
+        "buttons": {
+          "whatsapp": "Contáctame por WhatsApp",
+          "resume": "Currículum"
+        }
+      },
+      "impact": {
+        "marriott": "Reducción del tiempo de procesamiento manual en un 120% para Marriott/City Express.",
+        "upocket": "La app UPocket sirve a más de 15,000 estudiantes, reduciendo conflictos de horarios en un 80%.",
+        "whatsapp": "Bot de WhatsApp redujo el tiempo de respuesta de Airbnb de 5 min a 30 seg."
+      },
+      "workflow": {
+        "goals": "Metas y Objetivos",
+        "research": "Investigación",
+        "design": "Documentos de Diseño",
+        "prototype": "Prototipado",
+        "deploy": "Finalización y Despliegue"
+      },
+      "contact": {
+        "message": "¡Hagamos magia juntos!",
+        "email": "Envíame un Email",
+        "schedule": "Programar una Llamada"
+      },
+      "organizations": {
+        "marriott": "Marriott / City Express",
+        "university": "Universidad Panamericana",
+        "nyx": "Nyx Technology",
+        "freelance": "Clientes Freelance"
+      },
+      "skills": {
+        "backend": "Habilidades Backend",
+        "frontend": "Habilidades Frontend",
+        "databases": "Bases de Datos y Nube",
+        "soft": "Habilidades Blandas",
+        "backendSkills": {
+          "python": "Python",
+          "cpp": "C++",
+          "rust": "Rust",
+          "bash": "Bash"
+        },
+        "frontendSkills": {
+          "javascript": "JavaScript",
+          "react": "React",
+          "css": "CSS",
+          "swift": "Swift"
+        },
+        "databasesSkills": {
+          "postgresql": "PostgreSQL",
+          "mysql": "MySQL",
+          "aws": "AWS",
+          "docker": "Docker"
+        },
+        "softSkills": {
+          "agile": "Agile/Scrum",
+          "teamwork": "Trabajo en Equipo",
+          "leadership": "Liderazgo",
+          "communication": "Comunicación"
+        }
+      }
+    }
+  },
+  "portfolio": {
+    "title": "Portafolio",
+    "subtitle": "Mira mis proyectos más recientes",
+    "filterByTech": "Filtrar por Tecnología",
+    "clearFilters": "Limpiar Todo",
+    "noProjects": "No se encontraron proyectos con las tecnologías seleccionadas.",
+    "resetFilters": "Restablecer Filtros",
+    "seeProject": "Ver Proyecto",
+    "visitSite": "Visitar Sitio",
+    "viewCode": "Ver Código",
+    "technologies": "Tecnologías",
+    "role": "Mi Rol",
+    "duration": "Duración",
+    "overview": "Descripción General",
+    "challenges": "Desafíos",
+    "solutions": "Soluciones",
+    "results": "Resultados"
+  },
+  "contact": {
+    "title": "Programar una Llamada",
+    "subtitle": "Completa el formulario a continuación y me pondré en contacto contigo lo antes posible para programar una llamada.",
+    "form": {
+      "name": "Nombre",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono (opcional)",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "send": "Enviar Mensaje",
+      "sending": "Enviando...",
+      "success": "¡Gracias por tu mensaje!",
+      "successMessage": "Me pondré en contacto contigo lo antes posible para programar nuestra llamada.",
+      "sendAnother": "Enviar otro mensaje",
+      "error": "Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.",
+      "turnstileError": "Por favor, completa el desafío Turnstile.",
+      "validation": {
+        "nameRequired": "El nombre es obligatorio",
+        "nameMinLength": "El nombre debe tener al menos 2 caracteres",
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Dirección de correo electrónico inválida, debe contener @",
+        "subjectRequired": "El asunto es obligatorio",
+        "subjectMinLength": "El asunto debe tener al menos 3 caracteres",
+        "messageRequired": "El mensaje es obligatorio",
+        "messageMinLength": "El mensaje debe tener al menos 10 caracteres",
+        "phoneInvalid": "Formato de número de teléfono inválido"
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} Luis Cedillo. Todos los derechos reservados.",
+    "madeWith": "Hecho con React, TypeScript, y ❤️",
+    "socialLinks": "Conéctate conmigo"
+  },
+  "notFound": {
+    "title": "Página No Encontrada",
+    "message": "La página que estás buscando no existe.",
+    "button": "Ir al Inicio"
+  },
+  "language": {
+    "en": "Inglés",
+    "es": "Español",
+    "switchTo": "Cambiar a {{language}}"
+  }
+}

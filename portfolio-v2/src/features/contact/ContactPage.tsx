@@ -1,6 +1,6 @@
 import React from 'react';
-import Background from '../components/common/Background';
-import ContactForm from '../features/contact/Contact';
+import Background from '../../components/common/Background';
+import ContactForm from './Contact';
 
 const ContactPage: React.FC = () => {
   return (

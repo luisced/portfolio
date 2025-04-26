@@ -1,0 +1,109 @@
+.error-boundary {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--color-background);
+}
+
+.error-content {
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+  background-color: var(--color-glass-card-background);
+  border-radius: var(--border-radius-lg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+}
+
+.error-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-error, #ff5555);
+}
+
+.error-content p {
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.retry-button,
+.home-link {
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.retry-button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.retry-button:hover {
+  background-color: var(--color-highlight);
+  transform: translateY(-2px);
+}
+
+.home-link {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.home-link:hover {
+  background-color: rgba(var(--accent-rgb, 41, 174, 128), 0.1);
+  transform: translateY(-2px);
+}
+
+.error-details {
+  text-align: left;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-md);
+}
+
+.error-details summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.error-details pre {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius-sm);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: var(--font-family-code);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 576px) {
+  .error-actions {
+    flex-direction: column;
+  }
+  
+  .error-content h1 {
+    font-size: 1.5rem;
+  }
+}

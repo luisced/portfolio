@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams, Link } from 'react-router-dom';
-import { projects } from '../features/portfolio/ProjectData';
+import { getProjects } from './ProjectData';
 import { FaArrowLeft, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
-import Background from '../components/common/Background';
-import TechIcon from '../components/common/TechIcon';
+import { BsLightningCharge } from "react-icons/bs";
+import { FaCode } from "react-icons/fa6";
+
+import Background from '../../components/common/Background';
+import TechIcon from '../../components/common/TechIcon';
 import './ProjectDetailPage.css';
 
 const ProjectDetailPage: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Get projects based on current language
+  const projects = getProjects(i18n.language);
   
   // Find the project with the matching ID
   const project = projects.find(p => p.id === id);
@@ -27,10 +35,10 @@ const ProjectDetailPage: React.FC = () => {
       <div className="project-not-found">
         <Background />
         <div className="page-container">
-          <h2>Project Not Found</h2>
-          <p>The project you're looking for doesn't exist.</p>
-          <Link to="/portfolio" className="back-link">
-            <FaArrowLeft /> Back to Portfolio
+        <h2>{t('portfolio.notFound', 'Project Not Found')}</h2>
+        <p>{t('portfolio.notFoundMessage', "The project you're looking for doesn't exist.")}</p>
+        <Link to="/portfolio" className="back-link">
+          <FaArrowLeft /> {t('portfolio.backToPortfolio', 'Back to Portfolio')}
           </Link>
         </div>
       </div>
@@ -55,7 +63,7 @@ const ProjectDetailPage: React.FC = () => {
       <Background />
       <div className="page-container">
         <Link to="/portfolio" className="back-link">
-          <FaArrowLeft /> Back to Portfolio
+          <FaArrowLeft /> {t('portfolio.backToPortfolio', 'Back to Portfolio')}
         </Link>
         
         <h2 className="project-detail-title">
@@ -67,29 +75,53 @@ const ProjectDetailPage: React.FC = () => {
         <div className="project-detail-stats">
           <div className="stat-card">
             <div className="stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
+              <FaCode />
             </div>
             <div className="stat-info">
-              <span className="stat-label">Technologies</span>
+              <span className="stat-label">{t('portfolio.technologies')}</span>
               <span className="stat-value">{technologies.length}</span>
             </div>
           </div>
           
           <div className="stat-card">
             <div className="stat-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+            <BsLightningCharge />
+
             </div>
             <div className="stat-info">
-              <span className="stat-label">Key Features</span>
+              <span className="stat-label">{t('portfolio.features', 'Key Features')}</span>
               <span className="stat-value">{features.length}</span>
             </div>
           </div>
         </div>
         
+        
+        
+        <div className="project-detail-description">
+          <h3>{t('portfolio.overview')}</h3>
+          <p>{project.description}</p>
+        </div>
+        
+        <div className="project-detail-tech">
+          <h3>{t('portfolio.technologies')}</h3>
+          <div className="tech-tags">
+            {technologies.map((tech, index) => (
+              <TechIcon key={index} tech={tech} size="md" />
+            ))}
+          </div>
+        </div>
+        
+        {features.length > 0 && (
+          <div className="project-detail-features">
+            <h3>{t('portfolio.features', 'Key Features')}</h3>
+            <ul className="features-list">
+              {features.map((feature, index) => (
+                <li key={index}>{feature}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <div className="project-detail-gallery">
           <div className="gallery-main">
             <img 
@@ -119,44 +151,20 @@ const ProjectDetailPage: React.FC = () => {
           </div>
         </div>
         
-        <div className="project-detail-description">
-          <h3>Project Description</h3>
-          <p>{project.description}</p>
-        </div>
-        
-        <div className="project-detail-tech">
-          <h3>Technologies Used</h3>
-          <div className="tech-tags">
-            {technologies.map((tech, index) => (
-              <TechIcon key={index} tech={tech} size="md" />
-            ))}
-          </div>
-        </div>
-        
-        {features.length > 0 && (
-          <div className="project-detail-features">
-            <h3>Key Features</h3>
-            <ul className="features-list">
-              {features.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        
         <div className="project-detail-links">
           {project.url && (
             <a href={project.url} target="_blank" rel="noopener noreferrer" className="detail-link live-demo">
-              <FaExternalLinkAlt /> Live Demo
+              <FaExternalLinkAlt /> {t('portfolio.visitSite')}
             </a>
           )}
           {project.github && (
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="detail-link github">
-              <FaGithub /> GitHub Repository
+              <FaGithub /> {t('portfolio.viewCode')}
             </a>
           )}
         </div>
       </div>
+      
     </div>
   );
 };

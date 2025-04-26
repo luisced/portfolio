@@ -1,21 +1,24 @@
 import React, { lazy, Suspense } from 'react';
-import './About.css';
-import Background from '../components/common/Background';
-import SectionContainer from '../components/common/SectionContainer';
-import AppWindow from '../components/common/AppWindow';
-import BentoGrid from './about/BentoGrid';
-import CardTilt from './about/CardTilt';
-import Timeline from './about/Timeline';
+import { useTranslation } from 'react-i18next';
+import './AboutPage.css';
+import Background from '../../components/common/Background';
+import SectionContainer from '../../components/common/SectionContainer';
+import AppWindow from '../../components/common/AppWindow';
+import BentoGrid from './components/BentoGrid';
+import CardTilt from './components/CardTilt';
+import Timeline from './components/Timeline';
 
 const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const AboutPage: React.FC = () => {
+  const { t } = useTranslation();
+  
   return (
     <div className="about-page">
       <Background />
       <div className="page-container">
         <section id="about" className="about-section">
-          <SectionContainer title="About Me">
+          <SectionContainer title={t('about.title')}>
             <AppWindow id="app-window">
               {/* Bento Grid Layout */}
               <div className="bento-container">
@@ -26,7 +29,7 @@ const AboutPage: React.FC = () => {
           </SectionContainer>
           
           {/* Timeline Component */}
-          <SectionContainer title="Professional Experience" className="timeline-section">
+          <SectionContainer title={t('about.experience')} className="timeline-section">
             <Timeline />
           </SectionContainer>
           
@@ -34,7 +37,7 @@ const AboutPage: React.FC = () => {
           <section className="happy-mac" id="happy-mac">
             <div 
               className="happy-mac-interactive"
-              title="Click to visit my Portfolio"
+              title={t('about.portfolioLink')}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {

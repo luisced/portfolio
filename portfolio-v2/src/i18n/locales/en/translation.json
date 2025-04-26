@@ -1,0 +1,219 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "reset": "Reset",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "confirm": "Confirm",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Portfolio",
+    "contact": "Contact",
+    "blog": "Blog",
+    "resume": "Resume"
+  },
+  "home": {
+    "title": "Luis Cedillo",
+    "subtitle": "Software Engineer & Full-Stack Developer",
+    "description": "I build modern web applications and solve complex problems with clean, efficient code.",
+    "cta": "View My Work",
+    "contact": "Get in Touch",
+    "fullName": "Luis Cedillo Maldonado",
+    "buildingCleanCode": "Building Clean Code",
+    "and": "&",
+    "bio": "I'm Luis, a developer from Mexico City crafting scalable backend systems and intuitive user experiences.",
+    "aboutMe": "ABOUT ME",
+    "dynamicPhrases": {
+      "beautifulInterfaces": "Beautiful Interfaces",
+      "robustAPIs": "Robust APIs",
+      "scalableProducts": "Scalable Products",
+      "intelligentSolutions": "Intelligent Solutions",
+      "powerfulTools": "Powerful Tools"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Software Engineer & Full-Stack Developer",
+    "description": "I'm a passionate software engineer with expertise in building modern web applications. I love solving complex problems and creating elegant, efficient solutions.",
+    "experience": "Professional Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "interests": "Interests",
+    "downloadResume": "Download Resume",
+    "portfolioLink": "Click to visit my Portfolio",
+    "timeline": {
+      "responsibilities": "Responsibilities",
+      "present": "Present",
+      "dateFormat": "MMM yyyy"
+    },
+    "bentoGrid": {
+      "stats": {
+        "yearsExperience": "YEARS EXPERIENCE",
+        "projects": "PROJECTS"
+      },
+      "sections": {
+        "githubContributions": "GitHub Contributions",
+        "impactHighlights": "Impact Highlights",
+        "workflowHighlights": "Workflow Highlights",
+        "onlinePresence": "Online Presence",
+        "workTogether": "Let's Work Together",
+        "organizations": "Organizations",
+        "solutionsSuite": "Solutions Suite"
+      },
+      "profile": {
+        "name": "LUIS CEDILLO M.",
+        "available": "Available to work",
+        "bio": "Backend developer & cloud engineer passionate about building scalable, maintainable solutions.",
+        "tags": {
+          "mexico": "Mexico",
+          "languages": "English & Spanish",
+          "role": "Software Engineer",
+          "timezone": "CST -6",
+          "university": "Universidad Panamericana"
+        },
+        "buttons": {
+          "whatsapp": "WhatsApp Me",
+          "resume": "Resume"
+        }
+      },
+      "impact": {
+        "marriott": "Reduced manual processing time by 120% for Marriott/City Express.",
+        "upocket": "UPocket app serves 15,000+ students, cutting schedule conflicts by 80%.",
+        "whatsapp": "WhatsApp bot shortened Airbnb response time from 5 min → 30 sec."
+      },
+      "workflow": {
+        "goals": "Goals & Objectives",
+        "research": "Research",
+        "design": "Design Docs",
+        "prototype": "Prototyping",
+        "deploy": "Finalize & Deploy"
+      },
+      "contact": {
+        "message": "Let's make magic happen together!",
+        "email": "Email Me",
+        "schedule": "Schedule a Call"
+      },
+      "organizations": {
+        "marriott": "Marriott / City Express",
+        "university": "Universidad Panamericana",
+        "nyx": "Nyx Technology",
+        "freelance": "Freelance Clients"
+      },
+      "skills": {
+        "backend": "Backend Skills",
+        "frontend": "Frontend Skills",
+        "databases": "Databases & Cloud",
+        "soft": "Soft Skills",
+        "backendSkills": {
+          "python": "Python",
+          "cpp": "C++",
+          "rust": "Rust",
+          "bash": "Bash"
+        },
+        "frontendSkills": {
+          "javascript": "JavaScript",
+          "react": "React",
+          "css": "CSS",
+          "swift": "Swift"
+        },
+        "databasesSkills": {
+          "postgresql": "PostgreSQL",
+          "mysql": "MySQL",
+          "aws": "AWS",
+          "docker": "Docker"
+        },
+        "softSkills": {
+          "agile": "Agile/Scrum",
+          "teamwork": "Team Working",
+          "leadership": "Leadership",
+          "communication": "Communication"
+        }
+      }
+    }
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Check out my latest projects",
+    "filterByTech": "Filter by Technology",
+    "clearFilters": "Clear All",
+    "noProjects": "No projects found with the selected technologies.",
+    "resetFilters": "Reset Filters",
+    "seeProject": "See Project",
+    "visitSite": "Visit Site",
+    "viewCode": "View Code",
+    "technologies": "Technologies",
+    "role": "My Role",
+    "duration": "Duration",
+    "overview": "Overview",
+    "challenges": "Challenges",
+    "solutions": "Solutions",
+    "results": "Results"
+  },
+  "contact": {
+    "title": "Schedule a Call",
+    "subtitle": "Fill out the form below and I'll get back to you as soon as possible to schedule a call.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Thank you for your message!",
+      "successMessage": "I'll get back to you as soon as possible to schedule our call.",
+      "sendAnother": "Send another message",
+      "error": "There was an error sending your message. Please try again.",
+      "turnstileError": "Please complete the Turnstile challenge.",
+      "validation": {
+        "nameRequired": "Name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email address, must contain @",
+        "subjectRequired": "Subject is required",
+        "subjectMinLength": "Subject must be at least 3 characters",
+        "messageRequired": "Message is required",
+        "messageMinLength": "Message must be at least 10 characters",
+        "phoneInvalid": "Invalid phone number format"
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© {{year}} Luis Cedillo. All rights reserved.",
+    "madeWith": "Made with React, TypeScript, and ❤️",
+    "socialLinks": "Connect with me"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you are looking for does not exist.",
+    "button": "Go Home"
+  },
+  "language": {
+    "en": "English",
+    "es": "Spanish",
+    "switchTo": "Switch to {{language}}"
+  }
+}

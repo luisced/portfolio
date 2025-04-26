@@ -1,16 +1,18 @@
 import React, { lazy, Suspense, useCallback, useRef, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
-import Background from '../components/common/Background';
-import './Home.css';
+import { useTheme } from '../../contexts/ThemeContext';
+import { useTranslation } from 'react-i18next';
+import Background from '../../components/common/Background';
+import './HomePage.css';
 
 // Lazy load components for better performance
-const LazySplineRoom = lazy(() => import('../components/common/SimpleSplineRoom'));
+const LazySplineRoom = lazy(() => import('../../components/common/SimpleSplineRoom'));
 
 const HomePage: React.FC = () => {
   const location = useLocation();
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   const aboutRef = useRef<HTMLDivElement>(null);
   
@@ -38,16 +40,16 @@ const HomePage: React.FC = () => {
   }, [navigate]);
 
   // Static text for developer title
-  const developerTitle = " Full Stack Developer.";
+  const developerTitle = t('home.subtitle');
 
   // Create dynamic typing sequence for the Smart [DynamicWord] part
   const createDynamicWordSequence = () => {
     const phrases = [
-      'Beautiful Interfaces',
-      'Robust APIs',
-      'Scalable Products',
-      'Intelligent Solutions',
-      'Powerful Tools'
+      t('home.dynamicPhrases.beautifulInterfaces'),
+      t('home.dynamicPhrases.robustAPIs'),
+      t('home.dynamicPhrases.scalableProducts'),
+      t('home.dynamicPhrases.intelligentSolutions'),
+      t('home.dynamicPhrases.powerfulTools')
     ];
     const sequence: (string | number)[] = [];
     
@@ -74,16 +76,16 @@ const HomePage: React.FC = () => {
       <div className="home" id="home" data-theme={theme}>
         {/* Prioritize name rendering for better LCP */}
         <div className="presentation">
-        <h1 className="name">Luis Cedillo Maldonado</h1>
+        <h1 className="name">{t('home.fullName')}</h1>
 
           <h2 className="description">
             <span>{developerTitle}</span>
           </h2>
           
           <div className="tagline">
-            <h2 className="tagline-text">Building Clean Code</h2>
+            <h2 className="tagline-text">{t('home.buildingCleanCode')}</h2>
             <h2 className="tagline-text">
-              &amp; 
+              {t('home.and')} 
               <span className="dynamic-word">
                 <TypeAnimation
                   sequence={createDynamicWordSequence()}
@@ -96,10 +98,10 @@ const HomePage: React.FC = () => {
           </div>
           
           <p className="bio">
-            I'm Luis, a developer from Mexico City crafting scalable backend systems and intuitive user experiences.
+            {t('home.bio')}
           </p>
-          <button className="about-me" onClick={goToAbout} aria-label="About Me">
-            ABOUT ME
+          <button className="about-me" onClick={goToAbout} aria-label={t('about.title')}>
+            {t('home.aboutMe')}
           </button>
         </div>
         {/* Load Background after name is rendered */}

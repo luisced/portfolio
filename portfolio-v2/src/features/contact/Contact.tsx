@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import './Contact.css';
-import { FaEnvelope, FaPhone, FaUser, FaPaperPlane, FaTag } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaUser, FaPaperPlane, FaTag, FaExclamationCircle } from 'react-icons/fa';
 
 interface FormData {
   name: string;
@@ -15,54 +18,56 @@ interface FormData {
 
 const Contact: React.FC = () => {
   const { theme } = useTheme();
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-  
+  const { t } = useTranslation();
   const [turnstileToken, setTurnstileToken] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError('');
-    
-    // Validate required fields
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      setSubmitError('All fields except phone are required.');
-      setIsSubmitting(false);
-      return;
+  
+  // Check if user prefers reduced motion
+  const prefersReducedMotion = 
+    typeof window !== 'undefined' 
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+      : false;
+  
+  // React Hook Form setup
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors, isSubmitting }, 
+    reset,
+    setError,
+    clearErrors
+  } = useForm<FormData>({
+    mode: 'onBlur',
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: ''
     }
+  });
 
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // Clear any previous errors
+    clearErrors();
+    
     // Validate Turnstile token
     if (!turnstileToken) {
-      setSubmitError('Please complete the Turnstile challenge.');
-      setIsSubmitting(false);
+      setError('root.turnstile', { 
+        type: 'manual',
+        message: t('contact.form.turnstileError')
+      });
       return;
     }
     
     try {
       // Sanitize input data to prevent XSS attacks
       const sanitizedData = {
-        name: formData.name.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-        email: formData.email.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-        phone: formData.phone.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-        subject: formData.subject.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-        message: formData.message.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        name: data.name.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        email: data.email.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        phone: data.phone ? data.phone.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '',
+        subject: data.subject.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        message: data.message.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
         'cf-turnstile-response': turnstileToken
       };
       
@@ -81,149 +86,272 @@ const Contact: React.FC = () => {
       setSubmitSuccess(true);
       
       // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
+      reset();
       
       // Reset Turnstile token
       setTurnstileToken('');
       
     } catch (error) {
-      setSubmitError('There was an error sending your message. Please try again.');
+      setError('root.serverError', { 
+        type: 'manual',
+        message: t('contact.form.error')
+      });
       console.error('Form submission error:', error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
   return (
     <section className="contact-section" data-theme={theme}>
-      <div className="contact-container">
+      <motion.div 
+        className="contact-container"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ 
+          opacity: 1, 
+          y: 0,
+          transition: { duration: 0.5 }
+        }}
+      >
         <div className="contact-header">
-          <h2 className="contact-title">Schedule a Call</h2>
+          <h2 className="contact-title">{t('contact.title')}</h2>
           <p className="contact-subtitle">
-            Fill out the form below and I'll get back to you as soon as possible to schedule a call.
+            {t('contact.subtitle')}
           </p>
         </div>
         
-        {submitSuccess ? (
-          <div className="success-message">
-            <h3>Thank you for your message!</h3>
-            <p>I'll get back to you as soon as possible to schedule our call.</p>
-            <button 
-              className="button primary-button"
-              onClick={() => setSubmitSuccess(false)}
+        <AnimatePresence mode="wait">
+          {submitSuccess ? (
+            <motion.div 
+              className="success-message"
+              key="success"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                transition: { duration: 0.3 }
+              }}
+              exit={{ 
+                opacity: 0, 
+                scale: 0.9,
+                transition: { duration: 0.2 }
+              }}
             >
-              Send another message
-            </button>
-          </div>
-        ) : (
-          <form className="contact-form" onSubmit={handleSubmit}>
-            {submitError && <div className="error-message">{submitError}</div>}
-            
-            <div className="form-group">
-              <label htmlFor="name">
-                <FaUser /> Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Your name"
-                required
-                aria-label="Name"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="email">
-                <FaEnvelope /> Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Your email address"
-                required
-                aria-label="Email"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="subject">
-                <FaTag /> Subject
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                placeholder="What is this regarding?"
-                required
-                aria-label="Subject"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="phone">
-                <FaPhone /> Phone (optional)
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Your phone number"
-                aria-label="Phone"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Tell me about your project or when you'd like to schedule a call"
-                rows={5}
-                required
-                aria-label="Message"
-              />
-            </div>
-            
-            <div className="turnstile-container">
-              <Turnstile
-                siteKey="0x4AAAAAAAe671W_yalogCcB"
-                onSuccess={(token) => setTurnstileToken(token)}
-              />
-            </div>
-            
-            <button 
-              type="submit" 
-              className="button primary-button submit-button"
-              disabled={isSubmitting}
-              aria-label="Send"
+              <h3>{t('contact.form.success')}</h3>
+              <p>{t('contact.form.successMessage')}</p>
+              <motion.button 
+                className="button primary-button"
+                onClick={() => setSubmitSuccess(false)}
+                whileHover={!prefersReducedMotion ? { scale: 1.05 } : {}}
+                whileTap={!prefersReducedMotion ? { scale: 0.95 } : {}}
+              >
+                {t('contact.form.sendAnother')}
+              </motion.button>
+            </motion.div>
+          ) : (
+            <motion.form 
+              className="contact-form" 
+              onSubmit={handleSubmit(onSubmit)}
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: 1,
+                transition: { duration: 0.3 }
+              }}
+              exit={{ 
+                opacity: 0,
+                transition: { duration: 0.2 }
+              }}
             >
-              {isSubmitting ? 'Sending...' : (
-                <>
-                  <FaPaperPlane /> Send Message
-                </>
-              )}
-            </button>
-          </form>
-        )}
-      </div>
+              {/* Root errors display */}
+              <AnimatePresence>
+                {(errors.root?.serverError || errors.root?.turnstile) && (
+                  <motion.div 
+                    className="error-message"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ 
+                      opacity: 1, 
+                      height: 'auto',
+                      transition: { duration: 0.2 }
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      height: 0,
+                      transition: { duration: 0.1 }
+                    }}
+                  >
+                    <FaExclamationCircle /> {errors.root?.serverError?.message || errors.root?.turnstile?.message}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              
+              <div className="form-group">
+                <label htmlFor="name">
+                  <FaUser /> {t('contact.form.name')}
+                </label>
+                <input
+                  id="name"
+                  placeholder="Your name"
+                  aria-label="Name"
+                  aria-invalid={errors.name ? "true" : "false"}
+                  {...register("name", { 
+                    required: t('contact.form.validation.nameRequired'),
+                    minLength: {
+                      value: 2,
+                      message: t('contact.form.validation.nameMinLength')
+                    }
+                  })}
+                  className={errors.name ? "input-error" : ""}
+                />
+                {errors.name && (
+                  <motion.p 
+                    className="error-text"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <FaExclamationCircle /> {errors.name.message}
+                  </motion.p>
+                )}
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="email">
+                  <FaEnvelope /> {t('contact.form.email')}
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Your email address"
+                  aria-label="Email"
+                  aria-invalid={errors.email ? "true" : "false"}
+                  {...register("email", { 
+                    required: t('contact.form.validation.emailRequired'),
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: t('contact.form.validation.emailInvalid')
+                    }
+                  })}
+                  className={errors.email ? "input-error" : ""}
+                />
+                {errors.email && (
+                  <motion.p 
+                    className="error-text"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <FaExclamationCircle /> {errors.email.message}
+                  </motion.p>
+                )}
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="subject">
+                  <FaTag /> {t('contact.form.subject')}
+                </label>
+                <input
+                  id="subject"
+                  placeholder="What is this regarding?"
+                  aria-label="Subject"
+                  aria-invalid={errors.subject ? "true" : "false"}
+                  {...register("subject", { 
+                    required: t('contact.form.validation.subjectRequired'),
+                    minLength: {
+                      value: 3,
+                      message: t('contact.form.validation.subjectMinLength')
+                    }
+                  })}
+                  className={errors.subject ? "input-error" : ""}
+                />
+                {errors.subject && (
+                  <motion.p 
+                    className="error-text"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <FaExclamationCircle /> {errors.subject.message}
+                  </motion.p>
+                )}
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="phone">
+                  <FaPhone /> {t('contact.form.phone')}
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  placeholder="Your phone number"
+                  aria-label="Phone"
+                  {...register("phone", {
+                    pattern: {
+                      value: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/i,
+                      message: t('contact.form.validation.phoneInvalid')
+                    }
+                  })}
+                  className={errors.phone ? "input-error" : ""}
+                />
+                {errors.phone && (
+                  <motion.p 
+                    className="error-text"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <FaExclamationCircle /> {errors.phone.message}
+                  </motion.p>
+                )}
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="message">{t('contact.form.message')}</label>
+                <textarea
+                  id="message"
+                  placeholder="Tell me about your project or when you'd like to schedule a call"
+                  rows={5}
+                  aria-label="Message"
+                  aria-invalid={errors.message ? "true" : "false"}
+                  {...register("message", { 
+                    required: t('contact.form.validation.messageRequired'),
+                    minLength: {
+                      value: 10,
+                      message: t('contact.form.validation.messageMinLength')
+                    }
+                  })}
+                  className={errors.message ? "input-error" : ""}
+                />
+                {errors.message && (
+                  <motion.p 
+                    className="error-text"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <FaExclamationCircle /> {errors.message.message}
+                  </motion.p>
+                )}
+              </div>
+              
+              <div className="turnstile-container">
+                <Turnstile
+                  siteKey="0x4AAAAAAAe671W_yalogCcB"
+                  onSuccess={(token) => setTurnstileToken(token)}
+                />
+              </div>
+              
+              <motion.button 
+                type="submit" 
+                className="button primary-button submit-button"
+                disabled={isSubmitting}
+                aria-label="Send"
+                whileHover={!isSubmitting && !prefersReducedMotion ? { scale: 1.05 } : {}}
+                whileTap={!isSubmitting && !prefersReducedMotion ? { scale: 0.95 } : {}}
+              >
+                {isSubmitting ? t('contact.form.sending') : (
+                  <>
+                    <FaPaperPlane /> {t('contact.form.send')}
+                  </>
+                )}
+              </motion.button>
+            </motion.form>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </section>
   );
 };

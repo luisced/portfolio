@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useTheme } from '../../contexts/ThemeContext';
-import { experiences } from './TimelineData';
+import { useTheme } from '../../../contexts/ThemeContext';
+import { useTranslation } from 'react-i18next';
+import { getExperiences } from './TimelineData';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Timeline.css';
@@ -90,7 +91,11 @@ interface TimelineProps {
 
 const Timeline: React.FC<TimelineProps> = ({ className }) => {
   const { theme } = useTheme();
+  const { t, i18n } = useTranslation();
   const timelineRef = useRef<HTMLDivElement>(null);
+  
+  // Get experiences based on current language
+  const experiences = getExperiences(i18n.language);
   
   // Apply GSAP animations
   useTimelineAnimations(timelineRef);
@@ -99,19 +104,19 @@ const Timeline: React.FC<TimelineProps> = ({ className }) => {
   const formatDate = (ym: string): string => {
     // Check if the input string is valid
     if (!ym || typeof ym !== 'string' || !ym.includes('-')) {
-      return ym || 'Date N/A'; // Return original or placeholder if invalid
+      return ym || t('common.dateNA', 'Date N/A'); // Return original or placeholder if invalid
     }
     
     try {
       // Handle "Present" case
-      if (ym === "Present") return ym;
+      if (ym === "Present") return t('about.timeline.present', 'Present');
       
       // Split year and month
       const [year, month] = ym.split("-");
       // Create a Date object using UTC to prevent timezone issues
       const date = new Date(Date.UTC(parseInt(year), parseInt(month) - 1, 2));
-      // Format the date using the browser's default locale
-      return date.toLocaleString('default', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+      // Format the date using the current language locale
+      return date.toLocaleString(i18n.language, { month: 'short', year: 'numeric', timeZone: 'UTC' });
     } catch (e) {
       console.error("Error formatting date:", ym, e);
       return ym;
@@ -234,9 +239,9 @@ const Timeline: React.FC<TimelineProps> = ({ className }) => {
         <div className="timeline-item" key={`${exp.company}-${index}`}>
           <div className="timeline-content" data-color={exp.color || '#29ae80'}>
             <h3>{exp.title}</h3>
-            <span className="meta-info">
-              📅 {formatDate(exp.start)} – {exp.end === "Present" ? "Present" : formatDate(exp.end)} | 📍 {exp.location}
-            </span>
+              <span className="meta-info">
+                📅 {formatDate(exp.start)} – {exp.end === "Present" ? t('about.timeline.present', 'Present') : formatDate(exp.end)} | 📍 {exp.location}
+              </span>
             
             <div className="timeline-badges">
               {exp.badges.map((badge, badgeIndex) => (
@@ -246,7 +251,7 @@ const Timeline: React.FC<TimelineProps> = ({ className }) => {
               ))}
             </div>
             
-            <h4>Responsibilities</h4>
+            <h4>{t('about.timeline.responsibilities', 'Responsibilities')}</h4>
             <ul>
               {exp.responsibilities.map((responsibility, respIndex) => (
                 <li key={`resp-${index}-${respIndex}`}>{responsibility}</li>

@@ -1,0 +1,101 @@
+/* Base skeleton loader styles */
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton-start, rgba(255, 255, 255, 0.05)),
+    var(--color-skeleton-middle, rgba(255, 255, 255, 0.1)),
+    var(--color-skeleton-end, rgba(255, 255, 255, 0.05))
+  );
+  background-size: 200% 100%;
+  border-radius: var(--border-radius-sm);
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+/* Skeleton types */
+.skeleton-text {
+  height: 1rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.skeleton-title {
+  height: 1.8rem;
+  margin-bottom: 1rem;
+  width: 70%;
+}
+
+.skeleton-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.skeleton-thumbnail {
+  height: 200px;
+  width: 100%;
+  border-radius: var(--border-radius-md);
+}
+
+.skeleton-card {
+  height: 300px;
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+}
+
+.skeleton-button {
+  height: 40px;
+  width: 120px;
+  border-radius: var(--border-radius-md);
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+/* Animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Dark mode adjustments */
+:root[data-theme="dark"] {
+  --color-skeleton-start: rgba(255, 255, 255, 0.05);
+  --color-skeleton-middle: rgba(255, 255, 255, 0.1);
+  --color-skeleton-end: rgba(255, 255, 255, 0.05);
+}
+
+/* Light mode adjustments */
+:root[data-theme="light"] {
+  --color-skeleton-start: rgba(0, 0, 0, 0.05);
+  --color-skeleton-middle: rgba(0, 0, 0, 0.1);
+  --color-skeleton-end: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skeleton-thumbnail {
+    height: 150px;
+  }
+  
+  .skeleton-card {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skeleton-thumbnail {
+    height: 120px;
+  }
+  
+  .skeleton-card {
+    height: 200px;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Background from '../components/common/Background';
-import '../styles/NotFound.css';
+import Background from '../../components/common/Background';
+import './NotFound.css';
 
 const NotFound: React.FC = () => {
   return (
