@@ -9,12 +9,15 @@
   flex-direction: column;
 }
 
-/* Page container for consistent padding */
 .page-container {
   padding: var(--spacing-xl) var(--spacing-sm);
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+  position: relative;
+  width: 95%;
+}
+
+div.page-container {
+  margin: 0 auto !important;
+  width: 95% !important;
 }
 
 /* Section styling */

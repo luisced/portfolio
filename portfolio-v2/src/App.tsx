@@ -6,6 +6,9 @@ import Layout from './components/layout/Layout';
 import Loading from './components/common/Loading';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import AnimatedRoute from './components/common/AnimatedRoute';
+import HomePageSkeleton from './features/home/HomePageSkeleton';
+import PortfolioPageSkeleton from './features/portfolio/PortfolioPageSkeleton';
+import AboutPageSkeleton from './features/about/AboutPageSkeleton';
 import './App.css';
 
 // Lazy-loaded pages for better performance
@@ -22,11 +25,11 @@ function App() {
       <ThemeProvider>
         <ErrorBoundary>
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout>{null}</Layout>}>
-                <Route index element={
+            <Layout>
+              <Routes>
+                <Route path="/" element={
                   <ErrorBoundary>
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<HomePageSkeleton />}>
                       <AnimatedRoute>
                         <Home />
                       </AnimatedRoute>
@@ -35,7 +38,7 @@ function App() {
                 } />
                 <Route path="about" element={
                   <ErrorBoundary>
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<AboutPageSkeleton />}>
                       <AnimatedRoute>
                         <About />
                       </AnimatedRoute>
@@ -44,7 +47,7 @@ function App() {
                 } />
                 <Route path="portfolio" element={
                   <ErrorBoundary>
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<PortfolioPageSkeleton />}>
                       <AnimatedRoute>
                         <Portfolio />
                       </AnimatedRoute>
@@ -78,8 +81,8 @@ function App() {
                     </Suspense>
                   </ErrorBoundary>
                 } />
-              </Route>
-            </Routes>
+              </Routes>
+            </Layout>
           </BrowserRouter>
         </ErrorBoundary>
       </ThemeProvider>

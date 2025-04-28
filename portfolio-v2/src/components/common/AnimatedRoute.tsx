@@ -58,11 +58,12 @@ const AnimatedRoute: React.FC<AnimatedRouteProps> = ({
     <AnimatePresence mode="wait">
       <motion.div
         key={location.pathname}
+        layout="position"
         initial="initial"
         animate="animate"
         exit="exit"
         variants={pageVariants}
-        style={{ width: '100%', height: '100%' }}
+        style={{ position: 'relative', width: 'auto' }}
       >
         {children}
       </motion.div>

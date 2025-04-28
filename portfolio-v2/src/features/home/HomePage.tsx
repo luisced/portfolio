@@ -109,7 +109,7 @@ const HomePage: React.FC = () => {
         
         {/* Lazy load 3D model with Suspense */}
         <div className="spline-container">
-          <Suspense fallback={<div className="loading-spinner" />}>
+          <Suspense fallback={<div className="loading-spinner medium" />}>
             <LazySplineRoom />
           </Suspense>
         </div>

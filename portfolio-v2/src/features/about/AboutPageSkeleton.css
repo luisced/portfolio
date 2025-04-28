@@ -1,0 +1,41 @@
+.about-page-skeleton {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.about-header-skeleton {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.about-title-skeleton {
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-subtitle-skeleton {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .about-header-skeleton {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page-skeleton {
+    padding: 1rem 0;
+  }
+  
+  .about-header-skeleton {
+    margin-bottom: 1rem;
+  }
+}

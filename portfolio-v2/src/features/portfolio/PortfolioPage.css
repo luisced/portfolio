@@ -1,19 +1,16 @@
 /* Portfolio page styles */
 .portfolio-page {
-  width: 100%;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
   padding-top: 2rem;
 }
 
-.page-container {
-  width: 100%;
-  max-width: 100%;
+/* Override only specific properties of page-container */
+.portfolio-page .page-container {
   padding: 0;
-  margin: 0 auto;
-  position: relative;
   z-index: 1;
+  /* Other properties like width, max-width, and margin will be inherited from App.css */
 }
 
 /* Section title styles moved to SectionTitle.css and SectionContainer.css */

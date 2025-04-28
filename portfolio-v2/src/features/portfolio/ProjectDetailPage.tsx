@@ -34,7 +34,7 @@ const ProjectDetailPage: React.FC = () => {
     return (
       <div className="project-not-found">
         <Background />
-        <div className="page-container">
+        <div className="project-detail-content">
         <h2>{t('portfolio.notFound', 'Project Not Found')}</h2>
         <p>{t('portfolio.notFoundMessage', "The project you're looking for doesn't exist.")}</p>
         <Link to="/portfolio" className="back-link">
@@ -61,7 +61,7 @@ const ProjectDetailPage: React.FC = () => {
   return (
     <div className="project-detail-page">
       <Background />
-      <div className="page-container">
+      <div className="project-detail-content">
         <Link to="/portfolio" className="back-link">
           <FaArrowLeft /> {t('portfolio.backToPortfolio', 'Back to Portfolio')}
         </Link>

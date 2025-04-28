@@ -5,7 +5,6 @@ import './ProjectCard.css';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import TechIcon from '../../../components/common/TechIcon';
-import { motion } from 'framer-motion';
 import useKeyboard from '../../../hooks/useKeyboard';
 
 interface ProjectCardProps {
@@ -18,11 +17,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const technologies = project.technologies || [];
   const [isFocused, setIsFocused] = useState(false);
   
-  // Check if user prefers reduced motion
-  const prefersReducedMotion = 
-    typeof window !== 'undefined' 
-      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
-      : false;
 
   // Handle keyboard navigation for the card
   useKeyboard(
@@ -37,44 +31,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   );
 
   return (
-    <motion.article 
+    <article 
       className="project-card"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ 
-        opacity: 1, 
-        y: 0,
-        transition: { 
-          duration: 0.5,
-          ease: [0.22, 1, 0.36, 1]
-        }
-      }}
-      viewport={{ once: true, margin: "-50px" }}
-      whileHover={!prefersReducedMotion ? { 
-        y: -5,
-        transition: { duration: 0.2 }
-      } : {}}
-      whileTap={!prefersReducedMotion ? { 
-        scale: 0.98,
-        transition: { duration: 0.1 }
-      } : {}}
       tabIndex={0}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       aria-label={`${project.title} - ${project.role} - ${project.category}`}
     >
-      <motion.div 
-        className="project-card-content"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.1 }}
-      >
-        <motion.div 
-          className="project-image-container"
-          whileHover={!prefersReducedMotion ? {
-            scale: 1.03,
-            transition: { duration: 0.2 }
-          } : {}}
-        >
+      <div className="project-card-content">
+        <div className="project-image-container">
           {project.previewImage ? (
             <img 
               src={project.previewImage} 
@@ -87,7 +52,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               <span className="placeholder-text">{project.title.charAt(0)}</span>
             </div>
           )}
-        </motion.div>
+        </div>
         
         <div className="project-info">
           <h3 className="project-title">
@@ -118,23 +83,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             className="see-project-button"
             aria-label={`See details for ${project.title} project`}
           >
-            <motion.span
-              initial={{ x: 0 }}
-              whileHover={!prefersReducedMotion ? { 
-                x: 5,
-                transition: { 
-                  type: "spring", 
-                  stiffness: 400, 
-                  damping: 10 
-                } 
-              } : {}}
-            >
+            <span>
               {t('portfolio.seeProject')} <FaArrowRight className="arrow-icon" />
-            </motion.span>
+            </span>
           </Link>
         </div>
-      </motion.div>
-    </motion.article>
+      </div>
+    </article>
   );
 };
 

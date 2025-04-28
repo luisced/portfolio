@@ -6,13 +6,11 @@
   overflow-x: hidden;
 }
 
-.page-container {
-  width: 100%;
-  max-width: 100%;
+/* Override only specific properties of page-container */
+.about-page .page-container {
   padding: 0;
-  margin: 0 auto;
-  position: relative;
   z-index: 1;
+  /* Other properties like width, max-width, and margin will be inherited from App.css */
 }
 
 .about-section {
@@ -23,11 +21,10 @@
   font-family: var(--font-mono);
   padding: 2rem;
   width: 100%;
-  scroll-margin-top: 70px; /* Accounts for navbar height */
+  scroll-margin-top: 70px; 
 }
 
 .bento-container {
-  padding: 30px;
   width: 100%;
 }
 

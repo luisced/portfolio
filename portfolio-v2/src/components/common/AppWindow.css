@@ -14,12 +14,78 @@
   font-size: 15px;
   font-weight: 500;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
 }
 
-.app-window > *:not(.header):not(.menu-circle):not(.bento-container) {
-  padding: 50px;
+/* Animation classes */
+.app-window.with-animation {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.2s ease;
 }
+
+.app-window.with-animation:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.app-window.with-animation .header:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.app-window.with-animation .menu-circle {
+  transition: transform 0.2s ease;
+}
+
+.app-window.with-animation .menu-circle:hover {
+  transform: scale(1.1);
+}
+
+.app-window.with-animation .menu-circle:active {
+  transform: scale(0.95);
+}
+
+.app-window.with-animation .app-window-content {
+  opacity: 0;
+  animation: fadeInContent 0.5s ease 0.2s forwards;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* No animation class - for users who prefer reduced motion */
+.app-window.no-animation {
+  opacity: 1;
+  transform: none;
+}
+
+.app-window.no-animation .app-window-content {
+  opacity: 1;
+}
+
+/* Initial state for animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app-window.with-animation {
+  animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 
 .header {
   display: flex;
