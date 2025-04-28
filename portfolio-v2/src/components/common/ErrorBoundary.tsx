@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import './ErrorBoundary.css';
 
@@ -58,7 +58,7 @@ class ErrorBoundary extends Component<Props, State> {
                 Return to Home
               </Link>
             </div>
-            {process.env.NODE_ENV === 'development' && (
+            {import.meta.env.DEV && (
               <details className="error-details">
                 <summary>Error Details</summary>
                 <pre>{this.state.error && this.state.error.toString()}</pre>

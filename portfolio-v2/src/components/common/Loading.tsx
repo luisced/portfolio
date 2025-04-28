@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoadingProps } from '@types/components';
+import { LoadingProps } from '../../types/components';
 import SkeletonLoader from './SkeletonLoader';
 import './Loading.css';
 

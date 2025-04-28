@@ -13,7 +13,6 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [linkClass, setLinkClass] = useState('default-link');
   const [scrolled, setScrolled] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(-1);
   
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
@@ -40,10 +39,6 @@ const Navbar: React.FC<NavbarProps> = ({ className = '' }) => {
       setLinkClass('default-link');
     }
     
-    // Set active index based on current route
-    const routes = ['/', '/about', '/portfolio', '/contact'];
-    const currentIndex = routes.findIndex(route => route === location.pathname);
-    setActiveIndex(currentIndex);
   }, [location.pathname]);
 
   // Check if user prefers reduced motion
