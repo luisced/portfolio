@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "title": "Luis Cedillo | Full-Stack Developer & Tech Lead",
+    "description": "Full-stack developer and tech lead creating beautiful digital experiences with modern web technologies",
+    "siteName": "Luis Cedillo Portfolio",
+    "ogImageAlt": "Luis Cedillo - Full-Stack Developer Portfolio"
+  },
+  "navigation": {
+    "home": "Home",
+    "hero": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "skipToContent": "Skip to content"
+  },
+  "hero": {
+    "greeting": "Hi, I'm Luis Cedillo",
+    "title": "Full-Stack Developer & Tech Lead",
+    "tagline": "Creating beautiful digital experiences with modern web technologies",
+    "cta": "View my work",
+    "scrollIndicator": "Scroll to explore"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "Some of my recent work",
+    "filter": {
+      "all": "All",
+      "web": "Web Apps",
+      "mobile": "Mobile",
+      "backend": "Backend"
+    },
+    "viewProject": "View Project",
+    "viewCode": "View Code",
+    "github": "View on GitHub"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Who I am and what I do",
+    "bio": "Experienced full-stack developer passionate about creating scalable, user-focused applications.",
+    "readMore": "Read more",
+    "stats": {
+      "experience": "Years Experience",
+      "projects": "Projects Completed",
+      "commits": "Commits This Year"
+    },
+    "downloadCV": "Download CV",
+    "downloading": "Downloading..."
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Let's work together",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Failed to send message. Please try again.",
+    "socialLinks": "Connect with me"
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "backToTop": "Back to top"
+  }
+}

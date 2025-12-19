@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "title": "Luis Cedillo | Desarrollador Full-Stack & Tech Lead",
+    "description": "Desarrollador full-stack y tech lead creando experiencias digitales hermosas con tecnologías web modernas",
+    "siteName": "Portafolio de Luis Cedillo",
+    "ogImageAlt": "Luis Cedillo - Portafolio de Desarrollador Full-Stack"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "hero": "Inicio",
+    "projects": "Proyectos",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "skipToContent": "Saltar al contenido"
+  },
+  "hero": {
+    "greeting": "Hola, soy Luis Cedillo",
+    "title": "Desarrollador Full-Stack & Tech Lead",
+    "tagline": "Creando experiencias digitales hermosas con tecnologías web modernas",
+    "cta": "Ver mi trabajo",
+    "scrollIndicator": "Desplázate para explorar"
+  },
+  "projects": {
+    "title": "Proyectos Destacados",
+    "subtitle": "Algunos de mis trabajos recientes",
+    "filter": {
+      "all": "Todos",
+      "web": "Aplicaciones Web",
+      "mobile": "Móvil",
+      "backend": "Backend"
+    },
+    "viewProject": "Ver Proyecto",
+    "viewCode": "Ver Código",
+    "github": "Ver en GitHub"
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "Quién soy y qué hago",
+    "bio": "Desarrollador full-stack experimentado apasionado por crear aplicaciones escalables enfocadas en el usuario.",
+    "readMore": "Leer más",
+    "stats": {
+      "experience": "Años de Experiencia",
+      "projects": "Proyectos Completados",
+      "commits": "Commits Este Año"
+    },
+    "downloadCV": "Descargar CV",
+    "downloading": "Descargando..."
+  },
+  "contact": {
+    "title": "Contáctame",
+    "subtitle": "Trabajemos juntos",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado exitosamente!",
+    "error": "Error al enviar el mensaje. Por favor intenta nuevamente.",
+    "socialLinks": "Conéctate conmigo"
+  },
+  "footer": {
+    "copyright": "Todos los derechos reservados",
+    "backToTop": "Volver arriba"
+  }
+}
