@@ -77,8 +77,8 @@ export function Navbar() {
         <nav
           className={cn(
             'transition-all duration-300',
-            isScrolled
-              ? 'bg-background/60 backdrop-blur-md border-b border-border/30 shadow-sm'
+            isScrolled || isOpen
+              ? 'bg-background/80 backdrop-blur-md border-b border-border/30 shadow-sm'
               : 'bg-transparent'
           )}
         >
@@ -174,9 +174,9 @@ export function Navbar() {
             {/* Menu Content */}
             <motion.nav
               className="fixed top-16 left-0 right-0 z-40 md:hidden"
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
               aria-label="Mobile navigation menu"
             >
@@ -198,8 +198,8 @@ export function Navbar() {
                               ? 'text-foreground bg-foreground/5'
                               : 'text-muted-foreground'
                           )}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
                           transition={{ delay: index * 0.05 }}
                         >
                           <Icon className="size-5" />

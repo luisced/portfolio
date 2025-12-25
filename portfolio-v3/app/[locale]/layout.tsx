@@ -1,29 +1,10 @@
 import type { Metadata } from 'next';
-import { Sora, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n/config';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { LenisProvider } from '@/components/providers/lenis-provider';
-import '../globals.css';
-
-const sora = Sora({
-  variable: '--font-sora',
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
-  display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'arial'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-  display: 'swap',
-  preload: true,
-  fallback: ['monospace'],
-});
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -101,14 +82,10 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${sora.variable} ${geistMono.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <LenisProvider>
-            <ThemeProvider>{children}</ThemeProvider>
-          </LenisProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages}>
+      <LenisProvider>
+        <ThemeProvider>{children}</ThemeProvider>
+      </LenisProvider>
+    </NextIntlClientProvider>
   );
 }

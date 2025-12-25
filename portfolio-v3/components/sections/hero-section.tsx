@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import RotatingDecryptedText from '@/components/effects/rotating-decrypted-text';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -86,54 +87,42 @@ export function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  // Subtle parallax effect using ScrollTrigger (integrated with Lenis)
+  // Parallax effect using ScrollTrigger (integrated with Lenis)
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Subtle parallax - name moves slower (parallax up)
+      // Name moves up the most (furthest layer)
       gsap.to(nameRef.current, {
-        yPercent: -5,
+        y: -150,
         ease: 'none',
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: true,
+          scrub: 1,
         },
       });
 
-      // Headline moves slightly faster
+      // Headline moves up for layered effect
       gsap.to(headlineRef.current, {
-        yPercent: -3,
+        y: -100,
         ease: 'none',
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: true,
+          scrub: 1,
         },
       });
 
-      // Subtitle moves even faster for depth
+      // Subtitle moves up slightly less (closest to viewer)
       gsap.to(subtitleRef.current, {
-        yPercent: -2,
+        y: -60,
         ease: 'none',
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: true,
-        },
-      });
-
-      // Image moves slightly down for opposite effect
-      gsap.to(imageRef.current, {
-        yPercent: 3,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
+          scrub: 1,
         },
       });
     }, containerRef);
@@ -145,31 +134,31 @@ export function HeroSection() {
     <section
       id="hero"
       ref={containerRef}
-      className="relative h-screen w-full overflow-hidden bg-[#f5f5f5]"
+      className="relative h-[115vh] w-full overflow-hidden bg-[#f5f5f5]"
       aria-labelledby="hero-heading"
     >
       {/* Right Side - Image (takes right portion of viewport) */}
       <div
         ref={imageRef}
-        className="absolute top-0 right-0 bottom-0 w-full lg:w-[45%] overflow-hidden"
+        className="absolute top-0 right-0 h-[115vh] w-1/3 lg:w-[45%] overflow-hidden z-[5]"
       >
         <Image
           src="/luis_hero.webp"
           alt="Luis Cedillo"
           fill
-          className="object-cover object-center"
+          className="object-cover object-center lg:object-center"
           priority
           sizes="(max-width: 1024px) 100vw, 45vw"
         />
       </div>
 
-      {/* Main Name - Centered with mix-blend-difference for color inversion */}
+      {/* Main Name - Centered with split-color effect (black left, white right) */}
       <h1
         ref={nameRef}
         id="hero-heading"
-        className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none mix-blend-difference px-4"
+        className="absolute top-0 left-0 right-0 h-screen z-20 flex items-center justify-center pointer-events-none px-4 pb-[20vh]"
       >
-        <span className="hero-name text-[clamp(4rem,15vw,12rem)] leading-[85%] tracking-[-0.05em] font-extrabold uppercase text-white whitespace-nowrap">
+        <span className="hero-name text-[clamp(3rem,15vw,13.2rem)] leading-[85%] tracking-[-0.05em] font-extrabold uppercase whitespace-nowrap bg-gradient-to-r from-black from-68% to-white/90 to-65% lg:from-56% lg:to-56% bg-clip-text text-transparent">
           Luis Cedillo
         </span>
       </h1>
@@ -177,7 +166,7 @@ export function HeroSection() {
       {/* Left Side - Content (takes left portion of viewport) */}
       <div
         ref={leftContentRef}
-        className="absolute top-0 left-0 bottom-0 w-full lg:w-[55%] flex flex-col justify-end px-6 md:px-10 lg:px-14 xl:px-20 py-8 lg:py-16 z-10 bg-[#E5E5E5]"
+        className="absolute top-0 left-0 h-[115vh] w-2/3 lg:w-[55%] flex flex-col justify-end px-6 md:px-10 lg:px-14 xl:px-20 pb-[35vh] lg:pb-[40vh] z-10 bg-[#F5F5EB]"
       >
         {/* Secondary Headline */}
         <div ref={headlineRef} className="mb-6">
@@ -187,10 +176,20 @@ export function HeroSection() {
         </div>
 
         {/* Subtitle */}
-        <p ref={subtitleRef} className="text-base lg:text-lg text-[#171717]/60 max-w-md">
-          Building digital experiences that matter —{' '}
-          <span className="text-[#171717]">with precision and purpose.</span>
-        </p>
+        <div ref={subtitleRef} className="text-base lg:text-lg text-[#171717]/60 max-w-md">
+          <p className="mb-1">Building digital experiences that matter</p>
+          <RotatingDecryptedText
+            phrases={[
+              'with precision and purpose.',
+              'with passion and innovation.',
+              'with code and creativity.',
+              'with impact and excellence.',
+            ]}
+            intervalMs={4000}
+            speed={20}
+            className="text-[#171717]"
+          />
+        </div>
       </div>
     </section>
   );
