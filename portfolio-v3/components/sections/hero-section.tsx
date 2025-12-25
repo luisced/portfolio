@@ -1,111 +1,197 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+
+// Register ScrollTrigger
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export function HeroSection() {
-  const t = useTranslations('hero');
-  const prefersReducedMotion = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const leftContentRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
 
-  const scrollToProjects = () => {
-    const element = document.getElementById('projects');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // Entry animations
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Initial states - everything hidden
+      gsap.set(imageRef.current, { opacity: 0, y: -100, clipPath: 'inset(100% 0 0 0)' });
+      gsap.set(nameRef.current, { opacity: 0, scale: 0.95 });
+      gsap.set(leftContentRef.current, { opacity: 0 });
+      gsap.set(headlineRef.current, { opacity: 0, y: 30 });
+      gsap.set(subtitleRef.current, { opacity: 0, y: 20 });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
+      // Timeline - Animation sequence: Name → Header → Subtitle → Image
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.33, 1, 0.68, 1] as const,
-      },
-    },
-  };
+      // 1. First: background is already visible, wait a moment
+      tl.to({}, { duration: 0.3 })
+        // 2. Name appears first with invert effect
+        .to(nameRef.current, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+        })
+        // 3. Left content container becomes visible
+        .to(
+          leftContentRef.current,
+          {
+            opacity: 1,
+            duration: 0.5,
+          },
+          '-=0.3'
+        )
+        // 4. Header (headline) animates in
+        .to(
+          headlineRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+          },
+          '-=0.2'
+        )
+        // 5. Subtitle animates in
+        .to(
+          subtitleRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+          },
+          '-=0.2'
+        )
+        // 6. Finally: image animates from top to bottom
+        .to(
+          imageRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: 'inset(0% 0 0 0)',
+            duration: 1,
+            ease: 'power2.out',
+          },
+          '-=0.3'
+        );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Subtle parallax effect using ScrollTrigger (integrated with Lenis)
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Subtle parallax - name moves slower (parallax up)
+      gsap.to(nameRef.current, {
+        yPercent: -5,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      // Headline moves slightly faster
+      gsap.to(headlineRef.current, {
+        yPercent: -3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      // Subtitle moves even faster for depth
+      gsap.to(subtitleRef.current, {
+        yPercent: -2,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      // Image moves slightly down for opposite effect
+      gsap.to(imageRef.current, {
+        yPercent: 3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id="hero"
-      className="relative flex min-h-svh items-center justify-center overflow-hidden pt-16 lg:pt-0"
+      ref={containerRef}
+      className="relative h-screen w-full overflow-hidden bg-[#f5f5f5]"
       aria-labelledby="hero-heading"
     >
-      {/* Animated mesh gradient background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-chart-2/20" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
+      {/* Right Side - Image (takes right portion of viewport) */}
+      <div
+        ref={imageRef}
+        className="absolute top-0 right-0 bottom-0 w-full lg:w-[45%] overflow-hidden"
+      >
+        <Image
+          src="/luis_hero.webp"
+          alt="Luis Cedillo"
+          fill
+          className="object-cover object-center"
+          priority
+          sizes="(max-width: 1024px) 100vw, 45vw"
+        />
       </div>
 
-      {/* Content */}
-      <motion.div
-        className="container mx-auto px-4 md:px-6 lg:px-8 text-center"
-        variants={prefersReducedMotion ? {} : containerVariants}
-        initial={prefersReducedMotion ? false : 'hidden'}
-        animate={prefersReducedMotion ? false : 'visible'}
+      {/* Main Name - Centered with mix-blend-difference for color inversion */}
+      <h1
+        ref={nameRef}
+        id="hero-heading"
+        className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none mix-blend-difference px-4"
       >
-        <motion.div variants={prefersReducedMotion ? {} : itemVariants}>
-          <h1 id="hero-heading" className="sr-only">
-            {t('greeting')}
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-4" aria-hidden="true">
-            {t('greeting')}
+        <span className="hero-name text-[clamp(4rem,15vw,12rem)] leading-[85%] tracking-[-0.05em] font-extrabold uppercase text-white whitespace-nowrap">
+          Luis Cedillo
+        </span>
+      </h1>
+
+      {/* Left Side - Content (takes left portion of viewport) */}
+      <div
+        ref={leftContentRef}
+        className="absolute top-0 left-0 bottom-0 w-full lg:w-[55%] flex flex-col justify-end px-6 md:px-10 lg:px-14 xl:px-20 py-8 lg:py-16 z-10 bg-[#E5E5E5]"
+      >
+        {/* Secondary Headline */}
+        <div ref={headlineRef} className="mb-6">
+          <p className="text-[clamp(1.5rem,5vw,4rem)] leading-[100%] tracking-[-0.07em] font-extrabold uppercase text-[#171717]">
+            Software Engineer
           </p>
-        </motion.div>
+        </div>
 
-        <motion.h2
-          variants={prefersReducedMotion ? {} : itemVariants}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 gradient-text"
-        >
-          {t('title')}
-        </motion.h2>
-
-        <motion.p
-          variants={prefersReducedMotion ? {} : itemVariants}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
-        >
-          {t('tagline')}
-        </motion.p>
-
-        <motion.button
-          variants={prefersReducedMotion ? {} : itemVariants}
-          onClick={scrollToProjects}
-          className="inline-flex items-center gap-2 rounded-lg glass hover:glass-strong px-6 py-3 text-sm font-medium transition-all duration-200 hover:-translate-y-1"
-        >
-          {t('cta')}
-          <ChevronDown className="size-4" />
-        </motion.button>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={prefersReducedMotion ? false : { opacity: 0 }}
-        animate={prefersReducedMotion ? false : { opacity: 1 }}
-        transition={{ delay: 2 }}
-      >
-        <button
-          onClick={scrollToProjects}
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
-          aria-label={t('scrollIndicator')}
-        >
-          <span className="text-sm">{t('scrollIndicator')}</span>
-          <ChevronDown className="size-6 animate-bounce-slow group-hover:text-primary" />
-        </button>
-      </motion.div>
+        {/* Subtitle */}
+        <p ref={subtitleRef} className="text-base lg:text-lg text-[#171717]/60 max-w-md">
+          Building digital experiences that matter —{' '}
+          <span className="text-[#171717]">with precision and purpose.</span>
+        </p>
+      </div>
     </section>
   );
 }

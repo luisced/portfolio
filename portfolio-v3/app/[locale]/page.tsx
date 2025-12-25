@@ -1,16 +1,12 @@
 import { HeroSection } from '@/components/sections/hero-section';
 import { SkipLinks } from '@/components/navigation/skip-links';
-import { FloatingNav } from '@/components/navigation/floating-nav';
-import { MobileNav } from '@/components/navigation/mobile-nav';
-import { ThemeToggle } from '@/components/navigation/theme-toggle';
+import { Navbar } from '@/components/navigation/navbar';
 
 export default function HomePage() {
   return (
     <>
       <SkipLinks />
-      <MobileNav />
-      <ThemeToggle />
-      <FloatingNav />
+      <Navbar />
 
       <main id="main-content">
         <HeroSection />
