@@ -7,7 +7,7 @@ import { Menu, X, Moon, Sun, Home, Briefcase, User, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/components/providers/theme-provider';
 
-const sections = ['hero', 'projects', 'about', 'contact'] as const;
+const sections = ['hero', 'about', 'projects', 'contact'] as const;
 
 const sectionIcons = {
   hero: Home,

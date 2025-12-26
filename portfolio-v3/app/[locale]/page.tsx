@@ -1,4 +1,5 @@
 import { HeroSection } from '@/components/sections/hero-section';
+import { AboutSection } from '@/components/sections/about-section';
 import { SkipLinks } from '@/components/navigation/skip-links';
 import { Navbar } from '@/components/navigation/navbar';
 
@@ -11,7 +12,9 @@ export default function HomePage() {
       <main id="main-content">
         <HeroSection />
 
-        {/* Placeholder sections for navigation */}
+        {/* About Section with Timeline */}
+        <AboutSection />
+
         <section
           id="projects"
           className="min-h-screen flex items-center justify-center"
@@ -20,19 +23,6 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <h2 id="projects-heading" className="text-4xl font-bold text-center">
               Projects Section
-            </h2>
-            <p className="text-center text-muted-foreground mt-4">Coming soon...</p>
-          </div>
-        </section>
-
-        <section
-          id="about"
-          className="min-h-screen flex items-center justify-center bg-muted/30"
-          aria-labelledby="about-heading"
-        >
-          <div className="container mx-auto px-4">
-            <h2 id="about-heading" className="text-4xl font-bold text-center">
-              About Section
             </h2>
             <p className="text-center text-muted-foreground mt-4">Coming soon...</p>
           </div>

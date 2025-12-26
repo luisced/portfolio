@@ -156,9 +156,9 @@ export function HeroSection() {
       <h1
         ref={nameRef}
         id="hero-heading"
-        className="absolute top-0 left-0 right-0 h-screen z-20 flex items-center justify-center pointer-events-none px-4 pb-[20vh]"
+        className="absolute top-0 left-0 right-0 h-screen z-20 flex items-center justify-center pointer-events-none px-4 pb-[25vh] lg:pb-[28vh] 2xl:pb-[32vh]"
       >
-        <span className="hero-name text-[clamp(3rem,15vw,13.2rem)] leading-[85%] tracking-[-0.05em] font-extrabold uppercase whitespace-nowrap bg-gradient-to-r from-black from-68% to-white/90 to-65% lg:from-56% lg:to-56% bg-clip-text text-transparent">
+        <span className="hero-name text-[clamp(3rem,15vw,16rem)] leading-[85%] tracking-[-0.05em] font-extrabold uppercase whitespace-nowrap bg-gradient-to-r from-black from-68% to-white/90 to-65% lg:from-56% lg:to-56% bg-clip-text text-transparent">
           Luis Cedillo
         </span>
       </h1>
@@ -166,17 +166,17 @@ export function HeroSection() {
       {/* Left Side - Content (takes left portion of viewport) */}
       <div
         ref={leftContentRef}
-        className="absolute top-0 left-0 h-[115vh] w-2/3 lg:w-[55%] flex flex-col justify-end px-6 md:px-10 lg:px-14 xl:px-20 pb-[35vh] lg:pb-[40vh] z-10 bg-[#F5F5EB]"
+        className="absolute top-0 left-0 h-[115vh] w-2/3 lg:w-[55%] flex flex-col justify-end px-6 md:px-10 lg:px-14 xl:px-20 2xl:px-28 pb-[30vh] lg:pb-[32vh] 2xl:pb-[28vh] z-10 bg-[#F5F5EB]"
       >
         {/* Secondary Headline */}
-        <div ref={headlineRef} className="mb-6">
-          <p className="text-[clamp(1.5rem,5vw,4rem)] leading-[100%] tracking-[-0.07em] font-extrabold uppercase text-[#171717]">
+        <div ref={headlineRef} className="mb-6 lg:mb-8 2xl:mb-10">
+          <p className="text-[clamp(1.5rem,5vw,5.5rem)] leading-[100%] tracking-[-0.07em] font-extrabold uppercase text-[#171717]">
             Software Engineer
           </p>
         </div>
 
         {/* Subtitle */}
-        <div ref={subtitleRef} className="text-base lg:text-lg text-[#171717]/60 max-w-md">
+        <div ref={subtitleRef} className="text-[clamp(1rem,1.5vw,1.5rem)] text-[#171717]/60 max-w-md 2xl:max-w-xl">
           <p className="mb-1">Building digital experiences that matter</p>
           <RotatingDecryptedText
             phrases={[
