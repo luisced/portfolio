@@ -84,7 +84,9 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <LenisProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider locale={locale}>
+          {children}
+        </ThemeProvider>
       </LenisProvider>
     </NextIntlClientProvider>
   );

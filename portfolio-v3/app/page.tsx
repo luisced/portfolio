@@ -1,5 +1,6 @@
-import { ComponentExample } from "@/components/component-example";
+import { redirect } from 'next/navigation';
+import { defaultLocale } from '@/i18n/config';
 
-export default function Page() {
-return <ComponentExample />;
+export default function RootPage() {
+  redirect(`/${defaultLocale}`);
 }

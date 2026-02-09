@@ -1,30 +1,33 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-
-// Register ScrollTrigger
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { useTranslations } from 'next-intl';
+import { gsap, prefersReducedMotion } from '@/lib/gsap';
 
 export function IntroSection() {
+  const t = useTranslations('intro');
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const textContainerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
-  const fullText = "ANYONE CAN WRITE CODE. THE REAL ART LIES IN TRANSFORMING VISIONARY IDEAS INTO ELEGANT SOLUTIONS THAT RESHAPE HOW THE WORLD WORKS.";
-  const baseColor = 'rgba(255, 255, 255, 0.35)';
+  const fullText = t('quote');
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const textElement = textRef.current;
-      
-      if (!textElement) return;
+    const reduced = prefersReducedMotion();
+    const textElement = textRef.current;
+    const container = containerRef.current;
+    
+    if (!textElement || !container) return;
 
+    if (reduced) {
+      textElement.textContent = fullText;
+      textElement.style.color = 'hsl(var(--foreground))';
+      return;
+    }
+
+    const ctx = gsap.context(() => {
       // Build text as words (for natural spacing/wrapping), with per-char spans for highlight.
       const escapeHtml = (s: string) =>
         s
@@ -44,30 +47,33 @@ export function IntroSection() {
 
       const charElements = textElement.querySelectorAll('.char');
 
+      // Start fully dark / invisible
+      gsap.set(charElements, { color: 'rgba(255, 255, 255, 0.05)' });
+
       // Create the main ScrollTrigger animation
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
+          trigger: container,
           start: 'top top',
-          end: '+=200%', // Extended scroll area for both phases
+          end: '+=300%',
           pin: true,
-          scrub: 1,
+          scrub: 0.5,
           anticipatePin: 1,
         },
       });
 
-      // Phase 1 (0-60%): Highlight effect - change from grey to white
+      // Phase 1 (0-75%): Letter-by-letter reveal - each char snaps from invisible to bright white
       tl.to(charElements, {
         color: 'rgba(255, 255, 255, 1)',
-        duration: 0.6, // Takes 60% of the timeline
+        duration: 0.75,
         stagger: {
-          each: 0.6 / charElements.length,
+          each: 0.75 / charElements.length,
           ease: 'none',
         },
-        ease: 'none',
+        ease: 'power2.out',
       });
 
-      // Phase 2 (60-100%): Slide out to the left and fade
+      // Phase 2 (75-100%): Slide out to the left and fade
       tl.to(
         [imageRef.current, textContainerRef.current],
         {
@@ -78,17 +84,17 @@ export function IntroSection() {
         },
         '+=0.1' // Small pause after text is complete
       );
-    }, containerRef);
+    }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [fullText]);
 
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#141414' }}
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background"
     >
+      <h2 className="sr-only">Philosophy</h2>
       <div className="w-full h-screen flex flex-col lg:flex-row items-center justify-center">
         {/* Left Side - Image */}
         <div
@@ -115,12 +121,8 @@ export function IntroSection() {
           <div className="max-w-3xl">
             <div
               ref={textRef}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
-              style={{ 
-                color: baseColor,
-                fontFamily: 'var(--font-sora), Sora, sans-serif',
-                letterSpacing: '-0.02em',
-              }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight font-sans tracking-tight"
+              style={{ color: 'rgba(255, 255, 255, 0.05)' }}
             >
               {/* Text will be injected by GSAP */}
             </div>

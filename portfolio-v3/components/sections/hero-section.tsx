@@ -1,26 +1,33 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { ArrowDown } from 'lucide-react';
 import RotatingDecryptedText from '@/components/effects/rotating-decrypted-text';
-
-// Register ScrollTrigger
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { Button } from '@/components/ui/button';
+import { gsap, prefersReducedMotion } from '@/lib/gsap';
 
 export function HeroSection() {
+  const t = useTranslations('hero');
   const containerRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const leftContentRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   // Entry animations
   useEffect(() => {
+    const reduced = prefersReducedMotion();
     const ctx = gsap.context(() => {
       // Initial states - everything hidden
       gsap.set(imageRef.current, { opacity: 0, y: -100, clipPath: 'inset(100% 0 0 0)' });
@@ -28,9 +35,12 @@ export function HeroSection() {
       gsap.set(leftContentRef.current, { opacity: 0 });
       gsap.set(headlineRef.current, { opacity: 0, y: 30 });
       gsap.set(subtitleRef.current, { opacity: 0, y: 20 });
+      gsap.set(ctaRef.current, { opacity: 0, y: 20 });
 
       // Timeline - Animation sequence: Name → Header → Subtitle → Image
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      const tl = gsap.timeline({ 
+        defaults: { ease: 'power3.out', duration: reduced ? 0 : undefined } 
+      });
 
       // 1. First: background is already visible, wait a moment
       tl.to({}, { duration: 0.3 })
@@ -70,7 +80,17 @@ export function HeroSection() {
           },
           '-=0.2'
         )
-        // 6. Finally: image animates from top to bottom
+        // 6. CTA button animates in
+        .to(
+          ctaRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+          },
+          '-=0.2'
+        )
+        // 7. Finally: image animates from top to bottom
         .to(
           imageRef.current,
           {
@@ -89,6 +109,9 @@ export function HeroSection() {
 
   // Parallax effect using ScrollTrigger (integrated with Lenis)
   useEffect(() => {
+    const reduced = prefersReducedMotion();
+    if (reduced) return;
+
     const ctx = gsap.context(() => {
       // Name moves up the most (furthest layer)
       gsap.to(nameRef.current, {
@@ -189,6 +212,18 @@ export function HeroSection() {
             speed={20}
             className="text-[#171717]"
           />
+        </div>
+
+        {/* CTA Button */}
+        <div ref={ctaRef} className="mt-8">
+          <Button
+            onClick={scrollToProjects}
+            size="lg"
+            className="cursor-pointer group"
+          >
+            {t('cta')}
+            <ArrowDown className="ml-2 size-4 group-hover:translate-y-1 transition-transform" />
+          </Button>
         </div>
       </div>
     </section>

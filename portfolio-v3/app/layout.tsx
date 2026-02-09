@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sora.variable} ${geistMono.variable} ${pressStart2P.variable}`} suppressHydrationWarning>
+    <html className={`${sora.variable} ${geistMono.variable} ${pressStart2P.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
         {children}
       </body>

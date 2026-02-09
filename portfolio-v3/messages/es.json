@@ -62,5 +62,38 @@
   "footer": {
     "copyright": "Todos los derechos reservados",
     "backToTop": "Volver arriba"
+  },
+  "intro": {
+    "quote": "CUALQUIERA PUEDE ESCRIBIR CÓDIGO. EL VERDADERO ARTE ESTÁ EN TRANSFORMAR IDEAS VISIONARIAS EN SOLUCIONES ELEGANTES QUE REDEFINEN CÓMO FUNCIONA EL MUNDO."
+  },
+  "skills": {
+    "heading": "MIS HABILIDADES",
+    "tagline": "SIEMPRE APRENDIENDO, SIEMPRE CONSTRUYENDO",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Móvil",
+      "devops": "DevOps"
+    },
+    "names": {
+      "reactNextjs": "React & Next.js",
+      "typescript": "TypeScript",
+      "tailwind": "Tailwind CSS",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "databases": "Bases de Datos",
+      "reactNative": "React Native",
+      "awsCloud": "AWS & Cloud",
+      "gitCicd": "Git & CI/CD"
+    }
+  },
+  "timeline": {
+    "0": { "yearRange": "2019-2020", "title": "Desarrollador Practicante", "company": "StartUp Inc" },
+    "1": { "yearRange": "2020-2021", "title": "Desarrollador Junior", "company": "Code Labs" },
+    "2": { "yearRange": "2021-2022", "title": "Desarrollador Mid", "company": "Tech Startup" },
+    "3": { "yearRange": "2022-2023", "title": "Desarrollador Full Stack", "company": "Digital Agency" },
+    "4": { "yearRange": "2023-2024", "title": "Ingeniero Senior", "company": "Tech Giant" },
+    "5": { "yearRange": "2024-Presente", "title": "Tech Lead", "company": "Innovation Labs" },
+    "6": { "yearRange": "Futuro", "title": "VP de Ingeniería", "company": "Future Corp" }
   }
 }

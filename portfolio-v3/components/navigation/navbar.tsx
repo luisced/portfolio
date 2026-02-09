@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Moon, Sun, Home, Briefcase, User, Mail } from 'lucide-react';
+import { Menu, X, Home, Briefcase, User, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useTheme } from '@/components/providers/theme-provider';
+import { LanguageSwitcher } from './language-switcher';
 
 const sections = ['hero', 'about', 'projects', 'contact'] as const;
 
@@ -21,7 +21,6 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const t = useTranslations('navigation');
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,7 +68,10 @@ export function Navbar() {
     <>
       {/* Main Navbar */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50"
+        className={cn(
+          'fixed z-50 transition-all duration-300',
+          isScrolled ? 'top-4 left-4 right-4' : 'top-0 left-0 right-0'
+        )}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
@@ -77,7 +79,9 @@ export function Navbar() {
         <nav
           className={cn(
             'transition-all duration-300',
-            isScrolled || isOpen
+            isScrolled
+              ? 'bg-background/80 backdrop-blur-md border border-border/30 shadow-lg rounded-xl'
+              : isOpen
               ? 'bg-background/80 backdrop-blur-md border-b border-border/30 shadow-sm'
               : 'bg-transparent'
           )}
@@ -128,17 +132,8 @@ export function Navbar() {
 
             {/* Action Buttons */}
             <div className="flex items-center gap-2">
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className={cn(
-                  'flex size-9 items-center justify-center rounded-lg transition-all duration-200',
-                  'hover:bg-foreground/5 text-muted-foreground hover:text-foreground'
-                )}
-                aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-              >
-                {theme === 'light' ? <Moon className="size-[18px]" /> : <Sun className="size-[18px]" />}
-              </button>
+              {/* Language Switcher */}
+              <LanguageSwitcher />
 
               {/* Mobile Menu Button */}
               <button

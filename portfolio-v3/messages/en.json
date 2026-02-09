@@ -62,5 +62,38 @@
   "footer": {
     "copyright": "All rights reserved",
     "backToTop": "Back to top"
+  },
+  "intro": {
+    "quote": "ANYONE CAN WRITE CODE. THE REAL ART LIES IN TRANSFORMING VISIONARY IDEAS INTO ELEGANT SOLUTIONS THAT RESHAPE HOW THE WORLD WORKS."
+  },
+  "skills": {
+    "heading": "MY SKILLS",
+    "tagline": "ALWAYS LEARNING, ALWAYS BUILDING",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Mobile",
+      "devops": "DevOps"
+    },
+    "names": {
+      "reactNextjs": "React & Next.js",
+      "typescript": "TypeScript",
+      "tailwind": "Tailwind CSS",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "databases": "Databases",
+      "reactNative": "React Native",
+      "awsCloud": "AWS & Cloud",
+      "gitCicd": "Git & CI/CD"
+    }
+  },
+  "timeline": {
+    "0": { "yearRange": "2019-2020", "title": "Intern Developer", "company": "StartUp Inc" },
+    "1": { "yearRange": "2020-2021", "title": "Junior Developer", "company": "Code Labs" },
+    "2": { "yearRange": "2021-2022", "title": "Mid Developer", "company": "Tech Startup" },
+    "3": { "yearRange": "2022-2023", "title": "Full Stack Dev", "company": "Digital Agency" },
+    "4": { "yearRange": "2023-2024", "title": "Senior Engineer", "company": "Tech Giant" },
+    "5": { "yearRange": "2024-Present", "title": "Tech Lead", "company": "Innovation Labs" },
+    "6": { "yearRange": "Future", "title": "VP Engineering", "company": "Future Corp" }
   }
 }

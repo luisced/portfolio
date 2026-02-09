@@ -1,4 +1,4 @@
-export { Timeline, defaultTimelineData } from './timeline';
+export { Timeline } from './timeline';
 export type { TimelineItem } from './timeline';
 
 

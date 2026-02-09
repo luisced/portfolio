@@ -2,16 +2,11 @@
 
 import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register ScrollTrigger plugin
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 export function LenisProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
     // Initialize Lenis with optimal settings
@@ -36,15 +31,16 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     // Set up RAF loop for smooth animation
     const raf = (time: number) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId.current = requestAnimationFrame(raf);
     };
 
-    requestAnimationFrame(raf);
+    rafId.current = requestAnimationFrame(raf);
 
     // Cleanup on unmount
     return () => {
       lenis.destroy();
       lenisRef.current = null;
+      cancelAnimationFrame(rafId.current);
     };
   }, []);
 
