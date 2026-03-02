@@ -83,9 +83,10 @@ const SpriteCharacter = memo(function SpriteCharacter({ isWalking, facingLeft }:
 
 interface TimelineProps {
   data?: TimelineItem[];
+  scrollIndex?: number;
 }
 
-export function Timeline({ data }: TimelineProps = {}) {
+export function Timeline({ data, scrollIndex }: TimelineProps = {}) {
   const t = useTranslations('timeline');
 
   // Build timeline data from translations + metadata
@@ -105,6 +106,7 @@ export function Timeline({ data }: TimelineProps = {}) {
   const [isWalking, setIsWalking] = useState(false);
   const [facingLeft, setFacingLeft] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const prevScrollIndex = useRef(0);
   const timelineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -237,6 +239,21 @@ export function Timeline({ data }: TimelineProps = {}) {
 
     return () => ctx.revert();
   }, []);
+
+  // Respond to scroll-driven index changes from parent
+  useEffect(() => {
+    if (scrollIndex === undefined) return;
+    if (scrollIndex === prevScrollIndex.current) return;
+
+    const direction = scrollIndex > prevScrollIndex.current ? 1 : -1;
+    setFacingLeft(direction < 0);
+    setIsWalking(true);
+    setCurrentIndex(scrollIndex);
+    prevScrollIndex.current = scrollIndex;
+
+    const timeout = setTimeout(() => setIsWalking(false), 800);
+    return () => clearTimeout(timeout);
+  }, [scrollIndex]);
 
   // Auto-scroll timeline to keep character visible
   useEffect(() => {

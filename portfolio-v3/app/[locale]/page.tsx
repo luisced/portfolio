@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { HeroSection } from '@/components/sections/hero-section';
+import { ProjectsSection } from '@/components/sections/projects-section';
 import { SkipLinks } from '@/components/navigation/skip-links';
 import { Navbar } from '@/components/navigation/navbar';
 import { Footer } from '@/components/sections/footer';
@@ -25,22 +26,13 @@ export default function HomePage() {
       <main id="main-content">
         <HeroSection />
 
-        {/* About Section with Timeline */}
+        {/* About Section with Timeline + Intro */}
         <AboutSection />
 
-        <section
-          id="projects"
-          className="min-h-screen flex items-center justify-center"
-          aria-labelledby="projects-heading"
-        >
-          <div className="container mx-auto px-4">
-            <h2 id="projects-heading" className="text-4xl font-bold text-center">
-              Projects Section
-            </h2>
-            <p className="text-center text-muted-foreground mt-4">Coming soon...</p>
-          </div>
-        </section>
+        {/* Projects */}
+        <ProjectsSection />
 
+        {/* Contact */}
         <section
           id="contact"
           className="min-h-screen flex items-center justify-center"
@@ -50,12 +42,12 @@ export default function HomePage() {
             <h2 id="contact-heading" className="text-4xl font-bold text-center">
               Contact Section
             </h2>
-          <p className="text-center text-muted-foreground mt-4">Coming soon...</p>
-        </div>
-      </section>
-    </main>
+            <p className="text-center text-muted-foreground mt-4">Coming soon...</p>
+          </div>
+        </section>
+      </main>
 
-    <Footer />
-  </>
-);
+      <Footer />
+    </>
+  );
 }

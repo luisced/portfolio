@@ -125,9 +125,9 @@ export function HeroSection() {
         },
       });
 
-      // Headline moves up for layered effect
-      gsap.to(headlineRef.current, {
-        y: -100,
+      // Left content panel (headline + subtitle + CTA) moves up together
+      gsap.to(leftContentRef.current, {
+        y: -80,
         ease: 'none',
         scrollTrigger: {
           trigger: containerRef.current,
@@ -137,9 +137,9 @@ export function HeroSection() {
         },
       });
 
-      // Subtitle moves up slightly less (closest to viewer)
-      gsap.to(subtitleRef.current, {
-        y: -60,
+      // Image moves up slightly
+      gsap.to(imageRef.current, {
+        y: -40,
         ease: 'none',
         scrollTrigger: {
           trigger: containerRef.current,
