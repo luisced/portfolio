@@ -1,56 +1,24 @@
-# Luis Cedillo Portfolio
+# Luis Cedillo — Portfolio
 
-This repository contains two versions of my personal portfolio website:
+Monorepo for [luiscedillo.com](https://luiscedillo.com).
 
-## Portfolio V1
+| Directory | Status | Stack |
+|---|---|---|
+| `portfolio-v4/` | **current** — see `PLAN.md` and `portfolio-v4/README.md` | Astro 7, static, EN/ES, Cloudflare Pages |
+| `portfolio-v2/` | previous production site, kept until V4 cutover | React 19 + Vite + i18next |
 
-The original version of my portfolio website built with React.js. This version is located in the `portfolio-v1` directory.
+V1 (Create React App) lived in a submodule that no longer exists in this repo; its history is on the `dev` branch.
 
-## Portfolio V2
-
-The latest version of my portfolio website built with React, TypeScript, and Vite. This version includes:
-
-- Modern, responsive design
-- Dark/light theme support
-- Interactive 3D elements using Spline
-- Optimized performance with code splitting and lazy loading
-- TypeScript for improved developer experience and type safety
-
-This version is located in the `portfolio-v2` directory.
-
-## Getting Started
-
-### Portfolio V2 (Latest Version)
+## Run V4
 
 ```bash
-# Navigate to the portfolio-v2 directory
-cd portfolio-v2
-
-# Install dependencies
-npm install
-
-# Start the development server
-npm run dev
-
-# Build for production
-npm run build
+pnpm install:v4   # once
+pnpm dev          # http://localhost:4321  (alias of pnpm dev:v4)
+pnpm build:v4     # build + 404 mirrors + i18n parity + asset/JS budgets
+pnpm check:v4     # astro check
 ```
 
-### Portfolio V1 (Original Version)
-
-```bash
-# Navigate to the portfolio-v1 directory
-cd portfolio-v1
-
-# Install dependencies
-npm install
-
-# Start the development server
-npm start
-
-# Build for production
-npm run build
-```
+Astro 7 runs `astro dev` as a background daemon: `pnpm --dir portfolio-v4 exec astro dev stop` shuts it down.
 
 ## License
 
