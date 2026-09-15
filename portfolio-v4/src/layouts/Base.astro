@@ -1,8 +1,8 @@
 ---
 import '@/styles/base.css';
-import serifUrl from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
-import serifItalicUrl from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
-import sansUrl from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
+import displayUrl from '@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2?url';
+import narrowUrl from '@fontsource/archivo-narrow/files/archivo-narrow-latin-400-normal.woff2?url';
+import bodyUrl from '@fontsource/archivo/files/archivo-latin-400-normal.woff2?url';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
@@ -57,12 +57,12 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     <link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', path), site)} />
     <link rel="alternate" type="application/rss+xml" title="Luis Cedillo — notes" href={new URL(localizePath(locale, '/rss.xml'), site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="font" type="font/woff2" href={serifUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={serifItalicUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={sansUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={displayUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={narrowUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={bodyUrl} crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#211f1b" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1220" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#e2e1dc" media="(prefers-color-scheme: light)" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Luis Cedillo" />
@@ -95,7 +95,6 @@ const og = new URL(ogImage ?? '/og/default.png', site);
   </head>
   <body>
     <a class="skip-link" href="#main">{t('skip.main')}</a>
-    <div class="atmosphere" aria-hidden="true"></div>
     {!bare && <Nav locale={locale} path={path} />}
     <main id="main" tabindex="-1">
       <slot />

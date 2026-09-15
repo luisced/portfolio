@@ -1,5 +1,5 @@
 ---
-import { localizePath, otherLocale, useTranslations } from '@/i18n/utils';
+import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 
 const { locale, path } = Astro.props;
 const t = useTranslations(locale);
+const profile = await getProfile();
 const home = localizePath(locale, '/');
 const alt = otherLocale(locale);
 const links = [
@@ -20,43 +21,45 @@ const links = [
 ---
 
 <header class="nav" data-nav>
-  <div class="container nav__bar">
-    <a class="nav__brand" href={home}>
+  <div class="nav__row cells">
+    <a class="nav__brand cell" href={home}>
       <span class="nav__mark" aria-hidden="true"></span>
-      <span class="mono">luis<span class="nav__dot">.</span>cedillo</span>
+      <span class="narrow narrow--bold">Luis Cedillo</span>
+      <span class="label nav__rev">Rev 4.0</span>
     </a>
 
     <nav class="nav__links" aria-label="Primary">
-      <ul>
+      <ul class="cells">
         {links.map((l) => (
-          <li><a class="mono" href={l.href}>{l.label}</a></li>
+          <li><a class="cell narrow" href={l.href}>{l.label}</a></li>
         ))}
       </ul>
     </nav>
 
-    <div class="nav__tools">
-      <a class="nav__tool mono" href={localizePath(alt, path)} hreflang={alt} lang={alt} aria-label={t('lang.switch')}>
-        {t('lang.code')}
-      </a>
-      <button class="nav__tool nav__theme" type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-          <g class="nav__sun">
-            <circle cx="8" cy="8" r="3" />
-            <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06" />
-          </g>
-          <path class="nav__moon" d="M8 1.5a6.5 6.5 0 1 0 6.3 8.1A5 5 0 0 1 8 1.5Z" fill="currentColor" stroke="none" />
-        </svg>
-      </button>
-      <button class="nav__tool nav__burger" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={t('nav.menu')} data-nav-toggle>
-        <span></span><span></span>
-      </button>
-    </div>
+    <ul class="nav__social cells">
+      {profile.data.socials.slice(0, 2).map((s) => (
+        <li><a class="cell narrow" href={s.url} rel="me noopener" target="_blank">{s.label}</a></li>
+      ))}
+    </ul>
+
+    <a class="nav__tool cell narrow" href={localizePath(alt, path)} hreflang={alt} lang={alt}>
+      {t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span>
+    </a>
+    <button class="nav__tool nav__theme cell" type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">
+      <span class="nav__swatch" aria-hidden="true"></span>
+    </button>
+    <button class="nav__tool nav__burger cell" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={t('nav.menu')} data-nav-toggle>
+      <span></span><span></span>
+    </button>
   </div>
 
   <div class="nav__sheet" id="nav-sheet" hidden>
-    <ul>
-      {links.map((l) => (
-        <li><a class="mono" href={l.href}>{l.label}</a></li>
+    <ul class="cells">
+      {links.map((l, i) => (
+        <li><a class="cell headline" href={l.href}><span class="label">0{i + 1}</span>{l.label}</a></li>
+      ))}
+      {profile.data.socials.map((s) => (
+        <li><a class="cell narrow" href={s.url} rel="me noopener" target="_blank">{s.label} ↗</a></li>
       ))}
     </ul>
   </div>
@@ -86,13 +89,6 @@ const links = [
         toggle.focus();
       }
     });
-    addEventListener(
-      'scroll',
-      () => {
-        nav.classList.toggle('is-scrolled', scrollY > 24);
-      },
-      { passive: true },
-    );
   }
 </script>
 
@@ -101,129 +97,96 @@ const links = [
     position: sticky;
     top: 0;
     z-index: var(--z-nav);
-    backdrop-filter: blur(0px);
-    transition:
-      background-color var(--d-3) var(--ease-out),
-      backdrop-filter var(--d-3) var(--ease-out),
-      border-color var(--d-3) var(--ease-out);
-    border-bottom: 1px solid transparent;
+    background: var(--bg);
   }
 
-  .nav.is-scrolled {
-    background: color-mix(in oklch, var(--bg) 72%, transparent);
-    backdrop-filter: blur(14px) saturate(1.2);
-    border-color: var(--line-2);
+  .nav__row {
+    grid-template-columns: 1fr auto auto auto;
+    border-inline: 0;
+    border-top: 0;
   }
 
-  .nav__bar {
+  .nav__row > * {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--s-4);
-    height: 4rem;
   }
 
   .nav__brand {
-    display: inline-flex;
-    align-items: center;
     gap: var(--s-3);
-    text-decoration: none;
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
   }
 
   .nav__mark {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--amber);
-    box-shadow: 0 0 0 4px var(--amber-soft), 0 0 18px var(--amber);
+    width: 12px;
+    height: 12px;
+    background: var(--brand);
   }
 
-  .nav__dot {
-    color: var(--brand);
-  }
-
-  .nav__links {
+  .nav__rev {
+    color: var(--fg-3);
     display: none;
+  }
+
+  .nav__row > .nav__links,
+  .nav__row > .nav__social {
+    display: none;
+    padding: 0;
+    list-style: none;
   }
 
   .nav__links ul,
-  .nav__sheet ul {
-    list-style: none;
+  .nav__social {
     padding: 0;
+    grid-auto-flow: column;
+    border: 0;
+    border-inline: var(--hair) solid var(--line);
+  }
+
+  .nav__links li,
+  .nav__social li {
     display: flex;
-    gap: var(--s-5);
   }
 
-  .nav__links a {
-    text-decoration: none;
-    color: var(--fg-2);
-    font-size: var(--text-sm);
-    padding: var(--s-2) 0;
-    position: relative;
-  }
-
-  .nav__links a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 100%;
-    bottom: 0;
-    height: 1px;
-    background: var(--brand);
-    transition: right var(--d-2) var(--ease-out);
-  }
-
-  .nav__links a:hover {
-    color: var(--fg);
-  }
-
-  .nav__links a:hover::after {
-    right: 0;
-  }
-
-  .nav__tools {
-    display: flex;
+  .nav__links a,
+  .nav__social a {
+    height: 100%;
+    display: inline-flex;
     align-items: center;
-    gap: var(--s-2);
+    padding-inline: var(--s-5);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
+    transition:
+      background-color var(--d-1) var(--ease-step),
+      color var(--d-1) var(--ease-step);
+  }
+
+  .nav__links a:hover,
+  .nav__social a:hover,
+  .nav__tool:hover {
+    background: var(--fg);
+    color: var(--bg);
   }
 
   .nav__tool {
-    display: inline-grid;
-    place-items: center;
-    height: 2.25rem;
-    min-width: 2.25rem;
-    padding-inline: var(--s-2);
-    border-radius: var(--r-2);
-    border: 1px solid var(--line);
-    background: var(--bg-elev);
-    color: var(--fg-2);
-    font-size: var(--text-xs);
-    text-decoration: none;
-    box-shadow: var(--shadow-1);
+    justify-content: center;
+    min-width: 3.5rem;
+    padding-inline: var(--s-3);
+    font-size: var(--text-sm);
+    letter-spacing: 0.06em;
     transition:
-      color var(--d-2) var(--ease-out),
-      border-color var(--d-2) var(--ease-out);
+      background-color var(--d-1) var(--ease-step),
+      color var(--d-1) var(--ease-step);
   }
 
-  .nav__tool:hover {
-    color: var(--fg);
-    border-color: var(--fg-3);
+  .nav__swatch {
+    width: 14px;
+    height: 14px;
+    border: var(--hair) solid currentColor;
+    background: linear-gradient(90deg, currentColor 50%, transparent 50%);
   }
 
-  .nav__theme .nav__moon {
-    display: none;
-  }
-
-  :global([data-theme='light']) .nav__theme .nav__sun {
-    display: none;
-  }
-
-  :global([data-theme='light']) .nav__theme .nav__moon {
-    display: block;
-  }
-
-  .nav__burger {
+  /* `.nav__row > *` outranks a lone class under Astro scoping; qualify the burger. */
+  .nav__row > .nav__burger {
     display: inline-grid;
     gap: 5px;
     align-content: center;
@@ -231,44 +194,75 @@ const links = [
 
   .nav__burger span {
     display: block;
-    width: 16px;
-    height: 1.5px;
+    width: 18px;
+    height: 2px;
     background: currentColor;
     transition: transform var(--d-2) var(--ease-out);
   }
 
   .nav__burger[aria-expanded='true'] span:first-child {
-    transform: translateY(3.25px) rotate(45deg);
+    transform: translateY(3.5px) rotate(45deg);
   }
 
   .nav__burger[aria-expanded='true'] span:last-child {
-    transform: translateY(-3.25px) rotate(-45deg);
+    transform: translateY(-3.5px) rotate(-45deg);
   }
 
-  .nav__sheet {
-    border-top: 1px solid var(--line-2);
-    background: var(--bg-2);
-    padding: var(--s-5) var(--gutter) var(--s-6);
+  .nav__sheet .cells {
+    padding: 0;
+    list-style: none;
+    border-inline: 0;
+    border-top: 0;
   }
 
-  .nav__sheet ul {
-    flex-direction: column;
-    gap: var(--s-4);
+  .nav__sheet li {
+    display: flex;
   }
 
   .nav__sheet a {
-    text-decoration: none;
-    font-size: var(--text-lg);
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-4);
+    font-size: var(--text-2xl);
+    padding-block: var(--s-4);
+  }
+
+  .nav__sheet a.narrow {
+    font-size: var(--text-md);
+  }
+
+  .nav__sheet a:hover {
+    background: var(--fg);
+    color: var(--bg);
   }
 
   @media (--md) {
-    .nav__links {
+    .nav__row {
+      grid-template-columns: 1fr auto auto auto auto;
+    }
+
+    .nav__rev {
+      display: inline;
+    }
+
+    .nav__row > .nav__links {
       display: block;
     }
 
-    .nav__burger,
+    .nav__row > .nav__burger,
     .nav__sheet {
       display: none;
+    }
+  }
+
+  @media (--lg) {
+    .nav__row {
+      grid-template-columns: 1fr auto auto auto auto auto;
+    }
+
+    .nav__row > .nav__social {
+      display: grid;
     }
   }
 </style>

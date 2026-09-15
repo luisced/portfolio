@@ -5,12 +5,11 @@ import { Resvg } from '@resvg/resvg-js';
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-// IBM Plex Sans ships only WOFF2 in the available package; use Instrument Serif for both faces.
-const instrumentSerif = readFileSync(
-  resolve(
-    process.cwd(),
-    'node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff',
-  ),
+const archivoBlack = readFileSync(
+  resolve(process.cwd(), 'node_modules/@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff'),
+);
+const archivoNarrow = readFileSync(
+  resolve(process.cwd(), 'node_modules/@fontsource/archivo-narrow/files/archivo-narrow-latin-400-normal.woff'),
 );
 
 export interface OgInput {
@@ -40,6 +39,10 @@ function textNode(
 }
 
 export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Uint8Array<ArrayBuffer>> {
+  // Blueprint sheet: deep blue-black, white hairline frame, uppercase Archivo Black. Flat fills only.
+  const INK = '#f5f5f8';
+  const PAPER = '#12162a';
+  const BRAND = '#4fe39a';
   const tree: OgNode = {
     type: 'div',
     props: {
@@ -48,13 +51,10 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
         height: HEIGHT,
         display: 'flex',
         flexDirection: 'column',
-        padding: '54px 64px 48px',
-        color: '#f7f3eb',
-        fontFamily: 'Instrument Serif',
-        backgroundColor: '#211f1b',
-        // Flat fills only: a radial glow here quadruples the PNG size past the 80 KB budget.
-        backgroundImage:
-          'repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 64px), repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 64px)',
+        color: INK,
+        fontFamily: 'Archivo Narrow',
+        backgroundColor: PAPER,
+        border: `2px solid ${INK}`,
       },
       children: [
         {
@@ -62,56 +62,64 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
           props: {
             style: {
               display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              gap: 12,
-              color: '#cfc8bc',
-              fontSize: 20,
-              letterSpacing: 1.5,
+              padding: '18px 32px',
+              borderBottom: `2px solid ${INK}`,
+              fontSize: 22,
+              letterSpacing: 2,
+              textTransform: 'uppercase',
             },
             children: [
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    width: 10,
-                    height: 10,
-                    borderRadius: 999,
-                    backgroundColor: '#f0c674',
-                  },
-                },
-              },
-              { type: 'span', props: { children: 'luis.cedillo' } },
+              { type: 'span', props: { children: 'LUIS CEDILLO — THE BENCH' } },
+              { type: 'span', props: { style: { color: BRAND }, children: 'SHEET 1 / REV 4.0' } },
             ],
           },
         },
-        textNode(truncate(title, 70), {
-          marginTop: 86,
-          maxWidth: 1072,
-          maxHeight: 158,
-          overflow: 'hidden',
-          fontSize: 72,
-          lineHeight: 1.06,
-          letterSpacing: -1,
-        }),
-        textNode(truncate(subtitle, 140), {
-          marginTop: 24,
-          maxWidth: 1030,
-          maxHeight: 76,
-          overflow: 'hidden',
-          color: '#cfc8bc',
-          fontSize: 30,
-          lineHeight: 1.2,
-        }),
         {
           type: 'div',
-          props: { style: { flex: 1 } },
+          props: {
+            style: { display: 'flex', flexDirection: 'column', flex: 1, padding: '44px 32px 32px' },
+            children: [
+              textNode(truncate(title, 56).toUpperCase(), {
+                fontFamily: 'Archivo Black',
+                maxWidth: 1136,
+                maxHeight: 250,
+                overflow: 'hidden',
+                fontSize: 104,
+                lineHeight: 0.9,
+                letterSpacing: -4,
+              }),
+              textNode(truncate(subtitle, 150), {
+                marginTop: 28,
+                maxWidth: 1000,
+                maxHeight: 84,
+                overflow: 'hidden',
+                color: '#b9bdd0',
+                fontSize: 32,
+                lineHeight: 1.25,
+              }),
+            ],
+          },
         },
-        textNode(truncate(kicker, 100), {
-          color: '#f0c674',
-          fontSize: 20,
-          lineHeight: 1.2,
-          letterSpacing: 1,
-        }),
+        {
+          type: 'div',
+          props: {
+            style: {
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '16px 32px',
+              borderTop: `2px solid ${INK}`,
+              fontSize: 22,
+              letterSpacing: 2,
+              textTransform: 'uppercase',
+            },
+            children: [
+              textNode(truncate(kicker, 90).toUpperCase(), { color: BRAND }),
+              { type: 'span', props: { children: 'LUISCEDILLO.COM' } },
+            ],
+          },
+        },
       ],
     },
   };
@@ -119,7 +127,10 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
   const svg = await satori(tree as Parameters<typeof satori>[0], {
     width: WIDTH,
     height: HEIGHT,
-    fonts: [{ name: 'Instrument Serif', data: instrumentSerif, weight: 400, style: 'normal' }],
+    fonts: [
+      { name: 'Archivo Black', data: archivoBlack, weight: 400, style: 'normal' },
+      { name: 'Archivo Narrow', data: archivoNarrow, weight: 400, style: 'normal' },
+    ],
   });
   // `.slice()` re-backs the bytes with a plain ArrayBuffer, which is what `Response` accepts.
   return new Uint8Array(new Resvg(svg, { fitTo: { mode: 'width', value: WIDTH } }).render().asPng()).slice();

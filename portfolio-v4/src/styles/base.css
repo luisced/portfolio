@@ -1,12 +1,12 @@
 /* Latin subsets only: EN/ES content, ≤4 font files on any page (PLAN.md §7). */
-@import '@fontsource/instrument-serif/latin-400.css';
-@import '@fontsource/instrument-serif/latin-400-italic.css';
-@import '@fontsource/ibm-plex-sans/latin-400.css';
-@import '@fontsource/ibm-plex-sans/latin-500.css';
+@import '@fontsource/archivo-black/latin-400.css';
+@import '@fontsource/archivo-narrow/latin-400.css';
+@import '@fontsource/archivo-narrow/latin-700.css';
+@import '@fontsource/archivo/latin-400.css';
 @import './font-fallbacks.css';
 @import './tokens.css';
 
-/* Reset */
+/* ───────────────────────── Reset ───────────────────────── */
 *,
 *::before,
 *::after {
@@ -20,8 +20,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
-  hanging-punctuation: first last;
+  scroll-padding-top: 3.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -37,8 +36,6 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: var(--leading-body);
-  font-optical-sizing: auto;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -72,13 +69,7 @@ button {
 
 a {
   color: inherit;
-  text-decoration-color: color-mix(in oklch, currentColor 35%, transparent);
-  text-underline-offset: 0.18em;
-  transition: text-decoration-color var(--d-2) var(--ease-out);
-}
-
-a:hover {
-  text-decoration-color: currentColor;
+  text-decoration: none;
 }
 
 p,
@@ -91,42 +82,69 @@ h1,
 h2,
 h3,
 h4 {
-  text-wrap: balance;
-  line-height: var(--leading-tight);
   font-weight: 400;
+  line-height: var(--leading-snug);
 }
 
-/* Focus: always visible, never removed */
 :focus-visible {
-  outline: 2px solid var(--amber);
-  outline-offset: 3px;
-  border-radius: var(--r-1);
+  outline: 2px solid var(--brand);
+  outline-offset: -2px;
 }
 
 ::selection {
-  background: var(--amber);
-  color: var(--bg);
+  background: var(--brand);
+  color: var(--brand-ink);
 }
 
-/* Type utilities */
+/* ───────────────────────── Type ───────────────────────── */
+/* The one loud voice: Archivo Black, uppercase, tight. */
+.headline,
 .display {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: var(--leading-tight);
+  text-wrap: balance;
 }
 
+/* Secondary voice: Archivo Narrow, uppercase, for subheads and buttons. */
+.narrow {
+  font-family: var(--font-narrow);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: var(--leading-snug);
+}
+
+.narrow--bold {
+  font-weight: 700;
+}
+
+/* Drawing lettering: mono, small caps, tracked. */
+.label,
+.kicker,
 .mono {
-  font-family: var(--font-mono);
-  font-size: 0.86em;
-  letter-spacing: 0.01em;
-}
-
-.kicker {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.mono {
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.kicker {
   color: var(--fg-3);
+}
+
+/* [01] index numbers */
+.num::before {
+  content: '[' attr(data-num) ']';
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  margin-right: 0.6em;
 }
 
 .measure {
@@ -137,24 +155,332 @@ h4 {
   color: var(--fg-2);
 }
 
-/* Layout */
-.container {
-  width: min(100% - 2 * var(--gutter), var(--container));
-  margin-inline: auto;
+/* Legacy alias kept for any remaining .method usage: now a labelled narrow subhead. */
+.method {
+  font-family: var(--font-narrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--text-lg);
 }
 
-.section {
-  padding-block: var(--s-9);
-  position: relative;
+/* ───────────────────────── Sheet & cells ─────────────────────────
+   The page is a drawing sheet divided by hairlines. Put children in
+   `.cells`; the 1px gap over an ink background draws perfect rules
+   between every cell with zero extra DOM. */
+.sheet {
+  border-block: var(--hair) solid var(--line);
 }
 
-@media (--md) {
-  .section {
-    padding-block: var(--s-10);
+.cells {
+  display: grid;
+  gap: var(--hair);
+  background: var(--line);
+  border: var(--hair) solid var(--line);
+}
+
+.cells > * {
+  background: var(--bg);
+  min-width: 0;
+}
+
+.cell {
+  padding: var(--s-4) var(--gutter);
+}
+
+.cell--tight {
+  padding: var(--s-2) var(--s-3);
+}
+
+.cell--flush {
+  padding: 0;
+}
+
+.cell--ink {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.cell--brand {
+  background: var(--brand);
+  color: var(--brand-ink);
+}
+
+.cell--fill {
+  background: var(--bg-2);
+}
+
+.rule {
+  border: 0;
+  border-top: var(--hair) solid var(--line);
+}
+
+.rule--soft {
+  border-color: var(--line-2);
+}
+
+/* Section header row: [NN] · TITLE · kicker */
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--hair);
+  background: var(--line);
+  border-block: var(--hair) solid var(--line);
+}
+
+.sec-head > * {
+  background: var(--bg);
+  padding: var(--s-3) var(--gutter);
+}
+
+.sec-head__num {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  min-width: 4.5rem;
+}
+
+.sec-head__title {
+  font-size: var(--text-2xl);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+
+.sec-head__title .kicker {
+  flex: 0 0 auto;
+}
+
+/* ───────────────────────── Ticker ─────────────────────────
+   A hairline strip with a marquee. Markup duplicates the items twice
+   so the loop is seamless: <div class="ticker"><ul class="ticker__track">…</ul></div> */
+.ticker {
+  overflow: hidden;
+  border-block: var(--hair) solid var(--line);
+  white-space: nowrap;
+  font-family: var(--font-narrow);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--text-sm);
+  padding-block: var(--s-2);
+}
+
+.ticker--ink {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.ticker__track {
+  display: flex;
+  gap: var(--s-6);
+  width: max-content;
+  list-style: none;
+  padding: 0;
+}
+
+.ticker__track > li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-6);
+}
+
+.ticker__track > li::after {
+  content: '✦';
+  font-size: 0.8em;
+}
+
+@media (--motion-ok) {
+  .ticker__track {
+    animation: ticker 40s linear infinite;
+  }
+
+  .ticker:hover .ticker__track {
+    animation-play-state: paused;
   }
 }
 
-/* Screen-reader only */
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ───────────────────────── Hatching & lamp shadows ───────────────────────── */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--line) 0 var(--hair),
+    transparent var(--hair) 7px
+  );
+}
+
+.hatch--soft {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--line-2) 0 var(--hair),
+    transparent var(--hair) 7px
+  );
+}
+
+/* An object on the bench: hairline box that casts a hatched shadow away
+   from the lamp. --shadow-dx/dy are driven by scripts/theme.ts. */
+.object {
+  position: relative;
+  border: var(--hair) solid var(--line);
+  background: var(--bg);
+}
+
+.object::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  translate: var(--shadow-dx) var(--shadow-dy);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--line-2) 0 var(--hair),
+    transparent var(--hair) 6px
+  );
+  transition: translate var(--d-3) var(--ease-out);
+}
+
+/* Specimen: object with four corner handles (Groteskly). */
+.specimen {
+  position: relative;
+  border: var(--hair) solid var(--line);
+  background:
+    linear-gradient(var(--fg), var(--fg)) top left / 8px 8px no-repeat,
+    linear-gradient(var(--fg), var(--fg)) top right / 8px 8px no-repeat,
+    linear-gradient(var(--fg), var(--fg)) bottom left / 8px 8px no-repeat,
+    linear-gradient(var(--fg), var(--fg)) bottom right / 8px 8px no-repeat,
+    var(--bg);
+}
+
+/* Numbered guide columns inside a specimen: <div class="guides" style="--n: 7"> */
+.guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--line-2) 0 var(--hair),
+    transparent var(--hair) calc(100% / var(--n, 6))
+  );
+  background-size: 100% 100%;
+}
+
+/* ───────────────────────── Controls ───────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 2.75rem;
+  padding: 0 var(--s-4);
+  border: var(--hair) solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-narrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--text-sm);
+  transition:
+    background-color var(--d-1) var(--ease-step),
+    color var(--d-1) var(--ease-step);
+}
+
+.btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn--primary {
+  background: var(--brand);
+  color: var(--brand-ink);
+  border-color: var(--brand);
+}
+
+.btn--primary:hover {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.btn--ink {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btn--ink:hover {
+  background: var(--brand);
+  color: var(--brand-ink);
+  border-color: var(--brand);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0.2em 0.55em;
+  border: var(--hair) solid var(--line-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.stamp {
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  border: 2px solid var(--brand);
+  color: var(--brand);
+  font-family: var(--font-narrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  rotate: -3deg;
+}
+
+/* Table: bill of materials / revision table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--s-2) var(--s-3);
+  border: var(--hair) solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  font-weight: 400;
+}
+
+/* ───────────────────────── Utilities ───────────────────────── */
+.container {
+  width: 100%;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -167,19 +493,17 @@ h4 {
   border: 0;
 }
 
-/* Skip link */
 .skip-link {
   position: fixed;
-  top: var(--s-3);
-  left: var(--s-3);
+  top: 0;
+  left: 0;
   z-index: var(--z-toast);
   padding: var(--s-2) var(--s-4);
-  background: var(--amber);
-  color: var(--bg);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  border-radius: var(--r-2);
-  text-decoration: none;
+  background: var(--brand);
+  color: var(--brand-ink);
+  font-family: var(--font-narrow);
+  font-weight: 700;
+  text-transform: uppercase;
   transform: translateY(-200%);
   transition: transform var(--d-2) var(--ease-out);
 }
@@ -188,148 +512,99 @@ h4 {
   transform: translateY(0);
 }
 
-/* Atmosphere: grain + bench light + blueprint grid */
-.atmosphere {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+/* Prose (case studies, notes) */
+.prose {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--fg-2);
 }
 
-.atmosphere::before {
-  /* bench light */
-  content: '';
-  position: absolute;
-  inset: -20%;
-  background: radial-gradient(
-    42rem 42rem at var(--light-x) var(--light-y),
-    var(--amber-soft),
-    transparent 70%
-  );
-  opacity: 0.9;
-  transition: opacity var(--d-4) var(--ease-out);
+.prose > * + * {
+  margin-top: 1.1em;
 }
 
-[data-theme='light'] .atmosphere::before {
-  opacity: 0.55;
-}
-
-.atmosphere::after {
-  /* grain */
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.045;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-}
-
-[data-theme='light'] .atmosphere::after {
-  opacity: 0.08;
-  mix-blend-mode: multiply;
-}
-
-.blueprint {
-  background-image:
-    linear-gradient(to right, var(--line-2) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line-2) 1px, transparent 1px);
-  background-size: 4rem 4rem;
-  mask-image: radial-gradient(60% 60% at 50% 40%, black 30%, transparent 100%);
-  opacity: 0.35;
-}
-
-/* Method heading: work() / about(luis) */
-.method {
-  font-family: var(--font-mono);
-  font-size: var(--text-xl);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+.prose h2 {
+  margin-top: 2.2em;
+  padding-top: var(--s-3);
+  border-top: var(--hair) solid var(--line);
+  font-family: var(--font-narrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--text-md);
   color: var(--fg);
 }
 
-.method::before {
-  content: '.';
+.prose h3 {
+  font-family: var(--font-narrow);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--text-md);
+  color: var(--fg);
+}
+
+.prose strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--brand);
+  text-underline-offset: 0.15em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+}
+
+.prose li::marker {
   color: var(--brand);
 }
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  padding: 0.8em 1.25em;
-  border-radius: var(--r-2);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  line-height: 1;
-  text-decoration: none;
-  border: 1px solid var(--line);
-  background: var(--bg-elev);
+.prose blockquote {
+  border-left: 3px solid var(--brand);
+  padding-left: var(--s-4);
   color: var(--fg);
-  box-shadow: var(--shadow-1);
-  transition:
-    transform var(--d-2) var(--ease-out),
-    background-color var(--d-2) var(--ease-out),
-    border-color var(--d-2) var(--ease-out);
 }
 
-.btn:hover {
-  border-color: var(--fg-3);
-  transform: translateY(-1px);
-}
-
-.btn:active {
-  transform: translateY(0) scale(0.99);
-}
-
-.btn--primary {
-  background: var(--brand);
-  color: var(--brand-ink);
-  border-color: transparent;
-}
-
-.btn--primary:hover {
-  background: color-mix(in oklch, var(--brand) 88%, white);
-  border-color: transparent;
-}
-
-/* Spec plate: engraved metadata block */
-.plate {
-  display: grid;
-  gap: var(--s-2) var(--s-4);
+.prose pre {
   padding: var(--s-4);
-  border: 1px solid var(--line);
-  border-radius: var(--r-3);
+  border: var(--hair) solid var(--line);
   background: var(--bg-2);
-  box-shadow: var(--shadow-1);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-}
-
-.plate dt {
-  color: var(--fg-3);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.plate dd {
+  overflow-x: auto;
+  font-size: var(--text-sm);
   color: var(--fg);
 }
 
-/* Reveal defaults (motion.ts flips these; static without JS or with reduced motion) */
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.prose :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: var(--hair) solid var(--line-2);
+}
+
+.prose img {
+  border: var(--hair) solid var(--line);
+}
+
+/* ───────────────────────── Reveal ─────────────────────────
+   A print reveal: hard, bottom-up, no opacity (LCP-safe). Static without
+   JS or under reduced motion. motion.ts adds .is-visible. */
 @media (--motion-ok) {
   html.js [data-reveal] {
-    opacity: 0;
-    transform: translateY(18px);
+    clip-path: inset(0 0 100% 0);
   }
 
   html.js [data-reveal].is-visible {
-    opacity: 1;
-    transform: none;
-    transition:
-      opacity var(--d-3) var(--ease-out),
-      transform var(--d-3) var(--ease-out);
+    clip-path: inset(-1px);
+    transition: clip-path var(--d-3) var(--ease-out);
     transition-delay: var(--reveal-delay, 0ms);
   }
 }

@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import heroImage from '@/assets/hero.webp';
-import { getProfile, localizePath, useTranslations } from '@/i18n/utils';
+import { getProfile, getProjects, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
 interface Props {
@@ -15,111 +15,210 @@ const p = profile.data;
 const [first, ...rest] = p.name.split(' ');
 const last = rest[0] ?? '';
 const home = localizePath(locale, '/');
+const featured = (await getProjects(locale)).filter((x) => x.data.featured).slice(0, 3);
+const link = (i: number) => (featured[i] ? localizePath(locale, `/work/${featured[i]!.data.slug}/`) : `${home}#work`);
+const title = (i: number) => featured[i]?.data.title ?? '';
+
+/* Facts for the ticker — every one is defensible; they come from the timeline and case studies. */
+const facts =
+  locale === 'es'
+    ? ['15,000+ estudiantes en UPocket', 'Channel manager en producción para Marriott / City Express', '99% de uptime', 'De 5 min a 30 s de respuesta', '4 apps iOS entregadas', 'Ciudad de México · UTC−6']
+    : ['15,000+ students on UPocket', 'Channel manager in production for Marriott / City Express', '99% uptime', '5 min → 30 s reply time', '4 iOS apps shipped', 'Mexico City · UTC−6'];
 ---
 
 <section id="hero" class="hero" aria-labelledby="hero-title">
-  <div class="hero__blueprint blueprint" aria-hidden="true"></div>
+  <!-- Title block -->
+  <div class="hero__block cells" aria-hidden="true">
+    <div class="cell cell--tight label">{t('hero.sheet')} 1 / 1</div>
+    <div class="cell cell--tight label hero__block-title">{p.headline[locale]}</div>
+    <div class="cell cell--tight label hero__block-meta">{p.location}</div>
+    <div class="cell cell--tight label hero__block-meta">{p.timezone}</div>
+    <div class="cell cell--tight label cell--brand">Rev 4.0</div>
+  </div>
 
-  <div class="container hero__grid">
-    <div class="hero__copy">
-      <p class="kicker hero__kicker" data-enter style="--n: 0">
-        <span class="hero__pulse" aria-hidden="true"></span>
-        {p.headline[locale]} · {p.location}
-      </p>
-
-      <h1 id="hero-title" class="display hero__title">
+  <!-- Name + portrait -->
+  <div class="hero__main cells">
+    <div class="hero__copy cell">
+      <h1 id="hero-title" class="headline hero__title">
         <span class="hero__line">{first}</span>
-        <span class="hero__line hero__line--accent"><em>{last}</em></span>
+        <span class="hero__line hero__line--accent">{last}</span>
       </h1>
-
-      <p class="hero__lead" data-enter style="--n: 3">{p.positioning[locale]}</p>
-
-      <div class="hero__actions" data-enter style="--n: 4">
-        <a class="btn btn--primary" href={`${home}#work`}>{t('hero.cta.work')}</a>
-        <a class="btn" href={`${home}#contact`}>{t('hero.cta.contact')}</a>
+      <div class="hero__sub">
+        <p class="hero__lead narrow" data-enter style="--n: 1">{p.positioning[locale]}</p>
+        <div class="hero__actions" data-enter style="--n: 2">
+          <a class="btn btn--primary" href={`${home}#work`}>{t('hero.cta.work')}</a>
+          <a class="btn" href={`${home}#contact`}>{t('hero.cta.contact')}</a>
+          <span class="hero__avail label"><span class="hero__dot" aria-hidden="true"></span>{p.availability[locale]}</span>
+        </div>
       </div>
-
-      <p class="hero__avail mono" data-enter style="--n: 5">
-        <span class="hero__dot" aria-hidden="true"></span>
-        {p.availability[locale]}
-      </p>
     </div>
 
-    <figure class="hero__figure" data-enter style="--n: 2">
-      <div class="hero__frame">
+    <figure class="hero__figure cell cell--flush" data-enter style="--n: 1">
+      <div class="hero__specimen specimen">
+        <div class="guides" style="--n: 4" aria-hidden="true"></div>
         <Picture
           fallbackFormat="webp"
           src={heroImage}
           alt={p.portraitAlt[locale]}
           widths={[320, 480, 720, 960]}
-          sizes="(min-width: 64em) 34vw, (min-width: 48em) 44vw, 80vw"
+          sizes="(min-width: 64em) 30vw, (min-width: 48em) 40vw, 100vw"
           formats={['avif', 'webp']}
           loading="eager"
           decoding="async"
         />
       </div>
-      <figcaption class="hero__plate mono">
-        <span>fig. 01</span>
-        <span>{p.shortName}</span>
-        <span>{p.timezone}</span>
-      </figcaption>
+      <figcaption class="label hero__caption">{t('hero.fig')}</figcaption>
     </figure>
   </div>
 
-  <a class="hero__scroll mono" href={`${home}#work`} aria-label={t('hero.scroll')}>
-    <span>{t('hero.scroll')}</span>
-    <span class="hero__scroll-line" aria-hidden="true"></span>
-  </a>
+  <!-- Facts ticker -->
+  <div class="ticker" aria-label={locale === 'es' ? 'Datos' : 'Facts'}>
+    <ul class="ticker__track">
+      {[0, 1].map(() => facts.map((f) => <li>{f}</li>))}
+    </ul>
+  </div>
+
+  <!-- The bench, top view -->
+  <div class="hero__bench-head cells">
+    <p class="cell cell--tight label">{t('hero.bench')}</p>
+    <p class="cell cell--tight label hero__bench-legend" aria-hidden="true">
+      <span>[01] {title(0)}</span><span>[02] {title(1)}</span><span>[03] {title(2)}</span>
+    </p>
+  </div>
+  <div class="hero__bench" data-enter style="--n: 3">
+    <svg class="hero__svg" viewBox="0 0 1600 440" role="img" aria-labelledby="bench-title bench-desc" data-parallax-x="0.35">
+      <title id="bench-title">{t('hero.bench')}</title>
+      <desc id="bench-desc">{featured.map((f) => f.data.title).join(', ')}</desc>
+      <defs>
+        <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="1" />
+        </pattern>
+      </defs>
+
+      <!-- bench edge: front face, hatched -->
+      <rect x="40" y="380" width="1520" height="26" fill="url(#hatch)" stroke="currentColor" />
+      <rect x="40" y="60" width="1520" height="320" fill="none" stroke="currentColor" />
+      <!-- ruler along the back edge -->
+      <g class="hero__ruler" stroke="currentColor">
+        <line x1="40" y1="90" x2="1560" y2="90" />
+        {Array.from({ length: 77 }, (_, i) => {
+          const x = 40 + i * 20;
+          const major = i % 5 === 0;
+          return <line x1={x} y1="90" x2={x} y2={major ? 76 : 83} />;
+        })}
+      </g>
+
+      <!-- shadows: hatched copies offset by the lamp -->
+      <g class="hero__shadows" fill="url(#hatch)" stroke="none" aria-hidden="true">
+        <rect x="140" y="170" width="480" height="92" />
+        <rect x="720" y="120" width="132" height="250" rx="14" />
+        <g transform="rotate(-8 1040 250)"><rect x="974" y="125" width="132" height="250" rx="14" /></g>
+        <rect x="1190" y="298" width="130" height="30" />
+        <rect x="1320" y="309" width="200" height="8" />
+      </g>
+
+      <!-- [01] rack unit -->
+      <a href={link(0)} class="hero__obj" aria-label={title(0)}>
+        <g stroke="currentColor" fill="var(--bg)">
+          <rect x="140" y="170" width="480" height="92" />
+          <rect x="120" y="182" width="20" height="68" />
+          <rect x="620" y="182" width="20" height="68" />
+          <g stroke-width="1">
+            <line x1="180" y1="196" x2="420" y2="196" />
+            <line x1="180" y1="216" x2="420" y2="216" />
+            <line x1="180" y1="236" x2="420" y2="236" />
+          </g>
+          <rect x="460" y="190" width="120" height="52" />
+          <circle cx="595" cy="216" r="4" fill="var(--brand)" stroke="none" />
+        </g>
+        <text x="140" y="290" class="hero__tag">[01]</text>
+      </a>
+
+      <!-- [02] phone -->
+      <a href={link(1)} class="hero__obj" aria-label={title(1)}>
+        <g stroke="currentColor" fill="var(--bg)">
+          <rect x="720" y="120" width="132" height="250" rx="14" />
+          <rect x="732" y="146" width="108" height="198" />
+          <line x1="764" y1="133" x2="808" y2="133" />
+          <g stroke="var(--line-2)" stroke-width="1">
+            <line x1="744" y1="180" x2="828" y2="180" />
+            <line x1="744" y1="200" x2="810" y2="200" />
+            <line x1="744" y1="220" x2="820" y2="220" />
+            <rect x="744" y="250" width="84" height="40" />
+          </g>
+        </g>
+        <text x="720" y="398" class="hero__tag">[02]</text>
+      </a>
+
+      <!-- [03] phone, tilted -->
+      <a href={link(2)} class="hero__obj" aria-label={title(2)}>
+        <g transform="rotate(-8 1040 250)" stroke="currentColor" fill="var(--bg)">
+          <rect x="974" y="125" width="132" height="250" rx="14" />
+          <rect x="986" y="151" width="108" height="198" />
+          <line x1="1018" y1="138" x2="1062" y2="138" />
+          <g stroke="var(--line-2)" stroke-width="1">
+            <circle cx="1040" cy="210" r="26" />
+            <line x1="998" y1="270" x2="1082" y2="270" />
+            <line x1="998" y1="290" x2="1060" y2="290" />
+          </g>
+        </g>
+        <text x="960" y="398" class="hero__tag">[03]</text>
+      </a>
+
+      <!-- tools (not links): screwdriver, pencil -->
+      <g stroke="currentColor" fill="var(--bg)" aria-hidden="true">
+        <rect x="1190" y="298" width="130" height="30" rx="4" />
+        <rect x="1320" y="309" width="200" height="8" />
+        <line x1="1520" y1="313" x2="1540" y2="313" stroke-width="3" />
+        <line x1="1210" y1="306" x2="1300" y2="306" stroke="var(--line-2)" stroke-width="1" />
+        <line x1="1210" y1="320" x2="1300" y2="320" stroke="var(--line-2)" stroke-width="1" />
+      </g>
+    </svg>
+  </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    min-height: calc(100svh - 4rem);
     display: grid;
-    align-items: center;
-    padding-block: var(--s-8) var(--s-9);
-    overflow: clip;
   }
 
-  .hero__blueprint {
-    position: absolute;
-    inset: 0 0 0 40%;
-    mask-image: radial-gradient(70% 70% at 70% 45%, black 20%, transparent 100%);
+  /* Title block */
+  .hero__block {
+    grid-template-columns: auto 1fr auto;
+    border-inline: 0;
+    border-top: 0;
   }
 
-  .hero__grid {
-    position: relative;
-    display: grid;
-    gap: var(--s-7);
-    align-items: center;
+  .hero__block .label {
+    color: var(--fg-2);
+  }
+
+  .hero__block-meta {
+    display: none;
+  }
+
+  .hero__block .cell--brand {
+    color: var(--brand-ink);
+  }
+
+  /* Name + portrait */
+  .hero__main {
+    border-inline: 0;
+    border-top: 0;
   }
 
   .hero__copy {
     display: grid;
-    gap: var(--s-5);
-  }
-
-  .hero__kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s-3);
-    color: var(--fg-2);
-  }
-
-  .hero__pulse {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--amber);
-    box-shadow: 0 0 0 4px var(--amber-soft);
+    align-content: space-between;
+    gap: var(--s-6);
+    padding-block: var(--s-6) var(--s-5);
   }
 
   .hero__title {
     font-size: var(--text-4xl);
-    line-height: 0.92;
-    letter-spacing: -0.025em;
     display: grid;
+    /* Let the name run to the edge: the sheet is cut, not padded. */
+    margin-inline: -0.02em;
   }
 
   .hero__line {
@@ -127,24 +226,26 @@ const home = localizePath(locale, '/');
   }
 
   .hero__line--accent {
-    color: var(--amber);
-    /* The name sits slightly into the margin, like a stamped plate. */
-    margin-left: -0.02em;
+    color: var(--brand);
   }
 
-  .hero__line--accent em {
-    font-style: italic;
+  .hero__sub {
+    display: grid;
+    gap: var(--s-5);
   }
 
   .hero__lead {
     font-size: var(--text-lg);
+    max-width: 44ch;
     color: var(--fg-2);
-    max-width: 46ch;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--s-3);
   }
 
@@ -153,152 +254,176 @@ const home = localizePath(locale, '/');
     align-items: center;
     gap: var(--s-2);
     color: var(--fg-3);
-    font-size: var(--text-xs);
+    flex-basis: 100%;
   }
 
   .hero__dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--ok);
-    box-shadow: 0 0 10px var(--ok);
+    width: 8px;
+    height: 8px;
+    background: var(--brand);
   }
 
   .hero__figure {
     display: grid;
-    gap: var(--s-3);
-    justify-items: start;
-    max-width: 26rem;
+    grid-template-rows: 1fr auto;
   }
 
-  .hero__frame {
+  .hero__specimen {
     position: relative;
-    border-radius: var(--r-4);
-    overflow: hidden;
-    box-shadow: var(--shadow-3);
-    background: var(--bg-2);
-    /* The portrait dissolves into the dark at the bottom, as if lit from above. */
-    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    border: 0;
+    overflow: clip;
   }
 
-  .hero__frame::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 1px 0 var(--rim), inset 0 0 0 1px oklch(1 0 0 / 0.04);
-    pointer-events: none;
-  }
-
-  .hero__frame :global(img) {
-    aspect-ratio: 3 / 4;
+  .hero__specimen :global(picture),
+  .hero__specimen :global(img) {
     width: 100%;
+    height: 100%;
+  }
+
+  .hero__specimen :global(img) {
+    aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: 50% 20%;
+    object-position: 50% 15%;
+    /* Print, not photograph: monochrome, hard contrast. */
+    filter: grayscale(1) contrast(1.45) brightness(1.02);
+    mix-blend-mode: luminosity;
   }
 
-  .hero__plate {
-    display: flex;
-    gap: var(--s-4);
-    font-size: var(--text-xs);
+  :global([data-theme='light']) .hero__specimen :global(img) {
+    mix-blend-mode: multiply;
+  }
+
+  .hero__specimen .guides {
+    z-index: 1;
+  }
+
+  .hero__caption {
+    padding: var(--s-2) var(--s-3);
+    border-top: var(--hair) solid var(--line);
     color: var(--fg-3);
-    letter-spacing: 0.04em;
   }
 
-  .hero__plate span + span::before {
-    content: '·';
-    margin-right: var(--s-4);
-    color: var(--line);
+  /* Bench */
+  .hero__bench-head {
+    grid-template-columns: 1fr;
+    border-inline: 0;
+    border-top: 0;
   }
 
-  .hero__scroll {
-    position: absolute;
-    left: var(--gutter);
-    bottom: var(--s-5);
+  .hero__bench-head .label {
+    color: var(--fg-3);
+  }
+
+  .hero__bench-legend {
     display: none;
-    align-items: center;
-    gap: var(--s-3);
+    justify-content: flex-end;
+    gap: var(--s-5);
+  }
+
+  .hero__bench {
+    border-bottom: var(--hair) solid var(--line);
+    overflow: clip;
+    padding-block: var(--s-4) 0;
+  }
+
+  .hero__svg {
+    /* Wider than the phone: the scroll-scrub pans the camera along the bench. */
+    width: 230%;
+    margin-left: -12%;
+    height: auto;
+    color: var(--fg);
+    stroke-width: 1.5;
+    stroke-linecap: square;
+  }
+
+  .hero__ruler {
+    stroke-width: 1;
+  }
+
+  .hero__shadows {
+    translate: var(--shadow-dx) var(--shadow-dy);
+    transition: translate var(--d-3) var(--ease-out);
     color: var(--fg-3);
-    font-size: var(--text-xs);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
   }
 
-  .hero__scroll-line {
-    width: 4rem;
-    height: 1px;
-    background: var(--line);
-    position: relative;
-    overflow: hidden;
+  .hero__tag {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 1px;
+    fill: var(--fg-2);
+    stroke: none;
   }
 
-  .hero__scroll-line::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--amber);
-    transform: translateX(-100%);
+  .hero__obj {
+    outline-offset: 4px;
   }
 
-  /* Entrance: one orchestrated reveal, CSS only, gated on JS + motion preference. */
+  .hero__obj:hover g,
+  .hero__obj:focus-visible g {
+    stroke: var(--brand);
+  }
+
+  .hero__obj:hover .hero__tag,
+  .hero__obj:focus-visible .hero__tag {
+    fill: var(--brand);
+  }
+
+  /* Load choreography: cells print in around the name. The name itself never animates (it is the LCP). */
   @media (--motion-ok) {
     :global(html.js) [data-enter] {
-      animation: hero-enter var(--d-4) var(--ease-out) both;
-      animation-delay: calc(140ms + var(--n) * 110ms);
-    }
-
-
-    .hero__scroll-line::after {
-      animation: hero-scan 2.4s var(--ease-in-out) infinite;
+      animation: print var(--d-4) var(--ease-out) both;
+      animation-delay: calc(80ms + var(--n) * 140ms);
     }
   }
 
-  @keyframes hero-enter {
+  @keyframes print {
     from {
-      opacity: 0;
-      transform: translateY(22px);
+      clip-path: inset(0 0 100% 0);
     }
     to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes hero-scan {
-    0% {
-      transform: translateX(-100%);
-    }
-    60%,
-    100% {
-      transform: translateX(100%);
+      clip-path: inset(-1px);
     }
   }
 
   @media (--md) {
-    .hero__grid {
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: var(--s-8);
+    .hero__block {
+      grid-template-columns: auto 1fr auto auto auto;
     }
 
-    .hero__figure {
-      justify-self: end;
+    .hero__block-meta {
+      display: block;
     }
 
-    .hero__scroll {
-      display: inline-flex;
+    .hero__main {
+      grid-template-columns: 1.5fr 1fr;
+    }
+
+    .hero__copy {
+      min-height: 62svh;
+    }
+
+    .hero__bench-head {
+      grid-template-columns: 1fr auto;
+    }
+
+    .hero__bench-legend {
+      display: flex;
+    }
+
+    .hero__svg {
+      width: 108%;
+      margin-left: -4%;
     }
   }
 
   @media (--lg) {
-    .hero__grid {
-      grid-template-columns: 1.3fr 0.7fr;
+    .hero__main {
+      grid-template-columns: 2fr 1fr;
     }
 
-    .hero__figure {
-      max-width: 30rem;
-      /* Break the grid a little: the artifact leans off the baseline. */
-      transform: translateY(var(--s-6));
+    .hero__actions .hero__avail {
+      flex-basis: auto;
+      margin-left: var(--s-3);
     }
   }
 </style>

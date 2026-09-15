@@ -11,32 +11,73 @@ const t = useTranslations(locale);
 const profile = await getProfile();
 const home = localizePath(locale, '/');
 const year = new Date().getFullYear();
+const revisions = [
+  { rev: '4.0', date: '2026-09', note: locale === 'es' ? 'Redibujado como un banco de trabajo. Astro, Cloudflare Pages.' : 'Redrawn as a workbench. Astro, Cloudflare Pages.' },
+  { rev: '3.0', date: '2025-12', note: locale === 'es' ? 'Prototipo Next.js, sin terminar.' : 'Next.js prototype, unfinished.' },
+  { rev: '2.0', date: '2025-04', note: locale === 'es' ? 'React + Vite, bento grid, EN/ES.' : 'React + Vite, bento grid, EN/ES.' },
+  { rev: '1.0', date: '2024-01', note: locale === 'es' ? 'Primer sitio. Create React App.' : 'First site. Create React App.' },
+];
 ---
 
 <footer class="footer">
-  <div class="container footer__grid">
-    <div>
-      <p class="mono footer__brand">luis<span class="footer__dot">.</span>cedillo</p>
-      <p class="muted footer__built">{t('footer.built')}</p>
-    </div>
-    <nav aria-label="Footer">
-      <ul class="footer__links">
-        <li><a class="mono" href={`${home}#work`}>{t('nav.work')}</a></li>
-        <li><a class="mono" href={`${home}#about`}>{t('nav.about')}</a></li>
-        <li><a class="mono" href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a></li>
-        <li><a class="mono" href={`${home}#contact`}>{t('nav.contact')}</a></li>
-        <li><a class="mono" href={localizePath(locale, '/rss.xml')}>{t('footer.rss')}</a></li>
-      </ul>
-    </nav>
-    <ul class="footer__links footer__social">
-      {profile.data.socials.map((s) => (
-        <li><a class="mono" href={s.url} rel="me noopener" target="_blank">{s.label}</a></li>
+  <div class="ticker ticker--ink" aria-hidden="true">
+    <ul class="ticker__track">
+      {[0, 1].map(() => (
+        <>
+          <li>{profile.data.name}</li>
+          <li>{profile.data.headline[locale]}</li>
+          <li>{profile.data.location}</li>
+          <li>{profile.data.email}</li>
+          <li>{t('footer.built')}</li>
+        </>
       ))}
-      <li><a class="mono" href={`mailto:${profile.data.email}`}>{profile.data.email}</a></li>
     </ul>
   </div>
-  <div class="container footer__legal">
-    <p class="mono muted">© {year} {profile.data.name}. {t('footer.rights')}</p>
+
+  <div class="footer__grid cells">
+    <section class="cell footer__rev" aria-labelledby="rev-title">
+      <h2 id="rev-title" class="label">Revisions</h2>
+      <table class="table">
+        <thead>
+          <tr><th>Rev</th><th>Date</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          {revisions.map((r) => (
+            <tr>
+              <td class="mono">{r.rev}</td>
+              <td class="mono">{r.date}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+
+    <nav class="cell footer__nav" aria-label="Footer">
+      <h2 class="label">Index</h2>
+      <ul>
+        <li><a class="narrow" href={`${home}#work`}>{t('nav.work')}</a></li>
+        <li><a class="narrow" href={`${home}#about`}>{t('nav.about')}</a></li>
+        <li><a class="narrow" href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a></li>
+        <li><a class="narrow" href={`${home}#contact`}>{t('nav.contact')}</a></li>
+        <li><a class="narrow" href={localizePath(locale, '/rss.xml')}>{t('footer.rss')}</a></li>
+      </ul>
+    </nav>
+
+    <section class="cell footer__contact" aria-labelledby="elsewhere-title">
+      <h2 id="elsewhere-title" class="label">Elsewhere</h2>
+      <ul>
+        {profile.data.socials.map((s) => (
+          <li><a class="narrow" href={s.url} rel="me noopener" target="_blank">{s.label} <span class="mono footer__handle">{s.handle}</span></a></li>
+        ))}
+        <li><a class="narrow" href={`mailto:${profile.data.email}`}>{profile.data.email}</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer__legal cells">
+    <p class="cell label">© {year} {profile.data.name}. {t('footer.rights')}</p>
+    <p class="cell label footer__sheet">Sheet 1 / 1 · Scale 1:1 · {locale.toUpperCase()}</p>
   </div>
 </footer>
 
@@ -44,59 +85,62 @@ const year = new Date().getFullYear();
   .footer {
     position: relative;
     z-index: 1;
-    border-top: 1px solid var(--line-2);
-    background: var(--bg-2);
-    padding-block: var(--s-8) var(--s-6);
-    font-size: var(--text-sm);
+    border-top: var(--hair) solid var(--line);
   }
 
   .footer__grid {
+    border-inline: 0;
+    border-top: 0;
+  }
+
+  .footer h2 {
+    margin-bottom: var(--s-4);
+    color: var(--fg-3);
+  }
+
+  .footer ul {
+    list-style: none;
+    padding: 0;
     display: grid;
-    gap: var(--s-6);
+    gap: var(--s-2);
   }
 
-  .footer__brand {
-    font-size: var(--text-md);
+  .footer__nav a,
+  .footer__contact a {
+    display: inline-flex;
+    gap: var(--s-3);
+    align-items: baseline;
+    font-size: var(--text-lg);
   }
 
-  .footer__dot {
+  .footer__nav a:hover,
+  .footer__contact a:hover {
     color: var(--brand);
   }
 
-  .footer__built {
-    margin-top: var(--s-2);
-    font-size: var(--text-xs);
+  .footer__handle {
+    color: var(--fg-3);
+    letter-spacing: 0;
   }
 
-  .footer__links {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-3) var(--s-5);
-  }
-
-  .footer__links a {
-    text-decoration: none;
+  .footer__rev .table td:last-child {
     color: var(--fg-2);
   }
 
-  .footer__links a:hover {
-    color: var(--fg);
+  .footer__legal {
+    grid-template-columns: 1fr auto;
+    border-inline: 0;
+    border-bottom: 0;
   }
 
-  .footer__legal {
-    margin-top: var(--s-7);
-    font-size: var(--text-xs);
+  .footer__legal .label {
+    color: var(--fg-3);
+    padding-block: var(--s-3);
   }
 
   @media (--md) {
     .footer__grid {
-      grid-template-columns: 1.4fr 1fr 1fr;
-    }
-
-    .footer__links {
-      flex-direction: column;
+      grid-template-columns: 1.4fr 0.8fr 1fr;
     }
   }
 </style>

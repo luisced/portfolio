@@ -53,6 +53,20 @@ for (const el of document.querySelectorAll<HTMLElement>('[data-parallax]')) {
   });
 }
 
+/* Horizontal scrub: the camera tracks along the bench. Percentage of the element's width. */
+for (const el of document.querySelectorAll<HTMLElement>('[data-parallax-x]')) {
+  const factor = Number(el.dataset.parallaxX ?? '0.1');
+  gsap.fromTo(
+    el,
+    { xPercent: factor * 50 },
+    {
+      xPercent: -factor * 50,
+      ease: 'none',
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+    },
+  );
+}
+
 /* Bespoke sections register lazily so their code only ships if the section exists. */
 if (document.querySelector('[data-manifesto]')) import('./manifesto-motion');
 if (document.querySelector('[data-timeline]')) import('./timeline-motion');
