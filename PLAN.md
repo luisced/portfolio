@@ -112,7 +112,7 @@ Hosting:
 |---|---|---|---|
 | Lighthouse (mobile, simulated slow-4G, median of 3) | Accessibility, Best Practices, SEO = 100; Performance ≥ 95 on `/`, `/es/`, one case study, one note | `lighthouserc.json` via LHCI in `.github/workflows/quality.yml` | 100/100/100/100 on `/`, `/es/`, case study; note 95–100 (run variance) |
 | LCP | Observed < 1.0 s (measured 118 ms locally). Simulated: warn > 2.5 s — the serif title is the LCP element, so the lantern model charges one font round-trip and swings 1.7–2.9 s between identical runs | LHCI (warn) + PerformanceObserver | met observed; simulated within warn band |
-| CLS | ≤ 0.02, and every image sized. Remaining shift is webfont metric swap only; `size-adjust` fallbacks would take it to 0 (open item) | LHCI `cumulative-layout-shift` + `unsized-images` | 0–0.013 |
+| CLS | 0. Every image sized; webfont swap neutralised by generated metric-matched fallback faces (`scripts/font-fallbacks.mjs` → `src/styles/font-fallbacks.css`, `size-adjust` + ascent/descent overrides computed from the real font files) | LHCI `cumulative-layout-shift` = 0 + `unsized-images` | 0 on 9/9 runs |
 | INP / TBT | TBT < 100 ms; timeline keyboard interaction verified by hand | LHCI + browser test | TBT 0 ms |
 | JS shipped on landing | ≤ 55 KB gzip total (entry + motion + bespoke chunks); 0 KB under reduced motion | `scripts/check-assets.mjs` walks the import graph from `dist/index.html` | 45.5 KB (GSAP core+ScrollTrigger is 43 KB — above the 35 KB sub-target originally hoped for; cutting it means moving parallax/manifesto to CSS scroll-driven animations) |
 | CSS | ≤ 25 KB gzip, inlined (`build.inlineStylesheets: 'always'`) so nothing blocks render | build output | ≈ 10 KB |

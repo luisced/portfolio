@@ -51,8 +51,8 @@
   --light-y: 28%;
 
   /* Type */
-  --font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-body: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif;
+  --font-body: 'IBM Plex Sans', 'IBM Plex Sans Fallback Helvetica', 'IBM Plex Sans Fallback Arial', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
 
   /* Fluid scale (anchors 14 → 96) */
