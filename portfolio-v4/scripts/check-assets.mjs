@@ -1,6 +1,7 @@
-// Fails the build when dist/ ships media over budget (PLAN.md §5).
-import { readdirSync, statSync } from 'node:fs';
-import { join, extname } from 'node:path';
+// Fails the build when dist/ ships media or landing JS over budget (PLAN.md §5).
+import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
+import { join, extname, dirname, resolve } from 'node:path';
 
 const LIMITS = { default: 200 * 1024, og: 80 * 1024 };
 const RASTER = new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif', '.gif']);
@@ -19,8 +20,33 @@ function walk(dir) {
 }
 
 walk('dist');
+
+// Landing JS: entry scripts plus every chunk reachable through static/dynamic imports.
+const JS_BUDGET = 55 * 1024;
+const FONT_BUDGET = 4;
+const html = readFileSync('dist/index.html', 'utf8');
+const seen = new Set();
+const queue = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]);
+let jsGz = 0;
+while (queue.length) {
+  const url = queue.pop();
+  if (seen.has(url)) continue;
+  seen.add(url);
+  const file = join('dist', url);
+  const src = readFileSync(file, 'utf8');
+  jsGz += gzipSync(src, { level: 9 }).length;
+  for (const m of src.matchAll(/import\(\s*["'`]([^"'`]+)["'`]\s*\)|from\s*["']([^"']+)["']/g)) {
+    const spec = m[1] ?? m[2];
+    if (spec.startsWith('.')) queue.push('/' + resolve(dirname(url), spec).slice(1));
+  }
+}
+if (jsGz > JS_BUDGET) failures.push(`landing JS ${(jsGz / 1024).toFixed(1)} KB gz > ${JS_BUDGET / 1024} KB (${[...seen].join(', ')})`);
+// fontsource also emits legacy .woff fallbacks; browsers only fetch the matching .woff2.
+const fonts = readdirSync('dist/_astro').filter((f) => f.endsWith('.woff2'));
+if (fonts.length > FONT_BUDGET) failures.push(`${fonts.length} font files shipped > ${FONT_BUDGET}`);
+
 if (failures.length) {
   console.error('Asset budget exceeded:\n' + failures.map((f) => `  ${f}`).join('\n'));
   process.exit(1);
 }
-console.log('check-assets: ok');
+console.log(`check-assets: ok (landing JS ${(jsGz / 1024).toFixed(1)} KB gz, ${fonts.length} font files)`);

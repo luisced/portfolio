@@ -1,0 +1,31 @@
+name: quality
+
+on:
+  push:
+    branches: [master, luisced/Portfolio-V4]
+    paths: ['portfolio-v4/**', '.github/workflows/quality.yml']
+  pull_request:
+    paths: ['portfolio-v4/**']
+
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portfolio-v4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: portfolio-v4/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      # build = astro build → 404 mirrors → i18n parity → asset + JS budgets
+      - run: pnpm build
+      - name: Lighthouse CI (mobile, 3 runs, budgets in lighthouserc.json)
+        run: npx --yes @lhci/cli@0.14 autorun
