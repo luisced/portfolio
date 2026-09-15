@@ -5,7 +5,8 @@ import serifItalicUrl from '@fontsource/instrument-serif/files/instrument-serif-
 import sansUrl from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
-import { localizePath, otherLocale, useTranslations } from '@/i18n/utils';
+import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
+import { graph, person, website, type JsonLd } from '@/lib/seo';
 import type { Locale } from '@/i18n/ui';
 
 interface Props {
@@ -16,6 +17,8 @@ interface Props {
   path?: string;
   ogImage?: string;
   type?: 'website' | 'article';
+  /** Extra JSON-LD entities; WebSite + Person are always emitted. */
+  jsonLd?: JsonLd[];
   /** Hide nav/footer chrome (404 etc.). */
   bare?: boolean;
 }
@@ -27,9 +30,11 @@ const {
   description,
   ogImage,
   type = 'website',
+  jsonLd = [],
   bare = false,
 } = Astro.props;
 const t = useTranslations(locale);
+const profile = await getProfile();
 const pageTitle = title ? `${title} — Luis Cedillo` : t('site.title');
 const pageDescription = description ?? t('site.description');
 const site = Astro.site!;
@@ -58,18 +63,24 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#211f1b" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Luis Cedillo" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={pageTitle} />
     <meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'} />
     <meta property="og:locale:alternate" content={alt === 'es' ? 'es_MX' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={og} />
+    <meta name="twitter:image:alt" content={pageTitle} />
+    <script type="application/ld+json" set:html={JSON.stringify(graph(website(profile, locale), person(profile, locale), ...jsonLd))} />
     <slot name="head" />
     <script is:inline>
       // No-flash theme + JS marker. Runs before first paint.

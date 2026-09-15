@@ -17,7 +17,7 @@ const featuredProjects = projects.filter((project) => project.data.featured);
   <div class="container">
     <header class="sec-head" data-reveal>
       <p class="kicker">{t('work.kicker')}</p>
-      <h2 class="method" id="work-title">{t('work.title')}</h2>
+      <h2 class="method" id="work-title">{t('work.title')}<span class="sr-only">: {t('work.kicker')}</span></h2>
     </header>
 
     <div class="work-grid" data-reveal-group>

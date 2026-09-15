@@ -9,6 +9,7 @@ import {
   type Project,
 } from '@/i18n/utils';
 import { locales, type Locale } from '@/i18n/ui';
+import { breadcrumbs, projectWork } from '@/lib/seo';
 
 interface Props {
   project: Project;
@@ -63,6 +64,14 @@ const { Content } = await render(project);
   path={`/work/${project.data.slug}/`}
   type="article"
   ogImage={`/og/work/${project.data.slug}.png`}
+  jsonLd={[
+    projectWork(project, locale),
+    breadcrumbs(locale, [
+      { name: 'Luis Cedillo', path: '/' },
+      { name: t('work.all'), path: '/work/' },
+      { name: project.data.title, path: `/work/${project.data.slug}/` },
+    ]),
+  ]}
 >
   <article class="case-study">
     <header class="case-study__hero container">

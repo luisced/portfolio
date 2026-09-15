@@ -21,7 +21,7 @@ const bioDetails = bioParts.slice(1).join(' ');
   <div class="container">
     <header class="sec-head" data-reveal>
       <p class="kicker">{t('about.kicker')}</p>
-      <h2 class="method" id="about-title">{t('about.title')}</h2>
+      <h2 class="method" id="about-title">{t('about.title')}<span class="sr-only">: {t('about.kicker')}</span></h2>
     </header>
 
     <div class="about__grid">

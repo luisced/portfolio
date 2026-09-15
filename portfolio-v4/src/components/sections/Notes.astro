@@ -16,7 +16,7 @@ const notes = (await getNotes(locale)).slice(0, 3);
     <div class="notes-heading">
       <header class="sec-head" data-reveal>
         <p class="kicker">{t('notes.kicker')}</p>
-        <h2 class="method" id="notes-title">{t('notes.title')}</h2>
+        <h2 class="method" id="notes-title">{t('notes.title')}<span class="sr-only">: {t('notes.kicker')}</span></h2>
       </header>
       <a class="notes-all" href={localizePath(locale, '/notes/')}>{t('notes.all')} <span aria-hidden="true">→</span></a>
     </div>

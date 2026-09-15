@@ -9,6 +9,7 @@ import {
 } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 import type { Note } from '@/i18n/utils';
+import { blogPosting, breadcrumbs } from '@/lib/seo';
 
 interface Props {
   note: Note;
@@ -43,6 +44,14 @@ const published = note.data.date.toISOString();
   path={`/notes/${note.data.slug}/`}
   type="article"
   ogImage={`/og/notes/${note.data.slug}.png`}
+  jsonLd={[
+    blogPosting(note, locale, (note.body ?? '').trim().split(/\s+/).filter(Boolean).length),
+    breadcrumbs(locale, [
+      { name: 'Luis Cedillo', path: '/' },
+      { name: t('notes.all'), path: '/notes/' },
+      { name: note.data.title, path: `/notes/${note.data.slug}/` },
+    ]),
+  ]}
 >
   <Fragment slot="head">
     <meta property="article:published_time" content={published} />

@@ -15,7 +15,7 @@ const t = useTranslations(locale);
 const projects = await getProjects(locale);
 ---
 
-<Base locale={locale} title={t('work.all')} path="/work/">
+<Base locale={locale} title={t('work.all')} description={t('work.description')} path="/work/">
   <section class="section work-index" aria-labelledby="work-index-title">
     <div class="container">
       <header class="work-index__head" data-reveal>

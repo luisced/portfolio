@@ -28,7 +28,7 @@ const accentVar = (accent: Experience['data']['accent']) =>
   <div class="container timeline__inner">
     <header class="sec-head" data-reveal>
       <p class="kicker">{t('timeline.kicker')}</p>
-      <h2 class="method" id="timeline-title">{t('timeline.title')}</h2>
+      <h2 class="method" id="timeline-title">{t('timeline.title')}<span class="sr-only">: {t('timeline.kicker')}</span></h2>
       <p class="timeline__hint mono">{t('timeline.hint')}</p>
     </header>
 

@@ -21,7 +21,7 @@ const t = useTranslations(locale);
 const notes = await getNotes(locale);
 ---
 
-<Base locale={locale} title={t('notes.title')} path="/notes/">
+<Base locale={locale} title={t('notes.title')} description={t('notes.description')} path="/notes/">
   <section class="section" aria-labelledby="notes-title">
     <div class="container">
       <header class="sec-head" data-reveal>
