@@ -1,0 +1,55 @@
+---
+slug: oxxo-corner
+locale: en
+title: "Oxxo Corner / Femsa"
+role: "Product Owner • Full-stack developer"
+category: ios
+timeframe: "2023"
+outcome: "Shoppers can explore an Oxxo store with augmented-reality directions and get product suggestions in the same app."
+summary: "I owned the product direction and full-stack delivery of an iOS concept combining AR navigation, image recognition, generative image filtering and a community forum. SwiftUI, ARKit, CoreML, Flask, Python and Docker formed the first version's stack."
+stack:
+  - SwiftUI
+  - Flask
+  - Python
+  - ARKit
+  - CoreML
+  - Generative AI
+  - Docker
+links: {}
+cover: ../../assets/projects/oxxocorner/oxxocorner_preview.webp
+coverAlt: "Oxxo Corner augmented-reality retail experience"
+gallery:
+  - src: ../../assets/projects/oxxocorner/oxxocorner1.webp
+    alt: "Oxxo Corner store dashboard"
+  - src: ../../assets/projects/oxxocorner/oxxocorner2.webp
+    alt: "Oxxo Corner augmented-reality experience"
+  - src: ../../assets/projects/oxxocorner/oxxocorner3.webp
+    alt: "Oxxo Corner user profile"
+  - src: ../../assets/projects/oxxocorner/oxxocorner4.webp
+    alt: "Oxxo Corner sign-in screen"
+featured: false
+order: 5
+---
+
+## Context
+
+Oxxo Corner explored a different way to interact with an Oxxo store: use the phone's camera and location context to discover products and recommendations. The first version combined an augmented-reality experience, image filtering with generative AI, product information and a community forum.
+
+## My role
+
+I was the Product Owner and a full-stack developer on a team of four. I turned the idea into a first-version scope, coordinated the SwiftUI screens with the Flask and Python API, and kept the AR navigation, profile and community flows connected rather than treating them as separate demos.
+
+## Decisions
+
+- **Use ARKit for directions, not as decoration.** Store locations and product cues had to answer a shopper's next question. The trade-off was device-specific testing and more careful fallback behavior when tracking was weak.
+- **Keep CoreML image recognition close to the iOS client.** On-device inference can respond without sending every camera frame to the backend, but it adds model-size and device-compatibility constraints.
+- **Put accounts and community data behind Flask.** The service gave profiles and forum interactions a shared persistence boundary. That costs API and permission work, yet keeps the mobile client from owning business data.
+- **Limit generative AI to image filtering in the first version.** A narrow use kept the experiment understandable and reduced the risk of making product recommendations sound more certain than the inputs allowed.
+
+## Result
+
+The team produced a coherent first version that connected store discovery, AR directions, product recognition, recommendations, profiles and community discussion in one iOS flow.
+
+## What I would do differently
+
+I would validate AR navigation with real store layouts before expanding the social layer. That would reveal tracking and signage constraints early and give the team a clearer basis for deciding which parts of the concept deserved another iteration.

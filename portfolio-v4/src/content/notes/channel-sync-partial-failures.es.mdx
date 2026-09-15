@@ -1,0 +1,63 @@
+---
+slug: channel-sync-partial-failures
+locale: es
+title: "Diseñar una sincronización de canales resistente a fallas parciales"
+date: 2026-08-20
+summary: "Un modelo práctico para mantener entendibles el inventario, los precios y las promociones de un hotel cuando una API socia responde, expira o falla a mitad de una actualización."
+tags: [backend, distributed-systems]
+draft: false
+---
+
+## La falla también es parte del producto
+
+Un channel manager parece sencillo desde el lado del operador. Alguien cambia una tarifa una vez y espera que Booking.com, Expedia y el sitio del hotel queden de acuerdo. El backend ve una secuencia menos cómoda: varios sistemas remotos, formatos de petición distintos, timeouts de red y respuestas que pueden perderse después de que el socio ya aceptó una escritura.
+
+Aprendí a partir de ese modelo de falla mientras trabajaba en StackUp, también presentado como Flowlink. El objetivo era quitar la mayor parte de la recaptura manual entre canales sin sustituirla por un dashboard que mintiera. “La sincronización falló” no es un único estado. Un canal puede estar actualizado, otro seguir procesando y un tercero quedar desconocido porque la petición expiró después de ser recibida por el sistema remoto.
+
+
+## Separar el estado deseado del observado
+
+Modelo el cambio del operador como estado deseado en nuestro sistema. Un cuarto, tarifa o promoción tiene una representación canónica que el dashboard puede validar y el servicio puede guardar. Cada canal tiene después su propio estado observado: la última respuesta que podemos comprobar, el momento en que se confirmó y la operación que está en curso.
+
+Esos estados no deben ser reemplazados por la respuesta que llegue al final. Si una petición a Expedia falla después de que Booking.com respondió bien, el cambio canónico sigue siendo la intención del operador, Booking.com registra éxito y Expedia registra falla o resultado desconocido. Reducirlos a un booleano haría parecer completa una actualización parcial y obligaría a descubrir la discrepancia en otro lugar.
+
+Este modelo también aclara qué significa reintentar. Un reintento busca acercar el estado observado de un canal al estado deseado canónico. No crea un cambio de negocio nuevo ni debe borrar el historial exitoso de otro canal.
+
+## Hacer repetible cada escritura sin duplicarla
+
+Los reintentos son inevitables. Una conexión puede fallar antes de que la respuesta llegue, y quien llama no sabe si el socio aplicó el cambio. Mandar la misma mutación otra vez sin una identidad puede duplicar una operación o producir una secuencia inesperada.
+
+Uso una clave de idempotencia estable para la mutación lógica y la delimito al canal. Creo la clave antes del envío, la guardo con la operación y la reutilizo en los reintentos. Si el socio soporta idempotencia, la clave permite que devuelva el resultado existente. Si no la soporta, la clave sigue protegiendo nuestro worker para no despachar dos veces la misma operación mientras el intento anterior está sin resolver.
+
+El intercambio es almacenar más estado. Hay que conservar la clave, la versión de la petición y el resultado para distinguir un reintento de un cambio de precio nuevo. Modificar el payload debe crear una mutación nueva; reutilizar la clave vuelve ilegible el historial.
+
+## Poner el trabajo detrás de un outbox
+
+La escritura en nuestra base y la intención de llamar al socio deben comenzar juntas. Un outbox guarda esa intención en una fila dentro de la misma transacción que el cambio canónico. Si el proceso se detiene después de confirmar el cambio del hotel pero antes de hacer la llamada de red, un dispatcher todavía puede encontrar el elemento pendiente. Si la llamada funciona y el proceso se detiene antes de guardar la respuesta, la clave de idempotencia hace seguro investigar o repetir el intento.
+
+El dispatcher controla el tiempo de reintento, no el handler HTTP. Guarda intentos, último error, siguiente intento y estado terminal. El backoff evita golpear al socio; los reintentos acotados impiden que una integración rota consuma todos los workers. Conserva lo no resuelto para revisión y reconciliación.
+
+Un outbox no vuelve fuertemente consistente al sistema. Vuelve duradero y observable el camino desde la intención hasta el envío. El contrato honesto es consistencia eventual con un rastro registrado.
+
+## Reconciliar en vez de confiar para siempre en una respuesta
+
+Una respuesta HTTP exitosa es evidencia de un intento, no prueba de que dos sistemas coincidirán para siempre. Los trabajos del socio pueden demorarse, las credenciales pueden cambiar y una integración puede normalizar un valor distinto al de nuestro modelo. La reconciliación lee periódicamente la representación del socio y la compara con el estado deseado.
+
+La haría específica por canal e idempotente. Una diferencia debe crear una operación o un evento de revisión, no un loop de sobrescrituras. Si el socio no puede dar suficiente detalle, muestra “no se puede verificar” con el último valor conocido y la razón.
+
+## Mostrarle al operador lo que el sistema sabe
+
+El dashboard debe responder cuatro preguntas sin abrir un log: qué pedí, qué canales lo aceptaron, cuáles están pendientes o fallaron y cuándo volverá a intentar el sistema. Uso estados por canal como sincronizado, pendiente, fallido y desconocido, junto con el último sync exitoso, el siguiente reintento y un error seguro de entender.
+
+Aquí importan el acceso por roles y el historial de auditoría. Reintentar o resolver manualmente es una acción de negocio, así que el sistema debe guardar quién la inició y a qué versión del estado deseado aplicaba. El operador debería poder reintentar un solo canal fallido sin volver a enviar los que ya están al día.
+
+## Una secuencia que sí enviaría
+
+1. Validar y guardar el estado deseado canónico, su versión y un evento de auditoría.
+2. Crear una operación de outbox por canal con una clave de idempotencia estable.
+3. Despachar cada operación por separado y guardar cada respuesta o timeout.
+4. Mostrar de inmediato el estado parcial; no esperar una pantalla artificialmente atómica.
+5. Reintentar las fallas acotadas con backoff y pasar lo no resuelto a revisión.
+6. Reconciliar el estado remoto y crear una operación nueva solo cuando la diferencia sea real.
+
+El resultado importante no es que todos los socios respondan siempre. Es que una falla deje al sistema capaz de explicar qué pasó, reintentar sin duplicar la intención y ofrecerle a una persona una siguiente acción segura.

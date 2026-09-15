@@ -1,0 +1,145 @@
+/*
+ * Design tokens — Cinematic Digital Workshop.
+ * Dark is the workshop after hours; light is the same room with the blinds up.
+ * Every color is OKLCH. Nothing outside this file defines a color literal.
+ */
+
+/* Breakpoints live in postcss.config.mjs (`@media (--md)` etc.); nothing else may define one. */
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces: warm near-black, lit from one side */
+  --bg: oklch(0.16 0.012 60);
+  --bg-2: oklch(0.2 0.012 60);
+  --bg-3: oklch(0.245 0.012 60);
+  --bg-elev: oklch(0.225 0.014 60);
+
+  /* Ink */
+  --fg: oklch(0.955 0.01 80);
+  --fg-2: oklch(0.78 0.012 75);
+  --fg-3: oklch(0.6 0.012 70);
+
+  /* Lines and rims (the "rim light" on edges) */
+  --line: oklch(0.32 0.012 60);
+  --line-2: oklch(0.27 0.012 60);
+  --rim: oklch(1 0 0 / 0.09);
+
+  /* Brand green — carried from every prior version */
+  --brand: oklch(0.72 0.14 163);
+  --brand-ink: oklch(0.16 0.03 163);
+  --brand-soft: oklch(0.72 0.14 163 / 0.14);
+
+  /* Bench light — the one warm source */
+  --amber: oklch(0.84 0.13 78);
+  --amber-soft: oklch(0.84 0.13 78 / 0.16);
+
+  /* Timeline / tag accents (by token name only) */
+  --accent-brand: var(--brand);
+  --accent-amber: var(--amber);
+  --accent-rose: oklch(0.74 0.14 15);
+  --accent-sky: oklch(0.76 0.11 230);
+  --accent-violet: oklch(0.72 0.13 300);
+
+  /* Semantic */
+  --ok: oklch(0.75 0.15 150);
+  --danger: oklch(0.7 0.18 25);
+  --warn: oklch(0.82 0.15 85);
+
+  /* Bench light position (updated by scripts/theme.ts on pointer devices) */
+  --light-x: 62%;
+  --light-y: 28%;
+
+  /* Type */
+  --font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* Fluid scale (anchors 14 → 96) */
+  --text-xs: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --text-sm: clamp(0.9rem, 0.86rem + 0.2vw, 1rem);
+  --text-md: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
+  --text-xl: clamp(1.5rem, 1.3rem + 0.9vw, 1.9rem);
+  --text-2xl: clamp(2rem, 1.6rem + 1.8vw, 2.9rem);
+  --text-3xl: clamp(2.75rem, 2rem + 3.4vw, 4.6rem);
+  --text-4xl: clamp(3.5rem, 2.2rem + 6.5vw, 7.5rem);
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+  --measure: 64ch;
+
+  /* Spacing (8pt) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --container: 80rem;
+
+  /* Radius */
+  --r-1: 4px;
+  --r-2: 8px;
+  --r-3: 12px;
+  --r-4: 20px;
+
+  /* Elevation: layered shadow + rim */
+  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.4), 0 0 0 1px var(--rim) inset;
+  --shadow-2: 0 8px 24px -8px oklch(0 0 0 / 0.6), 0 1px 0 var(--rim) inset;
+  --shadow-3: 0 24px 60px -20px oklch(0 0 0 / 0.7), 0 1px 0 var(--rim) inset;
+
+  /* Motion */
+  --d-1: 120ms;
+  --d-2: 240ms;
+  --d-3: 480ms;
+  --d-4: 900ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --z-nav: 50;
+  --z-overlay: 60;
+  --z-toast: 70;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: oklch(0.97 0.01 80);
+  --bg-2: oklch(0.94 0.012 80);
+  --bg-3: oklch(0.905 0.014 80);
+  --bg-elev: oklch(0.99 0.006 80);
+
+  --fg: oklch(0.2 0.012 60);
+  --fg-2: oklch(0.4 0.012 60);
+  --fg-3: oklch(0.5 0.012 60);
+
+  --line: oklch(0.84 0.012 70);
+  --line-2: oklch(0.89 0.012 75);
+  --rim: oklch(1 0 0 / 0.7);
+
+  --brand: oklch(0.5 0.13 163);
+  --brand-ink: oklch(0.98 0.01 163);
+  --brand-soft: oklch(0.5 0.13 163 / 0.12);
+
+  --amber: oklch(0.58 0.14 68);
+  --amber-soft: oklch(0.58 0.14 68 / 0.16);
+
+  --accent-rose: oklch(0.58 0.16 15);
+  --accent-sky: oklch(0.56 0.12 230);
+  --accent-violet: oklch(0.55 0.14 300);
+
+  --ok: oklch(0.55 0.15 150);
+  --danger: oklch(0.55 0.19 25);
+  --warn: oklch(0.65 0.15 80);
+
+  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.08), 0 0 0 1px oklch(0 0 0 / 0.04);
+  --shadow-2: 0 8px 24px -8px oklch(0 0 0 / 0.18), 0 1px 0 var(--rim) inset;
+  --shadow-3: 0 24px 60px -20px oklch(0 0 0 / 0.25), 0 1px 0 var(--rim) inset;
+}

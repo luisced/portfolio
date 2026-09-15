@@ -1,0 +1,94 @@
+---
+import type { Locale } from '@/i18n/ui';
+import { getProfile, useTranslations } from '@/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const profile = await getProfile();
+const text = profile.data.manifesto[locale];
+const words = text.split(' ');
+---
+
+<section
+  id="manifesto"
+  class="section"
+  data-manifesto
+  aria-labelledby="manifesto-title"
+  style="--progress: 1"
+>
+  <div class="blueprint manifesto__blueprint" aria-hidden="true"></div>
+  <div class="container manifesto__inner">
+    <header class="manifesto__head" data-reveal>
+      <p class="kicker">{t('manifesto.kicker')}</p>
+      <h2 id="manifesto-title" class="sr-only">{t('manifesto.kicker')}</h2>
+      <span class="manifesto__rule" aria-hidden="true"></span>
+    </header>
+    <p class="display manifesto__text" data-reveal>
+      {words.map((word, index) => (
+        <>
+          {index > 0 ? ' ' : ''}
+          <span
+            data-word
+            style={`--i: ${index / Math.max(1, words.length - 1)}`}
+          >{word}</span>
+        </>
+      ))}
+    </p>
+  </div>
+</section>
+
+<style>
+  .manifesto__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: var(--s-10);
+  }
+
+  .manifesto__blueprint {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .manifesto__head {
+    display: grid;
+    gap: var(--s-3);
+    margin-bottom: var(--s-7);
+  }
+
+  .manifesto__rule {
+    display: block;
+    width: 4rem;
+    height: 2px;
+    background: var(--amber);
+  }
+
+  .manifesto__text {
+    max-width: 20ch;
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+    text-wrap: balance;
+  }
+
+  .manifesto__text [data-word] {
+    --i: 0;
+    color: var(--fg);
+    /* Word i is fully lit once progress passes i; the 1.15 overshoot guarantees the last word lights at progress 1. */
+    color: color-mix(
+      in oklch,
+      var(--fg) calc(clamp(0, calc((var(--progress, 1) * 1.15 - var(--i)) * 8), 1) * 100%),
+      var(--fg-3)
+    );
+    transition: color var(--d-1) linear;
+  }
+
+  @media (--md) {
+    .manifesto__inner {
+      padding-block: var(--s-10);
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+{
+  "name": "portfolio-v4",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/postbuild.mjs && node scripts/check-i18n.mjs && node scripts/check-assets.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "check:i18n": "node scripts/check-i18n.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/rss": "^4",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.2.5",
+    "@resvg/resvg-js": "^2.6",
+    "astro": "^7.3.2",
+    "gsap": "^3.15.0",
+    "satori": "^0.15"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "sharp": "^0.35.4",
+    "typescript": "^5.9.2"
+  }
+}

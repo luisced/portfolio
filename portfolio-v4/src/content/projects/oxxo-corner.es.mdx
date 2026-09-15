@@ -1,0 +1,55 @@
+---
+slug: oxxo-corner
+locale: es
+title: "Oxxo Corner / Femsa"
+role: "Product Owner • Desarrollador full-stack"
+category: ios
+timeframe: "2023"
+outcome: "Los clientes pueden explorar una tienda Oxxo con indicaciones de realidad aumentada y recibir sugerencias de productos en la misma app."
+summary: "Llevé la dirección de producto y la entrega full-stack de un concepto iOS que combinaba navegación con RA, reconocimiento de imágenes, filtrado generativo y un foro comunitario. La primera versión usó SwiftUI, ARKit, CoreML, Flask, Python y Docker."
+stack:
+  - SwiftUI
+  - Flask
+  - Python
+  - ARKit
+  - CoreML
+  - Generative AI
+  - Docker
+links: {}
+cover: ../../assets/projects/oxxocorner/oxxocorner_preview.webp
+coverAlt: "Experiencia de retail con realidad aumentada de Oxxo Corner"
+gallery:
+  - src: ../../assets/projects/oxxocorner/oxxocorner1.webp
+    alt: "Panel de tienda de Oxxo Corner"
+  - src: ../../assets/projects/oxxocorner/oxxocorner2.webp
+    alt: "Experiencia de realidad aumentada de Oxxo Corner"
+  - src: ../../assets/projects/oxxocorner/oxxocorner3.webp
+    alt: "Perfil de usuario de Oxxo Corner"
+  - src: ../../assets/projects/oxxocorner/oxxocorner4.webp
+    alt: "Pantalla de inicio de sesión de Oxxo Corner"
+featured: false
+order: 5
+---
+
+## Contexto
+
+Oxxo Corner exploró otra forma de interactuar con una tienda Oxxo: usar la cámara del teléfono para descubrir productos y recomendaciones. La primera versión combinó realidad aumentada, filtrado de imágenes con IA generativa, información de productos y un foro comunitario.
+
+## Mi rol
+
+Fui Product Owner y desarrollador full-stack en un equipo de cuatro. Convertí la idea en el alcance inicial, coordiné pantallas SwiftUI con la API en Flask y Python, y conecté navegación RA, perfil y comunidad.
+
+## Decisiones
+
+- **Usar ARKit para orientar, no como adorno.** Las ubicaciones y señales de producto debían responder la siguiente pregunta. El costo fue probar distintos dispositivos y definir un fallback cuando el tracking fuera débil.
+- **Mantener el reconocimiento de imágenes de CoreML cerca del cliente iOS.** Inferir en el dispositivo puede responder sin mandar cada cuadro de cámara al backend, pero agrega restricciones de tamaño del modelo y compatibilidad.
+- **Poner cuentas y datos de comunidad detrás de Flask.** El servicio dio a perfiles y foro un límite compartido de persistencia. Eso requiere trabajo de API y permisos, pero evita que el cliente móvil sea dueño de los datos de negocio.
+- **Limitar la IA generativa al filtrado de imágenes en la primera versión.** Un uso acotado hizo comprensible el experimento y redujo el riesgo de que las recomendaciones parecieran más seguras de lo que permitían sus datos.
+
+## Resultado
+
+El equipo produjo una primera versión coherente que conectó descubrimiento de tienda, indicaciones RA, reconocimiento de productos, recomendaciones, perfiles y conversación comunitaria en un solo flujo iOS.
+
+## Qué haría diferente
+
+Validaría la navegación RA con distribuciones reales de tienda antes de ampliar la capa social. Así descubriríamos temprano las restricciones de tracking y señalización, y tendríamos una base más clara para decidir qué partes del concepto merecían otra iteración.

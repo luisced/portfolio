@@ -1,0 +1,60 @@
+---
+slug: upocket
+locale: es
+title: "UPocket"
+role: "Desarrollador full-stack"
+category: ios
+timeframe: "2023–present"
+outcome: "Los estudiantes universitarios consultan horario, asistencias, calificaciones y enlaces académicos en un solo lugar, sin armar la información desde sistemas separados."
+summary: "Ayudé a construir una app en SwiftUI respaldada por FastAPI, Python y PostgreSQL para centralizar la información académica. Docker y Kubernetes sostuvieron un servicio capaz de atender a una comunidad universitaria, mientras el cliente móvil se concentraba en una vista diaria sencilla."
+stack:
+  - FastAPI
+  - Python
+  - PostgreSQL
+  - SwiftUI
+  - Kubernetes
+  - Docker
+links:
+  repo: https://github.com/ios-lab-up/UPOCKET
+cover: ../../assets/projects/upocket/upocket_preview.webp
+coverAlt: "Resumen académico de UPocket en iPhone"
+gallery:
+  - src: ../../assets/projects/upocket/upocket1.webp
+    alt: "Panel de estudiante de UPocket con resumen académico"
+  - src: ../../assets/projects/upocket/upocket2.webp
+    alt: "Horario interactivo de clases en UPocket"
+  - src: ../../assets/projects/upocket/upocket3.webp
+    alt: "Pantalla de seguimiento de asistencias de UPocket"
+  - src: ../../assets/projects/upocket/upocket4.webp
+    alt: "Pantalla de resumen de calificaciones de UPocket"
+featured: true
+order: 2
+---
+
+## Contexto
+
+La información de la universidad estaba repartida en los lugares que los estudiantes ya tenían que revisar: horario, asistencias, calificaciones y enlaces académicos no formaban una vista diaria. UPocket nació para cubrir ese hueco con una app móvil todo en uno. Debía poder consultarse rápido entre clases, pero los datos necesitaban un hogar confiable conforme crecía la audiencia.
+
+Trabajé en UPocket en el iOS Development Lab desde 2023 como desarrollador full-stack. El stack combinaba SwiftUI en el teléfono con un backend en FastAPI y Python, PostgreSQL, Docker y Kubernetes. El trabajo del laboratorio llegó a servir a más de 15,000 estudiantes, así que procuré que una decisión que aclarara la pantalla de una persona también funcionara cuando muchas solicitaran la misma información.
+
+## Mi rol
+
+Me moví entre la capa móvil y la de servicio. Diseñé respuestas de API alrededor de las vistas que realmente usaban los estudiantes, implementé en SwiftUI las pantallas de resumen, horario, asistencias y calificaciones, y rastreé las inconsistencias hasta el modelo de datos en vez de remendar cada pantalla. También ayudé a mantener el backend desplegable en contenedores y trabajé con el equipo del laboratorio para convertir la retroalimentación de la rutina académica en cambios pequeños y revisables.
+
+La frontera importante era la responsabilidad. La app debía mostrar un resumen tranquilo y tratar con honestidad la carga o la falta de datos; el servicio debía encargarse de normalizar y combinar los registros académicos. Así, cambiar una fuente no producía una interpretación distinta en cada teléfono.
+
+## Decisiones
+
+- **Diseñar la API alrededor del periodo académico del estudiante.** Horario, asistencias y calificaciones son más fáciles de razonar cuando comparten periodo e identidad de materia. El costo fue normalizar más antes de poder renderizar una respuesta, pero evitó que cada pantalla armara por separado nombres y periodos contradictorios.
+- **Separar las responsabilidades de SwiftUI y del backend.** SwiftUI se encarga de navegación, presentación y estados propios del móvil; FastAPI, de validar, agregar y persistir. La frontera exige trabajo de versionado de API, pero permite mejorar una pantalla sin reescribir las reglas de datos y probarlas fuera de la app.
+- **Usar PostgreSQL como fuente duradera de los registros académicos.** Un modelo relacional encaja con materias, periodos y relaciones con estudiantes, y hace explícitas esas conexiones. El intercambio es mantener disciplina de migraciones: agregar un campo requiere un cambio deliberado en la base, no una forma de documento improvisada.
+- **Tratar la carga y los datos no disponibles como estados del producto.** Un horario puede estar vacío o una calificación puede llegar después; mostrar una pantalla en blanco como si estuviera completa engañaría al estudiante. Dejamos esos estados visibles en la UI: hay más ramas, pero la app sigue siendo útil cuando la información de origen está incompleta.
+- **Empaquetar el servicio con Docker y ejecutarlo en Kubernetes.** Los contenedores hicieron reproducible el servicio y Kubernetes dio al laboratorio una forma consistente de operarlo conforme crecía el uso. La infraestructura es más compleja que un proceso único, así que el beneficio debía ser un release repetible y un servicio estable, no complejidad por sí misma.
+
+## Resultado
+
+UPocket dio a más de 15,000 estudiantes un punto de partida académico único y redujo 80% los conflictos de horario. Lo valioso no fue llenar más el dashboard, sino tener un lugar para consultar la siguiente clase, confirmar una asistencia y revisar el avance sin saltar entre sistemas.
+
+## Qué haría diferente
+
+Desde el inicio establecería un conjunto pequeño de horarios estudiantiles representativos como fixtures de contrato. Harían visibles durante los cambios de API casos como periodos traslapados y calificaciones faltantes, antes de que una pantalla móvil tuviera que explicarlos. También fijaría el ritmo de releases alrededor del calendario académico para entregar mejoras de bajo riesgo entre los cambios grandes de periodo.

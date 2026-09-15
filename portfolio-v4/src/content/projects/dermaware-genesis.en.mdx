@@ -1,0 +1,59 @@
+---
+slug: dermaware-genesis
+locale: en
+title: "Dermaware / Genesis"
+role: "Development lead • Full-stack developer"
+category: ios
+timeframe: "Jul–Nov 2023"
+outcome: "People can record skin changes, receive tailored guidance and speak with a dermatologist through one mobile app."
+summary: "I led the first Genesis version of a SwiftUI skin-health app with image analysis, recommendations, chat and a community forum. A Flask and Python API, SQLite storage and AWS deployment supported the mobile experience."
+stack:
+  - SwiftUI
+  - Flask
+  - Python
+  - SQLite
+  - AWS
+links:
+  repo: https://github.com/ios-lab-up/Genesis-API
+cover: ../../assets/projects/genesis/dermaware.webp
+coverAlt: "Dermaware Genesis skin-health dashboard"
+gallery:
+  - src: ../../assets/projects/genesis/genesis1.webp
+    alt: "Genesis skin-health dashboard"
+  - src: ../../assets/projects/genesis/genesis4.webp
+    alt: "Genesis dermatologist consultation chat"
+  - src: ../../assets/projects/genesis/genesis3.webp
+    alt: "Genesis user profile"
+  - src: ../../assets/projects/genesis/genesis2.webp
+    alt: "Genesis account sign-in screen"
+featured: true
+order: 3
+---
+
+## Context
+
+Dermaware Genesis was the first version of a mobile product for tracking skin health. A person could record changes, receive recommendations based on skin type, ask questions through an integrated dermatologist chat and share experiences in a community forum. That put several kinds of information in one app: personal observations, image-based analysis, conversations and public posts.
+
+I led five developers at the iOS Development Lab during July–November 2023. We used SwiftUI for the client, Flask and Python for the API, SQLite for storage and AWS for the deployment path. The short first version forced us to decide what the backend should guarantee and what the phone could make easy without turning health-related flows into a maze.
+
+## My role
+
+I broke the product into vertical slices instead of assigning an entire layer to each person. I coordinated the SwiftUI screens with the Flask endpoints, reviewed data shapes and integrated the dashboard, profile, login, chat and forum flows. When an implementation choice affected another developer's screen, I wrote down the contract and reviewed the change with the team rather than letting each feature invent its own response.
+
+I also kept the first release boundary visible. Image analysis and recommendations had to fit the tracking flow; chat needed a clear place in the same account; and community content needed to remain distinct from private health information. That framing helped us ship a coherent first version without promising a clinical system we had not built.
+
+## Decisions
+
+- **Use SwiftUI for the whole mobile surface.** Shared state and declarative views made the dashboard, profile and conversational screens easier to compose as the product changed. The trade-off was learning a newer UI approach as a team, so I favored small reusable view states over clever abstractions.
+- **Keep Flask responsible for account and health-data boundaries.** The API validated what the client could send and returned a stable shape for tracking, recommendations and chat. This added explicit request and response work, but it stopped business rules from being duplicated in multiple SwiftUI views.
+- **Start with SQLite for the first version.** A small relational store was enough for the initial tracking data and kept local development understandable. The trade-off was planning for a future migration if usage or collaboration required stronger operational characteristics; I avoided making the prototype depend on an opaque persistence layer.
+- **Treat image analysis as an input to guidance, not a diagnosis.** The app could use an image and skin type to produce a recommendation, but the product also offered dermatologist conversations. Keeping that distinction in the flow made the feature understandable and avoided presenting an automated result as medical certainty.
+- **Separate private profile data from community interactions.** The forum and personal tracking serve different audiences, so the API and UI kept their boundaries visible. That costs more navigation and permission handling, but it makes it harder to expose a personal record while loading public content.
+
+## Result
+
+Genesis brought tracking, image analysis, recommendations, dermatologist chat and a community forum into one first release. I left the team with a shared SwiftUI and Flask structure that could be extended without making every new feature a cross-layer rewrite.
+
+## What I would do differently
+
+I would test the full image-to-recommendation journey with representative, incomplete inputs before polishing the surrounding screens. I would also add a written data-retention and privacy boundary at the start, then use it to review profile, chat and forum decisions consistently as the team moved quickly.

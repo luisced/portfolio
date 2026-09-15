@@ -1,0 +1,17 @@
+org: Universidad Panamericana
+role:
+  en: "Assistant Manager – iOS Development Lab"
+  es: "Gerente asistente – iOS Development Lab"
+start: "2023-01"
+end: null
+location: Mexico City
+highlights:
+  en:
+    - "Developed 4 iOS apps for students and staff."
+    - "Led Agile sprints, shortening delivery by 3 weeks."
+  es:
+    - "Desarrollé 4 aplicaciones iOS para estudiantes y personal."
+    - "Lideré sprints Agile y acorté la entrega en 3 semanas."
+tags: [iOS, Swift, Agile]
+accent: sky
+order: 3

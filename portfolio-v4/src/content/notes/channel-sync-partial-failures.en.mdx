@@ -1,0 +1,63 @@
+---
+slug: channel-sync-partial-failures
+locale: en
+title: "Designing a channel sync that survives partial failure"
+date: 2026-08-20
+summary: "A practical model for keeping hotel inventory, prices and promotions understandable when a partner API succeeds, times out or fails halfway through an update."
+tags: [backend, distributed-systems]
+draft: false
+---
+
+## The failure is part of the product
+
+A channel manager looks simple from the operator's side. Someone changes a room price once and expects Booking.com, Expedia and the hotel's own site to agree. The backend sees a less comfortable sequence: several remote systems, different request formats, network timeouts and responses that can disappear after a partner has already accepted a write.
+
+I learned to start with that failure model while working on StackUp, also presented as Flowlink. The goal was to remove most of the manual re-entry between channels without replacing it with a dashboard that lies. “Sync failed” is not one state. One channel may be current, another may still be processing, and a third may be unknown because the request timed out after the remote system received it.
+
+
+## Keep desired state separate from observed state
+
+I model the operator's change as desired state in our system. A room, rate or promotion has a canonical representation that the dashboard can validate and that the service can store. Each channel then has its own observed state: the last response we can prove, the time it was confirmed and the operation currently in flight.
+
+Those states should not be overwritten by whichever response arrives last. If an Expedia request fails after a Booking.com request succeeds, the canonical change remains the operator's intent, Booking.com records success and Expedia records a failure or unknown result. Collapsing them into one boolean would make a partial update look complete and force someone to discover the discrepancy elsewhere.
+
+This model also clarifies what a retry means. A retry tries to bring one channel's observed state toward the canonical desired state. It does not create a new business change, and it should not rewrite the successful history of another channel.
+
+## Make every write safe to repeat
+
+Retries are unavoidable. A connection can fail before a response reaches us, so the caller cannot tell whether the partner applied the update. Sending the same mutation again without an identity can duplicate an operation or produce an unexpected sequence of changes.
+
+I use an idempotency key that is stable for the logical mutation and scoped to the channel. The key is created before dispatch, stored with the operation and reused for retries. The worker records a successful response against that key. If the partner supports idempotency, the key lets the remote side return the existing result. If it does not, the key still protects our own worker from dispatching the same operation twice while a previous attempt is unresolved.
+
+The trade-off is storage. Retain the key, request version and outcome long enough to distinguish a retry from a new price change. A changed payload must create a new mutation; reusing the key makes history impossible to interpret.
+
+## Put work behind an outbox
+
+The write to our database and the intention to call a partner should begin together. An outbox gives that intention a durable row in the same transaction as the canonical change. If the process stops after committing the hotel update but before making a network call, a dispatcher can still find the pending outbox item. If the network call succeeds and the process stops before recording the response, the idempotency key makes the next attempt safe to investigate or repeat.
+
+The dispatcher owns retry timing, not the HTTP handler. Store attempts, last error, next attempt and terminal state. Backoff avoids hammering a partner; bounded retries keep one broken integration from consuming every worker. Preserve unresolved rows for review and reconciliation.
+
+An outbox does not make the system strongly consistent. It makes the path from intent to attempted delivery durable and inspectable. The honest contract is eventual consistency with a recorded trail.
+
+## Reconcile instead of trusting responses forever
+
+A successful HTTP response is evidence about one attempt, not proof that two systems will agree forever. Partner jobs can be delayed, credentials can change and an integration can normalize a value differently from our model. Reconciliation periodically reads the partner's representation and compares it with the desired state.
+
+I would make reconciliation channel-specific and idempotent. A difference should create an operation or review event, not an overwrite loop. If the partner cannot report enough detail, show “cannot verify” with the last known value and reason.
+
+## Show operators what the system knows
+
+The dashboard should answer four questions without opening a log: what did I ask for, which channels accepted it, which are pending or failed, and when will the system try again? I use per-channel statuses such as synced, pending, failed and unknown, along with the last successful sync, the next retry and a safe error description.
+
+Role-based access and audit history matter here. A retry or manual resolution is a business action, so the system should record who initiated it and which desired-state version it addressed. The operator should be able to retry one failed channel without resubmitting channels that are already current.
+
+## A sequence I would ship
+
+1. Validate and persist the new canonical desired state, its version and an audit event.
+2. Create one outbox operation per channel with a stable idempotency key.
+3. Dispatch operations independently and record each response or timeout.
+4. Expose partial status immediately; do not wait for an artificial all-or-nothing screen.
+5. Retry bounded failures with backoff, then move unresolved work to review.
+6. Reconcile remote state and create a new operation only when the difference is real.
+
+The important result is not that every partner always responds. It is that a failure leaves the system able to say what happened, retry without duplicating intent and give a person a safe next action.

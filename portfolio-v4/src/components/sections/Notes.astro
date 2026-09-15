@@ -1,0 +1,199 @@
+---
+import { getNotes, formatDate, localizePath, readingMinutes, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const notes = (await getNotes(locale)).slice(0, 3);
+---
+
+<section id="notes" class="section" aria-labelledby="notes-title">
+  <div class="container">
+    <div class="notes-heading">
+      <header class="sec-head" data-reveal>
+        <p class="kicker">{t('notes.kicker')}</p>
+        <h2 class="method" id="notes-title">{t('notes.title')}</h2>
+      </header>
+      <a class="notes-all" href={localizePath(locale, '/notes/')}>{t('notes.all')} <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="notes-list" data-reveal-group>
+      {notes.length > 0 ? (
+        notes.map((note) => (
+          <a
+            class="note-row"
+            href={localizePath(locale, `/notes/${note.data.slug}/`)}
+            data-reveal
+          >
+            <div class="note-meta mono">
+              <time datetime={note.data.date.toISOString()}>{formatDate(locale, note.data.date, { month: 'short' })}</time>
+              <span>{readingMinutes(note.body)} {t('notes.readingTime')}</span>
+            </div>
+            <div class="note-copy">
+              <h3>{note.data.title}</h3>
+              <p>{note.data.summary}</p>
+              {note.data.tags.length > 0 && (
+                <ul class="note-tags">
+                  {note.data.tags.map((tag) => <li class="note-tag mono">{tag}</li>)}
+                </ul>
+              )}
+            </div>
+          </a>
+        ))
+      ) : (
+        <p class="notes-empty" data-reveal>{t('notes.empty')}</p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .notes-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--s-4);
+    margin-bottom: var(--s-7);
+  }
+
+  .sec-head {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .notes-all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-block-size: 44px;
+    color: var(--fg-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: var(--s-1);
+    white-space: nowrap;
+  }
+
+  .notes-all span {
+    color: var(--amber);
+    font-size: var(--text-md);
+    transition: transform var(--d-2) var(--ease-out);
+  }
+
+  .notes-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .note-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
+    gap: var(--s-4);
+    padding-block: var(--s-5);
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .note-row::after {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    inline-size: 0;
+    block-size: 1px;
+    background: var(--amber);
+    content: '';
+    transition: inline-size var(--d-2) var(--ease-out);
+  }
+
+  .note-meta {
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    color: var(--fg-2);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+  }
+
+  .note-copy {
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    min-inline-size: 0;
+  }
+
+  .note-copy h3 {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    line-height: var(--leading-snug);
+  }
+
+  .note-copy p {
+    color: var(--fg-2);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+  }
+
+  .note-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    list-style: none;
+    padding: 0;
+    margin-top: var(--s-2);
+  }
+
+  .note-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    padding: var(--s-1) var(--s-2);
+    color: var(--fg-2);
+    font-size: var(--text-xs);
+    border: 1px solid var(--line);
+    border-radius: var(--r-1);
+    background: var(--bg-3);
+  }
+
+  .note-tag::before {
+    inline-size: var(--s-2);
+    block-size: var(--s-2);
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--accent-brand);
+    content: '';
+  }
+
+  .note-tag:nth-child(2)::before { background: var(--accent-amber); }
+  .note-tag:nth-child(3)::before { background: var(--accent-rose); }
+  .note-tag:nth-child(4)::before { background: var(--accent-sky); }
+  .note-tag:nth-child(5)::before { background: var(--accent-violet); }
+
+  .notes-empty {
+    padding-block: var(--s-5);
+    color: var(--fg-2);
+  }
+
+  @media (--pointer) {
+    .notes-all:hover span {
+      transform: translateX(var(--s-1));
+    }
+
+    .note-row:hover::after {
+      inline-size: 100%;
+    }
+  }
+
+  @media (--md) {
+    .note-row {
+      grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+      gap: var(--s-6);
+      padding-block: var(--s-6);
+    }
+  }
+</style>

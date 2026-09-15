@@ -1,0 +1,53 @@
+---
+slug: running-a-university-ios-lab
+locale: en
+title: "What running a university iOS lab taught me about shipping"
+date: 2026-09-05
+summary: "Lessons from leading a university iOS lab that built four apps: make scope teachable, mentor through decisions and give releases a dependable rhythm."
+tags: [leadership, ios]
+draft: false
+---
+
+## The lab is a real team with a learning constraint
+
+A university lab can be both a learning environment and a team responsible for software that other people use. Treating it as only a class makes the work feel optional. Treating it as only a production team hides the reason students are there: they need to understand the decisions, not just complete tickets.
+
+As assistant manager of Universidad Panamericana's iOS Development Lab, I helped lead four iOS apps for students and staff. The projects included UPocket, which brought academic information together for a community of 15,000+ students, as well as first versions of Dermaware Genesis, Homecare Nemesis and Oxxo Corner. Each project had a different problem, but the same constraint: a student should leave with more judgment than they had when they started.
+
+That changed how I measured progress. A feature that works on a laptop is not automatically a useful contribution. I looked for a small slice that could be explained, reviewed and connected to a person who would use it.
+
+## Scope is how we protect the release
+
+Student teams can generate more ideas than a short project can hold. The instinct is to say yes to everything and hope implementation will reveal the limit. In practice, the limit arrives as unfinished screens, unclear ownership and a release that nobody can demonstrate confidently.
+
+I now make scope explicit in three layers. First, write the user outcome in plain language: what can someone do after this slice exists? Second, name the smallest vertical path that proves it, including the SwiftUI screen, the API boundary and the data it needs. Third, record what is deliberately outside the first release. A forum, recommendation engine or AR flow can all be valuable, but each needs a boundary that prevents it from absorbing the whole project.
+
+This is not a way to make student work smaller for its own sake. It gives a new contributor a place to start and gives the team a way to cut safely when time changes. On UPocket, keeping the academic summary, schedule, attendance and grades as recognizable flows made the product easier to discuss than a list of disconnected UI tasks.
+
+## Mentor through decisions, not answers
+
+The fastest way to finish a student's task is to provide the answer. The better way to grow the team is to make the reasoning visible. When someone asked whether logic belonged in a SwiftUI view or the backend, I asked what needed to remain consistent across devices. When an API response was awkward, we traced it back to the model instead of adding another field only for one screen.
+
+A useful review has three passes. I first ask the contributor to explain the user path and the failure state. Then I check the seam: what contract does the screen expect, what does the service guarantee and what happens when data is late or missing? Only after that do I discuss naming, layout or implementation details. The order matters because polishing a wrong boundary teaches the wrong lesson.
+
+Mentoring also means making disagreement safe. I can reject a design without rejecting the person who proposed it. I explain the trade-off, invite an alternative and leave a short decision record. That record helps the next student avoid reopening the same question and gives the original contributor evidence that their thinking affected the product.
+
+## Ship in a rhythm
+
+A release rhythm turns “we should finish soon” into a sequence the team can trust. I use short planning horizons, a visible definition of done and a demoable slice at the end of each cycle. Done means more than merged code: the happy path works, loading and empty states are understandable, the API and mobile code agree, and someone else has reviewed the change.
+
+The lab's Agile sprints shortened delivery by 3 weeks. The number matters, but the mechanism matters more: work was small enough to review while context was still fresh, and feedback arrived before a late integration. A rhythm also protects teaching. Students can see how a requirement becomes a branch, a review, a release and a correction rather than experiencing shipping as one stressful event at the end.
+
+I keep the release checklist boring. Confirm the build, exercise the main path on a real device, check the data states the screen can display, and write down anything deferred. A predictable checklist gives beginners confidence and gives experienced contributors fewer chances to rely on memory.
+
+## Make ownership visible
+
+Four apps do not need four isolated teams. Shared patterns for SwiftUI state, API contracts and review language reduce repeated mistakes, while project ownership gives each contributor a real decision to carry. I prefer pairing across the mobile and backend seam for the first slice, then letting ownership deepen as the contributor demonstrates understanding.
+
+The same applies to feedback from students and staff. It should become a concrete observation, not an unranked feature queue. “The schedule is confusing” can lead to a narrower question about labels, empty periods or conflicts. That question is teachable; a vague request for a complete redesign is not.
+
+## What I carry forward
+
+Running the lab taught me that leadership is a release system. Scope determines whether people can contribute, mentoring determines whether they can make the next decision alone, and rhythm determines whether the team learns from a real user before the project ends.
+
+I still use the same test on backend and product work: can the next person explain the boundary, the failure state and the reason for the trade-off? If not, the code may be finished, but the team has not shipped the knowledge needed to keep it working.

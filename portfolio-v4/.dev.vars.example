@@ -1,0 +1,6 @@
+# Cloudflare Pages Function secrets
+RESEND_API_KEY=
+TURNSTILE_SECRET=
+
+# Astro build-time variable (public, not a secret)
+PUBLIC_TURNSTILE_SITE_KEY=

@@ -1,0 +1,59 @@
+---
+slug: dermaware-genesis
+locale: es
+title: "Dermaware / Genesis"
+role: "Líder de desarrollo • Desarrollador full-stack"
+category: ios
+timeframe: "Jul–Nov 2023"
+outcome: "Las personas pueden registrar cambios en su piel, recibir orientación personalizada y hablar con un dermatólogo desde una sola app móvil."
+summary: "Lideré la primera versión de Genesis, una app SwiftUI para salud cutánea con análisis de imágenes, recomendaciones, chat y foro comunitario. Una API en Flask y Python, almacenamiento en SQLite y despliegue en AWS sostuvieron la experiencia móvil."
+stack:
+  - SwiftUI
+  - Flask
+  - Python
+  - SQLite
+  - AWS
+links:
+  repo: https://github.com/ios-lab-up/Genesis-API
+cover: ../../assets/projects/genesis/dermaware.webp
+coverAlt: "Panel de salud cutánea de Dermaware Genesis"
+gallery:
+  - src: ../../assets/projects/genesis/genesis1.webp
+    alt: "Panel de salud cutánea de Genesis"
+  - src: ../../assets/projects/genesis/genesis4.webp
+    alt: "Chat de consulta dermatológica de Genesis"
+  - src: ../../assets/projects/genesis/genesis3.webp
+    alt: "Perfil de usuario de Genesis"
+  - src: ../../assets/projects/genesis/genesis2.webp
+    alt: "Pantalla de inicio de sesión de Genesis"
+featured: true
+order: 3
+---
+
+## Contexto
+
+Dermaware Genesis fue la primera versión de un producto móvil para dar seguimiento a la salud cutánea. Una persona podía registrar cambios, recibir recomendaciones según su tipo de piel, hacer preguntas en un chat integrado con dermatólogos y compartir experiencias en un foro comunitario. Eso juntaba varios tipos de información: observaciones personales, análisis basados en imágenes, conversaciones y publicaciones públicas.
+
+Lideré a cinco desarrolladores en el iOS Development Lab entre julio y noviembre de 2023. Usamos SwiftUI para el cliente, Flask y Python para la API, SQLite para almacenamiento y AWS para el despliegue. La primera versión tenía un plazo corto y nos obligó a decidir qué debía garantizar el backend y qué podía hacer sencillo el teléfono, sin convertir los flujos de salud en un laberinto.
+
+## Mi rol
+
+Dividí el producto en rebanadas verticales en vez de asignar una capa completa a cada persona. Coordiné las pantallas SwiftUI con los endpoints de Flask, revisé las formas de los datos e integré los flujos de panel, perfil, inicio de sesión, chat y foro. Cuando una decisión afectaba la pantalla de otra persona, dejaba claro el contrato y revisaba el cambio con el equipo, en lugar de permitir que cada feature inventara su propia respuesta.
+
+También mantuve visible el límite de la primera entrega. El análisis de imágenes y las recomendaciones debían caber en el flujo de seguimiento; el chat necesitaba un lugar claro dentro de la cuenta; y el contenido de la comunidad debía permanecer separado de la información privada de salud. Ese encuadre nos ayudó a entregar una primera versión coherente sin presentar como sistema clínico algo que no habíamos construido.
+
+## Decisiones
+
+- **Usar SwiftUI en toda la superficie móvil.** El estado compartido y las vistas declarativas facilitaron componer el dashboard, el perfil y las pantallas conversacionales mientras cambiaba el producto. El costo fue aprender un enfoque de UI más nuevo como equipo, así que preferí estados pequeños y reutilizables antes que abstracciones ingeniosas.
+- **Dejar a Flask a cargo de los límites de cuenta y datos de salud.** La API validaba lo que el cliente podía enviar y devolvía una forma estable para seguimiento, recomendaciones y chat. Eso exige trabajo explícito de petición y respuesta, pero evita duplicar reglas de negocio en varias vistas SwiftUI.
+- **Comenzar con SQLite para la primera versión.** Un almacenamiento relacional pequeño bastaba para los datos iniciales de seguimiento y mantenía sencillo el desarrollo local. El intercambio era preparar una posible migración si el uso o la colaboración exigían otras características operativas; evité que el prototipo dependiera de una capa de persistencia opaca.
+- **Tratar el análisis de imágenes como insumo para orientar, no como diagnóstico.** La app podía usar una imagen y el tipo de piel para producir una recomendación, pero también ofrecía conversaciones con dermatólogos. Mantener esa diferencia en el flujo hizo comprensible la función y evitó presentar un resultado automatizado como certeza médica.
+- **Separar los datos privados del perfil de las interacciones comunitarias.** El foro y el seguimiento personal tienen públicos distintos, por lo que la API y la UI mantuvieron visibles sus límites. Eso agrega navegación y manejo de permisos, pero dificulta exponer un registro personal al cargar contenido público.
+
+## Resultado
+
+Genesis reunió seguimiento, análisis de imágenes, recomendaciones, chat con dermatólogos y foro comunitario en una primera entrega. Dejé al equipo una estructura compartida de SwiftUI y Flask que podía crecer sin convertir cada feature nueva en una reescritura entre capas.
+
+## Qué haría diferente
+
+Probaría desde el inicio el recorrido completo de imagen a recomendación con entradas representativas e incompletas, antes de pulir las pantallas alrededor. También establecería desde el primer día un límite escrito para retención y privacidad de datos, y lo usaría para revisar de forma consistente las decisiones de perfil, chat y foro mientras el equipo avanzaba rápido.

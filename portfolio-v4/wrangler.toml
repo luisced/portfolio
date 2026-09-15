@@ -1,0 +1,10 @@
+name = "luiscedillo"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "dist"
+
+[vars]
+CONTACT_TO = "me@luiscedillo.com"
+CONTACT_FROM = "Luis Cedillo <notes@luiscedillo.com>"
+
+# Set RESEND_API_KEY and TURNSTILE_SECRET with `wrangler pages secret put`.
+# PUBLIC_TURNSTILE_SITE_KEY is a build-time environment variable.

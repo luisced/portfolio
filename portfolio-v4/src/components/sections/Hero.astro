@@ -1,0 +1,304 @@
+---
+import { Picture } from 'astro:assets';
+import heroImage from '@/assets/hero.webp';
+import { getProfile, localizePath, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const profile = await getProfile();
+const p = profile.data;
+const [first, ...rest] = p.name.split(' ');
+const last = rest[0] ?? '';
+const home = localizePath(locale, '/');
+---
+
+<section id="hero" class="hero" aria-labelledby="hero-title">
+  <div class="hero__blueprint blueprint" aria-hidden="true"></div>
+
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="kicker hero__kicker" data-enter style="--n: 0">
+        <span class="hero__pulse" aria-hidden="true"></span>
+        {p.headline[locale]} · {p.location}
+      </p>
+
+      <h1 id="hero-title" class="display hero__title">
+        <span class="hero__line">{first}</span>
+        <span class="hero__line hero__line--accent"><em>{last}</em></span>
+      </h1>
+
+      <p class="hero__lead" data-enter style="--n: 3">{p.positioning[locale]}</p>
+
+      <div class="hero__actions" data-enter style="--n: 4">
+        <a class="btn btn--primary" href={`${home}#work`}>{t('hero.cta.work')}</a>
+        <a class="btn" href={`${home}#contact`}>{t('hero.cta.contact')}</a>
+      </div>
+
+      <p class="hero__avail mono" data-enter style="--n: 5">
+        <span class="hero__dot" aria-hidden="true"></span>
+        {p.availability[locale]}
+      </p>
+    </div>
+
+    <figure class="hero__figure" data-enter style="--n: 2">
+      <div class="hero__frame">
+        <Picture
+          fallbackFormat="webp"
+          src={heroImage}
+          alt={p.portraitAlt[locale]}
+          widths={[320, 480, 720, 960]}
+          sizes="(min-width: 64em) 34vw, (min-width: 48em) 44vw, 80vw"
+          formats={['avif', 'webp']}
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="hero__plate mono">
+        <span>fig. 01</span>
+        <span>{p.shortName}</span>
+        <span>{p.timezone}</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <a class="hero__scroll mono" href={`${home}#work`} aria-label={t('hero.scroll')}>
+    <span>{t('hero.scroll')}</span>
+    <span class="hero__scroll-line" aria-hidden="true"></span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: calc(100svh - 4rem);
+    display: grid;
+    align-items: center;
+    padding-block: var(--s-8) var(--s-9);
+    overflow: clip;
+  }
+
+  .hero__blueprint {
+    position: absolute;
+    inset: 0 0 0 40%;
+    mask-image: radial-gradient(70% 70% at 70% 45%, black 20%, transparent 100%);
+  }
+
+  .hero__grid {
+    position: relative;
+    display: grid;
+    gap: var(--s-7);
+    align-items: center;
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .hero__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    color: var(--fg-2);
+  }
+
+  .hero__pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 4px var(--amber-soft);
+  }
+
+  .hero__title {
+    font-size: var(--text-4xl);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    display: grid;
+  }
+
+  .hero__line {
+    display: block;
+  }
+
+  .hero__line--accent {
+    color: var(--amber);
+    /* The name sits slightly into the margin, like a stamped plate. */
+    margin-left: -0.02em;
+  }
+
+  .hero__line--accent em {
+    font-style: italic;
+  }
+
+  .hero__lead {
+    font-size: var(--text-lg);
+    color: var(--fg-2);
+    max-width: 46ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+  }
+
+  .hero__avail {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    color: var(--fg-3);
+    font-size: var(--text-xs);
+  }
+
+  .hero__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 10px var(--ok);
+  }
+
+  .hero__figure {
+    display: grid;
+    gap: var(--s-3);
+    justify-items: start;
+    max-width: 26rem;
+  }
+
+  .hero__frame {
+    position: relative;
+    border-radius: var(--r-4);
+    overflow: hidden;
+    box-shadow: var(--shadow-3);
+    background: var(--bg-2);
+    /* The portrait dissolves into the dark at the bottom, as if lit from above. */
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .hero__frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 0 var(--rim), inset 0 0 0 1px oklch(1 0 0 / 0.04);
+    pointer-events: none;
+  }
+
+  .hero__frame :global(img) {
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+
+  .hero__plate {
+    display: flex;
+    gap: var(--s-4);
+    font-size: var(--text-xs);
+    color: var(--fg-3);
+    letter-spacing: 0.04em;
+  }
+
+  .hero__plate span + span::before {
+    content: '·';
+    margin-right: var(--s-4);
+    color: var(--line);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--s-5);
+    display: none;
+    align-items: center;
+    gap: var(--s-3);
+    color: var(--fg-3);
+    font-size: var(--text-xs);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero__scroll-line {
+    width: 4rem;
+    height: 1px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero__scroll-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--amber);
+    transform: translateX(-100%);
+  }
+
+  /* Entrance: one orchestrated reveal, CSS only, gated on JS + motion preference. */
+  @media (--motion-ok) {
+    :global(html.js) [data-enter] {
+      animation: hero-enter var(--d-4) var(--ease-out) both;
+      animation-delay: calc(140ms + var(--n) * 110ms);
+    }
+
+
+    .hero__scroll-line::after {
+      animation: hero-scan 2.4s var(--ease-in-out) infinite;
+    }
+  }
+
+  @keyframes hero-enter {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-scan {
+    0% {
+      transform: translateX(-100%);
+    }
+    60%,
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @media (--md) {
+    .hero__grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--s-8);
+    }
+
+    .hero__figure {
+      justify-self: end;
+    }
+
+    .hero__scroll {
+      display: inline-flex;
+    }
+  }
+
+  @media (--lg) {
+    .hero__grid {
+      grid-template-columns: 1.3fr 0.7fr;
+    }
+
+    .hero__figure {
+      max-width: 30rem;
+      /* Break the grid a little: the artifact leans off the baseline. */
+      transform: translateY(var(--s-6));
+    }
+  }
+</style>

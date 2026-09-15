@@ -1,0 +1,181 @@
+---
+import Base from '@/layouts/Base.astro';
+import {
+  formatDate,
+  getNotes,
+  localizePath,
+  localeStaticPaths,
+  readingMinutes,
+  useTranslations,
+} from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+export const getStaticPaths = localeStaticPaths;
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const notes = await getNotes(locale);
+---
+
+<Base locale={locale} title={t('notes.title')} path="/notes/">
+  <section class="section" aria-labelledby="notes-title">
+    <div class="container">
+      <header class="sec-head" data-reveal>
+        <p class="kicker">{t('notes.kicker')}</p>
+        <h1 class="display notes-title" id="notes-title">{t('notes.title')}</h1>
+      </header>
+
+      <div class="notes-list" data-reveal-group>
+        {notes.length > 0 ? (
+          notes.map((note) => (
+            <a
+              class="note-row"
+              href={localizePath(locale, `/notes/${note.data.slug}/`)}
+              data-reveal
+            >
+              <div class="note-meta mono">
+                <time datetime={note.data.date.toISOString()}>{formatDate(locale, note.data.date, { month: 'short' })}</time>
+                <span>{readingMinutes(note.body)} {t('notes.readingTime')}</span>
+              </div>
+              <div class="note-copy">
+                <h2>{note.data.title}</h2>
+                <p>{note.data.summary}</p>
+                {note.data.tags.length > 0 && (
+                  <ul class="note-tags">
+                    {note.data.tags.map((tag) => <li class="note-tag mono">{tag}</li>)}
+                  </ul>
+                )}
+              </div>
+            </a>
+          ))
+        ) : (
+          <p class="notes-empty" data-reveal>{t('notes.empty')}</p>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sec-head {
+    display: grid;
+    gap: var(--s-2);
+    margin-bottom: var(--s-7);
+  }
+  .notes-title {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+
+  .notes-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .note-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
+    gap: var(--s-4);
+    padding-block: var(--s-5);
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .note-row::after {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    inline-size: 0;
+    block-size: 1px;
+    background: var(--amber);
+    content: '';
+    transition: inline-size var(--d-2) var(--ease-out);
+  }
+
+  .note-meta {
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    color: var(--fg-2);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+  }
+
+  .note-copy {
+    display: grid;
+    align-content: start;
+    gap: var(--s-2);
+    min-inline-size: 0;
+  }
+
+  .note-copy h2 {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    line-height: var(--leading-snug);
+  }
+
+  .note-copy p {
+    color: var(--fg-2);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+  }
+
+  .note-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    list-style: none;
+    padding: 0;
+    margin-top: var(--s-2);
+  }
+
+  .note-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-1);
+    padding: var(--s-1) var(--s-2);
+    color: var(--fg-2);
+    font-size: var(--text-xs);
+    border: 1px solid var(--line);
+    border-radius: var(--r-1);
+    background: var(--bg-3);
+  }
+
+  .note-tag::before {
+    inline-size: var(--s-2);
+    block-size: var(--s-2);
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--accent-brand);
+    content: '';
+  }
+
+  .note-tag:nth-child(2)::before { background: var(--accent-amber); }
+  .note-tag:nth-child(3)::before { background: var(--accent-rose); }
+  .note-tag:nth-child(4)::before { background: var(--accent-sky); }
+  .note-tag:nth-child(5)::before { background: var(--accent-violet); }
+
+  .notes-empty {
+    padding-block: var(--s-5);
+    color: var(--fg-2);
+  }
+
+  @media (--pointer) {
+    .note-row:hover::after {
+      inline-size: 100%;
+    }
+  }
+
+  @media (--md) {
+    .note-row {
+      grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+      gap: var(--s-6);
+      padding-block: var(--s-6);
+    }
+  }
+</style>

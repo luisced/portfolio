@@ -1,0 +1,350 @@
+---
+import { getProfile, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const profile = await getProfile();
+const { email, whatsapp, socials } = profile.data;
+const whatsappDigits = whatsapp.replace(/\D/g, '');
+---
+
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="container">
+    <header class="sec-head" data-reveal>
+      <p class="kicker">{t('contact.kicker')}</p>
+      <h2 class="method" id="contact-title">{t('contact.title')}</h2>
+      <p class="contact__lead measure">{t('contact.lead')}</p>
+    </header>
+
+    <div class="contact__grid">
+      <div class="contact__form-column" data-reveal>
+        <div class="contact__note">
+          <span class="contact__pin" aria-hidden="true"></span>
+          <form
+            method="post"
+            action="/api/contact"
+            data-contact
+            data-msg-required={t('contact.required')}
+            data-msg-email={t('contact.invalidEmail')}
+            data-msg-minlength={t('contact.invalidMessage')}
+            data-sending={t('contact.sending')}
+            novalidate
+          >
+            <div class="contact__fields">
+              <div class="field">
+                <label for="contact-name">{t('contact.name')}</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  aria-describedby="contact-name-error"
+                />
+                <p class="field__error" id="contact-name-error" hidden></p>
+              </div>
+
+              <div class="field">
+                <label for="contact-email">{t('contact.email')}</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  aria-describedby="contact-email-error"
+                />
+                <p class="field__error" id="contact-email-error" hidden></p>
+              </div>
+
+              <div class="field">
+                <label for="contact-message">{t('contact.message')}</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows="6"
+                  minlength="20"
+                  required
+                  aria-describedby="contact-message-error"
+                ></textarea>
+                <p class="field__error" id="contact-message-error" hidden></p>
+              </div>
+            </div>
+
+            <input class="sr-only" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="locale" value={locale} />
+
+            <fieldset class="contact__verification">
+              <legend class="sr-only">{t('contact.turnstile')}</legend>
+              <div
+                class="cf-turnstile"
+                data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? ''}
+                data-theme="auto"
+                data-size="flexible"
+              ></div>
+              <noscript><p>{t('contact.turnstile')}</p></noscript>
+            </fieldset>
+
+            <button class="btn btn--primary contact__submit" type="submit" data-contact-submit>
+              {t('contact.send')}
+            </button>
+          </form>
+
+          <!-- Announces state changes to assistive tech; the visible message is the block below. -->
+          <div class="sr-only" role="status" aria-live="polite" tabindex="-1" data-contact-status></div>
+
+          <div class="contact__state" data-contact-success hidden>
+            <span class="contact__state-pin" aria-hidden="true"></span>
+            <h3>{t('contact.success.title')}</h3>
+            <p>{t('contact.success.body')}</p>
+          </div>
+
+          <div class="contact__state" data-contact-error hidden>
+            <h3>{t('contact.error.title')}</h3>
+            <p>
+              {t('contact.error.body')}{' '}
+              <a href={`mailto:${email}`}>{email}</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="contact__direct" data-reveal aria-labelledby="contact-direct-title">
+        <div class="plate">
+          <h3 id="contact-direct-title">{t('contact.direct')}</h3>
+          <div class="contact__direct-links">
+            <a class="btn" href={`mailto:${email}`}>
+              <span>{t('contact.email')}</span>
+              <span>{email}</span>
+            </a>
+            <a class="btn" href={`https://wa.me/${whatsappDigits}`}>
+              <span>{t('contact.whatsapp')}</span>
+            </a>
+          </div>
+          <ul class="contact__socials">
+            {
+              socials.map((social) => (
+                <li>
+                  <a class="btn" href={social.url} target="_blank" rel="noreferrer">
+                    {social.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '@/scripts/contact';
+</script>
+
+<style>
+  .sec-head {
+    display: grid;
+    gap: var(--s-2);
+    margin-bottom: var(--s-7);
+  }
+
+  .contact__lead {
+    color: var(--fg-2);
+  }
+
+  .contact__grid {
+    display: grid;
+    gap: var(--s-7);
+  }
+
+  .contact__note {
+    position: relative;
+    padding: var(--s-7) var(--s-5) var(--s-5);
+    border: 1px solid var(--line);
+    border-radius: var(--r-2);
+    background-color: var(--bg-elev);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(2rem - 1px),
+      var(--line-2) calc(2rem - 1px),
+      var(--line-2) 2rem
+    );
+    box-shadow: var(--shadow-2);
+  }
+
+  .contact__pin,
+  .contact__state-pin {
+    display: block;
+    width: var(--s-3);
+    height: var(--s-3);
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: var(--shadow-1);
+  }
+
+  .contact__pin {
+    position: absolute;
+    top: var(--s-3);
+    right: 0;
+    left: 0;
+    margin-inline: auto;
+  }
+
+  .contact__fields {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--s-1);
+  }
+
+  .field label,
+  .contact__verification legend {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.65em 0.75em;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2);
+    background: var(--bg-2);
+    color: var(--fg);
+    font: inherit;
+  }
+
+  .field textarea {
+    min-height: 9rem;
+    resize: vertical;
+  }
+
+  .field input[aria-invalid='true'],
+  .field textarea[aria-invalid='true'] {
+    border-color: var(--danger);
+  }
+
+  .field__error {
+    color: var(--danger);
+    font-size: var(--text-sm);
+  }
+
+  .contact__verification {
+    margin: var(--s-5) 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .contact__verification noscript p {
+    color: var(--fg-2);
+    font-size: var(--text-sm);
+  }
+
+  .contact__submit {
+    min-height: 44px;
+    margin-top: var(--s-5);
+  }
+
+  .contact__state:not([hidden]) {
+    display: grid;
+    gap: var(--s-2);
+    margin-top: var(--s-5);
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--line);
+  }
+
+  .contact__state h3 {
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+  }
+
+  .contact__state p {
+    color: var(--fg-2);
+  }
+
+  .contact__state a {
+    color: var(--fg);
+  }
+
+  .contact__state-pin {
+    width: var(--s-2);
+    height: var(--s-2);
+    margin-bottom: var(--s-1);
+  }
+
+  .contact__direct .plate {
+    gap: var(--s-5);
+  }
+
+  .contact__direct h3 {
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  .contact__direct-links,
+  .contact__socials {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .contact__direct .btn {
+    width: 100%;
+    min-height: 44px;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .contact__direct .btn span:last-child {
+    color: var(--fg-2);
+    font-size: var(--text-xs);
+  }
+
+  .contact__socials {
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (--lg) {
+    .contact__grid {
+      grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+      align-items: start;
+      gap: var(--s-8);
+    }
+  }
+
+  @media (--motion-ok) {
+    .contact__note.is-pinned {
+      animation: contact-note-pin var(--d-3) var(--ease-out);
+    }
+
+    @keyframes contact-note-pin {
+      0%,
+      100% {
+        transform: rotate(var(--contact-note-angle, 0deg)) translateY(0);
+      }
+
+      45% {
+        transform: rotate(var(--contact-note-angle, 0deg)) translateY(calc(-1 * var(--s-3)));
+      }
+    }
+  }
+
+  @media (--lg) and (--motion-ok) {
+    .contact__note {
+      --contact-note-angle: -0.6deg;
+      transform: rotate(var(--contact-note-angle));
+    }
+  }
+</style>

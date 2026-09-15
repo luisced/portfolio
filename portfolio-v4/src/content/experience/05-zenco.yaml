@@ -1,0 +1,17 @@
+org: Zenco
+role:
+  en: "Junior Backend Developer"
+  es: "Desarrollador backend junior"
+start: "2021-02"
+end: "2022-02"
+location: Mexico City
+highlights:
+  en:
+    - "Created CRM systems with Python, Flask, MySQL and AWS."
+    - "Built automated data synchronization, reducing manual entry by 75%."
+  es:
+    - "Creé sistemas CRM con Python, Flask, MySQL y AWS."
+    - "Construí una sincronización automática de datos que redujo la captura manual en 75%."
+tags: [Python, Flask, MySQL, AWS]
+accent: rose
+order: 5

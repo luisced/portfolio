@@ -1,0 +1,17 @@
+org: Universidad Panamericana
+role:
+  en: "President – Engineering Student Council"
+  es: "Presidente – Consejo Estudiantil de Ingeniería"
+start: "2024-01"
+end: null
+location: Mexico City
+highlights:
+  en:
+    - "Led the organization of 5+ academic and social events."
+    - "Established mentorships for 30+ students."
+  es:
+    - "Lideré la organización de más de 5 eventos académicos y sociales."
+    - "Establecí mentorías para más de 30 estudiantes."
+tags: [Leadership, Community, Mentorship]
+accent: amber
+order: 1

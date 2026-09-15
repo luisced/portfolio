@@ -1,0 +1,523 @@
+---
+import { Picture } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import {
+  getProjects,
+  localizePath,
+  useTranslations,
+  type Project,
+} from '@/i18n/utils';
+import { locales, type Locale } from '@/i18n/ui';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+export async function getStaticPaths() {
+  const paths = [];
+
+  for (const locale of locales) {
+    const projects = await getProjects(locale);
+    paths.push(
+      ...projects.map((project) => ({
+        params: {
+          lang: locale === 'en' ? undefined : 'es',
+          slug: project.data.slug,
+        },
+        props: { project, locale },
+      })),
+    );
+  }
+
+  return paths;
+}
+
+const { project, locale } = Astro.props;
+const t = useTranslations(locale);
+const categoryLabel = t(`work.category.${project.data.category}`);
+const projects = await getProjects(locale);
+const currentIndex = projects.findIndex((entry) => entry.data.slug === project.data.slug);
+
+if (currentIndex < 0) {
+  throw new Error(`Project not found: ${project.data.slug}`);
+}
+
+const previousProject = projects[(currentIndex + projects.length - 1) % projects.length];
+const nextProject = projects[(currentIndex + 1) % projects.length];
+
+if (!previousProject || !nextProject) {
+  throw new Error(`Project navigation is unavailable: ${project.data.slug}`);
+}
+
+const previousPath = localizePath(locale, `/work/${previousProject.data.slug}/`);
+const nextPath = localizePath(locale, `/work/${nextProject.data.slug}/`);
+const { Content } = await render(project);
+---
+
+<Base
+  locale={locale}
+  title={project.data.title}
+  description={project.data.outcome}
+  path={`/work/${project.data.slug}/`}
+  type="article"
+  ogImage={`/og/work/${project.data.slug}.png`}
+>
+  <article class="case-study">
+    <header class="case-study__hero container">
+      <div class="case-study__cover">
+        <Picture
+          fallbackFormat="webp"
+          src={project.data.cover}
+          alt={project.data.coverAlt}
+          widths={[720, 1200, 1800]}
+          sizes="(min-width: 64em) 58vw, 100vw"
+          formats={['avif', 'webp']}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="case-study__intro">
+        <p class:list={['kicker', 'case-study__kicker', `case-study__kicker--${project.data.category}`]}>
+          <span>{categoryLabel}</span>
+          <span aria-hidden="true">·</span>
+          <span>{project.data.timeframe}</span>
+        </p>
+        <h1 class="display case-study__title">{project.data.title}</h1>
+        <p class="case-study__outcome">{project.data.outcome}</p>
+      </div>
+    </header>
+
+    <section class="case-study__body container" aria-label={project.data.title}>
+      <aside class="case-study__specs">
+        <dl class="plate case-study__plate">
+          <div>
+            <dt>{t('work.role')}</dt>
+            <dd>{project.data.role}</dd>
+          </div>
+          <div>
+            <dt>{t('work.timeframe')}</dt>
+            <dd>{project.data.timeframe}</dd>
+          </div>
+          <div>
+            <dt>{t('work.stack')}</dt>
+            <dd>
+              <ul class="case-study__stack">
+                {project.data.stack.map((item) => <li>{item}</li>)}
+              </ul>
+            </dd>
+          </div>
+          {
+            project.data.links.live && (
+              <div>
+                <dt>{t('work.live')}</dt>
+                <dd>
+                  <a
+                    class="btn"
+                    href={project.data.links.live}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t('work.live')} <span aria-hidden="true">↗</span>
+                  </a>
+                </dd>
+              </div>
+            )
+          }
+          {
+            project.data.links.repo && (
+              <div>
+                <dt>{t('work.repo')}</dt>
+                <dd>
+                  <a
+                    class="btn"
+                    href={project.data.links.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t('work.repo')} <span aria-hidden="true">↗</span>
+                  </a>
+                </dd>
+              </div>
+            )
+          }
+        </dl>
+      </aside>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+
+    {
+      project.data.gallery.length > 0 && (
+        <section class="case-study__gallery container" aria-label={project.data.title}>
+          <div class="case-study__gallery-grid">
+            {project.data.gallery.map((image) => (
+              <figure>
+                <Picture
+                  fallbackFormat="webp"
+                  src={image.src}
+                  alt={image.alt}
+                  widths={[480, 960]}
+                  sizes="(min-width: 64em) 50vw, (min-width: 48em) 50vw, 100vw"
+                  formats={['avif', 'webp']}
+                  loading="lazy"
+                />
+                <figcaption>{image.alt}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <nav class="case-study__navigation container" aria-label={t('work.all')}>
+      <a class="case-study__nav-link" href={previousPath}>
+        <span class="kicker">{t('work.prev')}</span>
+        <span class="case-study__nav-title">{previousProject.data.title}</span>
+      </a>
+      <a class="case-study__nav-link case-study__nav-link--next" href={nextPath}>
+        <span class="kicker">{t('work.next')}</span>
+        <span class="case-study__nav-title">{nextProject.data.title}</span>
+      </a>
+    </nav>
+
+    <div class="case-study__back container">
+      <a class="btn" href={localizePath(locale, '/work/')}>{t('work.back')}</a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .case-study {
+    padding-block: var(--s-8) var(--s-10);
+  }
+
+  .case-study__hero {
+    display: grid;
+    gap: var(--s-7);
+    align-items: center;
+  }
+
+  .case-study__cover {
+    padding: var(--s-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-3);
+    background: var(--bg-2);
+    box-shadow: inset 0 1px 0 var(--rim), var(--shadow-2);
+  }
+
+  .case-study__cover :global(picture) {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--r-2);
+  }
+
+  .case-study__cover :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .case-study__intro {
+    display: grid;
+    gap: var(--s-5);
+    max-width: 42rem;
+  }
+
+  .case-study__kicker {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+
+  .case-study__kicker > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+  }
+
+  .case-study__kicker > span:first-child::before {
+    width: 0.375rem;
+    height: 0.375rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    content: '';
+    background: var(--case-accent);
+  }
+
+  .case-study__kicker--ios {
+    --case-accent: var(--accent-violet);
+  }
+
+  .case-study__kicker--web {
+    --case-accent: var(--accent-brand);
+  }
+
+  .case-study__kicker--backend {
+    --case-accent: var(--accent-amber);
+  }
+
+  .case-study__title {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+
+  .case-study__outcome {
+    max-width: 38ch;
+    color: var(--fg-2);
+    font-size: var(--text-lg);
+    line-height: var(--leading-snug);
+  }
+
+  .case-study__body {
+    display: grid;
+    gap: var(--s-8);
+    margin-top: var(--s-9);
+    align-items: start;
+  }
+
+  .case-study__plate {
+    gap: var(--s-5);
+  }
+
+  .case-study__plate > div {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .case-study__plate dd {
+    line-height: var(--leading-snug);
+  }
+
+  .case-study__plate .btn {
+    width: fit-content;
+    margin-top: var(--s-1);
+  }
+
+  .case-study__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .case-study__stack li {
+    padding: var(--s-1) var(--s-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-1);
+    color: var(--fg-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+  }
+
+  .prose {
+    max-width: var(--measure);
+  }
+
+  .prose :global(h2) {
+    margin-top: var(--s-8);
+    padding-bottom: var(--s-2);
+    border-bottom: 1px solid var(--amber);
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: var(--leading-snug);
+    text-transform: uppercase;
+    font-variant-caps: all-small-caps;
+  }
+
+  .prose :global(h2)::before {
+    content: '.';
+    color: var(--amber);
+  }
+
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .prose :global(p),
+  .prose :global(li) {
+    color: var(--fg-2);
+    font-size: var(--text-md);
+    line-height: var(--leading-body);
+  }
+
+  .prose :global(p + p),
+  .prose :global(ul + p),
+  .prose :global(p + ul),
+  .prose :global(pre + p) {
+    margin-top: var(--s-4);
+  }
+
+  .prose :global(strong) {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .prose :global(ul) {
+    display: grid;
+    gap: var(--s-2);
+    margin-block: var(--s-4);
+    padding-inline-start: var(--s-5);
+  }
+
+  .prose :global(li)::marker {
+    color: var(--brand);
+  }
+
+  .prose :global(pre) {
+    margin-block: var(--s-5);
+    padding: var(--s-4);
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2);
+    background: var(--bg-2);
+    box-shadow: var(--shadow-1);
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .prose :global(:not(pre) > code) {
+    padding: var(--s-1) var(--s-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-1);
+    background: var(--bg-2);
+    color: var(--fg);
+  }
+
+  .prose :global(a) {
+    color: var(--brand);
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+  }
+
+  .case-study__gallery {
+    margin-top: var(--s-9);
+  }
+
+  .case-study__gallery-grid {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .case-study__gallery figure {
+    display: grid;
+    gap: var(--s-2);
+    margin: 0;
+  }
+
+  .case-study__gallery figure :global(picture) {
+    display: block;
+    padding: var(--s-2);
+    border: 1px solid var(--line);
+    border-radius: var(--r-2);
+    background: var(--bg-2);
+    box-shadow: inset 0 1px 0 var(--rim), var(--shadow-1);
+  }
+
+  .case-study__gallery figure :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--r-1);
+  }
+
+  .case-study__gallery figcaption {
+    color: var(--fg-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .case-study__navigation {
+    display: grid;
+    gap: var(--s-4);
+    margin-top: var(--s-9);
+    padding-block: var(--s-5);
+    border-block: 1px solid var(--line);
+  }
+
+  .case-study__nav-link {
+    display: grid;
+    gap: var(--s-2);
+    padding: var(--s-3);
+    border: 1px solid transparent;
+    border-radius: var(--r-2);
+    color: var(--fg);
+    text-decoration: none;
+    transition:
+      transform var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+
+  .case-study__nav-link--next {
+    text-align: end;
+  }
+
+  .case-study__nav-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: var(--leading-tight);
+  }
+
+  .case-study__back {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--s-6);
+  }
+
+  @media (--md) {
+    .case-study__gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .case-study__navigation {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (--lg) {
+    .case-study__hero {
+      grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+      gap: var(--s-8);
+    }
+
+    .case-study__body {
+      grid-template-columns: minmax(14rem, 0.34fr) minmax(0, 0.66fr);
+      gap: var(--s-8);
+    }
+
+    .case-study__specs .plate {
+      position: sticky;
+      top: var(--s-6);
+    }
+  }
+
+  @media (--pointer) {
+    .case-study__nav-link:hover {
+      transform: translateY(-2px);
+      border-color: var(--line);
+      background: var(--bg-2);
+    }
+  }
+</style>

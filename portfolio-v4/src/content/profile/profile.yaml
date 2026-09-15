@@ -1,0 +1,102 @@
+name: Luis Cedillo Maldonado
+shortName: Luis Cedillo
+headline:
+  en: Software engineer & tech lead
+  es: Ingeniero de software y tech lead
+positioning:
+  en: I build backend systems and iOS products, and I lead the small teams that ship them — from a university lab serving 15,000 students to a hotel channel manager running in production.
+  es: Construyo sistemas backend y productos iOS, y lidero los equipos pequeños que los entregan — desde un laboratorio universitario que sirve a 15,000 estudiantes hasta un channel manager hotelero corriendo en producción.
+bio:
+  en: >-
+    I am a backend-leaning engineer from Mexico City. I care about systems that stay
+    consistent under failure, interfaces people do not have to think about, and teams
+    that ship on a rhythm. I have led iOS and backend projects at Universidad
+    Panamericana's iOS Development Lab, built a channel manager for Marriott / City
+    Express as tech lead at Nyx Technology, and automated operations for small
+    businesses as a freelancer.
+  es: >-
+    Soy un ingeniero con inclinación backend, de la Ciudad de México. Me importan los
+    sistemas que se mantienen consistentes ante fallas, las interfaces en las que la
+    gente no tiene que pensar y los equipos que entregan con ritmo. He liderado
+    proyectos iOS y backend en el iOS Development Lab de la Universidad Panamericana,
+    construí un channel manager para Marriott / City Express como tech lead en Nyx
+    Technology y automaticé operaciones para pequeños negocios como freelancer.
+portrait: ../../assets/portrait.webp
+portraitAlt:
+  en: Portrait of Luis Cedillo
+  es: Retrato de Luis Cedillo
+location: Mexico City
+timezone: CST (UTC−6)
+email: me@luiscedillo.com
+whatsapp: "+525571967146"
+availability:
+  en: Open to senior backend / full-stack roles and selected freelance work
+  es: Abierto a roles senior backend / full-stack y trabajo freelance seleccionado
+socials:
+  - id: github
+    label: GitHub
+    handle: "@luisced"
+    url: https://github.com/luisced
+  - id: linkedin
+    label: LinkedIn
+    handle: "@luisced"
+    url: https://linkedin.com/in/luisced
+  - id: instagram
+    label: Instagram
+    handle: "@lui._.cedm"
+    url: https://instagram.com/lui._.cedm
+skills:
+  - group: { en: Backend, es: Backend }
+    items:
+      - { name: Python, evidence: [stackup-channel-manager, upocket, dermaware-genesis] }
+      - { name: FastAPI, evidence: [stackup-channel-manager, upocket] }
+      - { name: Django, evidence: [homecare-nemesis] }
+      - { name: Flask, evidence: [dermaware-genesis, oxxo-corner] }
+      - { name: Rust, evidence: [] }
+      - { name: C++, evidence: [] }
+      - { name: Bash, evidence: [] }
+  - group: { en: Mobile & frontend, es: Móvil y frontend }
+    items:
+      - { name: Swift / SwiftUI, evidence: [dermaware-genesis, homecare-nemesis, oxxo-corner, upocket] }
+      - { name: Svelte, evidence: [stackup-channel-manager] }
+      - { name: React, evidence: [] }
+      - { name: TypeScript, evidence: [] }
+  - group: { en: Data & cloud, es: Datos y nube }
+    items:
+      - { name: PostgreSQL, evidence: [stackup-channel-manager, upocket, homecare-nemesis] }
+      - { name: MySQL, evidence: [] }
+      - { name: AWS, evidence: [stackup-channel-manager, dermaware-genesis] }
+      - { name: Docker, evidence: [stackup-channel-manager, upocket, homecare-nemesis] }
+      - { name: Kubernetes, evidence: [upocket] }
+  - group: { en: Leading, es: Liderazgo }
+    items:
+      - { name: Agile / Scrum, evidence: [] }
+      - { name: Mentoring, evidence: [] }
+      - { name: Product ownership, evidence: [oxxo-corner] }
+education:
+  - institution: Universidad Panamericana
+    credential:
+      en: B.Sc. Data Intelligence & Cybersecurity
+      es: Ing. en Inteligencia de Datos y Ciberseguridad
+    year: "2025"
+  - institution: AWS Academy
+    credential:
+      en: Cloud Foundations graduate
+      es: Graduado de Cloud Foundations
+    year: "2023"
+  - institution: Apple
+    credential:
+      en: App Development with Swift Associate
+      es: App Development with Swift Associate
+    year: "2023"
+languages:
+  - name: { en: Spanish, es: Español }
+    level: { en: Native, es: Nativo }
+  - name: { en: English, es: Inglés }
+    level: { en: Fluent, es: Fluido }
+  - name: { en: French, es: Francés }
+    level: { en: Intermediate, es: Intermedio }
+manifesto:
+  en: Anyone can write code. The real craft is turning an ambitious idea into a system that keeps working after everyone stops watching it.
+  es: Cualquiera puede escribir código. El verdadero oficio es convertir una idea ambiciosa en un sistema que sigue funcionando cuando ya nadie lo está mirando.
+cv: /cv/Luis-Cedillo-Maldonado-CV.pdf

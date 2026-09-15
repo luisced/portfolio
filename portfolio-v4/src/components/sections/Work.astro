@@ -1,0 +1,92 @@
+---
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getProjects, localizePath, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const projects = await getProjects(locale);
+const featuredProjects = projects.filter((project) => project.data.featured);
+---
+
+<section id="work" class="section">
+  <div class="container">
+    <header class="sec-head" data-reveal>
+      <p class="kicker">{t('work.kicker')}</p>
+      <h2 class="method" id="work-title">{t('work.title')}</h2>
+    </header>
+
+    <div class="work-grid" data-reveal-group>
+      {
+        featuredProjects.map((project, index) => (
+          <ProjectCard
+            project={project}
+            locale={locale}
+            index={index}
+            featured={index === 0}
+            sizes={
+              index === 0
+                ? '(min-width: 64em) 66vw, (min-width: 48em) 50vw, 100vw'
+                : '(min-width: 64em) 33vw, (min-width: 48em) 50vw, 100vw'
+            }
+          />
+        ))
+      }
+    </div>
+
+    <a class="work-more" href={localizePath(locale, '/work/')} data-reveal>
+      <span>{t('work.all')}</span>
+      <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .sec-head {
+    display: grid;
+    gap: var(--s-2);
+    margin-bottom: var(--s-7);
+  }
+
+  .work-grid {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .work-more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin-top: var(--s-7);
+    border-bottom: 1px solid var(--brand);
+    color: var(--brand);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    text-decoration: none;
+  }
+
+  @media (--md) {
+    .work-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (--lg) {
+    .work-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+    }
+  }
+
+  @media (--pointer) {
+    .work-more:hover {
+      border-color: var(--fg);
+      color: var(--fg);
+    }
+  }
+</style>

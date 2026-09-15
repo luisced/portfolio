@@ -1,0 +1,274 @@
+---
+import { localizePath, otherLocale, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = useTranslations(locale);
+const home = localizePath(locale, '/');
+const alt = otherLocale(locale);
+const links = [
+  { href: `${home}#work`, label: t('nav.work') },
+  { href: `${home}#about`, label: t('nav.about') },
+  { href: localizePath(locale, '/notes/'), label: t('nav.notes') },
+  { href: `${home}#contact`, label: t('nav.contact') },
+];
+---
+
+<header class="nav" data-nav>
+  <div class="container nav__bar">
+    <a class="nav__brand" href={home}>
+      <span class="nav__mark" aria-hidden="true"></span>
+      <span class="mono">luis<span class="nav__dot">.</span>cedillo</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <ul>
+        {links.map((l) => (
+          <li><a class="mono" href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="nav__tools">
+      <a class="nav__tool mono" href={localizePath(alt, path)} hreflang={alt} lang={alt} aria-label={t('lang.switch')}>
+        {t('lang.code')}
+      </a>
+      <button class="nav__tool nav__theme" type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <g class="nav__sun">
+            <circle cx="8" cy="8" r="3" />
+            <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1.06 1.06M11.54 11.54l1.06 1.06M3.4 12.6l1.06-1.06M11.54 4.46l1.06-1.06" />
+          </g>
+          <path class="nav__moon" d="M8 1.5a6.5 6.5 0 1 0 6.3 8.1A5 5 0 0 1 8 1.5Z" fill="currentColor" stroke="none" />
+        </svg>
+      </button>
+      <button class="nav__tool nav__burger" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={t('nav.menu')} data-nav-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__sheet" id="nav-sheet" hidden>
+    <ul>
+      {links.map((l) => (
+        <li><a class="mono" href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const sheet = document.getElementById('nav-sheet');
+  if (nav && toggle && sheet) {
+    const close = () => {
+      sheet.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+    toggle.addEventListener('click', () => {
+      const open = sheet.hidden;
+      sheet.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) sheet.querySelector<HTMLAnchorElement>('a')?.focus();
+    });
+    sheet.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) close();
+    });
+    addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !sheet.hidden) {
+        close();
+        toggle.focus();
+      }
+    });
+    addEventListener(
+      'scroll',
+      () => {
+        nav.classList.toggle('is-scrolled', scrollY > 24);
+      },
+      { passive: true },
+    );
+  }
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    backdrop-filter: blur(0px);
+    transition:
+      background-color var(--d-3) var(--ease-out),
+      backdrop-filter var(--d-3) var(--ease-out),
+      border-color var(--d-3) var(--ease-out);
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav.is-scrolled {
+    background: color-mix(in oklch, var(--bg) 72%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border-color: var(--line-2);
+  }
+
+  .nav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    height: 4rem;
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+
+  .nav__mark {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 4px var(--amber-soft), 0 0 18px var(--amber);
+  }
+
+  .nav__dot {
+    color: var(--brand);
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav__links ul,
+  .nav__sheet ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: var(--s-5);
+  }
+
+  .nav__links a {
+    text-decoration: none;
+    color: var(--fg-2);
+    font-size: var(--text-sm);
+    padding: var(--s-2) 0;
+    position: relative;
+  }
+
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    height: 1px;
+    background: var(--brand);
+    transition: right var(--d-2) var(--ease-out);
+  }
+
+  .nav__links a:hover {
+    color: var(--fg);
+  }
+
+  .nav__links a:hover::after {
+    right: 0;
+  }
+
+  .nav__tools {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+  }
+
+  .nav__tool {
+    display: inline-grid;
+    place-items: center;
+    height: 2.25rem;
+    min-width: 2.25rem;
+    padding-inline: var(--s-2);
+    border-radius: var(--r-2);
+    border: 1px solid var(--line);
+    background: var(--bg-elev);
+    color: var(--fg-2);
+    font-size: var(--text-xs);
+    text-decoration: none;
+    box-shadow: var(--shadow-1);
+    transition:
+      color var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out);
+  }
+
+  .nav__tool:hover {
+    color: var(--fg);
+    border-color: var(--fg-3);
+  }
+
+  .nav__theme .nav__moon {
+    display: none;
+  }
+
+  :global([data-theme='light']) .nav__theme .nav__sun {
+    display: none;
+  }
+
+  :global([data-theme='light']) .nav__theme .nav__moon {
+    display: block;
+  }
+
+  .nav__burger {
+    display: inline-grid;
+    gap: 5px;
+    align-content: center;
+  }
+
+  .nav__burger span {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform var(--d-2) var(--ease-out);
+  }
+
+  .nav__burger[aria-expanded='true'] span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+
+  .nav__burger[aria-expanded='true'] span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  .nav__sheet {
+    border-top: 1px solid var(--line-2);
+    background: var(--bg-2);
+    padding: var(--s-5) var(--gutter) var(--s-6);
+  }
+
+  .nav__sheet ul {
+    flex-direction: column;
+    gap: var(--s-4);
+  }
+
+  .nav__sheet a {
+    text-decoration: none;
+    font-size: var(--text-lg);
+  }
+
+  @media (--md) {
+    .nav__links {
+      display: block;
+    }
+
+    .nav__burger,
+    .nav__sheet {
+      display: none;
+    }
+  }
+</style>

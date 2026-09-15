@@ -1,0 +1,56 @@
+---
+slug: homecare-nemesis
+locale: es
+title: "Homecare / Nemesis"
+role: "Líder de equipo • Desarrollador backend"
+category: ios
+timeframe: "2023"
+outcome: "Los hogares pueden entender cuánta energía usa cada habitación y recibir sugerencias prácticas para reducir su consumo."
+summary: "Lideré el trabajo de backend para una app SwiftUI de monitoreo energético que combinaba visión por computadora, históricos y recomendaciones con IA generativa. Django, Python, PostgreSQL y Docker sostuvieron la primera versión de Nemesis."
+stack:
+  - SwiftUI
+  - Django
+  - Python
+  - PostgreSQL
+  - Computer Vision
+  - AI
+  - Docker
+links:
+  repo: https://github.com/ios-lab-up/Homecare-Back
+cover: ../../assets/projects/homecare/homecare_preview.webp
+coverAlt: "Panel de monitoreo energético de Homecare"
+gallery:
+  - src: ../../assets/projects/homecare/homecare1.webp
+    alt: "Dashboard energético de Homecare"
+  - src: ../../assets/projects/homecare/homecare2.webp
+    alt: "Gráfica histórica de energía de Homecare"
+  - src: ../../assets/projects/homecare/homecare3.webp
+    alt: "Vista de consumo por habitación de Homecare"
+  - src: ../../assets/projects/homecare/homecare4.webp
+    alt: "Configuración de perfil de Homecare"
+featured: false
+order: 4
+---
+
+## Contexto
+
+Homecare Nemesis exploró una pregunta sencilla: ¿una persona puede entender su consumo de energía sin leer datos crudos del medidor? La primera versión combinó un tracker, análisis por habitación, históricos y recomendaciones con visión por computadora e IA generativa.
+
+## Mi rol
+
+Lideré a cinco desarrolladores y estuve a cargo del backend. Diseñé endpoints de Django alrededor de las vistas móviles, modelé las lecturas guardadas en PostgreSQL y mantuve reproducible la configuración de Docker mientras el equipo conectaba el cliente con el servicio.
+
+## Decisiones
+
+- **Mantener Django y PostgreSQL como fuente de verdad.** El histórico relacional hizo consultables las lecturas por habitación y fecha. El costo fueron las migraciones, pero era más seguro que esconder datos energéticos en respuestas sin estructura.
+- **Separar lo medido de la orientación generada.** Guardamos los resultados de visión como insumos de las recomendaciones, no como hechos definitivos sobre una casa. Eso agregó un paso de procesamiento, pero permitió distinguir lo observado de lo sugerido.
+- **Permitir que SwiftUI mostrara la incertidumbre.** Un resultado de imagen ausente o un histórico incompleto no debía verse como consumo cero. Los estados de carga y vacío hicieron más honesta la pantalla.
+- **Usar Docker como frontera del equipo.** Los contenedores redujeron diferencias entre el trabajo local de API y el entorno compartido, a cambio de mantener configuración.
+
+## Resultado
+
+Nemesis entregó un flujo móvil para registrar consumo, revisar habitaciones y recibir sugerencias de ahorro. La primera versión dejó una base concreta para conectar visión por computadora e IA generativa con una vista doméstica útil.
+
+## Qué haría diferente
+
+Definiría un conjunto de evaluación para la etapa de visión antes de agregar más lenguaje a las recomendaciones. Así podríamos discutir los errores de reconocimiento con los mismos ejemplos y mantener el producto enfocado en orientación entendible, no en la novedad de la tecnología.

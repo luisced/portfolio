@@ -1,0 +1,17 @@
+org: Independent
+role:
+  en: "Freelance Developer"
+  es: "Desarrollador freelance"
+start: "2022-06"
+end: "2022-11"
+location: Mexico City
+highlights:
+  en:
+    - "Automated Airbnb reservations through a WhatsApp bot."
+    - "Reduced reply time from 5 minutes to 30 seconds."
+  es:
+    - "Automaticé reservas de Airbnb mediante un bot de WhatsApp."
+    - "Reduje el tiempo de respuesta de 5 minutos a 30 segundos."
+tags: [Chatbot, Twilio, Automation]
+accent: violet
+order: 4

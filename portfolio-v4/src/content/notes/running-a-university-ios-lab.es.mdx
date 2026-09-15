@@ -1,0 +1,53 @@
+---
+slug: running-a-university-ios-lab
+locale: es
+title: "Lo que aprendí al dirigir un laboratorio universitario de iOS"
+date: 2026-09-05
+summary: "Lecciones de liderar un laboratorio universitario de iOS que construyó cuatro apps: hacer enseñable el alcance, acompañar decisiones y dar a las entregas un ritmo confiable."
+tags: [leadership, ios]
+draft: false
+---
+
+## El laboratorio también es un equipo real
+
+Un laboratorio universitario puede ser al mismo tiempo un espacio de aprendizaje y un equipo responsable de software que otras personas usan. Tratarlo solo como una clase hace que el trabajo parezca opcional. Tratarlo únicamente como un equipo de producción oculta por qué están ahí los estudiantes: necesitan entender las decisiones, no solo terminar tickets.
+
+Como gerente asistente del iOS Development Lab de la Universidad Panamericana, ayudé a liderar cuatro apps iOS para estudiantes y personal. Entre los proyectos estuvieron UPocket, que reunió información académica para una comunidad de más de 15,000 estudiantes, y las primeras versiones de Dermaware Genesis, Homecare Nemesis y Oxxo Corner. Cada proyecto resolvía un problema distinto, pero compartía la misma restricción: cada estudiante debía terminar con más criterio que al comenzar.
+
+Eso cambió cómo medía el avance. Que una feature funcione en una laptop no la convierte automáticamente en una contribución útil. Buscaba una rebanada pequeña que pudiera explicarse, revisarse y conectarse con una persona que la usaría.
+
+## El alcance protege la entrega
+
+Los equipos estudiantiles pueden generar más ideas de las que caben en un proyecto corto. El impulso es aceptar todo y esperar que la implementación revele el límite. En la práctica, el límite llega como pantallas incompletas, ownership confuso y una entrega que nadie puede demostrar con seguridad.
+
+Ahora hago explícito el alcance en tres capas. Primero escribo el resultado para la persona usuaria en lenguaje sencillo: ¿qué podrá hacer cuando exista esta rebanada? Después nombro el camino vertical mínimo que lo demuestra, incluida la pantalla SwiftUI, el límite de API y los datos que necesita. Por último registro qué queda fuera de la primera entrega de manera intencional. Un foro, un motor de recomendaciones o un flujo de RA pueden ser valiosos, pero cada uno necesita un límite para no absorber el proyecto completo.
+
+Esto no busca hacer más pequeño el trabajo estudiantil. Da a quien empieza un lugar para arrancar y al equipo una forma segura de recortar cuando cambia el tiempo. En UPocket, mantener el resumen académico, horario, asistencias y calificaciones como flujos claros hizo el producto más fácil de conversar que una lista de tareas de UI.
+
+## Acompañar decisiones, no repartir respuestas
+
+La forma más rápida de terminar una tarea estudiantil es dar la respuesta. La mejor forma de hacer crecer al equipo es volver visible el razonamiento. Cuando alguien preguntaba si la lógica debía vivir en una vista SwiftUI o en el backend, preguntaba qué debía permanecer consistente entre dispositivos. Cuando una respuesta de API era incómoda, regresábamos al modelo en vez de agregar otro campo solo para una pantalla.
+
+Una revisión útil tiene tres pasadas. Pido explicar el recorrido y la falla. Luego reviso la frontera: qué contrato espera la pantalla, qué garantiza el servicio y qué ocurre cuando los datos faltan. Al final hablamos de nombres, layout o implementación. El orden importa: pulir una frontera equivocada enseña la lección equivocada.
+
+Acompañar también es hacer seguro el desacuerdo. Rechazo un diseño sin rechazar a quien lo propuso: explico el intercambio, pido otra opción y dejo un registro corto. Ese registro evita reabrir la pregunta y muestra que su razonamiento influyó.
+
+## Entregar con un ritmo
+
+Un ritmo de releases convierte “ya casi terminamos” en una secuencia que el equipo puede confiar. Uso horizontes cortos de planeación, una definición de terminado visible y una rebanada demostrable al final de cada ciclo. Terminado es más que hacer merge: funciona el camino principal, los estados de carga y vacío se entienden, el código móvil coincide con la API y otra persona revisó el cambio.
+
+Los sprints Agile del laboratorio acortaron la entrega en 3 semanas. La cifra importa, pero importa más el mecanismo: el trabajo era suficientemente pequeño para revisarlo mientras el contexto seguía fresco y la retroalimentación llegaba antes de una integración tardía. El ritmo también protege el aprendizaje. Los estudiantes pueden ver cómo un requisito se convierte en una rama, una revisión, un release y una corrección, en lugar de vivir el envío como un solo evento estresante al final.
+
+Mantengo aburrido el checklist de release. Confirmar el build, recorrer el camino principal en un dispositivo real, revisar los estados de datos que la pantalla puede mostrar y anotar lo que se difiere. Un checklist predecible da confianza a quienes empiezan y deja menos oportunidades para que las personas con experiencia dependan de la memoria.
+
+## Hacer visible el ownership
+
+Cuatro apps no necesitan cuatro equipos aislados. Patrones compartidos para el estado de SwiftUI, contratos de API y lenguaje de revisión reducen errores repetidos, mientras que el ownership de cada proyecto le da a cada contribuyente una decisión real que cuidar. Prefiero hacer pairing a través de la frontera móvil-backend en la primera rebanada y profundizar la responsabilidad cuando la persona demuestra que entiende.
+
+Lo mismo aplica a la retroalimentación de estudiantes y personal. Debe convertirse en una observación concreta, no en una cola de features sin orden. “El horario confunde” puede llevar a una pregunta más acotada sobre etiquetas, periodos vacíos o conflictos. Esa pregunta se puede enseñar; pedir un rediseño total y vago, no.
+
+## Lo que me llevé
+
+Dirigir el laboratorio me enseñó que el liderazgo es un sistema de entrega. El alcance determina si las personas pueden contribuir, el acompañamiento determina si pueden tomar solas la siguiente decisión y el ritmo determina si el equipo aprende de una persona usuaria real antes de que termine el proyecto.
+
+Todavía aplico la misma prueba al trabajo de backend y producto: ¿la siguiente persona puede explicar la frontera, el estado de falla y el motivo del intercambio? Si no puede, quizá el código terminó, pero el equipo aún no entregó el conocimiento necesario para mantenerlo funcionando.

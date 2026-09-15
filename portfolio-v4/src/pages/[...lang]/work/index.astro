@@ -1,0 +1,71 @@
+---
+import Base from '@/layouts/Base.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getProjects, localeStaticPaths, useTranslations } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+
+export const getStaticPaths = localeStaticPaths;
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const projects = await getProjects(locale);
+---
+
+<Base locale={locale} title={t('work.all')} path="/work/">
+  <section class="section work-index" aria-labelledby="work-index-title">
+    <div class="container">
+      <header class="work-index__head" data-reveal>
+        <p class="kicker">{t('work.kicker')}</p>
+        <h1 class="display work-index__title" id="work-index-title">{t('work.all')}</h1>
+      </header>
+
+      <div class="work-index__grid" data-reveal-group>
+        {
+          projects.map((project, index) => (
+            <ProjectCard
+              project={project}
+              locale={locale}
+              index={index}
+              sizes="(min-width: 64em) 33vw, (min-width: 48em) 50vw, 100vw"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .work-index__head {
+    display: grid;
+    gap: var(--s-2);
+    margin-bottom: var(--s-7);
+  }
+
+  .work-index__title {
+    max-width: 12ch;
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+  }
+
+  .work-index__grid {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  @media (--md) {
+    .work-index__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (--lg) {
+    .work-index__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+slug: stackup-channel-manager
+locale: es
+title: "StackUp / Flowlink Channel Manager"
+role: "Desarrollador backend"
+category: web
+timeframe: "2024–2025"
+outcome: "Los operadores de hotel administran cuartos, precios y disponibilidad en Booking, Expedia y su propio sitio desde una sola pantalla."
+summary: "Construí el backend de un channel manager que normaliza el inventario, los precios y las promociones de un hotel entre varias OTAs. Un servicio con FastAPI, un modelo en PostgreSQL y una interfaz administrativa en Svelte coordinan los cambios, mientras Docker y AWS hacen repetible el despliegue."
+stack:
+  - Svelte
+  - JavaScript
+  - FastAPI
+  - PostgreSQL
+  - Docker
+  - AWS
+links:
+  live: https://flowlink.stack-up.com/
+  repo: https://github.com/NyxTech/stackup-backend
+cover: ../../assets/projects/stackup/stackup_preview.webp
+coverAlt: "Panel del channel manager hotelero StackUp"
+gallery:
+  - src: ../../assets/projects/stackup/stackup1.webp
+    alt: "Interfaz de selección de hotel de StackUp"
+  - src: ../../assets/projects/stackup/stackup2.webp
+    alt: "Editor de precios de habitaciones de StackUp"
+  - src: ../../assets/projects/stackup/stackup3.webp
+    alt: "Vista de configuración de hotel de StackUp"
+  - src: ../../assets/projects/stackup/stackup4.webp
+    alt: "Panel de gestión de promociones de StackUp"
+featured: true
+order: 1
+---
+
+## Contexto
+
+Los equipos de hotel capturaban el mismo inventario, las tarifas y las promociones en varios lugares. StackUp, también presentado como Flowlink, les dio una superficie administrativa para canales como Booking.com y Expedia. El reto no era dibujar una tabla de cuartos. Cada socio tenía campos, tiempos y formas de fallar distintas, pero el operador necesitaba una respuesta clara sobre qué estaba vigente.
+
+Me integré a Nyx Technology como desarrollador backend del proyecto durante 2024–2025. El trabajo conectaba un dashboard en Svelte con un servicio en FastAPI, PostgreSQL, Docker y AWS. El objetivo de negocio era concreto: quitar la captura repetitiva sin esconder una actualización fallida detrás de un estado verde. Por eso traté el proyecto primero como un problema de sincronización y después como uno de interfaz.
+
+## Mi rol
+
+Convertí los flujos del hotel en límites de API y en un modelo de datos común. Revisé inventario, precios, disponibilidad y reglas de promociones, y después traduje esos conceptos en adaptadores por canal, en lugar de dejar que los campos particulares de cada socio llegaran al dashboard. También me encargué de la persistencia y del camino de despliegue, y trabajé con el equipo para que las pantallas de Svelte mostraran el estado real que devolvía el servicio.
+
+Cuando un cambio afectaba varios canales, lo seguí desde la acción del operador hasta la solicitud guardada y la respuesta del socio. Así los éxitos parciales quedaron a la vista: un canal podía terminar mientras otro necesitaba otro intento. El sistema quitó la mayor parte de la recaptura manual entre canales, sin afirmar que todos habían cambiado al mismo tiempo.
+
+## Decisiones
+
+- **Usar un modelo hotelero canónico con adaptadores por canal.** Un modelo común hizo comprensible el dashboard y permitió validar un flujo una sola vez. El costo fue mantener código de traducción cuando un socio agregara un campo, pero era menor que duplicar las reglas de negocio por integración.
+- **Hacer idempotente y reintentable la sincronización.** Di a cada actualización una identidad estable y guardé el estado suficiente para reconocer un intento repetido. Así evitamos escrituras duplicadas cuando una petición expiraba. El intercambio fue aceptar consistencia eventual: el operador puede ver un canal pendiente o fallido en vez de un resultado verde inmediato.
+- **Dejar explícita la falla parcial.** El servicio registra por separado el resultado de cada canal; un éxito en Booking.com no borra un error de Expedia. Esto complica el manejo de estados, pero evita que el dashboard prometa algo que no podemos comprobar.
+- **Poner los roles y el historial de auditoría junto al camino de escritura.** El acceso por roles y los registros agregan validaciones y almacenamiento a una mutación sencilla. Valieron la pena porque los cambios de hotel necesitan un responsable y un rastro cuando varias personas administran la misma propiedad.
+- **Separar la interfaz en Svelte del servicio en FastAPI y empaquetar ambos con Docker.** La separación permitió evolucionar la UI sin acoplarla al código de integraciones, y los contenedores acercaron los entornos local y de AWS. El costo fue mantener un contrato de API explícito y otra frontera de despliegue.
+
+## Resultado
+
+El sistema Flowlink en producción ofrece un solo lugar para administrar listados, precios, disponibilidad y promociones. Quitó la mayor parte de la recaptura entre canales y deja un camino visible para resolver una falla del socio, en vez de ocultarla.
+
+## Qué haría diferente
+
+Definiría pruebas de contrato por socio y reportes de reconciliación antes de ampliar la primera integración. Harían visible el drift más pronto y darían al equipo una forma común de comparar nuestro estado canónico con cada canal. También mostraría con más claridad el último sync exitoso y el siguiente reintento, para que el operador decida sin abrir un log técnico.
