@@ -1,0 +1,251 @@
+---
+/**
+ * LAB B — "Monograph". Editorial and quiet: no photo, no boxes.
+ * A metadata column on the left; the paragraph IS the hero, set in Newsreader.
+ * Featured work as a numbered index. Hover a work → a small plate appears.
+ */
+import { Picture } from 'astro:assets';
+import { getProfile, getProjects, localizePath } from '@/i18n/utils';
+
+const profile = await getProfile();
+const p = profile.data;
+const featured = (await getProjects('en')).filter((x) => x.data.featured);
+const [lead, ...restSentences] = p.positioning.en.split(/(?<=\.|—)\s/);
+---
+
+<section class="mg" aria-labelledby="mg-title">
+  <aside class="mg__meta">
+    <dl>
+      <div><dt>Name</dt><dd>{p.name}</dd></div>
+      <div><dt>Practice</dt><dd>{p.headline.en}</dd></div>
+      <div><dt>Based</dt><dd>{p.location} <span class="mg__tz">{p.timezone}</span></dd></div>
+      <div><dt>Now</dt><dd>{p.availability.en}</dd></div>
+      <div><dt>Write</dt><dd><a href={`mailto:${p.email}`}>{p.email}</a></dd></div>
+    </dl>
+    <ul class="mg__social">
+      {p.socials.map((s) => <li><a href={s.url} rel="me noopener" target="_blank">{s.label}</a></li>)}
+    </ul>
+  </aside>
+
+  <div class="mg__body">
+    <h1 id="mg-title" class="mg__title">
+      <em>{lead}</em> {restSentences.join(' ')}
+    </h1>
+
+    <ol class="mg__index">
+      {featured.map((f, i) => (
+        <li>
+          <a href={localizePath('en', `/work/${f.data.slug}/`)}>
+            <span class="mg__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="mg__work">
+              <span class="mg__wtitle">{f.data.title}</span>
+              <span class="mg__woutcome">{f.data.outcome}</span>
+            </span>
+            <span class="mg__plate" aria-hidden="true">
+              <Picture fallbackFormat="webp" src={f.data.cover} alt="" widths={[320, 640]} sizes="200px" formats={['avif', 'webp']} loading="lazy" />
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mg__foot">
+      <a href="#work">All work</a> · <a href="#notes">Notes</a> · <a href="#contact">Leave a note</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .mg {
+    --mg-bg: oklch(0.985 0.003 90);
+    --mg-ink: oklch(0.16 0.01 60);
+    --mg-mute: oklch(0.52 0.01 60);
+    --mg-hair: oklch(0.88 0.006 80);
+    --mg-accent: oklch(0.52 0.15 160);
+    --mg-serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+    --mg-sans: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+
+    min-height: 100svh;
+    display: grid;
+    gap: 3rem;
+    background: var(--mg-bg);
+    color: var(--mg-ink);
+    font-family: var(--mg-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: clamp(2rem, 6vh, 5rem) clamp(1.25rem, 6vw, 6rem);
+  }
+
+  .mg__meta dl {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+  }
+
+  .mg__meta div {
+    display: grid;
+    gap: 0.15rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--mg-hair);
+  }
+
+  .mg__meta dt {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mg-mute);
+  }
+
+  .mg__meta dd {
+    margin: 0;
+  }
+
+  .mg__tz {
+    color: var(--mg-mute);
+  }
+
+  .mg__meta a {
+    text-decoration: underline;
+    text-decoration-color: var(--mg-hair);
+    text-underline-offset: 0.2em;
+  }
+
+  .mg__meta a:hover {
+    text-decoration-color: var(--mg-ink);
+  }
+
+  .mg__social {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1.25rem;
+    font-size: 12px;
+    color: var(--mg-mute);
+  }
+
+  .mg__body {
+    display: grid;
+    gap: 3.5rem;
+    align-content: start;
+  }
+
+  .mg__title {
+    font-family: var(--mg-serif);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.6rem);
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    max-width: 24ch;
+    text-wrap: pretty;
+  }
+
+  .mg__title em {
+    font-style: italic;
+    color: var(--mg-accent);
+  }
+
+  .mg__index {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--mg-hair);
+    max-width: 44rem;
+  }
+
+  .mg__index a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--mg-hair);
+  }
+
+  .mg__num {
+    font-variant-numeric: tabular-nums;
+    color: var(--mg-mute);
+    font-size: 12px;
+    padding-top: 0.25em;
+  }
+
+  .mg__work {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .mg__wtitle {
+    font-family: var(--mg-serif);
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .mg__woutcome {
+    color: var(--mg-mute);
+    max-width: 44ch;
+  }
+
+  .mg__plate {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 200px;
+    aspect-ratio: 16 / 10;
+    translate: 0 -50%;
+    border: 1px solid var(--mg-hair);
+    overflow: hidden;
+    background: var(--mg-bg);
+    opacity: 0;
+    transform: translateX(6px);
+    transition:
+      opacity 260ms,
+      transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    display: none;
+  }
+
+  .mg__plate :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mg__index a:hover .mg__plate,
+  .mg__index a:focus-visible .mg__plate {
+    opacity: 1;
+    transform: none;
+  }
+
+  .mg__index a:hover .mg__wtitle {
+    color: var(--mg-accent);
+  }
+
+  .mg__foot {
+    color: var(--mg-mute);
+  }
+
+  .mg__foot a:hover {
+    color: var(--mg-ink);
+  }
+
+  @media (--md) {
+    .mg {
+      grid-template-columns: 14rem 1fr;
+      gap: 5rem;
+    }
+
+    .mg__meta {
+      position: sticky;
+      top: 3rem;
+      align-self: start;
+    }
+
+    .mg__plate {
+      display: block;
+    }
+
+    .mg__index a {
+      padding-right: 14rem;
+    }
+  }
+</style>

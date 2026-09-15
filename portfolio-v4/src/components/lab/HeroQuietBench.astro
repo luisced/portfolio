@@ -1,0 +1,325 @@
+---
+/**
+ * LAB A — "Quiet Bench". Warm paper, generous air, small precise type.
+ * One object on the bench: a top-view phone with the real UPocket screen inside,
+ * casting a soft shadow that follows the pointer. The workshop, spoken quietly.
+ */
+import { Picture } from 'astro:assets';
+import upocket from '@/assets/projects/upocket/upocket1.webp';
+import { getProfile, getProjects, localizePath } from '@/i18n/utils';
+
+const profile = await getProfile();
+const p = profile.data;
+const projects = await getProjects('en');
+const featured = projects.filter((x) => x.data.featured);
+const upocketProject = projects.find((x) => x.data.slug === 'upocket');
+---
+
+<section class="qb" aria-labelledby="qb-title" data-lab-lamp>
+  <header class="qb__meta">
+    <span class="qb__name">{p.name}</span>
+    <span class="qb__sep" aria-hidden="true">·</span>
+    <span>{p.headline.en}</span>
+    <span class="qb__sep" aria-hidden="true">·</span>
+    <span>{p.location}, {p.timezone}</span>
+  </header>
+
+  <div class="qb__grid">
+    <div class="qb__copy">
+      <h1 id="qb-title" class="qb__title">{p.positioning.en}</h1>
+      <p class="qb__bio">{p.bio.en.split(/(?<=\.)\s/)[0]}</p>
+      <nav class="qb__links" aria-label="Primary actions">
+        <a href="#work">See the work <span aria-hidden="true">→</span></a>
+        <a href="#contact">Leave a note <span aria-hidden="true">→</span></a>
+      </nav>
+      <p class="qb__avail"><span class="qb__dot" aria-hidden="true"></span>{p.availability.en}</p>
+    </div>
+
+    <figure class="qb__figure">
+      <div class="qb__bench" aria-hidden="true"></div>
+      <a class="qb__phone" href={localizePath('en', '/work/upocket/')} aria-label={upocketProject?.data.title ?? 'UPocket'}>
+        <span class="qb__screen">
+          <Picture fallbackFormat="webp" src={upocket} alt="" widths={[300, 600]} sizes="240px" formats={['avif', 'webp']} loading="eager" />
+        </span>
+        <span class="qb__spec">
+          <span>UPocket</span>
+          <span>iOS · FastAPI · 15,000+ students</span>
+        </span>
+      </a>
+      <figcaption class="qb__cap">
+        fig. 1 — {upocketProject?.data.outcome ?? ''}
+      </figcaption>
+    </figure>
+  </div>
+
+  <footer class="qb__index">
+    {featured.map((f, i) => (
+      <a href={localizePath('en', `/work/${f.data.slug}/`)}>
+        <span class="qb__num">0{i + 1}</span>
+        <span class="qb__ititle">{f.data.title}</span>
+        <span class="qb__ioutcome">{f.data.outcome}</span>
+      </a>
+    ))}
+  </footer>
+</section>
+
+<style>
+  .qb {
+    --qb-bg: oklch(0.965 0.006 80);
+    --qb-ink: oklch(0.2 0.01 60);
+    --qb-mute: oklch(0.5 0.01 60);
+    --qb-hair: oklch(0.86 0.008 70);
+    --qb-accent: oklch(0.55 0.13 160);
+    --qb-sans: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --qb-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --lx: 0.5;
+    --ly: 0.35;
+
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: var(--qb-bg);
+    color: var(--qb-ink);
+    font-family: var(--qb-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 5vw, 5rem);
+  }
+
+  .qb__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6em;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--qb-mute);
+  }
+
+  .qb__name {
+    color: var(--qb-ink);
+    font-weight: 500;
+  }
+
+  .qb__sep {
+    color: var(--qb-hair);
+  }
+
+  .qb__grid {
+    display: grid;
+    gap: 3rem;
+    align-content: center;
+    padding-block: clamp(3rem, 8vh, 6rem);
+  }
+
+  .qb__copy {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 34rem;
+  }
+
+  .qb__title {
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .qb__bio {
+    color: var(--qb-mute);
+    max-width: 30rem;
+  }
+
+  .qb__links {
+    display: flex;
+    gap: 2rem;
+    font-weight: 500;
+  }
+
+  .qb__links a {
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .qb__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--qb-ink);
+    transform: scaleX(0.35);
+    transform-origin: left;
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .qb__links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .qb__avail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--qb-mono);
+    font-size: 11.5px;
+    color: var(--qb-mute);
+  }
+
+  .qb__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--qb-accent);
+  }
+
+  /* The object */
+  .qb__figure {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    padding: 2rem 0 0;
+  }
+
+  .qb__bench {
+    position: absolute;
+    inset: 1rem 0 2.5rem;
+    border: 1px solid var(--qb-hair);
+    border-radius: 2px;
+  }
+
+  .qb__phone {
+    position: relative;
+    display: block;
+    width: 168px;
+    aspect-ratio: 9 / 19.2;
+    border: 1px solid var(--qb-ink);
+    border-radius: 26px;
+    padding: 8px;
+    background: var(--qb-bg);
+    /* Soft, real shadow, offset away from the lamp (pointer). */
+    box-shadow:
+      calc((0.5 - var(--lx)) * 36px) calc((0.5 - var(--ly)) * 36px + 18px) 40px -10px oklch(0.2 0.01 60 / 0.22),
+      0 1px 0 oklch(1 0 0 / 0.6) inset;
+    transition:
+      transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .qb__phone:hover {
+    transform: translateY(-3px);
+  }
+
+  .qb__screen {
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    background: oklch(0.15 0 0);
+  }
+
+  .qb__screen :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .qb__spec {
+    position: absolute;
+    left: calc(100% + 1.25rem);
+    top: 1.5rem;
+    display: grid;
+    gap: 2px;
+    white-space: nowrap;
+    font-family: var(--qb-mono);
+    font-size: 11px;
+    color: var(--qb-mute);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+      opacity 320ms,
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .qb__spec::before {
+    content: '';
+    position: absolute;
+    left: -1.25rem;
+    top: 0.55em;
+    width: 0.9rem;
+    height: 1px;
+    background: var(--qb-hair);
+  }
+
+  .qb__spec > span:first-child {
+    color: var(--qb-ink);
+  }
+
+  .qb__phone:hover .qb__spec,
+  .qb__phone:focus-visible .qb__spec {
+    opacity: 1;
+    transform: none;
+  }
+
+  .qb__cap {
+    font-family: var(--qb-mono);
+    font-size: 11px;
+    color: var(--qb-mute);
+    text-align: center;
+    max-width: 30rem;
+    text-wrap: balance;
+  }
+
+  /* Index */
+  .qb__index {
+    display: grid;
+    border-top: 1px solid var(--qb-hair);
+  }
+
+  .qb__index a {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.25rem 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--qb-hair);
+    transition: color 200ms;
+  }
+
+  .qb__index a:hover {
+    color: var(--qb-accent);
+  }
+
+  .qb__num {
+    font-family: var(--qb-mono);
+    font-size: 11px;
+    color: var(--qb-mute);
+    padding-top: 0.2em;
+  }
+
+  .qb__ititle {
+    font-weight: 500;
+  }
+
+  .qb__ioutcome {
+    grid-column: 2;
+    color: var(--qb-mute);
+    font-size: 14px;
+  }
+
+  @media (--md) {
+    .qb__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+    }
+
+    .qb__index a {
+      grid-template-columns: 2.5rem 14rem 1fr;
+    }
+
+    .qb__ioutcome {
+      grid-column: auto;
+    }
+  }
+</style>

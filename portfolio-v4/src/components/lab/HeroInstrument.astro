@@ -1,0 +1,323 @@
+---
+/**
+ * LAB C — "Instrument". Graphite, Linear-like precision: a faint hairline grid,
+ * mono labels, a readout panel with real facts (local time is live), and three
+ * modules with one number each. Motion is micro: a crosshair follows the pointer
+ * along the grid; numbers settle into place on load.
+ */
+import { getExperience, getProfile, getProjects, localizePath } from '@/i18n/utils';
+
+const profile = await getProfile();
+const p = profile.data;
+const featured = (await getProjects('en')).filter((x) => x.data.featured);
+const current = (await getExperience()).find((e) => e.data.end === null);
+const modules = [
+  { slug: 'upocket', value: '15,000+', unit: 'students', label: 'UPocket' },
+  { slug: 'stackup-channel-manager', value: '99%', unit: 'uptime', label: 'StackUp / Flowlink' },
+  { slug: 'dermaware-genesis', value: '4', unit: 'iOS apps shipped', label: 'iOS Development Lab' },
+];
+---
+
+<section class="in" aria-labelledby="in-title" data-lab-crosshair>
+  <div class="in__grid" aria-hidden="true"></div>
+  <div class="in__cross" aria-hidden="true"><span></span><span></span></div>
+
+  <div class="in__top">
+    <p class="in__mono in__brand"><span class="in__led" aria-hidden="true"></span>{p.name}</p>
+    <dl class="in__readout">
+      <div><dt>Status</dt><dd class="in__ok">Available</dd></div>
+      <div><dt>Local time</dt><dd data-lab-clock>—:— CST</dd></div>
+      <div><dt>Role</dt><dd>{p.headline.en}</dd></div>
+      <div><dt>Now at</dt><dd>{current?.data.org ?? featured[0]?.data.title}</dd></div>
+    </dl>
+  </div>
+
+  <div class="in__main">
+    <h1 id="in-title" class="in__title">{p.headline.en}<span class="in__cursor" aria-hidden="true"></span></h1>
+    <p class="in__lead">{p.positioning.en}</p>
+    <div class="in__actions">
+      <a class="in__btn in__btn--primary" href="#work">See the work</a>
+      <a class="in__btn" href="#contact">Leave a note</a>
+      <span class="in__mono in__hint">⌘K soon · Alt+T theme</span>
+    </div>
+  </div>
+
+  <ul class="in__modules">
+    {modules.map((m, i) => (
+      <li>
+        <a href={localizePath('en', `/work/${m.slug}/`)}>
+          <span class="in__mono in__mi">M{i + 1}</span>
+          <span class="in__value" data-lab-count>{m.value}</span>
+          <span class="in__unit">{m.unit}</span>
+          <span class="in__mono in__mlabel">{m.label} ↗</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .in {
+    --in-bg: oklch(0.2 0.006 260);
+    --in-panel: oklch(0.225 0.006 260);
+    --in-ink: oklch(0.93 0.004 260);
+    --in-mute: oklch(0.62 0.008 260);
+    --in-hair: oklch(0.3 0.006 260);
+    --in-grid: oklch(0.255 0.006 260);
+    --in-accent: oklch(0.8 0.17 160);
+    --in-sans: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --in-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --cx: 50%;
+    --cy: 40%;
+
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 3rem;
+    background: var(--in-bg);
+    color: var(--in-ink);
+    font-family: var(--in-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 5vw, 4rem);
+    overflow: clip;
+  }
+
+  .in__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--in-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--in-grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(60% 70% at var(--cx) var(--cy), black 20%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .in__cross {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms;
+  }
+
+  .in:hover .in__cross {
+    opacity: 1;
+  }
+
+  .in__cross span:first-child {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--cx);
+    width: 1px;
+    background: var(--in-hair);
+  }
+
+  .in__cross span:last-child {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cy);
+    height: 1px;
+    background: var(--in-hair);
+  }
+
+  .in__mono {
+    font-family: var(--in-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+
+  .in__top {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .in__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--in-mute);
+  }
+
+  .in__led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--in-accent);
+    box-shadow: 0 0 0 3px oklch(0.8 0.17 160 / 0.18);
+  }
+
+  .in__readout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--in-hair);
+    border: 1px solid var(--in-hair);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0;
+    max-width: 40rem;
+  }
+
+  .in__readout div {
+    background: var(--in-panel);
+    padding: 0.7rem 0.9rem;
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .in__readout dt {
+    font-family: var(--in-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--in-mute);
+  }
+
+  .in__readout dd {
+    margin: 0;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .in__ok {
+    color: var(--in-accent);
+  }
+
+  .in__main {
+    position: relative;
+    display: grid;
+    gap: 1.25rem;
+    align-content: center;
+    max-width: 40rem;
+  }
+
+  .in__title {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .in__cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.9em;
+    margin-left: 0.15em;
+    vertical-align: -0.08em;
+    background: var(--in-accent);
+  }
+
+  .in__lead {
+    color: var(--in-mute);
+    font-size: 1.05rem;
+    max-width: 38rem;
+  }
+
+  .in__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .in__btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--in-hair);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--in-panel);
+    transition:
+      border-color 200ms,
+      background-color 200ms;
+  }
+
+  .in__btn:hover {
+    border-color: var(--in-mute);
+  }
+
+  .in__btn--primary {
+    background: var(--in-ink);
+    color: var(--in-bg);
+    border-color: var(--in-ink);
+  }
+
+  .in__hint {
+    color: var(--in-mute);
+    margin-left: 0.5rem;
+  }
+
+  .in__modules {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--in-hair);
+    border: 1px solid var(--in-hair);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .in__modules a {
+    display: grid;
+    gap: 0.2rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--in-panel);
+    transition: background-color 200ms;
+  }
+
+  .in__modules a:hover {
+    background: oklch(0.25 0.008 260);
+  }
+
+  .in__mi {
+    color: var(--in-mute);
+  }
+
+  .in__value {
+    font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+
+  .in__unit {
+    color: var(--in-mute);
+  }
+
+  .in__mlabel {
+    margin-top: 0.6rem;
+    color: var(--in-mute);
+  }
+
+  .in__modules a:hover .in__mlabel {
+    color: var(--in-accent);
+  }
+
+  @media (--md) {
+    .in__top {
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+
+    .in__readout {
+      grid-template-columns: repeat(4, auto);
+    }
+
+    .in__modules {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

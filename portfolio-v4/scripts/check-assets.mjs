@@ -41,8 +41,9 @@ while (queue.length) {
   }
 }
 if (jsGz > JS_BUDGET) failures.push(`landing JS ${(jsGz / 1024).toFixed(1)} KB gz > ${JS_BUDGET / 1024} KB (${[...seen].join(', ')})`);
+// Fonts the landing can actually load: woff2 URLs referenced from its (inlined) CSS and preloads.
 // fontsource also emits legacy .woff fallbacks; browsers only fetch the matching .woff2.
-const fonts = readdirSync('dist/_astro').filter((f) => f.endsWith('.woff2'));
+const fonts = [...new Set([...html.matchAll(/\/_astro\/[^"')\s]+\.woff2/g)].map((m) => m[0]))];
 if (fonts.length > FONT_BUDGET) failures.push(`${fonts.length} font files shipped > ${FONT_BUDGET}`);
 
 if (failures.length) {

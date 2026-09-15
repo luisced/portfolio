@@ -1,0 +1,146 @@
+---
+/**
+ * /lab — three hero directions, same content, side by side. Not indexed, not in the sitemap.
+ * Fonts for the lab are loaded here only; the production landing keeps its own budget.
+ */
+import '@fontsource/hanken-grotesk/latin-400.css';
+import '@fontsource/hanken-grotesk/latin-500.css';
+import '@fontsource/newsreader/latin-400.css';
+import '@fontsource/newsreader/latin-400-italic.css';
+import '@fontsource/schibsted-grotesk/latin-400.css';
+import '@fontsource/schibsted-grotesk/latin-500.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import HeroQuietBench from '@/components/lab/HeroQuietBench.astro';
+import HeroMonograph from '@/components/lab/HeroMonograph.astro';
+import HeroInstrument from '@/components/lab/HeroInstrument.astro';
+
+const variants = [
+  { id: 'a', name: 'Quiet Bench', note: 'Warm paper · one real object · soft lamp shadow · Hanken Grotesk + JetBrains Mono' },
+  { id: 'b', name: 'Monograph', note: 'Editorial · no photo · the paragraph is the hero · Newsreader + Hanken Grotesk' },
+  { id: 'c', name: 'Instrument', note: 'Graphite · hairline grid · live readout · Schibsted Grotesk + JetBrains Mono' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Lab — three hero directions</title>
+    <style is:global>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      * {
+        margin: 0;
+      }
+      body {
+        font-family: 'Hanken Grotesk', system-ui, sans-serif;
+        background: #111;
+        color: #eee;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      .lab-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.6rem 1rem;
+        background: #111;
+        color: #bbb;
+        font-size: 12px;
+        border-bottom: 1px solid #2a2a2a;
+      }
+      .lab-bar nav {
+        display: flex;
+        gap: 0.75rem;
+      }
+      .lab-bar nav a {
+        padding: 0.25rem 0.6rem;
+        border: 1px solid #333;
+        border-radius: 999px;
+        color: #eee;
+      }
+      .lab-bar nav a:hover {
+        border-color: #888;
+      }
+      .lab-label {
+        position: sticky;
+        top: 2.4rem;
+        z-index: 9;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.45rem 1rem;
+        font-family: ui-monospace, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        background: #1c1c1c;
+        color: #ddd;
+        border-block: 1px solid #2a2a2a;
+      }
+      .lab-label b {
+        color: #7cf0b6;
+        font-weight: 500;
+      }
+      :focus-visible {
+        outline: 2px solid #7cf0b6;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="lab-bar">
+      <span>LAB · three hero directions · same content</span>
+      <nav aria-label="Variants">
+        {variants.map((v) => <a href={`#lab-${v.id}`}>{v.id.toUpperCase()} · {v.name}</a>)}
+      </nav>
+    </div>
+
+    <div id="lab-a" class="lab-label"><span><b>A</b> Quiet Bench</span><span>{variants[0]!.note}</span></div>
+    <HeroQuietBench />
+
+    <div id="lab-b" class="lab-label"><span><b>B</b> Monograph</span><span>{variants[1]!.note}</span></div>
+    <HeroMonograph />
+
+    <div id="lab-c" class="lab-label"><span><b>C</b> Instrument</span><span>{variants[2]!.note}</span></div>
+    <HeroInstrument />
+
+    <script>
+      // A: lamp follows the pointer (soft shadow). C: crosshair + live clock.
+      const lamp = document.querySelector<HTMLElement>('[data-lab-lamp]');
+      lamp?.addEventListener('pointermove', (e) => {
+        const r = lamp.getBoundingClientRect();
+        lamp.style.setProperty('--lx', ((e.clientX - r.left) / r.width).toFixed(3));
+        lamp.style.setProperty('--ly', ((e.clientY - r.top) / r.height).toFixed(3));
+      });
+      const cross = document.querySelector<HTMLElement>('[data-lab-crosshair]');
+      cross?.addEventListener('pointermove', (e) => {
+        const r = cross.getBoundingClientRect();
+        cross.style.setProperty('--cx', `${(((e.clientX - r.left) / r.width) * 100).toFixed(2)}%`);
+        cross.style.setProperty('--cy', `${(((e.clientY - r.top) / r.height) * 100).toFixed(2)}%`);
+      });
+      const clock = document.querySelector<HTMLElement>('[data-lab-clock]');
+      const tick = () => {
+        if (!clock) return;
+        clock.textContent =
+          new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Mexico_City' }).format(new Date()) +
+          ' CST';
+      };
+      tick();
+      setInterval(tick, 30_000);
+    </script>
+  </body>
+</html>

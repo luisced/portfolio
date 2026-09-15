@@ -24,6 +24,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
+      filter: (page) => !page.includes('/lab/'),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', es: 'es' },
