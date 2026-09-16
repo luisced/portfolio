@@ -16,7 +16,7 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <Velocity client:visible texts={[p.name, p.headline[locale], `${p.location} · ${year}`]} velocity={90} size="lg" className="footer__velocity" />
+  <Velocity client:media="(prefers-reduced-motion: no-preference)" texts={[p.name, p.headline[locale], `${p.location} · ${year}`]} velocity={90} size="lg" className="footer__velocity" />
 
   <div class="footer__grid">
     <nav class="footer__col" aria-label="Footer">

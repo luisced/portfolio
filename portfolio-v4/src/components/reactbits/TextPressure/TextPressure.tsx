@@ -69,7 +69,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
   const mouseRef = useRef({ x: 0, y: 0 });
   const cursorRef = useRef({ x: 0, y: 0 });
 
-  const [fontSize, setFontSize] = useState(minFontSize);
+  const [fontSize, setFontSize] = useState<number | null>(null); // null until measured → CSS sizes the SSR/static state
   const [scaleY, setScaleY] = useState(1);
   const [lineHeight, setLineHeight] = useState(1);
 
@@ -248,7 +248,7 @@ const TextPressure: React.FC<TextPressureProps> = ({
         style={{
           fontFamily,
           textTransform: 'uppercase',
-          fontSize: fontSize,
+          fontSize: fontSize ?? undefined,
           lineHeight,
           transform: `scale(1, ${scaleY})`,
           transformOrigin: 'center top',
@@ -256,7 +256,6 @@ const TextPressure: React.FC<TextPressureProps> = ({
           textAlign: 'center',
           userSelect: 'none',
           whiteSpace: 'nowrap',
-          fontWeight: 100,
           width: '100%'
         }}
       >

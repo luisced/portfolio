@@ -16,7 +16,7 @@ const quote = profile.data.manifesto[locale];
 <section id="manifesto" class="section manifesto" aria-labelledby="manifesto-title">
   <p class="label manifesto__kicker container" id="manifesto-title">{t('manifesto.kicker')}</p>
   <div class="container">
-    <ManifestoIsland client:visible text={quote} />
+    <ManifestoIsland client:media="(prefers-reduced-motion: no-preference)" text={quote} />
     <noscript><p class="manifesto__text display">{quote}</p></noscript>
   </div>
 </section>

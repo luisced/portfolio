@@ -23,7 +23,7 @@ const wa = p.whatsapp.replace(/[^\d]/g, '');
   </header>
 
   <div class="contact__lead container">
-    <ContactHeading client:visible text={t('contact.lead')} />
+    <ContactHeading client:media="(prefers-reduced-motion: no-preference)" text={t('contact.lead')} />
     <noscript><p class="contact__scramble display">{t('contact.lead')}</p></noscript>
   </div>
 

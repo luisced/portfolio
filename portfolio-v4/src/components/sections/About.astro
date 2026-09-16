@@ -39,7 +39,7 @@ const stats =
   </header>
 
   <div class="about container">
-    <AboutIsland client:visible portrait={portrait.src} portraitAlt={p.portraitAlt[locale]} stats={stats} />
+    <AboutIsland client:media="(prefers-reduced-motion: no-preference)" portrait={portrait.src} portraitAlt={p.portraitAlt[locale]} stats={stats} />
 
     <div class="about__copy">
       <p class="about__bio">{p.bio[locale]}</p>

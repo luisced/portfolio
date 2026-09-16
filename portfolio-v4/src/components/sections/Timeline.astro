@@ -35,7 +35,7 @@ const items: Milestone[] = experience.map((e, i) => ({
     <h2 id="timeline-title" class="display chapter__title">{t('timeline.title')}</h2>
     <span class="label chapter__meta">{t('timeline.kicker')}</span>
   </header>
-  <TimelineIsland client:visible items={items} />
+  <TimelineIsland client:media="(prefers-reduced-motion: no-preference)" items={items} />
 </section>
 
 <style is:global>

@@ -111,5 +111,10 @@ export default function CountUp({
     return () => unsubscribe();
   }, [springValue, formatValue]);
 
-  return <span className={className} ref={ref} />;
+  // Patched: server-render the final value so non-hydrated (reduced-motion / no-JS) readers see it.
+  return (
+    <span className={className} ref={ref}>
+      {formatValue(direction === 'down' ? from : to)}
+    </span>
+  );
 }

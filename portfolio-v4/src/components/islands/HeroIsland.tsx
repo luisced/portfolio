@@ -20,14 +20,16 @@ export default function HeroIsland({ first, last }: Props) {
       <div className="hero-stage__grid" aria-hidden="true">
         <DotGrid dotSize={2} gap={22} baseColor="#2a2a2a" activeColor="#c8ff00" proximity={140} shockRadius={220} shockStrength={4} resistance={600} returnDuration={1.2} />
       </div>
-      <h1 className="hero-stage__type" aria-label={`${first} ${last}`}>
+      {/* TextPressure injects a <style> next to its letters, so the real heading is a clean sr-only h1. */}
+      <h1 className="sr-only">{`${first} ${last}`}</h1>
+      <div className="hero-stage__type" aria-hidden="true">
         <span className="hero-stage__line">
           <TextPressure as="span" text={first} {...common} />
         </span>
         <span className="hero-stage__line hero-stage__line--acid">
           <TextPressure as="span" text={last} {...common} textColor="var(--acid)" />
         </span>
-      </h1>
+      </div>
     </div>
   );
 }

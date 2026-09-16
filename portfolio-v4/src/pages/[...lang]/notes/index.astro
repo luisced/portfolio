@@ -1,13 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import {
-  formatDate,
-  getNotes,
-  localizePath,
-  localeStaticPaths,
-  readingMinutes,
-  useTranslations,
-} from '@/i18n/utils';
+import { formatDate, getNotes, localeStaticPaths, localizePath, readingMinutes, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
 export const getStaticPaths = localeStaticPaths;
@@ -22,160 +15,113 @@ const notes = await getNotes(locale);
 ---
 
 <Base locale={locale} title={t('notes.title')} description={t('notes.description')} path="/notes/">
-  <section class="section" aria-labelledby="notes-title">
-    <div class="container">
-      <header class="sec-head" data-reveal>
-        <p class="kicker">{t('notes.kicker')}</p>
-        <h1 class="display notes-title" id="notes-title">{t('notes.title')}</h1>
-      </header>
+  <section class="index" aria-labelledby="notes-title">
+    <header class="chapter index__head">
+      <span class="chapter__num">04</span>
+      <h1 id="notes-title" class="display chapter__title">{t('notes.title')}</h1>
+      <span class="label chapter__meta">{t('notes.kicker')} · {notes.length}</span>
+    </header>
 
-      <div class="notes-list" data-reveal-group>
-        {notes.length > 0 ? (
-          notes.map((note) => (
-            <a
-              class="note-row"
-              href={localizePath(locale, `/notes/${note.data.slug}/`)}
-              data-reveal
-            >
-              <div class="note-meta mono">
-                <time datetime={note.data.date.toISOString()}>{formatDate(locale, note.data.date, { month: 'short' })}</time>
-                <span>{readingMinutes(note.body)} {t('notes.readingTime')}</span>
-              </div>
-              <div class="note-copy">
-                <h2>{note.data.title}</h2>
-                <p>{note.data.summary}</p>
-                {note.data.tags.length > 0 && (
-                  <ul class="note-tags">
-                    {note.data.tags.map((tag) => <li class="note-tag mono">{tag}</li>)}
-                  </ul>
-                )}
-              </div>
+    {notes.length === 0 ? (
+      <p class="container muted index__empty">{t('notes.empty')}</p>
+    ) : (
+      <ol class="index__list">
+        {notes.map((n, i) => (
+          <li>
+            <a class="note" href={localizePath(locale, `/notes/${n.data.slug}/`)} data-cursor-target data-reveal>
+              <span class="note__num display stroke">{String(i + 1).padStart(2, '0')}</span>
+              <span class="note__body">
+                <span class="note__title display">{n.data.title}</span>
+                <span class="note__summary">{n.data.summary}</span>
+              </span>
+              <span class="note__meta label">
+                <time datetime={n.data.date.toISOString()}>{formatDate(locale, n.data.date, { month: 'short' })}</time>
+                <span>{readingMinutes(n.body)} {t('notes.readingTime')}</span>
+                <span>{n.data.tags.join(' / ')}</span>
+              </span>
             </a>
-          ))
-        ) : (
-          <p class="notes-empty" data-reveal>{t('notes.empty')}</p>
-        )}
-      </div>
-    </div>
+          </li>
+        ))}
+      </ol>
+    )}
   </section>
 </Base>
 
 <style>
-  .sec-head {
-    display: grid;
-    gap: var(--s-2);
-    margin-bottom: var(--s-7);
-  }
-  .notes-title {
-    font-size: var(--text-3xl);
-    line-height: var(--leading-tight);
+  .index {
+    padding-top: 5.5rem;
+    padding-bottom: var(--s-9);
   }
 
-  .notes-list {
-    border-top: 1px solid var(--line);
+  .index__head {
+    border-top: var(--hair) solid var(--line);
   }
 
-  .note-row {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(6rem, 8rem) minmax(0, 1fr);
-    gap: var(--s-4);
-    padding-block: var(--s-5);
-    color: var(--fg);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .note-row::after {
-    position: absolute;
-    inset-inline: 0;
-    bottom: -1px;
-    inline-size: 0;
-    block-size: 1px;
-    background: var(--amber);
-    content: '';
-    transition: inline-size var(--d-2) var(--ease-out);
-  }
-
-  .note-meta {
-    display: grid;
-    align-content: start;
-    gap: var(--s-2);
-    color: var(--fg-2);
-    font-size: var(--text-xs);
-    line-height: var(--leading-snug);
-  }
-
-  .note-copy {
-    display: grid;
-    align-content: start;
-    gap: var(--s-2);
-    min-inline-size: 0;
-  }
-
-  .note-copy h2 {
-    font-size: var(--text-lg);
-    font-weight: 500;
-    line-height: var(--leading-snug);
-  }
-
-  .note-copy p {
-    color: var(--fg-2);
-    font-size: var(--text-md);
-    line-height: var(--leading-body);
-  }
-
-  .note-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
+  .index__list {
     list-style: none;
     padding: 0;
-    margin-top: var(--s-2);
   }
 
-  .note-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s-1);
-    padding: var(--s-1) var(--s-2);
+  .index__empty {
+    padding-block: var(--s-7);
+  }
+
+  .note {
+    display: grid;
+    gap: var(--s-3);
+    padding: var(--s-6) var(--gutter);
+    border-bottom: var(--hair) solid var(--line-2);
+    transition: background-color var(--d-1) steps(1, end);
+  }
+
+  .note:hover {
+    background: var(--bg-2);
+  }
+
+  .note__num {
+    font-size: var(--text-2xl);
+    line-height: 1;
+  }
+
+  .note__body {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .note__title {
+    font-size: var(--text-xl);
+    font-variation-settings: 'wdth' 100;
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
+  .note:hover .note__title {
+    color: var(--acid);
+  }
+
+  .note__summary {
     color: var(--fg-2);
-    font-size: var(--text-xs);
-    border: 1px solid var(--line);
-    border-radius: var(--r-1);
-    background: var(--bg-3);
+    max-width: 60ch;
   }
 
-  .note-tag::before {
-    inline-size: var(--s-2);
-    block-size: var(--s-2);
-    flex: 0 0 auto;
-    border-radius: 50%;
-    background: var(--accent-brand);
-    content: '';
-  }
-
-  .note-tag:nth-child(2)::before { background: var(--accent-amber); }
-  .note-tag:nth-child(3)::before { background: var(--accent-rose); }
-  .note-tag:nth-child(4)::before { background: var(--accent-sky); }
-  .note-tag:nth-child(5)::before { background: var(--accent-violet); }
-
-  .notes-empty {
-    padding-block: var(--s-5);
-    color: var(--fg-2);
-  }
-
-  @media (--pointer) {
-    .note-row:hover::after {
-      inline-size: 100%;
-    }
+  .note__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    color: var(--fg-3);
   }
 
   @media (--md) {
-    .note-row {
-      grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
-      gap: var(--s-6);
-      padding-block: var(--s-6);
+    .note {
+      grid-template-columns: 6rem 1fr 14rem;
+      align-items: start;
+    }
+
+    .note__meta {
+      flex-direction: column;
+      gap: var(--s-2);
+      align-items: flex-end;
+      text-align: right;
     }
   }
 </style>

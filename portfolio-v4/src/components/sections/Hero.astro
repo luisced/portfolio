@@ -39,7 +39,7 @@ const facts =
     <p class="label hero__avail"><span class="hero__dot" aria-hidden="true"></span>{p.availability[locale]}</p>
   </div>
 
-  <Velocity client:visible texts={facts} velocity={60} className="hero__velocity" />
+  <Velocity client:media="(prefers-reduced-motion: no-preference)" texts={facts} velocity={60} className="hero__velocity" />
 </section>
 
 <style>
@@ -123,10 +123,13 @@ const facts =
     color: var(--acid);
   }
 
-  /* Static fallback letters (no JS / reduced motion) keep the same size logic roughly */
+  /* Static state (no JS / reduced motion / before measurement): CSS sizes and weights the letters.
+     Once TextPressure measures, its inline font-size and per-letter variation settings take over. */
   .hero__name :global(.text-pressure-title) {
     font-family: var(--font-display);
     font-weight: 800;
+    font-variation-settings: 'wdth' 112;
+    font-size: clamp(3.5rem, 12.5vw, 15rem);
     letter-spacing: -0.03em;
     line-height: 0.9;
   }
@@ -175,12 +178,8 @@ const facts =
     }
 
     .hero__foot {
-      grid-template-columns: 1.2fr auto;
-      align-items: end;
-    }
-
-    .hero__avail {
-      grid-column: 1 / -1;
+      grid-template-columns: minmax(0, 60ch);
+      padding-right: 22rem; /* clears the fixed control strip */
     }
   }
 </style>

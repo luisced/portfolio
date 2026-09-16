@@ -35,7 +35,7 @@ const panels: WorkPanel[] = await Promise.all(
     <a class="label chapter__meta" href={localizePath(locale, '/work/')} data-cursor-target>{t('work.all')} →</a>
   </header>
 
-  <WorkIsland client:visible panels={panels} labels={{ view: t('work.view'), role: t('work.role'), stack: t('work.stack'), outcome: t('work.outcome') }} />
+  <WorkIsland client:media="(prefers-reduced-motion: no-preference)" panels={panels} labels={{ view: t('work.view'), role: t('work.role'), stack: t('work.stack'), outcome: t('work.outcome') }} />
 </section>
 
 <style is:global>
