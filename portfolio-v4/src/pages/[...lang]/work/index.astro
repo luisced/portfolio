@@ -16,114 +16,19 @@ const projects = await getProjects(locale);
 ---
 
 <Base locale={locale} title={t('work.all')} description={t('work.description')} path="/work/">
-  <section class="index" aria-labelledby="work-index-title">
-    <header class="chapter index__head">
-      <span class="chapter__num">01</span>
-      <h1 id="work-index-title" class="display chapter__title">{t('work.all')}</h1>
-      <span class="label chapter__meta">{projects.length} / {projects.length}</span>
-    </header>
-
-    <ol class="index__list">
-      {projects.map((p, i) => (
+  <section class="section container" aria-labelledby="work-index-title">
+    <h1 id="work-index-title">{t('work.all')}</h1>
+    <ol class="list">
+      {projects.map((p) => (
         <li>
-          <a class="row" href={localizePath(locale, `/work/${p.data.slug}/`)} data-cursor-target data-reveal>
-            <span class="row__num display stroke">{String(i + 1).padStart(2, '0')}</span>
-            <span class="row__art">
-              <Picture fallbackFormat="webp" src={p.data.cover} alt={p.data.coverAlt} widths={[320, 640]} sizes="(min-width: 48em) 18rem, 100vw" formats={['avif', 'webp']} loading="lazy" />
-            </span>
-            <span class="row__body">
-              <span class="row__title display">{p.data.title}</span>
-              <span class="row__outcome">{p.data.outcome}</span>
-              <span class="row__meta label">
-                <span>{t(`work.category.${p.data.category}`)}</span>
-                <span>{p.data.timeframe}</span>
-                <span>{p.data.role}</span>
-              </span>
-            </span>
+          <a href={localizePath(locale, `/work/${p.data.slug}/`)}>
+            <Picture fallbackFormat="webp" src={p.data.cover} alt={p.data.coverAlt} widths={[480, 960]} sizes="(min-width: 48em) 40rem, 100vw" formats={['avif', 'webp']} loading="lazy" />
+            <h2>{p.data.title}</h2>
           </a>
+          <p class="muted">{p.data.outcome}</p>
+          <p class="label">{p.data.role} · {t(`work.category.${p.data.category}`)} · {p.data.timeframe}</p>
         </li>
       ))}
     </ol>
   </section>
 </Base>
-
-<style>
-  .index {
-    padding-top: 5.5rem;
-    padding-bottom: var(--s-9);
-  }
-
-  .index__head {
-    border-top: var(--hair) solid var(--line);
-  }
-
-  .index__list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .row {
-    display: grid;
-    gap: var(--s-4);
-    padding: var(--s-6) var(--gutter);
-    border-bottom: var(--hair) solid var(--line-2);
-    transition: background-color var(--d-1) steps(1, end);
-  }
-
-  .row:hover {
-    background: var(--bg-2);
-  }
-
-  .row__num {
-    font-size: var(--text-2xl);
-    line-height: 1;
-  }
-
-  .row__art {
-    display: block;
-    border: var(--hair) solid var(--line);
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-  }
-
-  .row__art :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .row__body {
-    display: grid;
-    gap: var(--s-2);
-    align-content: start;
-  }
-
-  .row__title {
-    font-size: var(--text-xl);
-    font-variation-settings: 'wdth' 100;
-  }
-
-  .row:hover .row__title {
-    color: var(--acid);
-  }
-
-  .row__outcome {
-    color: var(--fg-2);
-    max-width: 56ch;
-  }
-
-  .row__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-4);
-    color: var(--fg-3);
-    margin-top: var(--s-2);
-  }
-
-  @media (--md) {
-    .row {
-      grid-template-columns: 6rem 18rem 1fr;
-      align-items: start;
-    }
-  }
-</style>

@@ -1,8 +1,5 @@
 ---
 import '@/styles/base.css';
-import displayUrl from '@fontsource-variable/mona-sans/files/mona-sans-latin-wdth-normal.woff2?url';
-import monoUrl from '@fontsource/azeret-mono/files/azeret-mono-latin-400-normal.woff2?url';
-import Chrome from '@/components/Chrome';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
@@ -57,11 +54,9 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     <link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', path), site)} />
     <link rel="alternate" type="application/rss+xml" title="Luis Cedillo — notes" href={new URL(localizePath(locale, '/rss.xml'), site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="font" type="font/woff2" href={displayUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={monoUrl} crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#efede6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Luis Cedillo" />
@@ -99,19 +94,8 @@ const og = new URL(ogImage ?? '/og/default.png', site);
       <slot />
     </main>
     {!bare && <Footer locale={locale} />}
-    <Chrome client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)" />
     <script>
       import '@/scripts/theme';
-      if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-        // Motion (and GSAP) only ever loads when motion is welcome, and only after
-        // the page is idle so it never competes with the hero for bandwidth or CPU.
-        const load = () => import('@/scripts/motion');
-        const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(load, { timeout: 1500 }) : setTimeout(load, 200));
-        if (document.readyState === 'complete') idle();
-        else addEventListener('load', idle, { once: true });
-      } else {
-        for (const el of document.querySelectorAll('[data-reveal]')) el.classList.add('is-visible');
-      }
     </script>
   </body>
 </html>

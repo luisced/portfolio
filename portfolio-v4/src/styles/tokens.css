@@ -1,63 +1,34 @@
 /*
- * Design tokens — round three: brutalist, modern, scroll-told.
- * Black paper, bone ink, one acid accent. Type does the talking (Mona Sans variable,
- * width + weight axes). Structure is exposed: hairlines, counters, mono labels.
- * No gradients, no glass, no glow. Motion is GSAP + React Bits, gated by reduced-motion.
+ * Design tokens — neutral base. No design decisions taken here yet: system fonts,
+ * a readable measure, two themes. Replace freely; every component only uses these variables.
+ * Breakpoints live in postcss.config.mjs (`@media (--sm|--md|--lg|--xl)`).
  */
-
-/* Breakpoints live in postcss.config.mjs (`@media (--md)` etc.); nothing else may define one. */
 
 :root {
   color-scheme: dark;
 
-  --bg: #0a0a0a;
-  --bg-2: #111111;
-  --bg-3: #1a1a1a;
-  --bg-elev: var(--bg-2);
+  --bg: #111111;
+  --bg-2: #181818;
+  --fg: #ededed;
+  --fg-2: #b5b5b5;
+  --fg-3: #7a7a7a;
+  --line: #2a2a2a;
+  --accent: #3ddc84;
+  --accent-ink: #062a17;
+  --danger: #ff6b6b;
+  --ok: var(--accent);
 
-  --fg: #f1efe8;
-  --fg-2: #b9b6ad;
-  --fg-3: #7c7a73;
+  --font-display: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  --line: #f1efe8;
-  --line-2: rgba(241, 239, 232, 0.18);
-  --hair: 1px;
-
-  /* Acid: the only color. Used like a highlighter, never as a fill for large areas. */
-  --acid: #c8ff00;
-  --acid-ink: #0a0a0a;
-  --acid-soft: rgba(200, 255, 0, 0.14);
-  --brand: var(--acid);
-  --brand-ink: var(--acid-ink);
-  --brand-soft: var(--acid-soft);
-
-  --accent-brand: var(--acid);
-  --accent-amber: #ffb800;
-  --accent-rose: #ff5c7a;
-  --accent-sky: #57c4ff;
-  --accent-violet: #b48cff;
-
-  --ok: var(--acid);
-  --danger: #ff5c5c;
-  --warn: #ffb800;
-
-  --font-display: 'Mona Sans Variable', 'Mona Sans Fallback', 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'Mona Sans Variable', 'Mona Sans Fallback', 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'Azeret Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-
-  --text-xs: 0.72rem;
-  --text-sm: 0.85rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-md: 1rem;
-  --text-lg: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
-  --text-xl: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
-  --text-2xl: clamp(2.4rem, 1.4rem + 3.6vw, 4.5rem);
-  --text-3xl: clamp(3.2rem, 1.2rem + 7.5vw, 8rem);
-  --text-4xl: clamp(4rem, 0.5rem + 14vw, 15rem);
-
-  --leading-tight: 0.88;
-  --leading-snug: 1.1;
-  --leading-body: 1.5;
-  --measure: 62ch;
+  --text-lg: 1.25rem;
+  --text-xl: 1.6rem;
+  --text-2xl: 2.2rem;
+  --text-3xl: 3rem;
 
   --s-1: 0.25rem;
   --s-2: 0.5rem;
@@ -67,55 +38,21 @@
   --s-6: 2rem;
   --s-7: 3rem;
   --s-8: 4rem;
-  --s-9: 6rem;
-  --s-10: 8rem;
-  --gutter: clamp(1rem, 3vw, 3rem);
-
-  --r-1: 0;
-  --r-2: 0;
-  --r-3: 0;
-  --r-4: 0;
-
-  --shadow-1: none;
-  --shadow-2: none;
-  --shadow-3: none;
-
-  --d-1: 120ms;
-  --d-2: 240ms;
-  --d-3: 480ms;
-  --d-4: 900ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-
-  --z-nav: 50;
-  --z-overlay: 60;
-  --z-cursor: 90;
-  --z-toast: 70;
+  --gutter: clamp(1rem, 3vw, 2rem);
+  --measure: 65ch;
+  --container: 72rem;
 }
 
-/* Light theme: bone paper, black ink, same acid. */
 [data-theme='light'] {
   color-scheme: light;
 
-  --bg: #efede6;
-  --bg-2: #e6e3da;
-  --bg-3: #dcd9cf;
-
-  --fg: #0a0a0a;
-  --fg-2: #3d3c38;
-  --fg-3: #6f6d66;
-
-  --line: #0a0a0a;
-  --line-2: rgba(10, 10, 10, 0.18);
-
-  --acid: #9bd400;
-  --acid-soft: rgba(155, 212, 0, 0.18);
-
-  --accent-amber: #b57f00;
-  --accent-rose: #c42a4a;
-  --accent-sky: #1f7fbf;
-  --accent-violet: #6f43d8;
-
-  --danger: #c43a3a;
-  --warn: #b57f00;
+  --bg: #fafafa;
+  --bg-2: #f0f0f0;
+  --fg: #111111;
+  --fg-2: #444444;
+  --fg-3: #777777;
+  --line: #dddddd;
+  --accent: #14915a;
+  --accent-ink: #ffffff;
+  --danger: #c0392b;
 }

@@ -1,6 +1,4 @@
 ---
-import HeroIsland from '@/components/islands/HeroIsland';
-import Velocity from '@/components/islands/Velocity';
 import { getProfile, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -13,173 +11,17 @@ const t = useTranslations(locale);
 const profile = await getProfile();
 const p = profile.data;
 const home = localizePath(locale, '/');
-const [first = p.shortName, last = ''] = p.shortName.split(' ');
-const facts =
-  locale === 'es'
-    ? ['15,000+ estudiantes en UPocket', 'Channel manager en producción para Marriott / City Express', '99% de uptime', 'De 5 min a 30 s', '4 apps iOS entregadas', 'CDMX · UTC−6']
-    : ['15,000+ students on UPocket', 'Channel manager in production for Marriott / City Express', '99% uptime', '5 min → 30 s reply time', '4 iOS apps shipped', 'Mexico City · UTC−6'];
 ---
 
-<section id="hero" class="hero" aria-label={p.name}>
-  <div class="hero__meta container">
-    <p class="label">{p.headline[locale]}</p>
-    <p class="label hero__meta-right">{p.location} · {p.timezone}</p>
+<section id="hero" class="section" aria-labelledby="hero-title">
+  <div class="container">
+    <p class="label">{p.headline[locale]} · {p.location} · {p.timezone}</p>
+    <h1 id="hero-title">{p.name}</h1>
+    <p class="measure muted">{p.positioning[locale]}</p>
+    <p>
+      <a class="btn btn--primary" href={`${home}#work`}>{t('hero.cta.work')}</a>
+      <a class="btn" href={`${home}#contact`}>{t('hero.cta.contact')}</a>
+    </p>
+    <p class="label">{p.availability[locale]}</p>
   </div>
-
-  <div class="hero__name">
-    <HeroIsland client:media="(prefers-reduced-motion: no-preference)" first={first} last={last} />
-  </div>
-
-  <div class="hero__foot container">
-    <p class="hero__lead">{p.positioning[locale]}</p>
-    <div class="hero__actions">
-      <a class="btn btn--acid" href={`${home}#work`} data-cursor-target>{t('hero.cta.work')}</a>
-      <a class="btn" href={`${home}#contact`} data-cursor-target>{t('hero.cta.contact')}</a>
-    </div>
-    <p class="label hero__avail"><span class="hero__dot" aria-hidden="true"></span>{p.availability[locale]}</p>
-  </div>
-
-  <Velocity client:media="(prefers-reduced-motion: no-preference)" texts={facts} velocity={60} className="hero__velocity" />
 </section>
-
-<style>
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 1fr auto auto;
-    min-height: 100svh;
-    padding-top: 5.5rem;
-    border-bottom: var(--hair) solid var(--line);
-  }
-
-  .hero__meta {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--s-4);
-    color: var(--fg-2);
-    padding-bottom: var(--s-4);
-  }
-
-  .hero__meta-right {
-    display: none;
-  }
-
-  .hero__name {
-    position: relative;
-    min-height: clamp(14rem, 44vw, 40rem);
-    display: grid;
-    /* astro-island is display:contents → .hero-stage is this grid's item; never let it size to content. */
-    grid-template-columns: minmax(0, 1fr);
-    min-width: 0;
-    overflow: clip;
-  }
-
-  /* React Bits stage */
-  .hero__name :global(.hero-stage) {
-    position: relative;
-    height: 100%;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    min-width: 0;
-    width: 100%;
-  }
-
-  .hero__name :global(.hero-stage__grid) {
-    position: absolute;
-    inset: 0;
-  }
-
-  .hero__name :global(.dot-grid) {
-    padding: 0;
-  }
-
-  .hero__name :global(.hero-stage__type) {
-    position: relative;
-    z-index: 1;
-    padding-inline: var(--gutter);
-    height: 100%;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-content: center;
-    gap: 0.5rem;
-    margin: 0;
-    min-width: 0;
-  }
-
-  .hero__name :global(.hero-stage__line) {
-    position: relative;
-    display: block;
-    min-width: 0;
-    width: 100%;
-    overflow: clip;
-  }
-
-  .hero__name :global(.hero-stage__line > div) {
-    width: 100%;
-  }
-
-  /* TextPressure renders an h1 per line; keep one heading for the document outline. */
-  .hero__name :global(.hero-stage__line--acid .text-pressure-title) {
-    color: var(--acid);
-  }
-
-  /* Static state (no JS / reduced motion / before measurement): CSS sizes and weights the letters.
-     Once TextPressure measures, its inline font-size and per-letter variation settings take over. */
-  .hero__name :global(.text-pressure-title) {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-variation-settings: 'wdth' 112;
-    font-size: clamp(3.5rem, 12.5vw, 15rem);
-    letter-spacing: -0.03em;
-    line-height: 0.9;
-  }
-
-  .hero__foot {
-    display: grid;
-    gap: var(--s-5);
-    padding-block: var(--s-6);
-    border-top: var(--hair) solid var(--line-2);
-  }
-
-  .hero__lead {
-    font-size: var(--text-lg);
-    max-width: 48ch;
-    color: var(--fg-2);
-    font-variation-settings: 'wdth' 95;
-  }
-
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-3);
-  }
-
-  .hero__avail {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s-2);
-    color: var(--fg-3);
-  }
-
-  .hero__dot {
-    width: 8px;
-    height: 8px;
-    background: var(--acid);
-  }
-
-  .hero :global(.hero__velocity) {
-    border-top: var(--hair) solid var(--line);
-    padding-block: var(--s-3);
-  }
-
-  @media (--md) {
-    .hero__meta-right {
-      display: block;
-    }
-
-    .hero__foot {
-      grid-template-columns: minmax(0, 60ch);
-      padding-right: 22rem; /* clears the fixed control strip */
-    }
-  }
-</style>

@@ -1,9 +1,6 @@
-/* Two families, two files. Mona Sans variable carries both wght and wdth axes (TextPressure needs wdth). */
-@import '@fontsource-variable/mona-sans/wdth.css';
-@import '@fontsource/azeret-mono/latin-400.css';
-@import './font-fallbacks.css';
 @import './tokens.css';
 
+/* Neutral, readable defaults. This is a starting point, not a design. */
 *,
 *::before,
 *::after {
@@ -16,13 +13,6 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 body {
@@ -31,17 +21,13 @@ body {
   color: var(--fg);
   font-family: var(--font-body);
   font-size: var(--text-md);
-  line-height: var(--leading-body);
-  font-variation-settings: 'wdth' 100;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
 }
 
 img,
 picture,
-video,
-svg,
-canvas {
+svg {
   display: block;
   max-width: 100%;
 }
@@ -58,273 +44,141 @@ select {
   color: inherit;
 }
 
-button {
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-}
-
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration-color: var(--fg-3);
+  text-underline-offset: 0.15em;
 }
 
-p,
-li,
-figcaption {
-  text-wrap: pretty;
+a:hover {
+  text-decoration-color: var(--accent);
 }
 
 h1,
 h2,
-h3,
-h4 {
-  font-weight: 400;
-  line-height: var(--leading-snug);
-}
-
-:focus-visible {
-  outline: 2px solid var(--acid);
-  outline-offset: 3px;
-}
-
-::selection {
-  background: var(--acid);
-  color: var(--acid-ink);
-}
-
-/* ─── Type ─── */
-.display {
+h3 {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-variation-settings: 'wdth' 110;
-  text-transform: uppercase;
-  letter-spacing: -0.04em;
-  line-height: var(--leading-tight);
+  line-height: 1.15;
   text-wrap: balance;
 }
 
-.display--narrow {
-  font-variation-settings: 'wdth' 80;
-  letter-spacing: -0.02em;
+h1 {
+  font-size: var(--text-3xl);
 }
 
-.display--wide {
-  font-variation-settings: 'wdth' 125;
+h2 {
+  font-size: var(--text-2xl);
 }
 
-.mono,
-.label,
-.kicker {
+h3 {
+  font-size: var(--text-lg);
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.container {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--s-8);
+  border-top: 1px solid var(--line);
+}
+
+.section > .container > h2 {
+  margin-bottom: var(--s-5);
+}
+
+.label {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-}
-
-.mono {
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.kicker {
   color: var(--fg-3);
-}
-
-.measure {
-  max-width: var(--measure);
 }
 
 .muted {
   color: var(--fg-2);
 }
 
-/* Outlined giant numerals */
-.stroke {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--fg);
+.measure {
+  max-width: var(--measure);
 }
 
-/* ─── Layout ─── */
-.container {
-  width: 100%;
-  padding-inline: var(--gutter);
-}
-
-.section {
-  position: relative;
-  border-top: var(--hair) solid var(--line);
-}
-
-.rule {
-  border: 0;
-  border-top: var(--hair) solid var(--line);
-}
-
-.rule--soft {
-  border-color: var(--line-2);
-}
-
-/* Chapter header: counter + word, hairline-framed, huge */
-.chapter {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: end;
-  gap: var(--s-4);
-  padding: var(--s-4) var(--gutter);
-  border-bottom: var(--hair) solid var(--line);
-}
-
-.chapter__num {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--acid);
-}
-
-.chapter__title {
-  font-size: var(--text-2xl);
-}
-
-.chapter__meta {
-  color: var(--fg-3);
-  text-align: right;
-}
-
-/* ─── Controls ─── */
 .btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: var(--s-2);
-  min-height: 3rem;
-  padding: 0 var(--s-5);
-  border: var(--hair) solid var(--line);
-  background: transparent;
-  color: var(--fg);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition:
-    background-color var(--d-1) steps(1, end),
-    color var(--d-1) steps(1, end);
+  min-height: 2.75rem;
+  padding: 0 var(--s-4);
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  text-decoration: none;
 }
 
-.btn:hover {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.btn--acid {
-  background: var(--acid);
-  color: var(--acid-ink);
-  border-color: var(--acid);
-}
-
-.btn--acid:hover {
-  background: var(--fg);
-  border-color: var(--fg);
-  color: var(--bg);
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
 }
 
 .chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25em 0.6em;
-  border: var(--hair) solid var(--line-2);
+  display: inline-block;
+  padding: 0.15em 0.5em;
+  border: 1px solid var(--line);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--fg-2);
 }
 
-.mark {
-  background: var(--acid);
-  color: var(--acid-ink);
-  padding: 0 0.15em;
-}
-
-/* Hairline data rows (skills, education, revisions) */
-.rows {
+.list {
   list-style: none;
   padding: 0;
-  border-top: var(--hair) solid var(--line);
-}
-
-.rows > li {
   display: grid;
-  grid-template-columns: 3rem 1fr auto;
   gap: var(--s-4);
-  align-items: baseline;
-  padding: var(--s-3) 0;
-  border-bottom: var(--hair) solid var(--line-2);
 }
 
-/* ─── Prose ─── */
+.list > li {
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Long-form content (case studies, notes) */
 .prose {
   max-width: var(--measure);
   font-size: var(--text-lg);
-  line-height: var(--leading-body);
+  line-height: 1.6;
   color: var(--fg-2);
 }
 
 .prose > * + * {
-  margin-top: 1.1em;
+  margin-top: 1em;
 }
 
-.prose h2 {
-  margin-top: 2.4em;
-  padding-top: var(--s-3);
-  border-top: var(--hair) solid var(--line);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--acid);
-}
-
+.prose h2,
 .prose h3 {
-  font-weight: 700;
   color: var(--fg);
-  font-size: var(--text-md);
-}
-
-.prose strong {
-  color: var(--fg);
-  font-weight: 700;
+  margin-top: 2em;
 }
 
 .prose a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-decoration-color: var(--acid);
-  text-underline-offset: 0.15em;
-}
-
-.prose ul,
-.prose ol {
-  padding-left: 1.2em;
-}
-
-.prose li::marker {
-  color: var(--acid);
-}
-
-.prose blockquote {
-  border-left: 3px solid var(--acid);
-  padding-left: var(--s-4);
   color: var(--fg);
 }
 
 .prose pre {
   padding: var(--s-4);
-  border: var(--hair) solid var(--line-2);
   background: var(--bg-2);
+  border: 1px solid var(--line);
   overflow-x: auto;
   font-size: var(--text-sm);
-  color: var(--fg);
 }
 
 .prose code {
@@ -332,12 +186,11 @@ h4 {
   font-size: 0.9em;
 }
 
-.prose :not(pre) > code {
-  padding: 0.1em 0.35em;
-  border: var(--hair) solid var(--line-2);
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: var(--s-4);
 }
 
-/* ─── Utilities ─── */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -354,133 +207,41 @@ h4 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--z-toast);
+  z-index: 100;
   padding: var(--s-2) var(--s-4);
-  background: var(--acid);
-  color: var(--acid-ink);
-  font-family: var(--font-mono);
-  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--accent-ink);
   transform: translateY(-200%);
-  transition: transform var(--d-2) var(--ease-out);
 }
 
 .skip-link:focus-visible {
-  transform: translateY(0);
+  transform: none;
 }
 
-/* Reveal hook (motion.ts): hard wipe, no opacity — LCP-safe. */
-@media (--motion-ok) {
-  html.js [data-reveal] {
-    clip-path: inset(0 0 100% 0);
-  }
-
-  html.js [data-reveal].is-visible {
-    clip-path: inset(-1px);
-    transition: clip-path var(--d-3) var(--ease-out);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
+/* Form */
+.field {
+  display: grid;
+  gap: var(--s-2);
 }
 
-/* React Bits cursor hides the native one on pointer devices only */
-@media (--pointer) {
-  html.js.has-cursor,
-  html.js.has-cursor a,
-  html.js.has-cursor button {
-    cursor: none;
-  }
-}
-
-/* Film grain (React Bits Noise) pinned to the viewport */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-
-.grain .noise-overlay {
-  position: absolute;
-  inset: 0;
+.field input,
+.field textarea {
   width: 100%;
-  height: 100%;
-}
-
-/* Velocity marquee (islands/Velocity.tsx, GSAP) */
-.velocity {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.velocity__track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-}
-
-.velocity__row {
-  flex: 0 0 auto;
-  padding-right: 0.5em;
-}
-
-.velocity .velocity__row {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  filter: none;
-  font-size: var(--text-sm);
-  line-height: 1.2;
-  color: var(--fg-2);
-}
-
-.velocity--lg .velocity__row {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-variation-settings: 'wdth' 115;
-  letter-spacing: -0.03em;
-  font-size: var(--text-3xl);
-  line-height: 1;
+  padding: var(--s-3);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
   color: var(--fg);
 }
 
-
-
-/* Fixed menu chrome (React Bits StaggeredMenu) */
-.staggered-menu-wrapper .staggered-menu-header {
-  padding: var(--s-5) var(--gutter);
+.field [aria-invalid='true'] {
+  border-color: var(--danger);
 }
 
-.sm-logo {
-  transition: opacity var(--d-2) var(--ease-out);
+.field__error {
+  color: var(--danger);
+  font-size: var(--text-sm);
 }
 
-html.scrolled .sm-logo {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.staggered-menu-wrapper .sm-toggle {
-  padding: 0.55rem 0.9rem;
-  border: var(--hair) solid var(--line);
-  background: var(--bg);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* Reduced motion: the animated menu island never hydrates; show the static nav instead. */
-.nav-static {
+.field__error[hidden] {
   display: none;
-}
-
-@media (--motion-reduce) {
-  .staggered-menu-wrapper {
-    display: none;
-  }
-
-  .nav-static {
-    display: flex;
-  }
 }

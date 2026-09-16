@@ -15,113 +15,20 @@ const notes = await getNotes(locale);
 ---
 
 <Base locale={locale} title={t('notes.title')} description={t('notes.description')} path="/notes/">
-  <section class="index" aria-labelledby="notes-title">
-    <header class="chapter index__head">
-      <span class="chapter__num">04</span>
-      <h1 id="notes-title" class="display chapter__title">{t('notes.title')}</h1>
-      <span class="label chapter__meta">{t('notes.kicker')} · {notes.length}</span>
-    </header>
-
+  <section class="section container" aria-labelledby="notes-title">
+    <h1 id="notes-title">{t('notes.title')}</h1>
     {notes.length === 0 ? (
-      <p class="container muted index__empty">{t('notes.empty')}</p>
+      <p class="muted">{t('notes.empty')}</p>
     ) : (
-      <ol class="index__list">
-        {notes.map((n, i) => (
+      <ol class="list">
+        {notes.map((n) => (
           <li>
-            <a class="note" href={localizePath(locale, `/notes/${n.data.slug}/`)} data-cursor-target data-reveal>
-              <span class="note__num display stroke">{String(i + 1).padStart(2, '0')}</span>
-              <span class="note__body">
-                <span class="note__title display">{n.data.title}</span>
-                <span class="note__summary">{n.data.summary}</span>
-              </span>
-              <span class="note__meta label">
-                <time datetime={n.data.date.toISOString()}>{formatDate(locale, n.data.date, { month: 'short' })}</time>
-                <span>{readingMinutes(n.body)} {t('notes.readingTime')}</span>
-                <span>{n.data.tags.join(' / ')}</span>
-              </span>
-            </a>
+            <p class="label"><time datetime={n.data.date.toISOString()}>{formatDate(locale, n.data.date, { month: 'short' })}</time> · {readingMinutes(n.body)} {t('notes.readingTime')} · {n.data.tags.join(', ')}</p>
+            <h2><a href={localizePath(locale, `/notes/${n.data.slug}/`)}>{n.data.title}</a></h2>
+            <p class="muted">{n.data.summary}</p>
           </li>
         ))}
       </ol>
     )}
   </section>
 </Base>
-
-<style>
-  .index {
-    padding-top: 5.5rem;
-    padding-bottom: var(--s-9);
-  }
-
-  .index__head {
-    border-top: var(--hair) solid var(--line);
-  }
-
-  .index__list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .index__empty {
-    padding-block: var(--s-7);
-  }
-
-  .note {
-    display: grid;
-    gap: var(--s-3);
-    padding: var(--s-6) var(--gutter);
-    border-bottom: var(--hair) solid var(--line-2);
-    transition: background-color var(--d-1) steps(1, end);
-  }
-
-  .note:hover {
-    background: var(--bg-2);
-  }
-
-  .note__num {
-    font-size: var(--text-2xl);
-    line-height: 1;
-  }
-
-  .note__body {
-    display: grid;
-    gap: var(--s-2);
-  }
-
-  .note__title {
-    font-size: var(--text-xl);
-    font-variation-settings: 'wdth' 100;
-    text-transform: none;
-    letter-spacing: -0.02em;
-  }
-
-  .note:hover .note__title {
-    color: var(--acid);
-  }
-
-  .note__summary {
-    color: var(--fg-2);
-    max-width: 60ch;
-  }
-
-  .note__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-4);
-    color: var(--fg-3);
-  }
-
-  @media (--md) {
-    .note {
-      grid-template-columns: 6rem 1fr 14rem;
-      align-items: start;
-    }
-
-    .note__meta {
-      flex-direction: column;
-      gap: var(--s-2);
-      align-items: flex-end;
-      text-align: right;
-    }
-  }
-</style>

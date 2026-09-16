@@ -73,244 +73,48 @@ const { Content } = await render(project);
     ]),
   ]}
 >
-  <article class="cs">
-    <header class="chapter cs__chapter">
-      <span class="chapter__num">{String(currentIndex + 1).padStart(2, '0')}</span>
-      <p class="label cs__crumbs">
-        <a href={localizePath(locale, '/work/')} data-cursor-target>{t('work.all')}</a> / {categoryLabel} / {project.data.timeframe}
-      </p>
-      <span class="label chapter__meta">{currentIndex + 1} / {projects.length}</span>
-    </header>
+  <article class="section container">
+    <p class="label"><a href={localizePath(locale, '/work/')}>{t('work.all')}</a> / {categoryLabel} / {project.data.timeframe} · {currentIndex + 1} / {projects.length}</p>
+    <h1>{project.data.title}</h1>
+    <p class="measure muted" style="font-size: var(--text-lg)">{project.data.outcome}</p>
 
-    <div class="cs__hero container">
-      <h1 class="display cs__title">{project.data.title}</h1>
-      <p class="cs__outcome">{project.data.outcome}</p>
-    </div>
+    <Picture fallbackFormat="webp" src={project.data.cover} alt={project.data.coverAlt} widths={[720, 1200, 1800]} sizes="100vw" formats={['avif', 'webp']} loading="eager" decoding="async" />
 
-    <div class="cs__cover">
-      <Picture
-        fallbackFormat="webp"
-        src={project.data.cover}
-        alt={project.data.coverAlt}
-        widths={[720, 1200, 1800]}
-        sizes="100vw"
-        formats={['avif', 'webp']}
-        loading="eager"
-        decoding="async"
-      />
-    </div>
+    <dl>
+      <dt class="label">{t('work.role')}</dt><dd>{project.data.role}</dd>
+      <dt class="label">{t('work.timeframe')}</dt><dd>{project.data.timeframe}</dd>
+      <dt class="label">{t('work.stack')}</dt><dd>{project.data.stack.map((s) => <span class="chip">{s}</span>)}</dd>
+      {(project.data.links.live || project.data.links.repo) && (
+        <>
+          <dt class="label">Links</dt>
+          <dd>
+            {project.data.links.live && <a class="btn btn--primary" href={project.data.links.live} rel="noopener" target="_blank">{t('work.live')} ↗</a>}
+            {project.data.links.repo && <a class="btn" href={project.data.links.repo} rel="noopener" target="_blank">{t('work.repo')} ↗</a>}
+          </dd>
+        </>
+      )}
+    </dl>
 
-    <div class="cs__grid container">
-      <aside class="cs__spec">
-        <dl class="cs__dl">
-          <div><dt class="label">{t('work.role')}</dt><dd>{project.data.role}</dd></div>
-          <div><dt class="label">{t('work.timeframe')}</dt><dd>{project.data.timeframe}</dd></div>
-          <div>
-            <dt class="label">{t('work.stack')}</dt>
-            <dd class="cs__stack">{project.data.stack.map((s) => <span class="chip">{s}</span>)}</dd>
-          </div>
-          {(project.data.links.live || project.data.links.repo) && (
-            <div>
-              <dt class="label">Links</dt>
-              <dd class="cs__links">
-                {project.data.links.live && <a class="btn btn--acid" href={project.data.links.live} rel="noopener" target="_blank" data-cursor-target>{t('work.live')} ↗</a>}
-                {project.data.links.repo && <a class="btn" href={project.data.links.repo} rel="noopener" target="_blank" data-cursor-target>{t('work.repo')} ↗</a>}
-              </dd>
-            </div>
-          )}
-        </dl>
-      </aside>
-
-      <div class="prose cs__prose">
-        <Content />
-      </div>
+    <div class="prose">
+      <Content />
     </div>
 
     {project.data.gallery.length > 0 && (
-      <ol class="cs__gallery">
-        {project.data.gallery.map((image, i) => (
+      <ol class="list">
+        {project.data.gallery.map((image) => (
           <li>
             <figure>
               <Picture fallbackFormat="webp" src={image.src} alt={image.alt} widths={[480, 960]} sizes="(min-width: 48em) 50vw, 100vw" formats={['avif', 'webp']} loading="lazy" />
-              <figcaption class="label"><span class="mono">{String(i + 1).padStart(2, '0')}</span> {image.alt}</figcaption>
+              <figcaption class="label">{image.alt}</figcaption>
             </figure>
           </li>
         ))}
       </ol>
     )}
 
-    <nav class="cs__nav" aria-label={t('work.next')}>
-      <a class="cs__nav-link" href={previousPath} data-cursor-target>
-        <span class="label">← {t('work.prev')}</span>
-        <span class="display cs__nav-title">{previousProject.data.title}</span>
-      </a>
-      <a class="cs__nav-link cs__nav-link--next" href={nextPath} data-cursor-target>
-        <span class="label">{t('work.next')} →</span>
-        <span class="display cs__nav-title">{nextProject.data.title}</span>
-      </a>
+    <nav aria-label={t('work.next')}>
+      <a href={previousPath}>← {t('work.prev')}: {previousProject.data.title}</a> ·
+      <a href={nextPath}>{t('work.next')}: {nextProject.data.title} →</a>
     </nav>
   </article>
 </Base>
-
-<style>
-  .cs {
-    padding-top: 5.5rem;
-  }
-
-  .cs__chapter {
-    border-top: var(--hair) solid var(--line);
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-  }
-
-  .cs__crumbs {
-    color: var(--fg-3);
-  }
-
-  .cs__crumbs a:hover {
-    color: var(--acid);
-  }
-
-  .cs__hero {
-    display: grid;
-    gap: var(--s-5);
-    padding-block: var(--s-7) var(--s-6);
-  }
-
-  .cs__title {
-    font-size: var(--text-3xl);
-  }
-
-  .cs__outcome {
-    font-size: var(--text-xl);
-    color: var(--fg-2);
-    max-width: 30ch;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
-
-  .cs__cover {
-    border-block: var(--hair) solid var(--line);
-    background: var(--bg-2);
-  }
-
-  .cs__cover :global(img) {
-    width: 100%;
-    max-height: 80svh;
-    object-fit: cover;
-  }
-
-  .cs__grid {
-    display: grid;
-    gap: var(--s-7);
-    padding-block: var(--s-7) var(--s-9);
-  }
-
-  .cs__dl {
-    display: grid;
-    gap: var(--s-4);
-    margin: 0;
-  }
-
-  .cs__dl div {
-    display: grid;
-    gap: var(--s-2);
-    padding-top: var(--s-3);
-    border-top: var(--hair) solid var(--line-2);
-  }
-
-  .cs__dl dt {
-    color: var(--fg-3);
-  }
-
-  .cs__dl dd {
-    margin: 0;
-  }
-
-  .cs__stack,
-  .cs__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
-  }
-
-  .cs__gallery {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    border-top: var(--hair) solid var(--line);
-  }
-
-  .cs__gallery figure {
-    margin: 0;
-    display: grid;
-    gap: var(--s-3);
-    padding: var(--s-5) var(--gutter);
-    border-bottom: var(--hair) solid var(--line-2);
-  }
-
-  .cs__gallery :global(img) {
-    border: var(--hair) solid var(--line);
-    width: 100%;
-  }
-
-  .cs__gallery figcaption {
-    color: var(--fg-3);
-  }
-
-  .cs__nav {
-    display: grid;
-    border-top: var(--hair) solid var(--line);
-  }
-
-  .cs__nav-link {
-    display: grid;
-    gap: var(--s-2);
-    padding: var(--s-6) var(--gutter) var(--s-8);
-    border-bottom: var(--hair) solid var(--line-2);
-    transition: background-color var(--d-1) steps(1, end);
-  }
-
-  .cs__nav-link:hover {
-    background: var(--bg-2);
-  }
-
-  .cs__nav-link:hover .cs__nav-title {
-    color: var(--acid);
-  }
-
-  .cs__nav-title {
-    font-size: var(--text-xl);
-    font-variation-settings: 'wdth' 100;
-  }
-
-  @media (--md) {
-    .cs__grid {
-      grid-template-columns: 18rem 1fr;
-      gap: var(--s-9);
-    }
-
-    .cs__spec {
-      position: sticky;
-      top: var(--s-6);
-      align-self: start;
-    }
-
-    .cs__gallery {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .cs__gallery li:nth-child(odd) figure {
-      border-right: var(--hair) solid var(--line-2);
-    }
-
-    .cs__nav {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .cs__nav-link--next {
-      text-align: right;
-      border-left: var(--hair) solid var(--line-2);
-    }
-  }
-</style>

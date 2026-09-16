@@ -1,6 +1,6 @@
 # Portfolio V4 — Redesign Plan
 
-Owner: Luis Cedillo Maldonado. Status: approved direction, ready for implementation.
+Owner: Luis Cedillo Maldonado. Status: **engine built; visual direction reset (2026-09-15).** Three designs were built and rejected — see `portfolio-v4/README.md` for the commits. §1 "Aesthetic" is open again; §3, §7 and §9 phases 1–4 describe the rejected first direction and are kept only as history.
 Analysis inputs: `local://portfolio-analysis.md`, `local://analysis-v1.md`, `local://analysis-v2.md`, `local://analysis-v3.md`.
 Reference worktrees: V1 `/tmp/pf-v1` (`origin/dev`), V2 `portfolio-v2/` (this branch), V3 `/tmp/pf-v3/portfolio-v3` (`origin/portfolio-v3`).
 

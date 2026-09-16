@@ -1,5 +1,4 @@
 ---
-import Menu from '@/components/Menu';
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -13,120 +12,44 @@ const t = useTranslations(locale);
 const profile = await getProfile();
 const home = localizePath(locale, '/');
 const alt = otherLocale(locale);
-const items = [
-  { label: t('nav.work'), ariaLabel: t('nav.work'), link: `${home}#work` },
-  { label: t('nav.about'), ariaLabel: t('nav.about'), link: `${home}#about` },
-  { label: t('nav.notes'), ariaLabel: t('nav.notes'), link: localizePath(locale, '/notes/') },
-  { label: t('nav.contact'), ariaLabel: t('nav.contact'), link: `${home}#contact` },
-];
-const socials = profile.data.socials.map((s) => ({ label: s.label, link: s.url }));
 ---
 
-<!-- Full-screen staggered menu (React Bits). Its header holds the mark (left) and MENU (right).
-     Hydrates only when motion is welcome; reduced-motion users get the static nav below (CSS-switched). -->
-<Menu client:media="(prefers-reduced-motion: no-preference)" items={items} socials={socials} />
-<nav class="nav-static" aria-label="Primary">
-  <a class="nav-static__mark" href={home} aria-label={profile.data.shortName}><img src="/mark.svg" alt="" width="64" height="32" /></a>
-  <ul>
-    {items.map((i) => <li><a class="mono" href={i.link} data-cursor-target>{i.label}</a></li>)}
-  </ul>
-</nav>
-
-<!-- Bottom-left control strip: locale, theme, position. Plain HTML; theme.ts wires the toggle. -->
-<div class="strip" data-nav>
-  <a class="strip__item mono" href={home}>{profile.data.shortName}</a>
-  <a class="strip__item mono" href={localizePath(alt, path)} hreflang={alt} lang={alt}>
-    {t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span>
-  </a>
-  <button class="strip__item mono" type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">
-    <span class="strip__swatch" aria-hidden="true"></span>{t('theme.toggle')}
-  </button>
-  <span class="strip__item strip__item--pos mono" aria-hidden="true"><span data-scroll-pct>000</span>%</span>
-</div>
+<header class="nav container">
+  <a href={home}><strong>{profile.data.shortName}</strong></a>
+  <nav aria-label="Primary">
+    <a href={`${home}#work`}>{t('nav.work')}</a>
+    <a href={`${home}#about`}>{t('nav.about')}</a>
+    <a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a>
+    <a href={`${home}#contact`}>{t('nav.contact')}</a>
+    <a href={localizePath(alt, path)} hreflang={alt} lang={alt}>{t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span></a>
+    <button type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">◐</button>
+  </nav>
+</header>
 
 <style>
-  .nav-static {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: var(--z-nav);
-    align-items: center;
+  .nav {
+    display: flex;
     justify-content: space-between;
-    gap: var(--s-4);
-    padding: var(--s-4) var(--gutter);
-    background: var(--bg);
-    border-bottom: var(--hair) solid var(--line);
-  }
-
-  .nav-static ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: var(--s-5);
-  }
-
-  .nav-static a {
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .nav-static a:hover {
-    color: var(--acid);
-  }
-
-  .strip {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    z-index: var(--z-nav);
-    display: flex;
-    border-top: var(--hair) solid var(--line);
-    border-left: var(--hair) solid var(--line);
-    background: var(--bg);
-  }
-
-  .strip__item {
-    display: inline-flex;
     align-items: center;
-    gap: var(--s-2);
-    min-height: 2.5rem;
-    padding: 0 var(--s-3);
-    border-right: var(--hair) solid var(--line-2);
-    font-size: var(--text-xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--fg-2);
-    transition:
-      background-color var(--d-1) steps(1, end),
-      color var(--d-1) steps(1, end);
+    gap: var(--s-4);
+    padding-block: var(--s-4);
   }
 
-  .strip__item:last-child {
-    border-right: 0;
+  .nav a {
+    text-decoration: none;
   }
 
-  a.strip__item:hover,
-  button.strip__item:hover {
-    background: var(--fg);
-    color: var(--bg);
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    align-items: center;
   }
 
-  .strip__swatch {
-    width: 10px;
-    height: 10px;
-    background: var(--acid);
-  }
-
-  .strip__item--pos {
-    font-variant-numeric: tabular-nums;
-    color: var(--fg-3);
-    display: none;
-  }
-
-  @media (--md) {
-    .strip__item--pos {
-      display: inline-flex;
-    }
+  button {
+    background: none;
+    border: 1px solid var(--line);
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
   }
 </style>

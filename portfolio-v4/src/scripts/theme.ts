@@ -30,16 +30,3 @@ addEventListener('keydown', (e) => {
 
 // Scroll position readout in the control strip (000–100).
 const pct = document.querySelector<HTMLElement>('[data-scroll-pct]');
-// Past the hero, the fixed mark gets out of the way of chapter titles (see base.css .scrolled).
-const onScroll = () => root.classList.toggle('scrolled', scrollY > 160);
-addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-
-if (pct) {
-  const update = () => {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    pct.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, '0');
-  };
-  addEventListener('scroll', update, { passive: true });
-  update();
-}

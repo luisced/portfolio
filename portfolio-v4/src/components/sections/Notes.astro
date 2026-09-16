@@ -12,102 +12,22 @@ const notes = (await getNotes(locale)).slice(0, 3);
 ---
 
 <section id="notes" class="section" aria-labelledby="notes-title">
-  <header class="chapter">
-    <span class="chapter__num">04</span>
-    <h2 id="notes-title" class="display chapter__title">{t('notes.title')}</h2>
-    <a class="label chapter__meta" href={localizePath(locale, '/notes/')} data-cursor-target>{t('notes.all')} →</a>
-  </header>
-
-  {notes.length === 0 ? (
-    <p class="container muted notes__empty">{t('notes.empty')}</p>
-  ) : (
-    <ol class="notes">
-      {notes.map((n, i) => (
-        <li>
-          <a class="note" href={localizePath(locale, `/notes/${n.data.slug}/`)} data-cursor-target data-reveal>
-            <span class="note__num display stroke">{String(i + 1).padStart(2, '0')}</span>
-            <span class="note__body">
-              <span class="note__title display">{n.data.title}</span>
-              <span class="note__summary">{n.data.summary}</span>
-            </span>
-            <span class="note__meta label">
-              <span>{formatDate(locale, n.data.date, { month: 'short' })}</span>
-              <span>{readingMinutes(n.body)} {t('notes.readingTime')}</span>
-              <span class="note__tags">{n.data.tags.join(' / ')}</span>
-            </span>
-          </a>
-        </li>
-      ))}
-    </ol>
-  )}
+  <div class="container">
+    <p class="label">{t('notes.kicker')}</p>
+    <h2 id="notes-title">{t('notes.title')}</h2>
+    {notes.length === 0 ? (
+      <p class="muted">{t('notes.empty')}</p>
+    ) : (
+      <ul class="list">
+        {notes.map((n) => (
+          <li>
+            <p class="label">{formatDate(locale, n.data.date, { month: 'short' })} · {readingMinutes(n.body)} {t('notes.readingTime')}</p>
+            <h3><a href={localizePath(locale, `/notes/${n.data.slug}/`)}>{n.data.title}</a></h3>
+            <p class="muted">{n.data.summary}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+    <p><a href={localizePath(locale, '/notes/')}>{t('notes.all')} →</a></p>
+  </div>
 </section>
-
-<style>
-  .notes {
-    list-style: none;
-    padding: 0;
-  }
-
-  .notes__empty {
-    padding-block: var(--s-7);
-  }
-
-  .note {
-    display: grid;
-    gap: var(--s-3);
-    padding: var(--s-6) var(--gutter);
-    border-bottom: var(--hair) solid var(--line-2);
-    transition: background-color var(--d-1) steps(1, end);
-  }
-
-  .note:hover {
-    background: var(--bg-2);
-  }
-
-  .note__num {
-    font-size: var(--text-2xl);
-    line-height: 1;
-  }
-
-  .note__body {
-    display: grid;
-    gap: var(--s-2);
-  }
-
-  .note__title {
-    font-size: var(--text-xl);
-    font-variation-settings: 'wdth' 100;
-    text-transform: none;
-    letter-spacing: -0.02em;
-  }
-
-  .note:hover .note__title {
-    color: var(--acid);
-  }
-
-  .note__summary {
-    color: var(--fg-2);
-    max-width: 60ch;
-  }
-
-  .note__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-4);
-    color: var(--fg-3);
-  }
-
-  @media (--md) {
-    .note {
-      grid-template-columns: 6rem 1fr 14rem;
-      align-items: start;
-    }
-
-    .note__meta {
-      flex-direction: column;
-      gap: var(--s-2);
-      text-align: right;
-      align-items: flex-end;
-    }
-  }
-</style>

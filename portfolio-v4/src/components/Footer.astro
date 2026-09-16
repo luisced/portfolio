@@ -1,5 +1,4 @@
 ---
-import Velocity from '@/components/islands/Velocity';
 import { getProfile, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -10,90 +9,31 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const profile = await getProfile();
-const p = profile.data;
-const home = localizePath(locale, '/');
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer">
-  <Velocity client:media="(prefers-reduced-motion: no-preference)" texts={[p.name, p.headline[locale], `${p.location} · ${year}`]} velocity={90} size="lg" className="footer__velocity" />
-
-  <div class="footer__grid">
-    <nav class="footer__col" aria-label="Footer">
-      <p class="label footer__h">Index</p>
-      <a href={`${home}#work`} data-cursor-target>01 {t('nav.work')}</a>
-      <a href={`${home}#timeline`} data-cursor-target>02 {t('timeline.title')}</a>
-      <a href={`${home}#about`} data-cursor-target>03 {t('nav.about')}</a>
-      <a href={localizePath(locale, '/notes/')} data-cursor-target>04 {t('nav.notes')}</a>
-      <a href={`${home}#contact`} data-cursor-target>05 {t('nav.contact')}</a>
+<footer class="footer section">
+  <div class="container footer__row">
+    <p class="label">© {year} {profile.data.name}. {t('footer.rights')}</p>
+    <nav aria-label="Footer" class="footer__links">
+      {profile.data.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label}</a>)}
+      <a href={`mailto:${profile.data.email}`}>{profile.data.email}</a>
+      <a href={localizePath(locale, '/rss.xml')}>{t('footer.rss')}</a>
     </nav>
-    <div class="footer__col">
-      <p class="label footer__h">Elsewhere</p>
-      {p.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank" data-cursor-target>{s.label} <span class="mono footer__handle">{s.handle}</span></a>)}
-      <a href={`mailto:${p.email}`} data-cursor-target>{p.email}</a>
-      <a href={localizePath(locale, '/rss.xml')} data-cursor-target>{t('footer.rss')}</a>
-    </div>
-    <div class="footer__col footer__col--meta">
-      <p class="label footer__h">Colophon</p>
-      <p class="muted">{t('footer.built')}</p>
-      <p class="mono muted">Mona Sans · Azeret Mono · GSAP · React Bits</p>
-      <p class="label footer__legal">© {year} {p.name}. {t('footer.rights')}</p>
-    </div>
   </div>
 </footer>
 
 <style>
-  .footer {
-    border-top: var(--hair) solid var(--line);
-    padding-bottom: 3rem; /* clears the fixed control strip */
+  .footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-4);
   }
 
-  .footer :global(.footer__velocity) {
-    padding-block: var(--s-6);
-    border-bottom: var(--hair) solid var(--line);
-  }
-
-  .footer__grid {
-    display: grid;
-    gap: var(--s-6);
-    padding: var(--s-7) var(--gutter) var(--s-8);
-  }
-
-  .footer__col {
-    display: grid;
-    gap: var(--s-2);
-    align-content: start;
-    font-size: var(--text-lg);
-    font-weight: 700;
-  }
-
-  .footer__col a:hover {
-    color: var(--acid);
-  }
-
-  .footer__h {
-    color: var(--acid);
-    margin-bottom: var(--s-2);
-  }
-
-  .footer__handle {
-    color: var(--fg-3);
-    font-weight: 400;
-  }
-
-  .footer__col--meta {
-    font-weight: 400;
-    font-size: var(--text-sm);
-  }
-
-  .footer__legal {
-    margin-top: var(--s-4);
-    color: var(--fg-3);
-  }
-
-  @media (--md) {
-    .footer__grid {
-      grid-template-columns: 1fr 1fr 1.4fr;
-    }
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
   }
 </style>

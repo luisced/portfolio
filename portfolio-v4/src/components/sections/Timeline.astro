@@ -1,5 +1,4 @@
 ---
-import TimelineIsland, { type Milestone } from '@/components/islands/TimelineIsland';
 import { formatMonth, getExperience, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -9,125 +8,23 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const accents: Record<string, string> = {
-  brand: '#c8ff00',
-  amber: '#ffb800',
-  rose: '#ff5c7a',
-  sky: '#57c4ff',
-  violet: '#b48cff',
-};
-const experience = (await getExperience()).slice().reverse(); // oldest first → newest lands on top
-const items: Milestone[] = experience.map((e, i) => ({
-  index: String(i + 1).padStart(2, '0'),
-  range: `${formatMonth(locale, e.data.start)} — ${e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}`,
-  role: e.data.role[locale],
-  org: e.data.org,
-  location: e.data.location,
-  highlights: e.data.highlights[locale],
-  tags: e.data.tags,
-  accent: accents[e.data.accent] ?? '#c8ff00',
-}));
+const experience = await getExperience();
 ---
 
 <section id="timeline" class="section" aria-labelledby="timeline-title">
-  <header class="chapter">
-    <span class="chapter__num">02</span>
-    <h2 id="timeline-title" class="display chapter__title">{t('timeline.title')}</h2>
-    <span class="label chapter__meta">{t('timeline.kicker')}</span>
-  </header>
-  <TimelineIsland client:media="(prefers-reduced-motion: no-preference)" items={items} />
+  <div class="container">
+    <p class="label">{t('timeline.kicker')}</p>
+    <h2 id="timeline-title">{t('timeline.title')}</h2>
+    <ol class="list">
+      {experience.map((e) => (
+        <li>
+          <p class="label">{formatMonth(locale, e.data.start)} — {e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}</p>
+          <h3>{e.data.role[locale]}</h3>
+          <p class="muted">{e.data.org} · {e.data.location}</p>
+          <ul>{e.data.highlights[locale].map((h) => <li>{h}</li>)}</ul>
+          <p>{e.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
 </section>
-
-<style is:global>
-  .timeline__stack.scroll-stack-scroller {
-    overflow: visible;
-    height: auto;
-    transform: none;
-  }
-
-  .timeline__stack .scroll-stack-inner {
-    padding: var(--s-8) var(--gutter) 40vh;
-    min-height: 0;
-  }
-
-  .milestone.scroll-stack-card {
-    height: auto;
-    min-height: 22rem;
-    margin: 0 0 var(--s-6);
-    padding: var(--s-6) var(--s-6) var(--s-7);
-    border-radius: 0;
-    border: var(--hair) solid var(--line);
-    background: var(--bg);
-    box-shadow: none;
-    display: grid;
-    gap: var(--s-4);
-    align-content: start;
-  }
-
-  .milestone__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--s-4);
-  }
-
-  .milestone__index {
-    font-size: var(--text-2xl);
-    line-height: 1;
-  }
-
-  .milestone__role {
-    font-size: var(--text-xl);
-    font-variation-settings: 'wdth' 100;
-  }
-
-  .milestone__org {
-    color: var(--fg-2);
-    font-size: var(--text-lg);
-  }
-
-  .milestone__loc {
-    color: var(--fg-3);
-  }
-
-  .milestone__list {
-    padding-left: 1.1em;
-    color: var(--fg-2);
-    max-width: 60ch;
-  }
-
-  .milestone__list li::marker {
-    color: var(--acid);
-  }
-
-  .milestone__tags {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
-  }
-
-  @media (--md) {
-    .milestone.scroll-stack-card {
-      grid-template-columns: 1fr 1.4fr;
-      column-gap: var(--s-8);
-      padding: var(--s-7);
-    }
-
-    .milestone__head,
-    .milestone__role,
-    .milestone__org {
-      grid-column: 1;
-    }
-
-    .milestone__list {
-      grid-column: 2;
-      grid-row: 1 / span 3;
-    }
-
-    .milestone__tags {
-      grid-column: 1 / -1;
-    }
-  }
-</style>

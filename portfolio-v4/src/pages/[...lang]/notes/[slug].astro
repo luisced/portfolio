@@ -57,108 +57,12 @@ const published = note.data.date.toISOString();
     <meta property="article:published_time" content={published} />
   </Fragment>
 
-  <article class="na">
-    <header class="chapter na__chapter">
-      <span class="chapter__num">04</span>
-      <p class="label na__crumbs"><a href={localizePath(locale, '/notes/')} data-cursor-target>{t('notes.back')}</a> / {note.data.tags.join(' / ')}</p>
-      <span class="label chapter__meta"><time datetime={published}>{formatDate(locale, note.data.date, { month: 'short' })}</time> · {readingMinutes(note.body)} {t('notes.readingTime')}</span>
-    </header>
-
-    <div class="na__hero container">
-      <h1 class="display na__title">{note.data.title}</h1>
-      <p class="na__summary">{note.data.summary}</p>
+  <article class="section container">
+    <p class="label"><a href={localizePath(locale, '/notes/')}>{t('notes.back')}</a> · <time datetime={published}>{formatDate(locale, note.data.date, { month: 'short' })}</time> · {readingMinutes(note.body)} {t('notes.readingTime')} · {note.data.tags.join(', ')}</p>
+    <h1>{note.data.title}</h1>
+    <p class="measure muted" style="font-size: var(--text-lg)">{note.data.summary}</p>
+    <div class="prose">
+      <Content />
     </div>
-
-    <div class="na__body container">
-      <div class="prose">
-        <Content />
-      </div>
-    </div>
-
-    <nav class="na__foot" aria-label={t('notes.back')}>
-      <a class="na__back" href={localizePath(locale, '/notes/')} data-cursor-target>
-        <span class="label">← {t('notes.back')}</span>
-        <span class="display na__back-title">{t('notes.title')}</span>
-      </a>
-    </nav>
   </article>
 </Base>
-
-<style>
-  .na {
-    padding-top: 5.5rem;
-  }
-
-  .na__chapter {
-    border-top: var(--hair) solid var(--line);
-    align-items: center;
-  }
-
-  .na__crumbs {
-    color: var(--fg-3);
-  }
-
-  .na__crumbs a:hover {
-    color: var(--acid);
-  }
-
-  .na__hero {
-    display: grid;
-    gap: var(--s-5);
-    padding-block: var(--s-7) var(--s-6);
-    border-bottom: var(--hair) solid var(--line);
-  }
-
-  .na__title {
-    font-size: var(--text-3xl);
-    text-transform: none;
-    letter-spacing: -0.035em;
-    max-width: 18ch;
-  }
-
-  .na__summary {
-    font-size: var(--text-xl);
-    color: var(--fg-2);
-    max-width: 34ch;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
-
-  .na__body {
-    padding-block: var(--s-7) var(--s-9);
-  }
-
-  .na__foot {
-    border-top: var(--hair) solid var(--line);
-  }
-
-  .na__back {
-    display: grid;
-    gap: var(--s-2);
-    padding: var(--s-6) var(--gutter) var(--s-8);
-    transition: background-color var(--d-1) steps(1, end);
-  }
-
-  .na__back:hover {
-    background: var(--bg-2);
-  }
-
-  .na__back:hover .na__back-title {
-    color: var(--acid);
-  }
-
-  .na__back-title {
-    font-size: var(--text-xl);
-  }
-
-  @media (--md) {
-    .na__body {
-      display: grid;
-      grid-template-columns: 1fr minmax(0, var(--measure)) 1fr;
-    }
-
-    .na__body .prose {
-      grid-column: 2;
-    }
-  }
-</style>

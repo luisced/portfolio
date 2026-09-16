@@ -1,6 +1,5 @@
 ---
-import { getImage } from 'astro:assets';
-import AboutIsland from '@/components/islands/AboutIsland';
+import { Picture } from 'astro:assets';
 import { getProfile, getProjects, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -12,214 +11,46 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 const profile = await getProfile();
 const p = profile.data;
-const portrait = await getImage({ src: p.portrait, width: 1000, format: 'webp' });
-const projects = await getProjects(locale);
-const titles = new Map(projects.map((x) => [x.data.slug, x.data.title]));
-const stats =
-  locale === 'es'
-    ? [
-        { to: 15000, suffix: '+', label: 'estudiantes en UPocket' },
-        { to: 99, suffix: '%', label: 'uptime en Flowlink' },
-        { to: 4, label: 'apps iOS entregadas' },
-        { to: 5, label: 'años construyendo' },
-      ]
-    : [
-        { to: 15000, suffix: '+', label: 'students on UPocket' },
-        { to: 99, suffix: '%', label: 'uptime on Flowlink' },
-        { to: 4, label: 'iOS apps shipped' },
-        { to: 5, label: 'years building' },
-      ];
+const titles = new Map((await getProjects(locale)).map((x) => [x.data.slug, x.data.title]));
 ---
 
 <section id="about" class="section" aria-labelledby="about-title">
-  <header class="chapter">
-    <span class="chapter__num">03</span>
-    <h2 id="about-title" class="display chapter__title">{t('about.title')}</h2>
-    <span class="label chapter__meta">{p.location} · {p.timezone}</span>
-  </header>
+  <div class="container">
+    <p class="label">{t('about.kicker')}</p>
+    <h2 id="about-title">{t('about.title')}</h2>
+    <Picture fallbackFormat="webp" src={p.portrait} alt={p.portraitAlt[locale]} widths={[400, 800]} sizes="20rem" formats={['avif', 'webp']} loading="lazy" style="max-width: 20rem" />
+    <p class="measure">{p.bio[locale]}</p>
+    <p class="measure">{p.manifesto[locale]}</p>
 
-  <div class="about container">
-    <AboutIsland client:media="(prefers-reduced-motion: no-preference)" portrait={portrait.src} portraitAlt={p.portraitAlt[locale]} stats={stats} />
-
-    <div class="about__copy">
-      <p class="about__bio">{p.bio[locale]}</p>
-
-      <h3 class="label about__h">{t('about.skills')}</h3>
-      {p.skills.map((group) => (
-        <div class="about__group">
-          <p class="label about__group-name">{group.group[locale]}</p>
-          <ul class="rows about__rows">
-            {group.items.map((item, i) => (
-              <li>
-                <span class="mono about__i">{String(i + 1).padStart(2, '0')}</span>
-                <span class="about__skill">{item.name}</span>
-                <span class="about__evidence">
-                  {item.evidence.map((slug) => (
-                    <a class="mono" href={localizePath(locale, `/work/${slug}/`)} data-cursor-target>{titles.get(slug) ?? slug}</a>
+    <h3>{t('about.skills')}</h3>
+    {p.skills.map((g) => (
+      <div>
+        <p class="label">{g.group[locale]}</p>
+        <ul>
+          {g.items.map((i) => (
+            <li>
+              {i.name}
+              {i.evidence.length > 0 && (
+                <span class="muted">
+                  {' — '}
+                  {i.evidence.map((slug, idx) => (
+                    <>
+                      {idx > 0 && ', '}
+                      <a href={localizePath(locale, `/work/${slug}/`)}>{titles.get(slug) ?? slug}</a>
+                    </>
                   ))}
                 </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-
-      <div class="about__facts">
-        <div>
-          <h3 class="label about__h">{t('about.education')}</h3>
-          <ul class="rows">
-            {p.education.map((e) => (
-              <li><span class="mono about__i">{e.year}</span><span>{e.credential[locale]}</span><span class="muted">{e.institution}</span></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 class="label about__h">{t('about.languages')}</h3>
-          <ul class="rows">
-            {p.languages.map((l) => (
-              <li><span class="mono about__i">—</span><span>{l.name[locale]}</span><span class="muted">{l.level[locale]}</span></li>
-            ))}
-          </ul>
-          <a class="btn about__cv" href={p.cv} download data-cursor-target>{t('about.cv')} ↓</a>
-        </div>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    ))}
+
+    <h3>{t('about.education')}</h3>
+    <ul>{p.education.map((e) => <li>{e.year} — {e.credential[locale]}, {e.institution}</li>)}</ul>
+    <h3>{t('about.languages')}</h3>
+    <ul>{p.languages.map((l) => <li>{l.name[locale]} — {l.level[locale]}</li>)}</ul>
+    <p><a class="btn" href={p.cv} download>{t('about.cv')}</a></p>
   </div>
 </section>
-
-<style is:global>
-  .about {
-    display: grid;
-    gap: var(--s-8);
-    padding-block: var(--s-8) var(--s-9);
-  }
-
-  .about__stage {
-    display: grid;
-    gap: var(--s-5);
-    align-content: start;
-  }
-
-  .about__portrait {
-    margin: 0;
-  }
-
-  .about__pixels.pixelated-image-card {
-    width: 100%;
-    border-radius: 0;
-    border: var(--hair) solid var(--line);
-    background: var(--bg-2);
-  }
-
-  .about__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 20%;
-  }
-
-  .about__img--mono {
-    filter: grayscale(1) contrast(1.3);
-  }
-
-  .about__stats {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    border-top: var(--hair) solid var(--line);
-    border-left: var(--hair) solid var(--line);
-  }
-
-  .about__stats li {
-    display: grid;
-    gap: var(--s-2);
-    padding: var(--s-4);
-    border-right: var(--hair) solid var(--line);
-    border-bottom: var(--hair) solid var(--line);
-  }
-
-  .about__stat {
-    font-size: var(--text-2xl);
-    font-variation-settings: 'wdth' 90;
-    line-height: 1;
-  }
-
-  .about__copy {
-    display: grid;
-    gap: var(--s-6);
-    align-content: start;
-  }
-
-  .about__bio {
-    font-size: var(--text-lg);
-    color: var(--fg-2);
-    max-width: 58ch;
-  }
-
-  .about__h {
-    color: var(--acid);
-  }
-
-  .about__group {
-    display: grid;
-    gap: var(--s-3);
-  }
-
-  .about__group-name {
-    color: var(--fg-3);
-  }
-
-  .about__i {
-    color: var(--fg-3);
-  }
-
-  .about__skill {
-    font-weight: 700;
-  }
-
-  .about__evidence {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: var(--s-2) var(--s-3);
-    color: var(--fg-3);
-    font-size: var(--text-xs);
-  }
-
-  .about__evidence a:hover {
-    color: var(--acid);
-  }
-
-  .about__facts {
-    display: grid;
-    gap: var(--s-6);
-  }
-
-  .about__facts > div {
-    display: grid;
-    gap: var(--s-3);
-    align-content: start;
-  }
-
-  .about__cv {
-    justify-self: start;
-    margin-top: var(--s-3);
-  }
-
-  @media (--md) {
-    .about {
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: var(--s-9);
-    }
-
-    .about__stage {
-      position: sticky;
-      top: var(--s-6);
-    }
-
-    .about__facts {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-</style>
