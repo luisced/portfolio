@@ -23,7 +23,7 @@ const socials = profile.data.socials.map((s) => ({ label: s.label, link: s.url }
 ---
 
 <!-- Full-screen staggered menu (React Bits). Its header holds the mark (left) and MENU (right). -->
-<Menu client:load items={items} socials={socials} />
+<Menu client:idle items={items} socials={socials} />
 
 <!-- Bottom-left control strip: locale, theme, position. Plain HTML; theme.ts wires the toggle. -->
 <div class="strip" data-nav>

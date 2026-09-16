@@ -34,7 +34,8 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
 
     const split = SplitText.create(rootRef.current.querySelector('p'), {
       type: 'words,chars', // patched: word-safe wrapping
-      charsClass: 'char'
+      charsClass: 'char',
+      aria: 'none' // patched: aria-label is prohibited on a <p>; the split text stays readable as-is
     });
     charsRef.current = split.chars as HTMLElement[];
 

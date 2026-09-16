@@ -13,7 +13,7 @@ pnpm check        # astro check (strict TS)
 ```
 
 `pnpm build` fails on: a content entry missing a locale, a UI key missing in `en` or `es`,
-a raw px/em media query, or any raster over 200 KB (OG images over 80 KB).
+a raw px/em media query, any raster over 200 KB (OG over 80 KB), landing JS over 220 KB gz, or more than 4 font files.
 
 ## Where things live
 
@@ -22,8 +22,9 @@ a raw px/em media query, or any raster over 200 KB (OG images over 80 KB).
 - `src/i18n/ui.ts` — every UI string, both locales. `src/i18n/utils.ts` — `t()`, paths, queries.
 - `src/styles/tokens.css` — the only place colors/type/spacing/motion are defined.
   Breakpoints: `postcss.config.mjs` (`@media (--sm|--md|--lg|--xl)`).
-- `src/scripts/motion.ts` — the single GSAP entry (loaded after idle, never under reduced motion).
-  Sections opt in with `data-reveal`, `data-reveal-group`, `data-parallax`.
+- `src/components/reactbits/` — vendored React Bits (TS-CSS) with local patches; `src/components/islands/` —
+  the site's React islands, every one `client:media="(prefers-reduced-motion: no-preference)"`.
+- `src/scripts/motion.ts` — declarative `data-reveal` / `data-parallax` hooks for static sections.
 - `functions/api/contact.ts` — Pages Function: honeypot → Turnstile → Resend. Works without JS.
 - `src/pages/og/` — build-time OG images (satori + resvg).
 

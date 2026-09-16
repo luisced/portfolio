@@ -4,6 +4,7 @@
  * SSR renders the letters (LCP-safe text); the grid canvas and pointer physics mount on the client
  * only when motion is welcome (client:media in Hero.astro) — otherwise the static letters stay.
  */
+import { useEffect, useState } from 'react';
 import DotGrid from '@/components/reactbits/DotGrid/DotGrid';
 import TextPressure from '@/components/reactbits/TextPressure/TextPressure';
 
@@ -13,12 +14,23 @@ interface Props {
 }
 
 export default function HeroIsland({ first, last }: Props) {
+  // The dot-grid physics (canvas + GSAP inertia) waits for idle so the name paints and reacts first.
+  const [grid, setGrid] = useState(false);
+  useEffect(() => {
+    const start = () => setGrid(true);
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(start, { timeout: 2000 });
+      return () => cancelIdleCallback(id);
+    }
+    const t = setTimeout(start, 600);
+    return () => clearTimeout(t);
+  }, []);
   const longest = first.length >= last.length ? first : last;
   const common = { fontFamily: "'Mona Sans Variable'", width: true, weight: true, italic: false, flex: true, stroke: false, textColor: 'var(--fg)', minFontSize: 40, fitText: longest };
   return (
     <div className="hero-stage">
       <div className="hero-stage__grid" aria-hidden="true">
-        <DotGrid dotSize={2} gap={22} baseColor="#2a2a2a" activeColor="#c8ff00" proximity={140} shockRadius={220} shockStrength={4} resistance={600} returnDuration={1.2} />
+        {grid && <DotGrid dotSize={2} gap={22} baseColor="#2a2a2a" activeColor="#c8ff00" proximity={140} shockRadius={220} shockStrength={4} resistance={600} returnDuration={1.2} />}
       </div>
       {/* TextPressure injects a <style> next to its letters, so the real heading is a clean sr-only h1. */}
       <h1 className="sr-only">{`${first} ${last}`}</h1>

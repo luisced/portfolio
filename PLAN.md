@@ -10,9 +10,9 @@ Reference worktrees: V1 `/tmp/pf-v1` (`origin/dev`), V2 `portfolio-v2/` (this br
 |---|---|---|
 | Primary job | Balanced: hiring + freelance/client work + personal brand | Top layer must read fast for non-technical visitors; technical depth lives in case studies and writing. |
 | Audience | Technical hiring teams and non-technical decision makers | Every project gets an outcome sentence first, then technical decisions. |
-| Aesthetic | Cinematic digital workshop | Dark atmospheric default, light mode as a lit-workshop variant, scroll choreography with purpose, visible craft artifacts. |
+| Aesthetic | **Round three (2026-09-15): brutalist, modern, scroll-told.** Black paper, bone ink, one acid accent; Mona Sans variable (width+weight axes) as the only display voice; React Bits + GSAP for storytelling. Earlier directions ("cinematic workshop", "blueprint bench", the three /lab quiet variants) were built, reviewed with Luis, and rejected as generic. | Type does the talking; every chapter has one signature interaction; no gradients, glass or glow. |
 | Structure | Single page + project case studies + writing | `/{locale}/` narrative page, `/{locale}/work/{slug}`, `/{locale}/notes/{slug}`. |
-| Stack/hosting | Astro + Cloudflare Pages | Static-first HTML, islands only where interaction exists, Cloudflare Pages Functions for the contact form. |
+| Stack/hosting | Astro + React islands + Cloudflare Pages | Static HTML; React Bits components vendored under `src/components/reactbits` (patched: SSR-safe, no Lenis, word-safe splitting, TextPressure fit/`as`); every motion island is `client:media=(prefers-reduced-motion: no-preference)` so reduced-motion users get server HTML only. |
 | Language/theme | EN + ES, dark/light | One content source per entry with both locales; theme is a preference, never forced. |
 | Motion | Highly immersive, but never at the cost of speed | Native scrolling only, GSAP ScrollTrigger as the single animation engine, reduced-motion parity, hard budgets below. |
 | Contact | Hosted form/email service | Cloudflare Pages Function + Resend, Turnstile-gated, `mailto:` fallback without JS. |
@@ -110,13 +110,13 @@ Hosting:
 
 | Metric | Budget | How verified | Status (2026-09-15) |
 |---|---|---|---|
-| Lighthouse (mobile, simulated slow-4G, median of 3) | Accessibility, Best Practices, SEO = 100; Performance ≥ 95 on `/`, `/es/`, one case study, one note | `lighthouserc.json` via LHCI in `.github/workflows/quality.yml` | 100/100/100/100 on `/`, `/es/`, case study; note 95–100 (run variance) |
+| Lighthouse (mobile, simulated slow-4G, median of 3) | Accessibility, Best Practices, SEO = 100; Performance ≥ 90 | `lighthouserc.json` via LHCI in `.github/workflows/quality.yml` | landing 95–96 / 100 / 100 / 100; case study 96 / 100 / 100 / 100 |
 | LCP | Observed < 1.0 s (measured 118 ms locally). Simulated: warn > 2.5 s — the serif title is the LCP element, so the lantern model charges one font round-trip and swings 1.7–2.9 s between identical runs | LHCI (warn) + PerformanceObserver | met observed; simulated within warn band |
 | CLS | 0. Every image sized; webfont swap neutralised by generated metric-matched fallback faces (`scripts/font-fallbacks.mjs` → `src/styles/font-fallbacks.css`, `size-adjust` + ascent/descent overrides computed from the real font files) | LHCI `cumulative-layout-shift` ≤ 0.02 (CI runs on Ubuntu, which lacks Georgia/Arial/Helvetica Neue, so the shims are inert there) + `unsized-images` | 0 on 9/9 runs on macOS; shims cover Windows/macOS/iOS. Android (Roboto/Noto) keeps the ≤ 0.02 swap shift — no shim, since those metrics are not available here to compute honestly |
 | INP / TBT | TBT < 100 ms; timeline keyboard interaction verified by hand | LHCI + browser test | TBT 0 ms |
-| JS shipped on landing | ≤ 55 KB gzip total (entry + motion + bespoke chunks); 0 KB under reduced motion | `scripts/check-assets.mjs` walks the import graph from `dist/index.html` | 45.5 KB (GSAP core+ScrollTrigger is 43 KB — above the 35 KB sub-target originally hoped for; cutting it means moving parallax/manifesto to CSS scroll-driven animations) |
+| JS shipped on landing | ≤ 220 KB gzip (React + GSAP + motion + islands — round-three decision); under reduced motion only the menu hydrates | `scripts/check-assets.mjs` walks scripts + island `component-url`/`renderer-url` graphs | 183 KB gz; dot-grid physics and menu deferred to idle → TBT 0–10 ms |
 | CSS | ≤ 25 KB gzip, inlined (`build.inlineStylesheets: 'always'`) so nothing blocks render | build output | ≈ 10 KB |
-| Fonts | 2 families, ≤ 4 woff2 files per page, latin subsets only, preloaded, `font-display: swap` | `check-assets.mjs` font count | 4 files, 21–24 KB each |
+| Fonts | 2 families (Mona Sans variable wdth+wght, Azeret Mono), ≤ 4 woff2 files per page, latin only, preloaded, metric-matched fallbacks | `check-assets.mjs` counts fonts the landing references | Mona 98 KB (one variable file carries display + body + TextPressure axes), Azeret 20 KB |
 | Images | Every raster ≤ 200 KB; OG ≤ 80 KB; AVIF/WebP + srcset via `astro:assets` (`fallbackFormat="webp"`, never PNG) | `check-assets.mjs` | ok (hero 24 KB AVIF) |
 | Total landing transfer | ≤ 400 KB | Lighthouse network summary | 196 KB / 15 requests |
 | Accessibility | Lighthouse a11y 100, keyboard-only pass, no-JS pass, reduced-motion pass; VoiceOver still manual | LHCI + browser scripts | all automated checks pass; VoiceOver pending |

@@ -14,13 +14,13 @@
     "assert": {
       "aggregationMethod": "median-run",
       "assertions": {
-        "categories:performance": ["error", { "minScore": 0.95 }],
+        "categories:performance": ["error", { "minScore": 0.9 }],
         "categories:accessibility": ["error", { "minScore": 1 }],
         "categories:best-practices": ["error", { "minScore": 1 }],
         "categories:seo": ["error", { "minScore": 1 }],
         "cumulative-layout-shift": ["error", { "maxNumericValue": 0.02 }],
-        "total-blocking-time": ["error", { "maxNumericValue": 100 }],
-        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
+        "total-blocking-time": ["error", { "maxNumericValue": 200 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
         "color-contrast": "error",
         "font-display": "error",
         "unsized-images": "error",
@@ -30,7 +30,7 @@
     "upload": { "target": "temporary-public-storage" }
   },
   "_notes": [
-    "Simulated slow-4G. LCP is the serif title, so the lantern model adds one font round-trip; it varies 1.7–2.9 s run to run — warn, aggregated on the median.",
+    "Round three (React Bits + GSAP islands, ~183 KB gz JS by decision): perf ≥ 90 and TBT ≤ 200 ms on simulated slow-4G/4× CPU; measured 95–96 / 0–10 ms after deferring the dot-grid physics and menu hydration to idle. LCP is warn-only (lantern variance).",
     "CLS: every image is sized. src/styles/font-fallbacks.css metric-matches Georgia/Arial/Helvetica Neue, giving 0 on Windows, macOS and iOS (measured 0 on 9/9 local runs). The Ubuntu CI runner has none of those fonts, so its swap shift is ≤ 0.02; anything above that is a layout bug.",
     "Landing JS (≤ 55 KB gz), font count (≤ 4) and image sizes are enforced separately by scripts/check-assets.mjs at build time."
   ]
