@@ -1,4 +1,5 @@
 ---
+import Menu from '@/components/Menu';
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -12,257 +13,83 @@ const t = useTranslations(locale);
 const profile = await getProfile();
 const home = localizePath(locale, '/');
 const alt = otherLocale(locale);
-const links = [
-  { href: `${home}#work`, label: t('nav.work') },
-  { href: `${home}#about`, label: t('nav.about') },
-  { href: localizePath(locale, '/notes/'), label: t('nav.notes') },
-  { href: `${home}#contact`, label: t('nav.contact') },
+const items = [
+  { label: t('nav.work'), ariaLabel: t('nav.work'), link: `${home}#work` },
+  { label: t('nav.about'), ariaLabel: t('nav.about'), link: `${home}#about` },
+  { label: t('nav.notes'), ariaLabel: t('nav.notes'), link: localizePath(locale, '/notes/') },
+  { label: t('nav.contact'), ariaLabel: t('nav.contact'), link: `${home}#contact` },
 ];
+const socials = profile.data.socials.map((s) => ({ label: s.label, link: s.url }));
 ---
 
-<header class="nav" data-nav>
-  <div class="nav__row cells">
-    <a class="nav__brand cell" href={home}>
-      <span class="nav__mark" aria-hidden="true"></span>
-      <span class="narrow narrow--bold">Luis Cedillo</span>
-      <span class="label nav__rev">Rev 4.0</span>
-    </a>
+<!-- Full-screen staggered menu (React Bits). Its header holds the mark (left) and MENU (right). -->
+<Menu client:load items={items} socials={socials} />
 
-    <nav class="nav__links" aria-label="Primary">
-      <ul class="cells">
-        {links.map((l) => (
-          <li><a class="cell narrow" href={l.href}>{l.label}</a></li>
-        ))}
-      </ul>
-    </nav>
-
-    <ul class="nav__social cells">
-      {profile.data.socials.slice(0, 2).map((s) => (
-        <li><a class="cell narrow" href={s.url} rel="me noopener" target="_blank">{s.label}</a></li>
-      ))}
-    </ul>
-
-    <a class="nav__tool cell narrow" href={localizePath(alt, path)} hreflang={alt} lang={alt}>
-      {t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span>
-    </a>
-    <button class="nav__tool nav__theme cell" type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">
-      <span class="nav__swatch" aria-hidden="true"></span>
-    </button>
-    <button class="nav__tool nav__burger cell" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label={t('nav.menu')} data-nav-toggle>
-      <span></span><span></span>
-    </button>
-  </div>
-
-  <div class="nav__sheet" id="nav-sheet" hidden>
-    <ul class="cells">
-      {links.map((l, i) => (
-        <li><a class="cell headline" href={l.href}><span class="label">0{i + 1}</span>{l.label}</a></li>
-      ))}
-      {profile.data.socials.map((s) => (
-        <li><a class="cell narrow" href={s.url} rel="me noopener" target="_blank">{s.label} ↗</a></li>
-      ))}
-    </ul>
-  </div>
-</header>
-
-<script>
-  const nav = document.querySelector<HTMLElement>('[data-nav]');
-  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
-  const sheet = document.getElementById('nav-sheet');
-  if (nav && toggle && sheet) {
-    const close = () => {
-      sheet.hidden = true;
-      toggle.setAttribute('aria-expanded', 'false');
-    };
-    toggle.addEventListener('click', () => {
-      const open = sheet.hidden;
-      sheet.hidden = !open;
-      toggle.setAttribute('aria-expanded', String(open));
-      if (open) sheet.querySelector<HTMLAnchorElement>('a')?.focus();
-    });
-    sheet.addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).closest('a')) close();
-    });
-    addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !sheet.hidden) {
-        close();
-        toggle.focus();
-      }
-    });
-  }
-</script>
+<!-- Bottom-left control strip: locale, theme, position. Plain HTML; theme.ts wires the toggle. -->
+<div class="strip" data-nav>
+  <a class="strip__item mono" href={home}>{profile.data.shortName}</a>
+  <a class="strip__item mono" href={localizePath(alt, path)} hreflang={alt} lang={alt}>
+    {t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span>
+  </a>
+  <button class="strip__item mono" type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">
+    <span class="strip__swatch" aria-hidden="true"></span>{t('theme.toggle')}
+  </button>
+  <span class="strip__item strip__item--pos mono" aria-hidden="true"><span data-scroll-pct>000</span>%</span>
+</div>
 
 <style>
-  .nav {
-    position: sticky;
-    top: 0;
+  .strip {
+    position: fixed;
+    right: 0;
+    bottom: 0;
     z-index: var(--z-nav);
+    display: flex;
+    border-top: var(--hair) solid var(--line);
+    border-left: var(--hair) solid var(--line);
     background: var(--bg);
   }
 
-  .nav__row {
-    grid-template-columns: 1fr auto auto auto;
-    border-inline: 0;
-    border-top: 0;
-  }
-
-  .nav__row > * {
-    display: flex;
+  .strip__item {
+    display: inline-flex;
     align-items: center;
+    gap: var(--s-2);
+    min-height: 2.5rem;
+    padding: 0 var(--s-3);
+    border-right: var(--hair) solid var(--line-2);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-2);
+    transition:
+      background-color var(--d-1) steps(1, end),
+      color var(--d-1) steps(1, end);
   }
 
-  .nav__brand {
-    gap: var(--s-3);
-    font-size: var(--text-md);
+  .strip__item:last-child {
+    border-right: 0;
   }
 
-  .nav__mark {
-    width: 12px;
-    height: 12px;
-    background: var(--brand);
+  a.strip__item:hover,
+  button.strip__item:hover {
+    background: var(--fg);
+    color: var(--bg);
   }
 
-  .nav__rev {
+  .strip__swatch {
+    width: 10px;
+    height: 10px;
+    background: var(--acid);
+  }
+
+  .strip__item--pos {
+    font-variant-numeric: tabular-nums;
     color: var(--fg-3);
     display: none;
   }
 
-  .nav__row > .nav__links,
-  .nav__row > .nav__social {
-    display: none;
-    padding: 0;
-    list-style: none;
-  }
-
-  .nav__links ul,
-  .nav__social {
-    padding: 0;
-    grid-auto-flow: column;
-    border: 0;
-    border-inline: var(--hair) solid var(--line);
-  }
-
-  .nav__links li,
-  .nav__social li {
-    display: flex;
-  }
-
-  .nav__links a,
-  .nav__social a {
-    height: 100%;
-    display: inline-flex;
-    align-items: center;
-    padding-inline: var(--s-5);
-    font-size: var(--text-sm);
-    letter-spacing: 0.06em;
-    transition:
-      background-color var(--d-1) var(--ease-step),
-      color var(--d-1) var(--ease-step);
-  }
-
-  .nav__links a:hover,
-  .nav__social a:hover,
-  .nav__tool:hover {
-    background: var(--fg);
-    color: var(--bg);
-  }
-
-  .nav__tool {
-    justify-content: center;
-    min-width: 3.5rem;
-    padding-inline: var(--s-3);
-    font-size: var(--text-sm);
-    letter-spacing: 0.06em;
-    transition:
-      background-color var(--d-1) var(--ease-step),
-      color var(--d-1) var(--ease-step);
-  }
-
-  .nav__swatch {
-    width: 14px;
-    height: 14px;
-    border: var(--hair) solid currentColor;
-    background: linear-gradient(90deg, currentColor 50%, transparent 50%);
-  }
-
-  /* `.nav__row > *` outranks a lone class under Astro scoping; qualify the burger. */
-  .nav__row > .nav__burger {
-    display: inline-grid;
-    gap: 5px;
-    align-content: center;
-  }
-
-  .nav__burger span {
-    display: block;
-    width: 18px;
-    height: 2px;
-    background: currentColor;
-    transition: transform var(--d-2) var(--ease-out);
-  }
-
-  .nav__burger[aria-expanded='true'] span:first-child {
-    transform: translateY(3.5px) rotate(45deg);
-  }
-
-  .nav__burger[aria-expanded='true'] span:last-child {
-    transform: translateY(-3.5px) rotate(-45deg);
-  }
-
-  .nav__sheet .cells {
-    padding: 0;
-    list-style: none;
-    border-inline: 0;
-    border-top: 0;
-  }
-
-  .nav__sheet li {
-    display: flex;
-  }
-
-  .nav__sheet a {
-    width: 100%;
-    display: flex;
-    align-items: baseline;
-    gap: var(--s-4);
-    font-size: var(--text-2xl);
-    padding-block: var(--s-4);
-  }
-
-  .nav__sheet a.narrow {
-    font-size: var(--text-md);
-  }
-
-  .nav__sheet a:hover {
-    background: var(--fg);
-    color: var(--bg);
-  }
-
   @media (--md) {
-    .nav__row {
-      grid-template-columns: 1fr auto auto auto auto;
-    }
-
-    .nav__rev {
-      display: inline;
-    }
-
-    .nav__row > .nav__links {
-      display: block;
-    }
-
-    .nav__row > .nav__burger,
-    .nav__sheet {
-      display: none;
-    }
-  }
-
-  @media (--lg) {
-    .nav__row {
-      grid-template-columns: 1fr auto auto auto auto auto;
-    }
-
-    .nav__row > .nav__social {
-      display: grid;
+    .strip__item--pos {
+      display: inline-flex;
     }
   }
 </style>

@@ -8,9 +8,8 @@
  *   data-reveal-group           stagger direct children marked data-reveal
  *   data-parallax="0.15"        translateY by (scroll progress * factor * 100px)
  *
- * Bespoke choreography lives in sibling modules and is registered here:
- *   ./manifesto-motion.ts       per-word scrubbed reveal for [data-manifesto]
- *   ./timeline-motion.ts        pinned rail + keyboard nav for [data-timeline]
+ * Section-level choreography lives in React islands (src/components/islands) that own their
+ * own GSAP timelines; this module only handles the declarative hooks above.
  */
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -66,7 +65,3 @@ for (const el of document.querySelectorAll<HTMLElement>('[data-parallax-x]')) {
     },
   );
 }
-
-/* Bespoke sections register lazily so their code only ships if the section exists. */
-if (document.querySelector('[data-manifesto]')) import('./manifesto-motion');
-if (document.querySelector('[data-timeline]')) import('./timeline-motion');

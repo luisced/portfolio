@@ -5,11 +5,12 @@ import { Resvg } from '@resvg/resvg-js';
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-const archivoBlack = readFileSync(
-  resolve(process.cwd(), 'node_modules/@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff'),
+// Satori needs static TTF/OTF/WOFF; Mona Sans only ships as variable woff2, so the OG voice is the mono.
+const monoBlack = readFileSync(
+  resolve(process.cwd(), 'node_modules/@fontsource/azeret-mono/files/azeret-mono-latin-800-normal.woff'),
 );
-const archivoNarrow = readFileSync(
-  resolve(process.cwd(), 'node_modules/@fontsource/archivo-narrow/files/archivo-narrow-latin-400-normal.woff'),
+const mono = readFileSync(
+  resolve(process.cwd(), 'node_modules/@fontsource/azeret-mono/files/azeret-mono-latin-400-normal.woff'),
 );
 
 export interface OgInput {
@@ -40,9 +41,9 @@ function textNode(
 
 export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Uint8Array<ArrayBuffer>> {
   // Blueprint sheet: deep blue-black, white hairline frame, uppercase Archivo Black. Flat fills only.
-  const INK = '#f5f5f8';
-  const PAPER = '#12162a';
-  const BRAND = '#4fe39a';
+  const INK = '#f1efe8';
+  const PAPER = '#0a0a0a';
+  const BRAND = '#c8ff00';
   const tree: OgNode = {
     type: 'div',
     props: {
@@ -52,7 +53,7 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
         display: 'flex',
         flexDirection: 'column',
         color: INK,
-        fontFamily: 'Archivo Narrow',
+        fontFamily: 'Azeret Mono',
         backgroundColor: PAPER,
         border: `2px solid ${INK}`,
       },
@@ -71,8 +72,8 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
               textTransform: 'uppercase',
             },
             children: [
-              { type: 'span', props: { children: 'LUIS CEDILLO — THE BENCH' } },
-              { type: 'span', props: { style: { color: BRAND }, children: 'SHEET 1 / REV 4.0' } },
+              { type: 'span', props: { children: 'LUIS CEDILLO' } },
+              { type: 'span', props: { style: { color: BRAND }, children: 'V4 / 2026' } },
             ],
           },
         },
@@ -82,12 +83,13 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
             style: { display: 'flex', flexDirection: 'column', flex: 1, padding: '44px 32px 32px' },
             children: [
               textNode(truncate(title, 56).toUpperCase(), {
-                fontFamily: 'Archivo Black',
+                fontFamily: 'Azeret Mono',
+                fontWeight: 800,
                 maxWidth: 1136,
                 maxHeight: 250,
                 overflow: 'hidden',
-                fontSize: 104,
-                lineHeight: 0.9,
+                fontSize: 84,
+                lineHeight: 0.95,
                 letterSpacing: -4,
               }),
               textNode(truncate(subtitle, 150), {
@@ -128,8 +130,8 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
     width: WIDTH,
     height: HEIGHT,
     fonts: [
-      { name: 'Archivo Black', data: archivoBlack, weight: 400, style: 'normal' },
-      { name: 'Archivo Narrow', data: archivoNarrow, weight: 400, style: 'normal' },
+      { name: 'Azeret Mono', data: monoBlack, weight: 800, style: 'normal' },
+      { name: 'Azeret Mono', data: mono, weight: 400, style: 'normal' },
     ],
   });
   // `.slice()` re-backs the bytes with a plain ArrayBuffer, which is what `Response` accepts.

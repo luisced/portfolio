@@ -1,11 +1,7 @@
 ---
+import TimelineIsland, { type Milestone } from '@/components/islands/TimelineIsland';
+import { formatMonth, getExperience, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-import {
-  formatMonth,
-  getExperience,
-  useTranslations,
-  type Experience,
-} from '@/i18n/utils';
 
 interface Props {
   locale: Locale;
@@ -13,363 +9,125 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const experience = [...(await getExperience())].reverse();
-const accentVar = (accent: Experience['data']['accent']) =>
-  `var(--accent-${accent})`;
+const accents: Record<string, string> = {
+  brand: '#c8ff00',
+  amber: '#ffb800',
+  rose: '#ff5c7a',
+  sky: '#57c4ff',
+  violet: '#b48cff',
+};
+const experience = (await getExperience()).slice().reverse(); // oldest first → newest lands on top
+const items: Milestone[] = experience.map((e, i) => ({
+  index: String(i + 1).padStart(2, '0'),
+  range: `${formatMonth(locale, e.data.start)} — ${e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}`,
+  role: e.data.role[locale],
+  org: e.data.org,
+  location: e.data.location,
+  highlights: e.data.highlights[locale],
+  tags: e.data.tags,
+  accent: accents[e.data.accent] ?? '#c8ff00',
+}));
 ---
 
-<section
-  id="timeline"
-  class="section timeline"
-  data-timeline
-  aria-labelledby="timeline-title"
->
-  <div class="blueprint timeline__blueprint" aria-hidden="true"></div>
-  <div class="container timeline__inner">
-    <header class="sec-head" data-reveal>
-      <p class="kicker">{t('timeline.kicker')}</p>
-      <h2 class="method" id="timeline-title">{t('timeline.title')}<span class="sr-only">: {t('timeline.kicker')}</span></h2>
-      <p class="timeline__hint mono">{t('timeline.hint')}</p>
-    </header>
-
-    <div class="timeline__viewport">
-      <div class="timeline__track" data-timeline-track>
-        <div class="timeline__rail" aria-hidden="true"></div>
-        <ol class="timeline__list">
-          {
-            experience.map((entry, index) => (
-              <li
-                class="timeline__item"
-                data-timeline-item
-                tabindex="0"
-                aria-current={index === 0 ? 'step' : undefined}
-                style={`--accent: ${accentVar(entry.data.accent)}`}
-              >
-                <span class="timeline__marker" aria-hidden="true"></span>
-                <article class="timeline__plate" data-reveal>
-                  <p class="timeline__dates mono">
-                    <time datetime={entry.data.start}>
-                      {formatMonth(locale, entry.data.start)}
-                    </time>
-                    <span aria-hidden="true">—</span>
-                    {
-                      entry.data.end ? (
-                        <time datetime={entry.data.end}>
-                          {formatMonth(locale, entry.data.end)}
-                        </time>
-                      ) : (
-                        <span>{t('timeline.present')}</span>
-                      )
-                    }
-                  </p>
-                  <h3 class="timeline__role">{entry.data.role[locale]}</h3>
-                  <p class="timeline__context">
-                    <span>{entry.data.org}</span>
-                    <span aria-hidden="true">·</span>
-                    <span>{entry.data.location}</span>
-                  </p>
-                  <ul class="timeline__highlights">
-                    {entry.data.highlights[locale].slice(0, 3).map((highlight) => (
-                      <li>{highlight}</li>
-                    ))}
-                  </ul>
-                  <ul class="timeline__tags">
-                    {entry.data.tags.map((tag) => (
-                      <li class="timeline__tag mono">
-                        <span class="timeline__tag-dot" aria-hidden="true"></span>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              </li>
-            ))
-          }
-        </ol>
-        <span class="timeline__cursor" data-timeline-cursor aria-hidden="true"></span>
-      </div>
-    </div>
-  </div>
+<section id="timeline" class="section" aria-labelledby="timeline-title">
+  <header class="chapter">
+    <span class="chapter__num">02</span>
+    <h2 id="timeline-title" class="display chapter__title">{t('timeline.title')}</h2>
+    <span class="label chapter__meta">{t('timeline.kicker')}</span>
+  </header>
+  <TimelineIsland client:visible items={items} />
 </section>
 
-<style>
-  .timeline {
-    isolation: isolate;
-    overflow: hidden;
-    background: var(--bg-2);
-  }
-
-  .timeline__blueprint {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .timeline__inner {
-    position: relative;
-    z-index: 1;
-  }
-
-  .sec-head {
-    display: grid;
-    gap: var(--s-2);
-    margin-bottom: var(--s-7);
-  }
-
-  .timeline__hint {
-    display: none;
-    color: var(--fg-2);
-    font-size: var(--text-xs);
-  }
-
-  .timeline__viewport {
-    position: relative;
-    width: 100%;
-  }
-
-  .timeline__track {
-    position: relative;
-    width: 100%;
-  }
-
-  .timeline__rail {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    right: auto;
-    bottom: 0;
-    left: var(--s-3);
-    width: 1px;
+<style is:global>
+  .timeline__stack.scroll-stack-scroller {
+    overflow: visible;
     height: auto;
-    background: var(--line);
+    transform: none;
   }
 
-  .timeline__list {
-    position: relative;
-    z-index: 1;
+  .timeline__stack .scroll-stack-inner {
+    padding: var(--s-8) var(--gutter) 40vh;
+    min-height: 0;
+  }
+
+  .milestone.scroll-stack-card {
+    height: auto;
+    min-height: 22rem;
+    margin: 0 0 var(--s-6);
+    padding: var(--s-6) var(--s-6) var(--s-7);
+    border-radius: 0;
+    border: var(--hair) solid var(--line);
+    background: var(--bg);
+    box-shadow: none;
     display: grid;
-    gap: var(--s-6);
-    margin: 0;
-    padding: var(--s-4) 0 var(--s-4) var(--s-7);
-    list-style: none;
+    gap: var(--s-4);
+    align-content: start;
   }
 
-  .timeline__item {
-    position: relative;
-    width: 100%;
-  }
-
-  .timeline__marker {
-    position: absolute;
-    top: var(--s-2);
-    left: calc(-1 * var(--s-7) + var(--s-3) - 5px);
-    width: 10px;
-    height: 10px;
-    border: 2px solid var(--bg);
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 1px var(--line);
-  }
-
-  .timeline__plate {
-    display: grid;
-    gap: var(--s-3);
-    width: 100%;
-    padding: var(--s-5);
-    border: 1px solid var(--line);
-    border-radius: var(--r-3);
-    background: var(--bg-elev);
-    box-shadow: var(--shadow-1);
-    transition:
-      transform var(--d-2) var(--ease-out),
-      border-color var(--d-2) var(--ease-out),
-      box-shadow var(--d-2) var(--ease-out);
-  }
-
-  .timeline__dates {
+  .milestone__head {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
-    color: var(--fg-2);
-    font-size: var(--text-xs);
-    line-height: var(--leading-snug);
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--s-4);
   }
 
-  .timeline__role {
-    color: var(--fg);
-    font-family: var(--font-body);
+  .milestone__index {
+    font-size: var(--text-2xl);
+    line-height: 1;
+  }
+
+  .milestone__role {
+    font-size: var(--text-xl);
+    font-variation-settings: 'wdth' 100;
+  }
+
+  .milestone__org {
+    color: var(--fg-2);
     font-size: var(--text-lg);
-    font-weight: 500;
   }
 
-  .timeline__context {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
+  .milestone__loc {
+    color: var(--fg-3);
+  }
+
+  .milestone__list {
+    padding-left: 1.1em;
     color: var(--fg-2);
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
+    max-width: 60ch;
   }
 
-  .timeline__highlights {
-    display: grid;
-    gap: var(--s-2);
-    margin: var(--s-2) 0 0;
-    padding-left: var(--s-4);
-    color: var(--fg-2);
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
+  .milestone__list li::marker {
+    color: var(--acid);
   }
 
-  .timeline__highlights li::marker {
-    color: var(--accent);
-  }
-
-  .timeline__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-2);
-    margin: var(--s-2) 0 0;
-    padding: 0;
+  .milestone__tags {
     list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
   }
 
-  .timeline__tag {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--s-1);
-    padding: var(--s-1) var(--s-2);
-    border: 1px solid var(--line);
-    border-radius: var(--r-1);
-    color: var(--fg-2);
-    font-size: var(--text-xs);
-    line-height: var(--leading-snug);
-  }
-
-  .timeline__tag-dot {
-    width: 6px;
-    height: 6px;
-    flex: 0 0 6px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
-
-  .timeline__cursor {
-    display: none;
-    position: absolute;
-    z-index: 2;
-    top: calc(var(--at, 0) * 100%);
-    left: var(--s-3);
-    width: 14px;
-    height: 22px;
-    transform: translate(-50%, -1px);
-    border: 1px solid var(--amber);
-    border-radius: var(--r-2);
-    background: var(--amber);
-    box-shadow: 0 0 18px var(--amber-soft);
-    pointer-events: none;
-    transition: top var(--d-3) var(--ease-out);
-  }
-
-  .timeline__cursor::before {
-    content: '';
-    position: absolute;
-    top: calc(-1 * var(--s-2));
-    left: 50%;
-    width: 1px;
-    height: var(--s-2);
-    transform: translateX(-50%);
-    background: var(--amber);
-  }
-
-  [data-timeline-item][aria-current='step'] .timeline__plate {
-    border-color: var(--amber);
-    background: var(--bg-3);
-    box-shadow: inset 0 2px 0 var(--amber), var(--shadow-2);
-  }
-
-  [data-timeline-item][aria-current='step'] .timeline__marker {
-    box-shadow: 0 0 0 1px var(--amber);
-  }
-
-  @media (--pointer) {
-    .timeline__plate:hover {
-      transform: translateY(-2px);
-      border-color: var(--fg-3);
-      box-shadow: var(--shadow-2);
+  @media (--md) {
+    .milestone.scroll-stack-card {
+      grid-template-columns: 1fr 1.4fr;
+      column-gap: var(--s-8);
+      padding: var(--s-7);
     }
 
-    [data-timeline-item][aria-current='step'] .timeline__plate:hover {
-      border-color: var(--amber);
-      box-shadow: inset 0 2px 0 var(--amber), var(--shadow-2);
-    }
-  }
-
-  @media (--lg) {
-    .sec-head {
-      grid-template-columns: 1fr auto;
+    .milestone__head,
+    .milestone__role,
+    .milestone__org {
+      grid-column: 1;
     }
 
-    .timeline__hint {
+    .milestone__list {
       grid-column: 2;
-      grid-row: 1 / span 2;
-      align-self: center;
-      justify-self: end;
-    }
-  }
-
-  @media (--motion-ok) {
-    html.js .timeline__cursor {
-      display: block;
-    }
-  }
-
-  @media (--lg) and (--motion-ok) {
-    html.js .timeline__track {
-      width: max-content;
-      min-width: 100%;
-      padding-bottom: var(--s-7);
+      grid-row: 1 / span 3;
     }
 
-    html.js .timeline__rail {
-      top: var(--s-4);
-      right: 0;
-      bottom: auto;
-      left: 0;
-      width: auto;
-      height: 1px;
-    }
-
-    html.js .timeline__list {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--s-8);
-      padding: var(--s-7) 0 0;
-    }
-
-    html.js .timeline__item {
-      width: clamp(18rem, 26vw, 24rem);
-      flex: 0 0 clamp(18rem, 26vw, 24rem);
-    }
-
-    html.js .timeline__marker {
-      top: calc(-1 * var(--s-7) + var(--s-4) - 5px);
-      left: 0;
-    }
-
-    html.js .timeline__cursor {
-      top: calc(var(--s-4) + var(--s-2));
-      left: calc(var(--at, 0) * 100%);
-      transform: translateX(-50%);
-      transition:
-        left var(--d-3) var(--ease-out),
-        top var(--d-3) var(--ease-out);
-    }
-  }
-
-  @media (--lg) and (--pointer) {
-    .timeline__hint {
-      display: block;
+    .milestone__tags {
+      grid-column: 1 / -1;
     }
   }
 </style>

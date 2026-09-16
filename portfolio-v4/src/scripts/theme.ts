@@ -28,34 +28,18 @@ addEventListener('keydown', (e) => {
   }
 });
 
-// The lamp is the pointer. Hatched shadows (.object::before) fall away from it:
-// --shadow-dx/dy are the offset, clamped so objects never look detached.
-if (
-  matchMedia('(hover: hover) and (pointer: fine)').matches &&
-  matchMedia('(prefers-reduced-motion: no-preference)').matches
-) {
-  let tx = 10;
-  let ty = 12;
-  let cx = tx;
-  let cy = ty;
-  let raf = 0;
+// Scroll position readout in the control strip (000–100).
+const pct = document.querySelector<HTMLElement>('[data-scroll-pct]');
+// Past the hero, the fixed mark gets out of the way of chapter titles (see base.css .scrolled).
+const onScroll = () => root.classList.toggle('scrolled', scrollY > 160);
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 
-  const tick = () => {
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-    root.style.setProperty('--shadow-dx', `${cx.toFixed(1)}px`);
-    root.style.setProperty('--shadow-dy', `${cy.toFixed(1)}px`);
-    raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.1 ? requestAnimationFrame(tick) : 0;
+if (pct) {
+  const update = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    pct.textContent = String(Math.round((scrollY / Math.max(1, max)) * 100)).padStart(3, '0');
   };
-
-  addEventListener(
-    'pointermove',
-    (e) => {
-      // Lamp at the pointer → shadow points the other way. ±16px range.
-      tx = ((0.5 - e.clientX / innerWidth) * 32).toFixed(1) as unknown as number;
-      ty = 6 + (0.5 - e.clientY / innerHeight) * 20;
-      if (!raf) raf = requestAnimationFrame(tick);
-    },
-    { passive: true },
-  );
+  addEventListener('scroll', update, { passive: true });
+  update();
 }

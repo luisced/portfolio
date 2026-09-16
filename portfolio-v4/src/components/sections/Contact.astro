@@ -1,4 +1,5 @@
 ---
+import ContactHeading from '@/components/islands/ContactHeading';
 import { getProfile, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -9,137 +10,75 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const profile = await getProfile();
-const { email, whatsapp, socials } = profile.data;
-const whatsappDigits = whatsapp.replace(/\D/g, '');
+const p = profile.data;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+const wa = p.whatsapp.replace(/[^\d]/g, '');
 ---
 
-<section id="contact" class="section" aria-labelledby="contact-title">
-  <div class="container">
-    <header class="sec-head" data-reveal>
-      <p class="kicker">{t('contact.kicker')}</p>
-      <h2 class="method" id="contact-title">{t('contact.title')}<span class="sr-only">: {t('contact.kicker')}</span></h2>
-      <p class="contact__lead measure">{t('contact.lead')}</p>
-    </header>
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <header class="chapter">
+    <span class="chapter__num">05</span>
+    <h2 id="contact-title" class="display chapter__title">{t('contact.title')}</h2>
+    <span class="label chapter__meta">{t('contact.kicker')}</span>
+  </header>
 
-    <div class="contact__grid">
-      <div class="contact__form-column" data-reveal>
-        <div class="contact__note">
-          <span class="contact__pin" aria-hidden="true"></span>
-          <form
-            method="post"
-            action="/api/contact"
-            data-contact
-            data-msg-required={t('contact.required')}
-            data-msg-email={t('contact.invalidEmail')}
-            data-msg-minlength={t('contact.invalidMessage')}
-            data-sending={t('contact.sending')}
-            novalidate
-          >
-            <div class="contact__fields">
-              <div class="field">
-                <label for="contact-name">{t('contact.name')}</label>
-                <input
-                  id="contact-name"
-                  name="name"
-                  type="text"
-                  required
-                  autocomplete="name"
-                  aria-describedby="contact-name-error"
-                />
-                <p class="field__error" id="contact-name-error" hidden></p>
-              </div>
+  <div class="contact__lead container">
+    <ContactHeading client:visible text={t('contact.lead')} />
+    <noscript><p class="contact__scramble display">{t('contact.lead')}</p></noscript>
+  </div>
 
-              <div class="field">
-                <label for="contact-email">{t('contact.email')}</label>
-                <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                  aria-describedby="contact-email-error"
-                />
-                <p class="field__error" id="contact-email-error" hidden></p>
-              </div>
-
-              <div class="field">
-                <label for="contact-message">{t('contact.message')}</label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  rows="6"
-                  minlength="20"
-                  required
-                  aria-describedby="contact-message-error"
-                ></textarea>
-                <p class="field__error" id="contact-message-error" hidden></p>
-              </div>
-            </div>
-
-            <input class="sr-only" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <input type="hidden" name="locale" value={locale} />
-
-            <fieldset class="contact__verification">
-              <legend class="sr-only">{t('contact.turnstile')}</legend>
-              <div
-                class="cf-turnstile"
-                data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? ''}
-                data-theme="auto"
-                data-size="flexible"
-              ></div>
-              <noscript><p>{t('contact.turnstile')}</p></noscript>
-            </fieldset>
-
-            <button class="btn btn--primary contact__submit" type="submit" data-contact-submit>
-              {t('contact.send')}
-            </button>
-          </form>
-
-          <!-- Announces state changes to assistive tech; the visible message is the block below. -->
-          <div class="sr-only" role="status" aria-live="polite" tabindex="-1" data-contact-status></div>
-
-          <div class="contact__state" data-contact-success hidden>
-            <span class="contact__state-pin" aria-hidden="true"></span>
-            <h3>{t('contact.success.title')}</h3>
-            <p>{t('contact.success.body')}</p>
-          </div>
-
-          <div class="contact__state" data-contact-error hidden>
-            <h3>{t('contact.error.title')}</h3>
-            <p>
-              {t('contact.error.body')}{' '}
-              <a href={`mailto:${email}`}>{email}</a>.
-            </p>
-          </div>
+  <div class="contact__grid">
+    <div class="contact__note">
+      <form method="post" action="/api/contact" data-contact data-sending={t('contact.sending')} data-msg-required={t('contact.required')} data-msg-email={t('contact.invalidEmail')} data-msg-message={t('contact.invalidMessage')} novalidate>
+        <div class="field">
+          <label class="label" for="contact-name">{t('contact.name')}</label>
+          <input id="contact-name" name="name" type="text" required autocomplete="name" aria-describedby="contact-name-error" />
+          <p class="field__error mono" id="contact-name-error" hidden></p>
         </div>
+        <div class="field">
+          <label class="label" for="contact-email">{t('contact.email')}</label>
+          <input id="contact-email" name="email" type="email" required autocomplete="email" aria-describedby="contact-email-error" />
+          <p class="field__error mono" id="contact-email-error" hidden></p>
+        </div>
+        <div class="field">
+          <label class="label" for="contact-message">{t('contact.message')}</label>
+          <textarea id="contact-message" name="message" rows="6" required minlength="20" aria-describedby="contact-message-error"></textarea>
+          <p class="field__error mono" id="contact-message-error" hidden></p>
+        </div>
+
+        <input class="sr-only" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="locale" value={locale} />
+
+        <fieldset class="contact__verification">
+          <legend class="sr-only">{t('contact.turnstile')}</legend>
+          <div class="cf-turnstile" data-sitekey={siteKey} data-theme="auto" data-size="flexible"></div>
+        </fieldset>
+
+        <button class="btn btn--acid contact__submit" type="submit" data-contact-submit data-cursor-target>{t('contact.send')} →</button>
+      </form>
+
+      <div class="sr-only" role="status" aria-live="polite" tabindex="-1" data-contact-status></div>
+
+      <div class="contact__state" data-contact-success hidden>
+        <h3 class="display">{t('contact.success.title')}</h3>
+        <p>{t('contact.success.body')}</p>
       </div>
-
-      <aside class="contact__direct" data-reveal aria-labelledby="contact-direct-title">
-        <div class="plate">
-          <h3 id="contact-direct-title">{t('contact.direct')}</h3>
-          <div class="contact__direct-links">
-            <a class="btn" href={`mailto:${email}`}>
-              <span>{t('contact.email')}</span>
-              <span>{email}</span>
-            </a>
-            <a class="btn" href={`https://wa.me/${whatsappDigits}`}>
-              <span>{t('contact.whatsapp')}</span>
-            </a>
-          </div>
-          <ul class="contact__socials">
-            {
-              socials.map((social) => (
-                <li>
-                  <a class="btn" href={social.url} target="_blank" rel="noreferrer">
-                    {social.label}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </aside>
+      <div class="contact__state contact__state--error" data-contact-error hidden>
+        <h3 class="display">{t('contact.error.title')}</h3>
+        <p>{t('contact.error.body')}{' '}<a href={`mailto:${p.email}`}>{p.email}</a>.</p>
+      </div>
     </div>
+
+    <aside class="contact__direct" aria-label={t('contact.direct')}>
+      <p class="label">{t('contact.direct')}</p>
+      <ul class="rows contact__links">
+        <li><span class="mono contact__k">@</span><a href={`mailto:${p.email}`} data-cursor-target>{p.email}</a><span class="label">Email</span></li>
+        <li><span class="mono contact__k">#</span><a href={`https://wa.me/${wa}`} rel="noopener" target="_blank" data-cursor-target>{t('contact.whatsapp')}</a><span class="label">{p.whatsapp}</span></li>
+        {p.socials.map((s) => (
+          <li><span class="mono contact__k">↗</span><a href={s.url} rel="me noopener" target="_blank" data-cursor-target>{s.label}</a><span class="label">{s.handle}</span></li>
+        ))}
+      </ul>
+    </aside>
   </div>
 </section>
 
@@ -147,204 +86,159 @@ const whatsappDigits = whatsapp.replace(/\D/g, '');
   import '@/scripts/contact';
 </script>
 
-<style>
-  .sec-head {
-    display: grid;
-    gap: var(--s-2);
-    margin-bottom: var(--s-7);
+<style is:global>
+  .contact__lead {
+    padding-block: var(--s-7) var(--s-6);
   }
 
-  .contact__lead {
-    color: var(--fg-2);
+  .contact__scramble.text-block {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 105;
+    color: var(--fg);
+    font-size: var(--text-2xl);
+    max-width: 24ch;
+    text-transform: none;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .contact__scramble .word {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   .contact__grid {
     display: grid;
-    gap: var(--s-7);
+    border-top: var(--hair) solid var(--line);
   }
 
   .contact__note {
-    position: relative;
-    padding: var(--s-7) var(--s-5) var(--s-5);
-    border: 1px solid var(--line);
-    border-radius: var(--r-2);
-    background-color: var(--bg-elev);
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent calc(2rem - 1px),
-      var(--line-2) calc(2rem - 1px),
-      var(--line-2) 2rem
-    );
-    box-shadow: var(--shadow-2);
+    padding: var(--s-6) var(--gutter) var(--s-8);
+    border-bottom: var(--hair) solid var(--line);
   }
 
-  .contact__pin,
-  .contact__state-pin {
-    display: block;
-    width: var(--s-3);
-    height: var(--s-3);
-    border-radius: 50%;
-    background: var(--amber);
-    box-shadow: var(--shadow-1);
-  }
-
-  .contact__pin {
-    position: absolute;
-    top: var(--s-3);
-    right: 0;
-    left: 0;
-    margin-inline: auto;
-  }
-
-  .contact__fields {
+  .contact__note form {
     display: grid;
-    gap: var(--s-4);
+    gap: var(--s-5);
+    max-width: 40rem;
   }
 
   .field {
     display: grid;
-    gap: var(--s-1);
+    gap: var(--s-2);
   }
 
-  .field label,
-  .contact__verification legend {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.04em;
+  .field .label {
+    color: var(--fg-3);
   }
 
   .field input,
   .field textarea {
     width: 100%;
-    min-height: 44px;
-    padding: 0.65em 0.75em;
-    border: 1px solid var(--line);
-    border-radius: var(--r-2);
-    background: var(--bg-2);
+    padding: var(--s-3) 0;
+    background: transparent;
+    border: 0;
+    border-bottom: var(--hair) solid var(--line);
+    font-size: var(--text-lg);
     color: var(--fg);
-    font: inherit;
+    outline: none;
   }
 
-  .field textarea {
-    min-height: 9rem;
-    resize: vertical;
+  .field input:focus,
+  .field textarea:focus {
+    border-bottom-color: var(--acid);
   }
 
-  .field input[aria-invalid='true'],
-  .field textarea[aria-invalid='true'] {
-    border-color: var(--danger);
+  .field [aria-invalid='true'] {
+    border-bottom-color: var(--danger);
   }
 
   .field__error {
     color: var(--danger);
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
+  }
+
+  .field__error[hidden] {
+    display: none;
   }
 
   .contact__verification {
-    margin: var(--s-5) 0 0;
-    padding: 0;
     border: 0;
+    padding: 0;
+    margin: 0;
   }
 
-  .contact__verification noscript p {
-    color: var(--fg-2);
-    font-size: var(--text-sm);
+  .contact__verification:empty {
+    display: none;
   }
 
   .contact__submit {
-    min-height: 44px;
-    margin-top: var(--s-5);
+    justify-self: start;
+    min-height: 3.5rem;
+    padding-inline: var(--s-6);
   }
 
   .contact__state:not([hidden]) {
     display: grid;
-    gap: var(--s-2);
-    margin-top: var(--s-5);
-    padding-top: var(--s-4);
-    border-top: 1px solid var(--line);
+    gap: var(--s-3);
+    margin-top: var(--s-6);
+    padding: var(--s-5);
+    border: var(--hair) solid var(--acid);
+    max-width: 40rem;
   }
 
   .contact__state h3 {
-    font-size: var(--text-lg);
-    line-height: var(--leading-snug);
+    font-size: var(--text-xl);
+    color: var(--acid);
   }
 
-  .contact__state p {
-    color: var(--fg-2);
+  .contact__state--error:not([hidden]) {
+    border-color: var(--danger);
+  }
+
+  .contact__state--error h3 {
+    color: var(--danger);
   }
 
   .contact__state a {
-    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--acid);
   }
 
-  .contact__state-pin {
-    width: var(--s-2);
-    height: var(--s-2);
-    margin-bottom: var(--s-1);
-  }
-
-  .contact__direct .plate {
-    gap: var(--s-5);
-  }
-
-  .contact__direct h3 {
-    font-size: var(--text-lg);
-    font-weight: 500;
-  }
-
-  .contact__direct-links,
-  .contact__socials {
+  .contact__direct {
+    padding: var(--s-6) var(--gutter) var(--s-8);
     display: grid;
-    gap: var(--s-2);
+    gap: var(--s-4);
+    align-content: start;
   }
 
-  .contact__direct .btn {
-    width: 100%;
-    min-height: 44px;
-    justify-content: space-between;
-    text-align: left;
+  .contact__direct > .label {
+    color: var(--acid);
   }
 
-  .contact__direct .btn span:last-child {
-    color: var(--fg-2);
-    font-size: var(--text-xs);
+  .contact__links a {
+    font-size: var(--text-lg);
+    font-weight: 700;
   }
 
-  .contact__socials {
-    padding: 0;
-    list-style: none;
+  .contact__links a:hover {
+    color: var(--acid);
   }
 
-  @media (--lg) {
+  .contact__k {
+    color: var(--fg-3);
+  }
+
+  @media (--md) {
     .contact__grid {
-      grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
-      align-items: start;
-      gap: var(--s-8);
-    }
-  }
-
-  @media (--motion-ok) {
-    .contact__note.is-pinned {
-      animation: contact-note-pin var(--d-3) var(--ease-out);
+      grid-template-columns: 1.3fr 0.7fr;
     }
 
-    @keyframes contact-note-pin {
-      0%,
-      100% {
-        transform: rotate(var(--contact-note-angle, 0deg)) translateY(0);
-      }
-
-      45% {
-        transform: rotate(var(--contact-note-angle, 0deg)) translateY(calc(-1 * var(--s-3)));
-      }
-    }
-  }
-
-  @media (--lg) and (--motion-ok) {
     .contact__note {
-      --contact-note-angle: -0.6deg;
-      transform: rotate(var(--contact-note-angle));
+      border-bottom: 0;
+      border-right: var(--hair) solid var(--line);
     }
   }
 </style>

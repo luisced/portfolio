@@ -2,6 +2,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 /** Notes carry a real publication date; expose it as sitemap <lastmod>. Other pages have none. */
@@ -22,6 +23,7 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   integrations: [
+    react(),
     mdx(),
     sitemap({
       filter: (page) => !page.includes('/lab/'),

@@ -1,12 +1,9 @@
-/* Latin subsets only: EN/ES content, ≤4 font files on any page (PLAN.md §7). */
-@import '@fontsource/archivo-black/latin-400.css';
-@import '@fontsource/archivo-narrow/latin-400.css';
-@import '@fontsource/archivo-narrow/latin-700.css';
-@import '@fontsource/archivo/latin-400.css';
+/* Two families, two files. Mona Sans variable carries both wght and wdth axes (TextPressure needs wdth). */
+@import '@fontsource-variable/mona-sans/wdth.css';
+@import '@fontsource/azeret-mono/latin-400.css';
 @import './font-fallbacks.css';
 @import './tokens.css';
 
-/* ───────────────────────── Reset ───────────────────────── */
 *,
 *::before,
 *::after {
@@ -20,7 +17,6 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 3.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -36,6 +32,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: var(--leading-body);
+  font-variation-settings: 'wdth' 100;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -43,7 +40,8 @@ body {
 img,
 picture,
 video,
-svg {
+svg,
+canvas {
   display: block;
   max-width: 100%;
 }
@@ -87,64 +85,51 @@ h4 {
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: -2px;
+  outline: 2px solid var(--acid);
+  outline-offset: 3px;
 }
 
 ::selection {
-  background: var(--brand);
-  color: var(--brand-ink);
+  background: var(--acid);
+  color: var(--acid-ink);
 }
 
-/* ───────────────────────── Type ───────────────────────── */
-/* The one loud voice: Archivo Black, uppercase, tight. */
-.headline,
+/* ─── Type ─── */
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 800;
+  font-variation-settings: 'wdth' 110;
   text-transform: uppercase;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   line-height: var(--leading-tight);
   text-wrap: balance;
 }
 
-/* Secondary voice: Archivo Narrow, uppercase, for subheads and buttons. */
-.narrow {
-  font-family: var(--font-narrow);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: var(--leading-snug);
+.display--narrow {
+  font-variation-settings: 'wdth' 80;
+  letter-spacing: -0.02em;
 }
 
-.narrow--bold {
-  font-weight: 700;
+.display--wide {
+  font-variation-settings: 'wdth' 125;
 }
 
-/* Drawing lettering: mono, small caps, tracked. */
+.mono,
 .label,
-.kicker,
-.mono {
+.kicker {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .mono {
   text-transform: none;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 .kicker {
   color: var(--fg-3);
-}
-
-/* [01] index numbers */
-.num::before {
-  content: '[' attr(data-num) ']';
-  font-family: var(--font-mono);
-  letter-spacing: 0.04em;
-  margin-right: 0.6em;
 }
 
 .measure {
@@ -155,59 +140,21 @@ h4 {
   color: var(--fg-2);
 }
 
-/* Legacy alias kept for any remaining .method usage: now a labelled narrow subhead. */
-.method {
-  font-family: var(--font-narrow);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: var(--text-lg);
+/* Outlined giant numerals */
+.stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--fg);
 }
 
-/* ───────────────────────── Sheet & cells ─────────────────────────
-   The page is a drawing sheet divided by hairlines. Put children in
-   `.cells`; the 1px gap over an ink background draws perfect rules
-   between every cell with zero extra DOM. */
-.sheet {
-  border-block: var(--hair) solid var(--line);
+/* ─── Layout ─── */
+.container {
+  width: 100%;
+  padding-inline: var(--gutter);
 }
 
-.cells {
-  display: grid;
-  gap: var(--hair);
-  background: var(--line);
-  border: var(--hair) solid var(--line);
-}
-
-.cells > * {
-  background: var(--bg);
-  min-width: 0;
-}
-
-.cell {
-  padding: var(--s-4) var(--gutter);
-}
-
-.cell--tight {
-  padding: var(--s-2) var(--s-3);
-}
-
-.cell--flush {
-  padding: 0;
-}
-
-.cell--ink {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.cell--brand {
-  background: var(--brand);
-  color: var(--brand-ink);
-}
-
-.cell--fill {
-  background: var(--bg-2);
+.section {
+  position: relative;
+  border-top: var(--hair) solid var(--line);
 }
 
 .rule {
@@ -219,179 +166,49 @@ h4 {
   border-color: var(--line-2);
 }
 
-/* Section header row: [NN] · TITLE · kicker */
-.sec-head {
+/* Chapter header: counter + word, hairline-framed, huge */
+.chapter {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--hair);
-  background: var(--line);
-  border-block: var(--hair) solid var(--line);
+  grid-template-columns: auto 1fr auto;
+  align-items: end;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--gutter);
+  border-bottom: var(--hair) solid var(--line);
 }
 
-.sec-head > * {
-  background: var(--bg);
-  padding: var(--s-3) var(--gutter);
-}
-
-.sec-head__num {
-  display: grid;
-  place-items: center;
+.chapter__num {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  letter-spacing: 0.06em;
-  min-width: 4.5rem;
+  color: var(--acid);
 }
 
-.sec-head__title {
+.chapter__title {
   font-size: var(--text-2xl);
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-4);
-  flex-wrap: wrap;
 }
 
-.sec-head__title .kicker {
-  flex: 0 0 auto;
+.chapter__meta {
+  color: var(--fg-3);
+  text-align: right;
 }
 
-/* ───────────────────────── Ticker ─────────────────────────
-   A hairline strip with a marquee. Markup duplicates the items twice
-   so the loop is seamless: <div class="ticker"><ul class="ticker__track">…</ul></div> */
-.ticker {
-  overflow: hidden;
-  border-block: var(--hair) solid var(--line);
-  white-space: nowrap;
-  font-family: var(--font-narrow);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: var(--text-sm);
-  padding-block: var(--s-2);
-}
-
-.ticker--ink {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.ticker__track {
-  display: flex;
-  gap: var(--s-6);
-  width: max-content;
-  list-style: none;
-  padding: 0;
-}
-
-.ticker__track > li {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-6);
-}
-
-.ticker__track > li::after {
-  content: '✦';
-  font-size: 0.8em;
-}
-
-@media (--motion-ok) {
-  .ticker__track {
-    animation: ticker 40s linear infinite;
-  }
-
-  .ticker:hover .ticker__track {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes ticker {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* ───────────────────────── Hatching & lamp shadows ───────────────────────── */
-.hatch {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--line) 0 var(--hair),
-    transparent var(--hair) 7px
-  );
-}
-
-.hatch--soft {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--line-2) 0 var(--hair),
-    transparent var(--hair) 7px
-  );
-}
-
-/* An object on the bench: hairline box that casts a hatched shadow away
-   from the lamp. --shadow-dx/dy are driven by scripts/theme.ts. */
-.object {
-  position: relative;
-  border: var(--hair) solid var(--line);
-  background: var(--bg);
-}
-
-.object::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  translate: var(--shadow-dx) var(--shadow-dy);
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--line-2) 0 var(--hair),
-    transparent var(--hair) 6px
-  );
-  transition: translate var(--d-3) var(--ease-out);
-}
-
-/* Specimen: object with four corner handles (Groteskly). */
-.specimen {
-  position: relative;
-  border: var(--hair) solid var(--line);
-  background:
-    linear-gradient(var(--fg), var(--fg)) top left / 8px 8px no-repeat,
-    linear-gradient(var(--fg), var(--fg)) top right / 8px 8px no-repeat,
-    linear-gradient(var(--fg), var(--fg)) bottom left / 8px 8px no-repeat,
-    linear-gradient(var(--fg), var(--fg)) bottom right / 8px 8px no-repeat,
-    var(--bg);
-}
-
-/* Numbered guide columns inside a specimen: <div class="guides" style="--n: 7"> */
-.guides {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--line-2) 0 var(--hair),
-    transparent var(--hair) calc(100% / var(--n, 6))
-  );
-  background-size: 100% 100%;
-}
-
-/* ───────────────────────── Controls ───────────────────────── */
+/* ─── Controls ─── */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
-  min-height: 2.75rem;
-  padding: 0 var(--s-4);
+  min-height: 3rem;
+  padding: 0 var(--s-5);
   border: var(--hair) solid var(--line);
-  background: var(--bg);
+  background: transparent;
   color: var(--fg);
-  font-family: var(--font-narrow);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   transition:
-    background-color var(--d-1) var(--ease-step),
-    color var(--d-1) var(--ease-step);
+    background-color var(--d-1) steps(1, end),
+    color var(--d-1) steps(1, end);
 }
 
 .btn:hover {
@@ -399,88 +216,128 @@ h4 {
   color: var(--bg);
 }
 
-.btn--primary {
-  background: var(--brand);
-  color: var(--brand-ink);
-  border-color: var(--brand);
+.btn--acid {
+  background: var(--acid);
+  color: var(--acid-ink);
+  border-color: var(--acid);
 }
 
-.btn--primary:hover {
+.btn--acid:hover {
   background: var(--fg);
-  color: var(--bg);
   border-color: var(--fg);
-}
-
-.btn--ink {
-  background: var(--fg);
   color: var(--bg);
-}
-
-.btn--ink:hover {
-  background: var(--brand);
-  color: var(--brand-ink);
-  border-color: var(--brand);
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: var(--s-2);
-  padding: 0.2em 0.55em;
+  padding: 0.25em 0.6em;
   border: var(--hair) solid var(--line-2);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--fg-2);
 }
 
-.stamp {
-  display: inline-block;
-  padding: 0.25em 0.6em;
-  border: 2px solid var(--brand);
-  color: var(--brand);
-  font-family: var(--font-narrow);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  rotate: -3deg;
+.mark {
+  background: var(--acid);
+  color: var(--acid-ink);
+  padding: 0 0.15em;
 }
 
-/* Table: bill of materials / revision table */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--text-sm);
+/* Hairline data rows (skills, education, revisions) */
+.rows {
+  list-style: none;
+  padding: 0;
+  border-top: var(--hair) solid var(--line);
 }
 
-.table th,
-.table td {
-  padding: var(--s-2) var(--s-3);
-  border: var(--hair) solid var(--line);
-  text-align: left;
-  vertical-align: top;
+.rows > li {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  gap: var(--s-4);
+  align-items: baseline;
+  padding: var(--s-3) 0;
+  border-bottom: var(--hair) solid var(--line-2);
 }
 
-.table th {
+/* ─── Prose ─── */
+.prose {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--fg-2);
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose h2 {
+  margin-top: 2.4em;
+  padding-top: var(--s-3);
+  border-top: var(--hair) solid var(--line);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--fg-3);
-  font-weight: 400;
+  color: var(--acid);
 }
 
-/* ───────────────────────── Utilities ───────────────────────── */
-.container {
-  width: 100%;
-  padding-inline: var(--gutter);
+.prose h3 {
+  font-weight: 700;
+  color: var(--fg);
+  font-size: var(--text-md);
 }
 
-.section {
-  position: relative;
+.prose strong {
+  color: var(--fg);
+  font-weight: 700;
 }
 
+.prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--acid);
+  text-underline-offset: 0.15em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.2em;
+}
+
+.prose li::marker {
+  color: var(--acid);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--acid);
+  padding-left: var(--s-4);
+  color: var(--fg);
+}
+
+.prose pre {
+  padding: var(--s-4);
+  border: var(--hair) solid var(--line-2);
+  background: var(--bg-2);
+  overflow-x: auto;
+  font-size: var(--text-sm);
+  color: var(--fg);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.prose :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: var(--hair) solid var(--line-2);
+}
+
+/* ─── Utilities ─── */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -499,10 +356,9 @@ h4 {
   left: 0;
   z-index: var(--z-toast);
   padding: var(--s-2) var(--s-4);
-  background: var(--brand);
-  color: var(--brand-ink);
-  font-family: var(--font-narrow);
-  font-weight: 700;
+  background: var(--acid);
+  color: var(--acid-ink);
+  font-family: var(--font-mono);
   text-transform: uppercase;
   transform: translateY(-200%);
   transition: transform var(--d-2) var(--ease-out);
@@ -512,91 +368,7 @@ h4 {
   transform: translateY(0);
 }
 
-/* Prose (case studies, notes) */
-.prose {
-  max-width: var(--measure);
-  font-size: var(--text-lg);
-  line-height: var(--leading-body);
-  color: var(--fg-2);
-}
-
-.prose > * + * {
-  margin-top: 1.1em;
-}
-
-.prose h2 {
-  margin-top: 2.2em;
-  padding-top: var(--s-3);
-  border-top: var(--hair) solid var(--line);
-  font-family: var(--font-narrow);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: var(--text-md);
-  color: var(--fg);
-}
-
-.prose h3 {
-  font-family: var(--font-narrow);
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: var(--text-md);
-  color: var(--fg);
-}
-
-.prose strong {
-  color: var(--fg);
-  font-weight: 500;
-}
-
-.prose a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-decoration-color: var(--brand);
-  text-underline-offset: 0.15em;
-}
-
-.prose ul,
-.prose ol {
-  padding-left: 1.2em;
-}
-
-.prose li::marker {
-  color: var(--brand);
-}
-
-.prose blockquote {
-  border-left: 3px solid var(--brand);
-  padding-left: var(--s-4);
-  color: var(--fg);
-}
-
-.prose pre {
-  padding: var(--s-4);
-  border: var(--hair) solid var(--line);
-  background: var(--bg-2);
-  overflow-x: auto;
-  font-size: var(--text-sm);
-  color: var(--fg);
-}
-
-.prose code {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-.prose :not(pre) > code {
-  padding: 0.1em 0.35em;
-  border: var(--hair) solid var(--line-2);
-}
-
-.prose img {
-  border: var(--hair) solid var(--line);
-}
-
-/* ───────────────────────── Reveal ─────────────────────────
-   A print reveal: hard, bottom-up, no opacity (LCP-safe). Static without
-   JS or under reduced motion. motion.ts adds .is-visible. */
+/* Reveal hook (motion.ts): hard wipe, no opacity — LCP-safe. */
 @media (--motion-ok) {
   html.js [data-reveal] {
     clip-path: inset(0 0 100% 0);
@@ -607,4 +379,87 @@ h4 {
     transition: clip-path var(--d-3) var(--ease-out);
     transition-delay: var(--reveal-delay, 0ms);
   }
+}
+
+/* React Bits cursor hides the native one on pointer devices only */
+@media (--pointer) {
+  html.js.has-cursor,
+  html.js.has-cursor a,
+  html.js.has-cursor button {
+    cursor: none;
+  }
+}
+
+/* Film grain (React Bits Noise) pinned to the viewport */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.grain .noise-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Velocity marquee (React Bits ScrollVelocity) */
+.velocity .scroller {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  filter: none;
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  color: var(--fg-2);
+}
+
+.velocity--lg .scroller {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: 'wdth' 115;
+  letter-spacing: -0.03em;
+  font-size: var(--text-3xl);
+  line-height: 1;
+  color: var(--fg);
+}
+
+@media (--md) {
+  .velocity .scroller {
+    font-size: var(--text-sm);
+    line-height: 1.2;
+  }
+
+  .velocity--lg .scroller {
+    font-size: var(--text-3xl);
+    line-height: 1;
+  }
+}
+
+/* Fixed menu chrome (React Bits StaggeredMenu) */
+.staggered-menu-wrapper .staggered-menu-header {
+  padding: var(--s-5) var(--gutter);
+}
+
+.sm-logo {
+  transition: opacity var(--d-2) var(--ease-out);
+}
+
+html.scrolled .sm-logo {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.staggered-menu-wrapper .sm-toggle {
+  padding: 0.55rem 0.9rem;
+  border: var(--hair) solid var(--line);
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }

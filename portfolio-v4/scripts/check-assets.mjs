@@ -22,11 +22,16 @@ function walk(dir) {
 walk('dist');
 
 // Landing JS: entry scripts plus every chunk reachable through static/dynamic imports.
-const JS_BUDGET = 55 * 1024;
+// Round three is React + GSAP + React Bits by decision (see PLAN.md §5); the budget moved from 55 to 220 KB.
+const JS_BUDGET = 220 * 1024;
 const FONT_BUDGET = 4;
 const html = readFileSync('dist/index.html', 'utf8');
 const seen = new Set();
-const queue = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]);
+// Entry points: hoisted scripts plus every island's component + renderer (Astro loads those lazily).
+const queue = [
+  ...[...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]),
+  ...[...html.matchAll(/(?:component-url|renderer-url)="([^"]+)"/g)].map((m) => m[1]),
+];
 let jsGz = 0;
 while (queue.length) {
   const url = queue.pop();

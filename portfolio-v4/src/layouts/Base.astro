@@ -1,8 +1,8 @@
 ---
 import '@/styles/base.css';
-import displayUrl from '@fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2?url';
-import narrowUrl from '@fontsource/archivo-narrow/files/archivo-narrow-latin-400-normal.woff2?url';
-import bodyUrl from '@fontsource/archivo/files/archivo-latin-400-normal.woff2?url';
+import displayUrl from '@fontsource-variable/mona-sans/files/mona-sans-latin-wdth-normal.woff2?url';
+import monoUrl from '@fontsource/azeret-mono/files/azeret-mono-latin-400-normal.woff2?url';
+import Chrome from '@/components/Chrome';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
@@ -58,11 +58,10 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     <link rel="alternate" type="application/rss+xml" title="Luis Cedillo — notes" href={new URL(localizePath(locale, '/rss.xml'), site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" as="font" type="font/woff2" href={displayUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={narrowUrl} crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href={bodyUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={monoUrl} crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0f1220" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#e2e1dc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#efede6" media="(prefers-color-scheme: light)" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Luis Cedillo" />
@@ -100,6 +99,7 @@ const og = new URL(ogImage ?? '/og/default.png', site);
       <slot />
     </main>
     {!bare && <Footer locale={locale} />}
+    <Chrome client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)" />
     <script>
       import '@/scripts/theme';
       if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {

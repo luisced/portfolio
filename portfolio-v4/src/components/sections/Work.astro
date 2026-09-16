@@ -1,5 +1,6 @@
 ---
-import ProjectCard from '@/components/ProjectCard.astro';
+import { getImage } from 'astro:assets';
+import WorkIsland, { type WorkPanel } from '@/components/islands/WorkIsland';
 import { getProjects, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -9,84 +10,219 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const projects = await getProjects(locale);
-const featuredProjects = projects.filter((project) => project.data.featured);
+const featured = (await getProjects(locale)).filter((p) => p.data.featured);
+const panels: WorkPanel[] = await Promise.all(
+  featured.map(async (p) => {
+    const img = await getImage({ src: p.data.cover, width: 1200, format: 'webp' });
+    return {
+      href: localizePath(locale, `/work/${p.data.slug}/`),
+      title: p.data.title,
+      role: p.data.role,
+      outcome: p.data.outcome,
+      category: t(`work.category.${p.data.category}`),
+      stack: p.data.stack.slice(0, 5),
+      cover: img.src,
+      coverAlt: p.data.coverAlt,
+    };
+  }),
+);
 ---
 
-<section id="work" class="section">
-  <div class="container">
-    <header class="sec-head" data-reveal>
-      <p class="kicker">{t('work.kicker')}</p>
-      <h2 class="method" id="work-title">{t('work.title')}<span class="sr-only">: {t('work.kicker')}</span></h2>
-    </header>
+<section id="work" class="section" aria-labelledby="work-title">
+  <header class="chapter">
+    <span class="chapter__num">01</span>
+    <h2 id="work-title" class="display chapter__title">{t('work.title')}</h2>
+    <a class="label chapter__meta" href={localizePath(locale, '/work/')} data-cursor-target>{t('work.all')} →</a>
+  </header>
 
-    <div class="work-grid" data-reveal-group>
-      {
-        featuredProjects.map((project, index) => (
-          <ProjectCard
-            project={project}
-            locale={locale}
-            index={index}
-            featured={index === 0}
-            sizes={
-              index === 0
-                ? '(min-width: 64em) 66vw, (min-width: 48em) 50vw, 100vw'
-                : '(min-width: 64em) 33vw, (min-width: 48em) 50vw, 100vw'
-            }
-          />
-        ))
-      }
-    </div>
-
-    <a class="work-more" href={localizePath(locale, '/work/')} data-reveal>
-      <span>{t('work.all')}</span>
-      <span aria-hidden="true">↗</span>
-    </a>
-  </div>
+  <WorkIsland client:visible panels={panels} labels={{ view: t('work.view'), role: t('work.role'), stack: t('work.stack'), outcome: t('work.outcome') }} />
 </section>
 
-<style>
-  .sec-head {
-    display: grid;
-    gap: var(--s-2);
-    margin-bottom: var(--s-7);
+<style is:global>
+  .work {
+    position: relative;
+    overflow: clip;
   }
 
-  .work-grid {
+  .work__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--line-2);
+    z-index: 2;
+  }
+
+  .work__bar {
+    height: 100%;
+    background: var(--acid);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .work__track {
+    display: grid;
+  }
+
+  .panel {
+    display: grid;
+    gap: var(--s-5);
+    padding: var(--s-7) var(--gutter);
+    border-bottom: var(--hair) solid var(--line-2);
+  }
+
+  .panel__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .panel__num {
+    font-size: var(--text-3xl);
+    line-height: 1;
+  }
+
+  .panel__cat {
+    color: var(--acid);
+  }
+
+  .panel__title {
+    font-size: var(--text-2xl);
+  }
+
+  .panel__glitch.glitch {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 110;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    font-size: inherit;
+    line-height: 0.95;
+    white-space: normal;
+    color: var(--fg);
+    margin: 0;
+  }
+
+  .panel__glitch.glitch::before,
+  .panel__glitch.glitch::after {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  .panel__glitch.glitch::after {
+    text-shadow: var(--after-shadow, -6px 0 #c8ff00);
+  }
+
+  .panel__glitch.glitch::before {
+    text-shadow: var(--before-shadow, 6px 0 #ff5c7a);
+  }
+
+  .panel__body {
     display: grid;
     gap: var(--s-5);
   }
 
-  .work-more {
-    display: inline-flex;
-    align-items: center;
+  .panel__art {
+    display: block;
+  }
+
+  .panel__pixels.pixelated-image-card {
+    width: 100%;
+    border-radius: 0;
+    border: var(--hair) solid var(--line);
+    background: var(--bg-2);
+  }
+
+  .panel__pixels img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .panel__art-alt {
+    height: 100%;
+    display: grid;
+    align-content: end;
+    gap: var(--s-3);
+    padding: var(--s-5);
+    background: var(--acid);
+    color: var(--acid-ink);
+  }
+
+  .panel__art-alt .label {
+    color: var(--acid-ink);
+  }
+
+  .panel__art-alt p {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-lg);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .panel__copy {
+    display: grid;
+    gap: var(--s-5);
+    align-content: start;
+  }
+
+  .panel__outcome {
+    font-size: var(--text-lg);
+    color: var(--fg-2);
+    max-width: 40ch;
+  }
+
+  .panel__spec {
+    display: grid;
+    gap: var(--s-4);
+    margin: 0;
+  }
+
+  .panel__spec div {
+    display: grid;
     gap: var(--s-2);
-    margin-top: var(--s-7);
-    border-bottom: 1px solid var(--brand);
-    color: var(--brand);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    line-height: var(--leading-snug);
-    text-decoration: none;
+    padding-top: var(--s-3);
+    border-top: var(--hair) solid var(--line-2);
+  }
+
+  .panel__spec dt {
+    color: var(--fg-3);
+  }
+
+  .panel__spec dd {
+    margin: 0;
+  }
+
+  .panel__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+
+  .panel__magnet {
+    justify-self: start;
   }
 
   @media (--md) {
-    .work-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .work__track {
+      grid-auto-flow: column;
+      grid-auto-columns: 100vw;
+      will-change: transform;
     }
-  }
 
-  @media (--lg) {
-    .work-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      align-items: stretch;
+    .panel {
+      height: 100svh;
+      grid-template-rows: auto auto 1fr;
+      border-bottom: 0;
+      border-right: var(--hair) solid var(--line-2);
+      padding-block: var(--s-8) var(--s-7);
     }
-  }
 
-  @media (--pointer) {
-    .work-more:hover {
-      border-color: var(--fg);
-      color: var(--fg);
+    .panel__body {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
     }
   }
 </style>

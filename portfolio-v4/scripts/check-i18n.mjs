@@ -63,7 +63,7 @@ function walk(dir, acc = []) {
   return acc;
 }
 for (const file of walk('src')) {
-  if (file.endsWith('tokens.css')) continue;
+  if (file.endsWith('tokens.css') || file.includes('/reactbits/')) continue; // vendored React Bits CSS is third-party
   const src = readFileSync(file, 'utf8');
   for (const m of src.matchAll(/@media\s+([^{]+)\{/g)) {
     const q = m[1].trim();
