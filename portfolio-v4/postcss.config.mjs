@@ -9,6 +9,7 @@ export const customMedia = {
   '--xl': '(width >= 90em)', // 1440px
   '--pointer': '(hover: hover) and (pointer: fine)',
   '--motion-ok': '(prefers-reduced-motion: no-preference)',
+  '--motion-reduce': '(prefers-reduced-motion: reduce)',
 };
 
 const expandCustomMedia = () => ({

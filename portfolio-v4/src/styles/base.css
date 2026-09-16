@@ -406,8 +406,24 @@ h4 {
   height: 100%;
 }
 
-/* Velocity marquee (React Bits ScrollVelocity) */
-.velocity .scroller {
+/* Velocity marquee (islands/Velocity.tsx, GSAP) */
+.velocity {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.velocity__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.velocity__row {
+  flex: 0 0 auto;
+  padding-right: 0.5em;
+}
+
+.velocity .velocity__row {
   font-family: var(--font-mono);
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -418,7 +434,7 @@ h4 {
   color: var(--fg-2);
 }
 
-.velocity--lg .scroller {
+.velocity--lg .velocity__row {
   font-family: var(--font-display);
   font-weight: 800;
   font-variation-settings: 'wdth' 115;
@@ -428,17 +444,7 @@ h4 {
   color: var(--fg);
 }
 
-@media (--md) {
-  .velocity .scroller {
-    font-size: var(--text-sm);
-    line-height: 1.2;
-  }
 
-  .velocity--lg .scroller {
-    font-size: var(--text-3xl);
-    line-height: 1;
-  }
-}
 
 /* Fixed menu chrome (React Bits StaggeredMenu) */
 .staggered-menu-wrapper .staggered-menu-header {
@@ -462,4 +468,19 @@ html.scrolled .sm-logo {
   font-size: var(--text-xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+/* Reduced motion: the animated menu island never hydrates; show the static nav instead. */
+.nav-static {
+  display: none;
+}
+
+@media (--motion-reduce) {
+  .staggered-menu-wrapper {
+    display: none;
+  }
+
+  .nav-static {
+    display: flex;
+  }
 }

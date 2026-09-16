@@ -28,7 +28,7 @@ Goals:
 5. Zero dead scaffolding shipped.
 
 Non-goals:
-- No Spline/three.js/WebGL scenes, no Lenis or any scroll hijacking, no Framer Motion alongside GSAP.
+- No Spline/three.js/WebGL scenes, no Lenis or any scroll hijacking, no Framer Motion alongside GSAP (round three honours this: React Bits components that required `motion` were re-implemented on GSAP; the Lenis call in ScrollStack was replaced with native scroll).
 - No CMS or database. Content lives in the repo as Astro content collections.
 - No resurrection of `backend/` from V3; nothing reusable exists there.
 - No joke content (V3 "Future Corp" row) and no placeholder links (`github.com/example/oxxocorner`, `twitter.com/luisced`).
@@ -114,7 +114,7 @@ Hosting:
 | LCP | Observed < 1.0 s (measured 118 ms locally). Simulated: warn > 2.5 s — the serif title is the LCP element, so the lantern model charges one font round-trip and swings 1.7–2.9 s between identical runs | LHCI (warn) + PerformanceObserver | met observed; simulated within warn band |
 | CLS | 0. Every image sized; webfont swap neutralised by generated metric-matched fallback faces (`scripts/font-fallbacks.mjs` → `src/styles/font-fallbacks.css`, `size-adjust` + ascent/descent overrides computed from the real font files) | LHCI `cumulative-layout-shift` ≤ 0.02 (CI runs on Ubuntu, which lacks Georgia/Arial/Helvetica Neue, so the shims are inert there) + `unsized-images` | 0 on 9/9 runs on macOS; shims cover Windows/macOS/iOS. Android (Roboto/Noto) keeps the ≤ 0.02 swap shift — no shim, since those metrics are not available here to compute honestly |
 | INP / TBT | TBT < 100 ms; timeline keyboard interaction verified by hand | LHCI + browser test | TBT 0 ms |
-| JS shipped on landing | ≤ 220 KB gzip (React + GSAP + motion + islands — round-three decision); under reduced motion only the menu hydrates | `scripts/check-assets.mjs` walks scripts + island `component-url`/`renderer-url` graphs | 183 KB gz; dot-grid physics and menu deferred to idle → TBT 0–10 ms |
+| JS shipped on landing | ≤ 160 KB gzip (React + GSAP + islands — round-three decision; GSAP is the *only* animation library: `motion`, `lenis`, `ogl` removed). **Under reduced motion: 0 islands hydrate, 0 KB animation JS** — static nav via CSS media switch | `scripts/check-assets.mjs` walks scripts + island `component-url`/`renderer-url` graphs | 138 KB gz; dot-grid physics deferred to idle → TBT 0–10 ms |
 | CSS | ≤ 25 KB gzip, inlined (`build.inlineStylesheets: 'always'`) so nothing blocks render | build output | ≈ 10 KB |
 | Fonts | 2 families (Mona Sans variable wdth+wght, Azeret Mono), ≤ 4 woff2 files per page, latin only, preloaded, metric-matched fallbacks | `check-assets.mjs` counts fonts the landing references | Mona 98 KB (one variable file carries display + body + TextPressure axes), Azeret 20 KB |
 | Images | Every raster ≤ 200 KB; OG ≤ 80 KB; AVIF/WebP + srcset via `astro:assets` (`fallbackFormat="webp"`, never PNG) | `check-assets.mjs` | ok (hero 24 KB AVIF) |

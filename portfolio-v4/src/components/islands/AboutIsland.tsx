@@ -1,6 +1,6 @@
 /** About: portrait resolves from grayscale to color pixel by pixel; counters settle on scroll. */
 import PixelTransition from '@/components/reactbits/PixelTransition/PixelTransition';
-import CountUp from '@/components/reactbits/CountUp/CountUp';
+import CountUp from '@/components/islands/CountUp';
 
 interface Stat {
   to: number;

@@ -22,8 +22,15 @@ const items = [
 const socials = profile.data.socials.map((s) => ({ label: s.label, link: s.url }));
 ---
 
-<!-- Full-screen staggered menu (React Bits). Its header holds the mark (left) and MENU (right). -->
-<Menu client:idle items={items} socials={socials} />
+<!-- Full-screen staggered menu (React Bits). Its header holds the mark (left) and MENU (right).
+     Hydrates only when motion is welcome; reduced-motion users get the static nav below (CSS-switched). -->
+<Menu client:media="(prefers-reduced-motion: no-preference)" items={items} socials={socials} />
+<nav class="nav-static" aria-label="Primary">
+  <a class="nav-static__mark" href={home} aria-label={profile.data.shortName}><img src="/mark.svg" alt="" width="64" height="32" /></a>
+  <ul>
+    {items.map((i) => <li><a class="mono" href={i.link} data-cursor-target>{i.label}</a></li>)}
+  </ul>
+</nav>
 
 <!-- Bottom-left control strip: locale, theme, position. Plain HTML; theme.ts wires the toggle. -->
 <div class="strip" data-nav>
@@ -38,6 +45,36 @@ const socials = profile.data.socials.map((s) => ({ label: s.label, link: s.url }
 </div>
 
 <style>
+  .nav-static {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    padding: var(--s-4) var(--gutter);
+    background: var(--bg);
+    border-bottom: var(--hair) solid var(--line);
+  }
+
+  .nav-static ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: var(--s-5);
+  }
+
+  .nav-static a {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-static a:hover {
+    color: var(--acid);
+  }
+
   .strip {
     position: fixed;
     right: 0;
