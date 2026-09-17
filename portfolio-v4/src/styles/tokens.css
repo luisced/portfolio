@@ -1,35 +1,27 @@
-/*
- * Design tokens — neutral base. No design decisions taken here yet: system fonts,
- * a readable measure, two themes. Replace freely; every component only uses these variables.
- * Breakpoints live in postcss.config.mjs (`@media (--sm|--md|--lg|--xl)`).
- */
-
 :root {
-  color-scheme: dark;
-
-  --bg: #111111;
-  --bg-2: #181818;
-  --fg: #ededed;
-  --fg-2: #b5b5b5;
-  --fg-3: #7a7a7a;
-  --line: #2a2a2a;
-  --accent: #3ddc84;
-  --accent-ink: #062a17;
-  --danger: #ff6b6b;
-  --ok: var(--accent);
-
-  --font-display: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-
-  --text-xs: 0.75rem;
+  color-scheme: light;
+  --bg: #f7f7f2;
+  --bg-2: #eaeae5;
+  --fg: #171717;
+  --fg-2: #434340;
+  --fg-3: #5d5d57;
+  --line: #b9b9b0;
+  --accent: #8f254c;
+  --accent-ink: #ffffff;
+  --signal: #ef92b1;
+  --pink: #ef92b1;
+  --danger: #a52222;
+  --ok: #416441;
+  --font-display: 'Archivo Variable', sans-serif;
+  --font-body: 'Archivo Variable', sans-serif;
+  --font-mono: 'Azeret Mono', monospace;
+  --text-xs: 0.6875rem;
   --text-sm: 0.875rem;
   --text-md: 1rem;
   --text-lg: 1.25rem;
   --text-xl: 1.6rem;
-  --text-2xl: 2.2rem;
-  --text-3xl: 3rem;
-
+  --text-2xl: clamp(2.75rem, 6.5vw, 6.5rem);
+  --text-3xl: clamp(3.5rem, 8vw, 8rem);
   --s-1: 0.25rem;
   --s-2: 0.5rem;
   --s-3: 0.75rem;
@@ -37,22 +29,22 @@
   --s-5: 1.5rem;
   --s-6: 2rem;
   --s-7: 3rem;
-  --s-8: 4rem;
-  --gutter: clamp(1rem, 3vw, 2rem);
-  --measure: 65ch;
-  --container: 72rem;
+  --s-8: clamp(4rem, 8vw, 8rem);
+  --gutter: clamp(1rem, 2.5vw, 2rem);
+  --measure: 62ch;
+  --container: 96rem;
 }
 
-[data-theme='light'] {
-  color-scheme: light;
-
-  --bg: #fafafa;
-  --bg-2: #f0f0f0;
-  --fg: #111111;
-  --fg-2: #444444;
-  --fg-3: #777777;
-  --line: #dddddd;
-  --accent: #14915a;
-  --accent-ink: #ffffff;
-  --danger: #c0392b;
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #171717;
+  --bg-2: #232323;
+  --fg: #f7f7f2;
+  --fg-2: #d1d1c9;
+  --fg-3: #aaaaa1;
+  --line: #53534e;
+  --accent: #f5a6c2;
+  --accent-ink: #171717;
+  --danger: #ffa094;
+  --ok: #abd3a3;
 }

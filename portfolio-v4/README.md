@@ -1,44 +1,39 @@
-# luiscedillo.com — Portfolio V4 (base)
+# luiscedillo.com — Portfolio V4
 
-Astro 7 · static · Cloudflare Pages. **This is the engine with a neutral, undesigned skin.**
-Three visual directions were built and rejected (see git history: `e396a92` React Bits brutalist,
-`e27055c` blueprint bench, `d9c26ae` cinematic workshop, `0f3b08e` three quiet /lab variants);
-the design layer was reset on 2026-09-15 to start clean. Everything below is what survives.
+A graphic, reference-led developer portfolio built with Astro 7, static HTML and native scrolling. Oversized Archivo typography, monochrome framing, a pink narrative section and an original wireframe sculpture draw on PortalOne and TypeSafe AI without copying their assets. English and Spanish routes share a light/dark design system.
 
 ## Run
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:4321  (Astro 7 runs dev as a daemon: `pnpm exec astro dev stop`)
-pnpm build        # astro build → postbuild (404 mirrors) → check-i18n → check-assets
-pnpm check        # astro check (strict TS)
+pnpm dev
+pnpm build
+pnpm preview
+pnpm check
 ```
 
-`pnpm build` fails on: a content entry missing a locale, a UI key missing in `en`/`es`,
-a raw px/em media query, a raster over 200 KB (OG over 80 KB), landing JS over the gate
-(`scripts/check-assets.mjs`, currently 60 KB gz), or more than 4 font files.
+`pnpm build` generates static pages, responsive AVIF/WebP images, social images, localized 404 fallbacks, sitemap and RSS feeds. For an Astro background dev server, `pnpm exec astro dev stop` stops it. If a long-running dev server mixes stale content or styles with new markup, restart with `pnpm dev --force` to rebuild the content cache; compare against a clean production preview.
 
-## What is here (keep)
+## Design and content
 
-- `src/content/` — projects (`{slug}.{en|es}.mdx`), experience (YAML), notes, `profile/profile.yaml`.
-  Schemas in `src/content.config.ts`. Real content for 5 projects, 5 roles, 2 notes, both locales.
-- `src/i18n/` — every UI string (`ui.ts`) and helpers (`utils.ts`: `t()`, `localizePath`, queries).
-- `src/layouts/Base.astro` — head (canonical, hreflang, OG/Twitter, JSON-LD via `src/lib/seo.ts`),
-  no-flash theme, skip link, nav, footer. `src/pages/og/` generates OG PNGs (satori + resvg; Azeret Mono
-  is kept only for that).
-- `src/pages/[...lang]/` — `/`, `/es/`, work, notes, 404, RSS. All routes exist in both locales.
-- `src/components/sections/*` and `src/components/{Nav,Footer}.astro` — semantic, content-only markup.
-  **Restyle or replace these; do not put content in them.**
-- `src/styles/tokens.css` + `base.css` — neutral tokens (system fonts, two themes) and readable defaults.
-  Breakpoints only via `postcss.config.mjs` (`@media (--sm|--md|--lg|--xl)`).
-- `src/scripts/theme.ts` (toggle + Alt+T), `src/scripts/contact.ts` (progressive form).
-- `functions/api/contact.ts` — Pages Function: honeypot → Turnstile → Resend. Works without JS.
-- `scripts/` — `check-assets.mjs`, `check-i18n.mjs`, `postbuild.mjs`, `font-fallbacks.mjs`
-  (configure fonts, `pnpm add -D fontkit`, run once to generate metric-matched fallbacks).
-- `lighthouserc.json` + `.github/workflows/quality.yml` — LHCI gates on every push.
+- `src/content/`: localized project case studies, notes, profile and professional experience. The September 2026 profile refresh uses the owner's signed-in LinkedIn profile for iLuk and Vyvo roles; older project details remain from the repository. The existing downloadable CV is retained, not regenerated.
+- `src/i18n/ui.ts`: bilingual interface copy. `utils.ts` localizes page and feed URLs.
+- `src/components/sections/`: graphic hero and three-part approach, framed project showcases, experience, portrait and background, writing and contact. Project images show actual product captures rather than promotional covers.
+- `src/styles/`: shared design tokens, typography, focus states and article styling. Use the custom breakpoints in `postcss.config.mjs`.
+- `Hero.astro`: an original torus wireframe is generated as SVG at build time. Native CSS ties the sculpture and section marker to scroll where supported; no WebGL, video, animation runtime, client framework or loading screen is required.
+- `src/scripts/story.ts`: IntersectionObserver updates the active project and triggers short positional reveals. Content is never hidden while waiting for an animation. Native CSS adds reading progress and a scroll-linked workflow line; scrolling is never intercepted.
+- Content and navigation remain usable without JavaScript. Reduced motion disables scroll-linked and entrance animations.
 
-## Deploy (Cloudflare Pages)
+## SEO and performance
 
-Build `pnpm build`, output `dist`. `wrangler.toml` holds `CONTACT_TO` / `CONTACT_FROM`.
-Secrets: `RESEND_API_KEY`, `TURNSTILE_SECRET`. Build env: `PUBLIC_TURNSTILE_SITE_KEY`.
-Local Functions: copy `.dev.vars.example` → `.dev.vars`, `wrangler pages dev dist`.
+`Base.astro` emits localized titles, descriptions, canonicals, hreflang, social metadata and linked Person/WebSite structured data. Case studies and notes add their own entities and breadcrumbs. Fonts are self-hosted; project images load lazily.
+
+The build checks translation parity, custom media tokens, raster size (200 KB, social images 80 KB), landing JavaScript (60 KB gzip ceiling, including inline scripts) and font count (four-file ceiling). This design currently uses two font files and approximately 1.7 KB gzip of executable JavaScript.
+
+`postbuild.mjs` adds exact SHA-256 hashes for emitted inline scripts to `dist/_headers`. Keep the source policy strict: do not add `unsafe-inline` to `script-src`.
+
+## Contact and deployment
+
+Build with `pnpm build`; publish `dist` on Cloudflare Pages. The form always renders, alongside direct email, WhatsApp and profile links. Delivery requires `RESEND_API_KEY` and the sender/recipient values in `wrangler.toml`. Turnstile is optional: configure both `PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET` to enable it, or leave both unset for the honeypot-only flow. Without Turnstile, the form also submits through native HTML when JavaScript is disabled.
+
+For local Functions, copy `.dev.vars.example` to `.dev.vars` and use `wrangler pages dev dist`. The static Astro preview does not run Pages Functions. No messages are sent during visual verification.

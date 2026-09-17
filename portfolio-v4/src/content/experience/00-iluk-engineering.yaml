@@ -1,0 +1,16 @@
+# Source: linkedin.com/in/luisced/details/experience/ (September 2026).
+org: iLuk.ai
+role:
+  en: "Co-Founder & Head of AI Engineering"
+  es: "Cofundador y director de ingeniería de IA"
+start: "2025-12"
+end: "2026-05"
+location: Mexico City
+highlights:
+  en:
+    - "Led engineering for enterprise generative AI and agentic systems, shaping the technical vision and architecture."
+  es:
+    - "Lideré la ingeniería de sistemas empresariales de IA generativa y agentes, definiendo la visión técnica y la arquitectura."
+tags: [AI, Product, Engineering]
+accent: brand
+order: -1

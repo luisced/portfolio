@@ -1,39 +1,17 @@
 ---
 import { getProfile, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-
-interface Props {
-  locale: Locale;
-}
-
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const profile = await getProfile();
-const year = new Date().getFullYear();
+const { data: p } = await getProfile();
 ---
-
-<footer class="footer section">
-  <div class="container footer__row">
-    <p class="label">© {year} {profile.data.name}. {t('footer.rights')}</p>
-    <nav aria-label="Footer" class="footer__links">
-      {profile.data.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label}</a>)}
-      <a href={`mailto:${profile.data.email}`}>{profile.data.email}</a>
-      <a href={localizePath(locale, '/rss.xml')}>{t('footer.rss')}</a>
-    </nav>
-  </div>
-</footer>
-
+<footer class="footer"><div class="container"><div class="footer-top"><p class="label">© {new Date().getFullYear()} {p.shortName}</p><p class="label">{t('footer.built')}</p><a class="label" href="#main">{t('footer.top')} ↑</a></div><nav aria-label={locale === 'es' ? 'Enlaces sociales' : 'Social links'}>{p.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label} ↗</a>)}<a href={localizePath(locale, '/rss.xml')}>{t('footer.rss')}</a></nav><p class="footer-name" aria-hidden="true">Luis Cedillo<span>.</span></p></div></footer>
 <style>
-  .footer__row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--s-4);
-  }
-
-  .footer__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-4);
-  }
+  .footer { padding-top: 2rem; border-top: 1px solid var(--line); overflow: hidden; }
+  .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
+  nav { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; margin-top: 1.5rem; }
+  nav a { min-height: 2.75rem; display: inline-flex; align-items: center; text-decoration: none; }
+  .footer-name { font-size: clamp(3rem, 13vw, 13rem); font-weight: 750; letter-spacing: -.075em; line-height: 1.15; margin-top: 2rem; margin-bottom: -.22em; white-space: nowrap; text-transform: uppercase; }
+  .footer-name span { color: var(--fg); }
 </style>

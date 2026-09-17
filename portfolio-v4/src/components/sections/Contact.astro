@@ -16,12 +16,13 @@ const wa = p.whatsapp.replace(/[^\d]/g, '');
 
 <section id="contact" class="section" aria-labelledby="contact-title">
   <div class="container">
-    <p class="label">{t('contact.kicker')}</p>
+    <p class="label section-label">{t('contact.kicker')}</p>
     <h2 id="contact-title">{t('contact.title')}</h2>
     <p class="measure muted">{t('contact.lead')}</p>
+    <a class="contact-email" href={`mailto:${p.email}`}>{p.email}<span aria-hidden="true">↗</span></a>
 
     <div class="contact__note">
-      <form class="contact__form" method="post" action="/api/contact" data-contact data-sending={t('contact.sending')} data-msg-required={t('contact.required')} data-msg-email={t('contact.invalidEmail')} data-msg-message={t('contact.invalidMessage')} novalidate>
+      <form class="contact__form" method="post" action="/api/contact" data-contact data-sending={t('contact.sending')} data-msg-required={t('contact.required')} data-msg-email={t('contact.invalidEmail')} data-msg-minlength={t('contact.invalidMessage')} novalidate>
         <div class="field">
           <label class="label" for="contact-name">{t('contact.name')}</label>
           <input id="contact-name" name="name" type="text" required autocomplete="name" aria-describedby="contact-name-error" />
@@ -39,10 +40,10 @@ const wa = p.whatsapp.replace(/[^\d]/g, '');
         </div>
         <input class="sr-only" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input type="hidden" name="locale" value={locale} />
-        <fieldset class="contact__verification">
+        {siteKey && <fieldset class="contact__verification">
           <legend class="sr-only">{t('contact.turnstile')}</legend>
           <div class="cf-turnstile" data-sitekey={siteKey} data-theme="auto" data-size="flexible"></div>
-        </fieldset>
+        </fieldset>}
         <button class="btn btn--primary" type="submit" data-contact-submit>{t('contact.send')}</button>
       </form>
 
@@ -59,7 +60,6 @@ const wa = p.whatsapp.replace(/[^\d]/g, '');
 
     <p class="label">{t('contact.direct')}</p>
     <ul>
-      <li><a href={`mailto:${p.email}`}>{p.email}</a></li>
       <li><a href={`https://wa.me/${wa}`} rel="noopener" target="_blank">{t('contact.whatsapp')}</a></li>
       {p.socials.map((s) => <li><a href={s.url} rel="me noopener" target="_blank">{s.label}</a></li>)}
     </ul>
@@ -71,10 +71,17 @@ const wa = p.whatsapp.replace(/[^\d]/g, '');
 </script>
 
 <style>
+  #contact { background: #171717; --bg: #171717; --bg-2: #242424; --fg: #f7f7f2; --fg-2: #d1d1c9; --fg-3: #aaaaa1; --line: #53534e; --accent: #f5a6c2; --danger: #ffa094; color: var(--fg); }
+  h2 { white-space: pre-line; font-size: clamp(3.5rem, 10vw, 10rem); max-width: 14ch; font-weight: 600; line-height: .95; }
+  .contact-email { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: clamp(1.4rem, 4vw, 4rem); letter-spacing: -.04em; text-decoration: none; padding-block: 2rem; margin-block: 1rem 2rem; border-bottom: 1px solid var(--fg-3); }
+  .contact-email:hover { color: var(--accent); }
+  ul { display: flex; flex-wrap: wrap; gap: 1rem 2rem; list-style: none; padding: 0; margin-top: .5rem; }
+  ul a { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: .875rem; }
+  .contact__note { margin-block: 2rem; }
   .contact__form {
     display: grid;
     gap: var(--s-4);
-    max-width: 36rem;
+    max-width: 58rem;
     margin-block: var(--s-5);
   }
 
@@ -87,4 +94,5 @@ const wa = p.whatsapp.replace(/[^\d]/g, '');
   .contact__verification:empty {
     display: none;
   }
+  @media (--md) { .contact__form { grid-template-columns: 1fr 1fr; gap: 1.5rem; } .field:nth-child(3), .contact__verification { grid-column: 1 / -1; } .contact__form > .btn { width: fit-content; } }
 </style>

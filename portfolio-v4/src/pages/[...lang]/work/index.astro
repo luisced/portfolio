@@ -3,32 +3,27 @@ import { Picture } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import { getProjects, localeStaticPaths, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-
 export const getStaticPaths = localeStaticPaths;
-
-interface Props {
-  locale: Locale;
-}
-
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const projects = await getProjects(locale);
 ---
-
 <Base locale={locale} title={t('work.all')} description={t('work.description')} path="/work/">
   <section class="section container" aria-labelledby="work-index-title">
-    <h1 id="work-index-title">{t('work.all')}</h1>
-    <ol class="list">
-      {projects.map((p) => (
-        <li>
-          <a href={localizePath(locale, `/work/${p.data.slug}/`)}>
-            <Picture fallbackFormat="webp" src={p.data.cover} alt={p.data.coverAlt} widths={[480, 960]} sizes="(min-width: 48em) 40rem, 100vw" formats={['avif', 'webp']} loading="lazy" />
-            <h2>{p.data.title}</h2>
-          </a>
-          <p class="muted">{p.data.outcome}</p>
-          <p class="label">{p.data.role} · {t(`work.category.${p.data.category}`)} · {p.data.timeframe}</p>
-        </li>
-      ))}
-    </ol>
+    <p class="label section-label">{t('work.kicker')}</p><h1 id="work-index-title">{t('work.all')}</h1><p class="measure muted">{t('work.intro')}</p>
+    <ol class="project-index">{projects.map((p, i) => <li><a href={localizePath(locale, `/work/${p.data.slug}/`)}><div class="index-image"><span class="label">0{i + 1} / {p.data.timeframe}</span><Picture fallbackFormat="webp" src={p.data.gallery[0]?.src ?? p.data.cover} alt={p.data.gallery[0]?.alt ?? p.data.coverAlt} widths={[480, 800]} sizes="(min-width: 48em) 40vw, 85vw" formats={['avif', 'webp']} loading="lazy" /></div><p class="label">{p.data.role} · {t(`work.category.${p.data.category}`)}</p><h2>{p.data.title} <span aria-hidden="true">↗</span></h2></a><p class="muted">{p.data.outcome}</p></li>)}</ol>
   </section>
 </Base>
+<style>
+  h1 { margin-block: 1.5rem; }
+  .project-index { list-style: none; padding: 0; display: grid; gap: 3.5rem 2rem; margin-top: 3rem; }
+  a { text-decoration: none; }
+  .index-image { position: relative; background: var(--bg-2); height: 22rem; padding: 3rem 1.5rem 1.5rem; display: grid; place-items: center; margin-bottom: 1.5rem; }
+  .index-image > span { position: absolute; top: 1rem; left: 1.5rem; }
+  .index-image :global(img) { height: 16rem; width: 100%; object-fit: contain; }
+  h2 { font-size: 2rem; margin-block: .75rem; }
+  h2 span { font-weight: 400; }
+  a:hover h2 { color: var(--accent); }
+  @media (--md) { .project-index { grid-template-columns: 1fr 1fr; } }
+</style>

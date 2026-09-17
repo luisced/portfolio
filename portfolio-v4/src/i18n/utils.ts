@@ -21,7 +21,7 @@ export function useTranslations(locale: Locale) {
 /** Prefix a site-relative path with the locale (default locale is unprefixed). */
 export function localizePath(locale: Locale, path = '/'): string {
   const clean = path.startsWith('/') ? path : `/${path}`;
-  const withSlash = clean.endsWith('/') ? clean : `${clean}/`;
+  const withSlash = clean.endsWith('/') || /\/[^/]+\.[^/]+$/.test(clean) ? clean : `${clean}/`;
   return locale === defaultLocale ? withSlash : `/${locale}${withSlash}`;
 }
 

@@ -2,55 +2,46 @@
 import { Picture } from 'astro:assets';
 import { getProfile, getProjects, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-
-interface Props {
-  locale: Locale;
-}
-
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const profile = await getProfile();
-const p = profile.data;
+const { data: p } = await getProfile();
 const titles = new Map((await getProjects(locale)).map((x) => [x.data.slug, x.data.title]));
 ---
-
 <section id="about" class="section" aria-labelledby="about-title">
-  <div class="container">
-    <p class="label">{t('about.kicker')}</p>
-    <h2 id="about-title">{t('about.title')}</h2>
-    <Picture fallbackFormat="webp" src={p.portrait} alt={p.portraitAlt[locale]} widths={[400, 800]} sizes="20rem" formats={['avif', 'webp']} loading="lazy" style="max-width: 20rem" />
-    <p class="measure">{p.bio[locale]}</p>
-    <p class="measure">{p.manifesto[locale]}</p>
-
-    <h3>{t('about.skills')}</h3>
-    {p.skills.map((g) => (
-      <div>
-        <p class="label">{g.group[locale]}</p>
-        <ul>
-          {g.items.map((i) => (
-            <li>
-              {i.name}
-              {i.evidence.length > 0 && (
-                <span class="muted">
-                  {' — '}
-                  {i.evidence.map((slug, idx) => (
-                    <>
-                      {idx > 0 && ', '}
-                      <a href={localizePath(locale, `/work/${slug}/`)}>{titles.get(slug) ?? slug}</a>
-                    </>
-                  ))}
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
-
-    <h3>{t('about.education')}</h3>
-    <ul>{p.education.map((e) => <li>{e.year} — {e.credential[locale]}, {e.institution}</li>)}</ul>
-    <h3>{t('about.languages')}</h3>
-    <ul>{p.languages.map((l) => <li>{l.name[locale]} — {l.level[locale]}</li>)}</ul>
-    <p><a class="btn" href={p.cv} download>{t('about.cv')}</a></p>
+  <div class="container about-layout">
+    <div class="about-intro"><p class="label section-label">{t('about.kicker')}</p><h2 id="about-title">{t('about.title')}</h2><figure class="about-portrait"><Picture fallbackFormat="webp" src={p.portrait} alt={p.portraitAlt[locale]} widths={[400,640,900]} sizes="(min-width: 48em) 35vw, 90vw" formats={['avif','webp']} loading="lazy"/><figcaption class="label">{t('hero.portrait')} <span aria-hidden="true">↗</span></figcaption></figure><p class="label">{p.location}<br/>{p.timezone}</p></div>
+    <div class="about-body">
+      <p class="bio">{p.bio[locale]}</p>
+      <div class="belief" data-reveal><p class="label">{t('manifesto.kicker')}</p><p>{p.manifesto[locale]}</p></div>
+      <div class="about-tools"><h3>{t('about.skills')}</h3>{p.skills.map((g) => <details><summary>{g.group[locale]} <span aria-hidden="true">+</span></summary><ul>{g.items.map((i) => <li><span>{i.name}</span>{i.evidence.length > 0 && <span class="evidence">{i.evidence.map((slug, idx) => <>{idx > 0 && ', '}<a href={localizePath(locale, `/work/${slug}/`)}>{titles.get(slug)}</a></>)}</span>}</li>)}</ul></details>)}</div>
+      <div class="about-facts"><div><h3 class="label">{t('about.education')}</h3><ul>{p.education.map((e) => <li><span>{e.credential[locale]}</span><small>{e.institution} · {e.year}</small></li>)}</ul></div><div><h3 class="label">{t('about.languages')}</h3><ul>{p.languages.map((l) => <li>{l.name[locale]}<small>{l.level[locale]}</small></li>)}</ul></div></div>
+      <a class="btn" href={p.cv} download>{t('about.cv')} <span aria-hidden="true">↓</span></a>
+    </div>
   </div>
 </section>
+<style>
+  .about-layout { display: grid; gap: 3rem; }
+  h2 { white-space: pre-line; margin-block: 1.5rem; }
+  .about-portrait { border: 1px solid var(--line); margin-top: 2rem; }
+  .about-portrait :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .about-portrait figcaption { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem; border-top: 1px solid var(--line); font-size: .6rem; }
+  .about-intro > .label:last-child { margin-top: 1rem; }
+  .bio { font-size: clamp(1.15rem, 2vw, 1.55rem); line-height: 1.5; }
+  .belief { border: 1px solid var(--line); padding: 1.5rem; margin-block: 2.5rem; background: var(--bg-2); }
+  .belief > p:last-child { font-size: 1.3rem; color: var(--fg-2); margin-top: 1rem; }
+  .about-tools h3 { margin-bottom: 1rem; }
+  details { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; padding-block: 1rem; display: flex; justify-content: space-between; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary > span { transform: rotate(45deg); }
+  details ul { list-style: none; padding: 0 0 1rem; }
+  details li { display: grid; gap: .2rem; padding-block: .5rem; font-size: .875rem; }
+  .evidence { font-size: .75rem; color: var(--fg-2); }
+  .about-facts { display: grid; gap: 2rem; margin-block: 2.5rem; }
+  .about-facts h3 { letter-spacing: .05em; }
+  .about-facts ul { list-style: none; padding: 0; font-size: .875rem; }
+  .about-facts li { padding-top: 1rem; }
+  small { display: block; color: var(--fg-2); font-size: .75rem; }
+  @media (--md) { .about-layout { grid-template-columns: 1fr 1.5fr; gap: 10%; } .about-facts { grid-template-columns: 2fr 1fr; } }
+</style>

@@ -21,8 +21,7 @@ function walk(dir) {
 
 walk('dist');
 
-// Landing JS: entry scripts plus every chunk reachable through static/dynamic imports.
-// Neutral base ships ~1 KB (theme + contact). Raise deliberately when a design adds JS; document in PLAN.md §5.
+// Landing JS includes executable inline modules as well as external entrypoints.
 const JS_BUDGET = 60 * 1024;
 const FONT_BUDGET = 4;
 const html = readFileSync('dist/index.html', 'utf8');
@@ -32,7 +31,10 @@ const queue = [
   ...[...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]),
   ...[...html.matchAll(/(?:component-url|renderer-url)="([^"]+)"/g)].map((m) => m[1]),
 ];
-let jsGz = 0;
+const inlineScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)]
+  .filter(([, attrs]) => !/\bsrc=/.test(attrs) && !/\btype=["']application\/ld\+json["']/.test(attrs))
+  .map(([, , source]) => source);
+let jsGz = inlineScripts.reduce((bytes, source) => bytes + gzipSync(source, { level: 9 }).length, 0);
 while (queue.length) {
   const url = queue.pop();
   if (seen.has(url)) continue;

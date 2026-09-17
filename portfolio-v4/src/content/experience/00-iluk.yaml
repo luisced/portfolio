@@ -1,0 +1,18 @@
+# Source: linkedin.com/in/luisced/details/experience/ (September 2026).
+org: iLuk.ai
+role:
+  en: "Co-Founder & CTO"
+  es: "Cofundador y CTO"
+start: "2026-05"
+end: null
+location: Mexico City
+highlights:
+  en:
+    - "Leading the architecture of a multi-agent platform for acquisition, onboarding, KYC, payments and collections."
+    - "Building orchestration systems where AI and humans collaborate in regulated financial workflows."
+  es:
+    - "Lidero la arquitectura de una plataforma multiagente para adquisición, onboarding, KYC, pagos y cobranza."
+    - "Construyo sistemas de orquestación donde IA y humanos colaboran en procesos financieros regulados."
+tags: [Agentic AI, Architecture, Leadership]
+accent: brand
+order: -2

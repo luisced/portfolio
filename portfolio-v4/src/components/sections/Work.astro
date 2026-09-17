@@ -2,33 +2,89 @@
 import { Picture } from 'astro:assets';
 import { getProjects, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-
-interface Props {
-  locale: Locale;
-}
-
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-const featured = (await getProjects(locale)).filter((p) => p.data.featured);
+const featured = (await getProjects(locale)).filter(p => p.data.featured);
 ---
-
 <section id="work" class="section" aria-labelledby="work-title">
   <div class="container">
-    <p class="label">{t('work.kicker')}</p>
-    <h2 id="work-title">{t('work.title')}</h2>
-    <ul class="list">
-      {featured.map((p) => (
-        <li>
-          <a href={localizePath(locale, `/work/${p.data.slug}/`)}>
-            <Picture fallbackFormat="webp" src={p.data.cover} alt={p.data.coverAlt} widths={[480, 960]} sizes="(min-width: 48em) 40rem, 100vw" formats={['avif', 'webp']} loading="lazy" />
-            <h3>{p.data.title}</h3>
-          </a>
-          <p class="muted">{p.data.outcome}</p>
-          <p class="label">{p.data.role} · {t(`work.category.${p.data.category}`)} · {p.data.timeframe}</p>
-          <p>{p.data.stack.map((s) => <span class="chip">{s}</span>)}</p>
-        </li>
-      ))}
-    </ul>
-    <p><a href={localizePath(locale, '/work/')}>{t('work.all')} →</a></p>
+    <header class="work-heading"><p class="label section-label">{t('work.kicker')}</p><h2 id="work-title">{t('work.title')}</h2><div class="work-intro"><p>{t('work.intro')}</p><a class="text-link" href={localizePath(locale, '/work/')}>{t('work.all')} <span aria-hidden="true">↗</span></a></div></header>
+    <nav class="chapters" aria-label={t('work.kicker')}><a href="#project-iluk" data-chapter-link aria-current="step"><span>[00]</span> iLuk <span aria-hidden="true">↗</span></a>{featured.map((p, i) => <a href={`#project-${p.data.slug}`} data-chapter-link><span>[0{i + 1}]</span> {p.data.title.split(' / ')[0]} <span aria-hidden="true">↗</span></a>)}</nav>
+    <article id="project-iluk" class="project project--current" data-chapter>
+      <div class="project-top label"><span>[00] / iLuk</span><span>{t('work.current')}</span></div>
+      <div class="project-layout">
+        <figure class="system-figure">
+          <figcaption class="label">{t('work.iluk.diagram')}</figcaption>
+          <div class="system-name" aria-hidden="true">iLuk<svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor"><rect x="6" y="6" width="88" height="88"/><path d="M6 50h88M50 6v88M6 6l88 88M94 6 6 94"/><circle cx="50" cy="50" r="27"/></svg></div>
+          <div class="system-rail" aria-hidden="true">{Array.from({length:5},()=> <span class="rail-dot"></span>)}</div>
+          <ol class="system-nodes"><li>{t('work.iluk.node1')}</li><li>{t('work.iluk.node2')}</li><li>{t('work.iluk.node3')}</li><li>{t('work.iluk.node4')}</li><li>{t('work.iluk.node5')}</li></ol>
+          <div class="system-human label"><span aria-hidden="true">↳</span> {t('work.iluk.human')}</div>
+        </figure>
+        <div class="project-copy"><p class="label project-role">{t('work.iluk.role')}</p><h3>{t('work.iluk.title')}</h3><p class="project-description">{t('work.iluk.body')}</p><dl class="project-metrics"><div><dt>100K+</dt><dd>{t('work.iluk.metric1')}</dd></div><div><dt>200+</dt><dd>{t('work.iluk.metric2')}</dd></div></dl><a class="metric-source" href="https://www.linkedin.com/in/luisced/" target="_blank" rel="noopener">{t('work.iluk.source')} ↗</a><a class="btn" href="https://www.iluk.ai/" target="_blank" rel="noopener">{t('work.iluk.link')} <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </article>
+    {featured.map((p, i) => <article id={`project-${p.data.slug}`} class:list={['project', {'project--mobile': p.data.category === 'ios'}]} data-chapter>
+      <div class="project-top label"><span>[0{i + 1}] / {p.data.title.split(' / ')[0]}</span><span>{t(`work.category.${p.data.category}`)} / {p.data.timeframe}</span></div>
+      <div class="project-layout">
+        <a class="project-image" href={localizePath(locale, `/work/${p.data.slug}/`)} aria-label={`${t('work.view')}: ${p.data.title}`}>
+          <Picture fallbackFormat="webp" src={p.data.gallery[0]?.src ?? p.data.cover} alt={p.data.gallery[0]?.alt ?? p.data.coverAlt} widths={p.data.category === 'ios' ? [320,480,640] : [480,800,1200]} sizes={p.data.category === 'ios' ? '(min-width: 64em) 250px, 42vw' : '(min-width: 64em) 56vw, 90vw'} formats={['avif','webp']} loading="lazy" />
+          <span class="image-arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor"><path d="M4 16 16 4M4 4h12v12"/></svg></span>
+        </a>
+        <div class="project-copy"><p class="label project-role">{p.data.role}</p><h3><a href={localizePath(locale, `/work/${p.data.slug}/`)}>{p.data.title}</a></h3><p class="project-description">{p.data.outcome}</p><p class="project-stack">{p.data.stack.map(s => <span class="chip">{s}</span>)}</p><a class="btn" href={localizePath(locale, `/work/${p.data.slug}/`)}>{t('work.view')} <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </article>)}
   </div>
 </section>
+<style>
+  #work { border-top: 0; }
+  .work-heading { padding-bottom: 3rem; }
+  .work-heading h2 { font-size: clamp(3.25rem, 8.2vw, 8.5rem); margin-block: 2rem; font-weight: 650; max-width: 13ch; }
+  .work-intro { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; align-items: end; }
+  .work-intro p { max-width: 42ch; color: var(--fg-2); }
+  .chapters { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); background: var(--bg); }
+  .chapters a { display: flex; justify-content: space-between; align-items: center; padding: 1rem .75rem; gap: .5rem; text-decoration: none; font-size: .7rem; }
+  .chapters a:nth-child(even) { border-left: 1px solid var(--line); }
+  .chapters a:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .chapters a > span:first-child { font: .55rem var(--font-mono); }
+  .chapters a[aria-current] { background: var(--fg); color: var(--bg); }
+  .project { margin-top: 2rem; border: 1px solid var(--line); scroll-margin-top: 9rem; }
+  .project-top { display: flex; justify-content: space-between; gap: 1.5rem; padding: 1rem; border-bottom: 1px solid var(--line); font-size: .6rem; }
+  .project-layout { display: grid; }
+  .project-layout > * { min-width: 0; }
+  .project-copy { padding: 2rem 1.25rem; }
+  .project h3 { font-size: clamp(2rem, 3.4vw, 3.75rem); max-width: 17ch; line-height: 1.02; margin-top: 1.5rem; }
+  .project h3 a { text-decoration: none; }
+  .project-role { font-size: .6rem; }
+  .project-description { max-width: 45ch; font-size: 1rem; line-height: 1.65; color: var(--fg-2); margin-top: 1.5rem; }
+  .project-stack { margin-top: 1.5rem; }
+  .project-stack .chip { font-size: .55rem; }
+  .project-copy > .btn { margin-top: 2rem; gap: 2rem; }
+  .project-image { width: 100%; display: grid; position: relative; place-items: center; padding: clamp(1.5rem,4vw,4rem); min-height: 19rem; background: #dfdfd8; overflow: hidden; }
+  .project-image :global(picture) { width: 100%; position: relative; z-index: 1; }
+  .project-image :global(img) { width: 100%; object-fit: contain; filter: drop-shadow(0 12px 15px #17171718); }
+  .project--mobile .project-image { background: #e7bad0; }
+  .project--mobile .project-image :global(picture) { width: 45%; max-width: 15.5rem; }
+  .project--mobile .project-image :global(img) { max-height: 33rem; }
+  .project:last-child .project-image { background: #c9d4c4; }
+  .image-arrow { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 3rem; height: 3rem; border-bottom: 1px solid #8e8e84; border-left: 1px solid #8e8e84; color: #171717; }
+  .system-figure { display: flex; flex-direction: column; justify-content: center; padding: clamp(1.5rem,3vw,3rem); background: #171717; color: #f7f7f2; min-height: 24rem; }
+  .system-figure .label { color: #c5c5bc; font-size: .6rem; }
+  .system-name { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: clamp(7rem,13vw,13rem); line-height: 1.2; letter-spacing: -.085em; font-weight: 550; margin-block: 2rem 3rem; }
+  .system-name svg { width: 20%; color: var(--pink); }
+  .system-rail { position: relative; display: flex; justify-content: space-around; align-items: center; height: 1rem; }
+  .system-rail::before { content: ''; position: absolute; height: 1px; width: 80%; left: 10%; background: #7c7c73; }
+  .rail-dot { width: 7px; height: 7px; border: 1px solid var(--pink); background: #171717; z-index: 1; }
+  .system-nodes { list-style: none; padding: .75rem 0 2rem; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); text-align: center; gap: .25rem; font-size: clamp(.5rem,1vw,.7rem); }
+  .system-human { display: flex; gap: 1rem; border-top: 1px solid #5a5a53; padding-top: 1rem; }
+  .system-human > span { color: var(--pink); }
+  .project-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-block: 1px solid var(--line); padding-block: 1rem; margin-top: 1.5rem; }
+  .project-metrics dt { font-size: 2.6rem; letter-spacing: -.065em; line-height: 1.3; }
+  .project-metrics dd { font-size: .65rem; color: var(--fg-2); }
+  .metric-source { display: block; margin-top: .75rem; font-size: .6rem; color: var(--fg-3); }
+  @media (--md) { .chapters { grid-template-columns: repeat(4,minmax(0,1fr)); } .chapters a { padding-inline: 1.25rem; } .chapters a + a { border-left: 1px solid var(--line); border-top: 0; } }
+  @media (--lg) { .chapters { position: sticky; top: 5.25rem; z-index: 5; } .project-layout { grid-template-columns: 1.3fr 1fr; } .project-copy { padding: 3rem; } .project-image { min-height: 38rem; } .project--mobile .project-image { min-height: 40rem; } .project-top { padding-inline: 1.5rem; } }
+  @media (--pointer) { .project-image :global(picture) { transition: transform .4s; } .project-image:hover :global(picture) { transform: scale(1.025); } }
+  @media (--motion-reduce) { .project-image :global(picture) { transition: none; } }
+  @supports (animation-timeline: view()) { @media (--motion-ok) { .project--current { view-timeline: --workflow block; } .system-rail::after { content: ''; position: absolute; width: 80%; left: 10%; height: 1px; background: var(--pink); transform-origin: left; animation: trace linear both; animation-timeline: --workflow; animation-range: entry 30% cover 70%; } @keyframes trace { from { transform: scaleX(0); } to { transform: scaleX(1); } } } }
+</style>

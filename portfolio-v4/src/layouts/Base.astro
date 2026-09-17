@@ -42,7 +42,7 @@ const og = new URL(ogImage ?? '/og/default.png', site);
 ---
 
 <!doctype html>
-<html lang={locale} data-theme="dark">
+<html lang={locale} data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,8 +55,7 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     <link rel="alternate" type="application/rss+xml" title="Luis Cedillo — notes" href={new URL(localizePath(locale, '/rss.xml'), site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#f7f7f2" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content="Luis Cedillo" />
@@ -77,12 +76,12 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     <script type="application/ld+json" set:html={JSON.stringify(graph(website(profile, locale), person(profile, locale), ...jsonLd))} />
     <slot name="head" />
     <script is:inline>
-      // No-flash theme + JS marker. Runs before first paint.
+      // Default to the editorial light palette; honor explicit visitor choice.
       (() => {
-        const stored = localStorage.getItem('theme');
-        const prefersLight = matchMedia('(prefers-color-scheme: light)').matches;
-        const theme = stored === 'light' || stored === 'dark' ? stored : prefersLight ? 'light' : 'dark';
-        document.documentElement.dataset.theme = theme;
+        try {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') document.documentElement.dataset.theme = stored;
+        } catch {}
         document.documentElement.classList.add('js');
       })();
     </script>
@@ -96,6 +95,7 @@ const og = new URL(ogImage ?? '/og/default.png', site);
     {!bare && <Footer locale={locale} />}
     <script>
       import '@/scripts/theme';
+      import '@/scripts/story';
     </script>
   </body>
 </html>

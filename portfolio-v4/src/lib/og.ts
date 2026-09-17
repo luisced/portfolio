@@ -5,7 +5,7 @@ import { Resvg } from '@resvg/resvg-js';
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-// Satori needs static TTF/OTF/WOFF; Mona Sans only ships as variable woff2, so the OG voice is the mono.
+// Satori uses static WOFF; the social card pairs the site's paper palette with its mono labels.
 const monoBlack = readFileSync(
   resolve(process.cwd(), 'node_modules/@fontsource/azeret-mono/files/azeret-mono-latin-800-normal.woff'),
 );
@@ -40,10 +40,9 @@ function textNode(
 }
 
 export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Uint8Array<ArrayBuffer>> {
-  // Blueprint sheet: deep blue-black, white hairline frame, uppercase Archivo Black. Flat fills only.
-  const INK = '#f1efe8';
-  const PAPER = '#0a0a0a';
-  const BRAND = '#c8ff00';
+  const INK = '#171717';
+  const PAPER = '#f7f7f2';
+  const BRAND = '#8f254c';
   const tree: OgNode = {
     type: 'div',
     props: {
@@ -73,7 +72,7 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
             },
             children: [
               { type: 'span', props: { children: 'LUIS CEDILLO' } },
-              { type: 'span', props: { style: { color: BRAND }, children: 'V4 / 2026' } },
+              { type: 'span', props: { style: { color: BRAND }, children: 'ENGINEERING / PRODUCT' } },
             ],
           },
         },
@@ -97,7 +96,7 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
                 maxWidth: 1000,
                 maxHeight: 84,
                 overflow: 'hidden',
-                color: '#b9bdd0',
+                color: '#55574e',
                 fontSize: 32,
                 lineHeight: 1.25,
               }),

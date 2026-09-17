@@ -1,55 +1,37 @@
 ---
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-
-interface Props {
-  locale: Locale;
-  path: string;
-}
-
+interface Props { locale: Locale; path: string; }
 const { locale, path } = Astro.props;
 const t = useTranslations(locale);
 const profile = await getProfile();
 const home = localizePath(locale, '/');
 const alt = otherLocale(locale);
 ---
-
-<header class="nav container">
-  <a href={home}><strong>{profile.data.shortName}</strong></a>
-  <nav aria-label="Primary">
-    <a href={`${home}#work`}>{t('nav.work')}</a>
-    <a href={`${home}#about`}>{t('nav.about')}</a>
-    <a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a>
-    <a href={`${home}#contact`}>{t('nav.contact')}</a>
-    <a href={localizePath(alt, path)} hreflang={alt} lang={alt}>{t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span></a>
-    <button type="button" data-theme-toggle aria-label={t('theme.toggle')} title="Alt+T">◐</button>
-  </nav>
+<header class="site-header">
+  <div class="nav container">
+    <a class="wordmark" href={home} aria-label={`LC — ${profile.data.shortName}`}><svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M1 1h11v11H1zm15 0h11v11H16zM1 16h11v11H1z" fill="currentColor"/><path d="M16 16h11v11H16z" fill="var(--pink)"/></svg><span class="wordmark-full">Luis Cedillo</span><span class="wordmark-short">LC</span></a>
+    <nav class="primary" aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'}>
+      <a href={`${home}#work`}>{t('nav.work')}</a><a href={`${home}#about`}>{t('nav.about')}</a><a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a><a class="nav-contact" href={`${home}#contact`}>{t('nav.contact')} <span aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="utilities"><a href={localizePath(alt, path)} hreflang={alt} lang={alt}>{t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span></a><button type="button" data-theme-toggle aria-label={t('theme.toggle')} title={t('theme.toggle')}><svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor"/></svg></button></div>
+  </div>
+  <div class="reading-progress" aria-hidden="true"></div>
 </header>
-
 <style>
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--s-4);
-    padding-block: var(--s-4);
-  }
-
-  .nav a {
-    text-decoration: none;
-  }
-
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-4);
-    align-items: center;
-  }
-
-  button {
-    background: none;
-    border: 1px solid var(--line);
-    padding: 0.2rem 0.5rem;
-    cursor: pointer;
-  }
+  .site-header { position: sticky; top: 0; z-index: 20; padding-top: .75rem; background: var(--bg); }
+  .nav { display: flex; align-items: stretch; min-height: 3.75rem; border: 1px solid var(--line); }
+  a { text-decoration: none; }
+  .wordmark { display: flex; align-items: center; gap: .75rem; padding: .5rem .7rem; margin-right: auto; font-size: 1.1rem; font-weight: 650; letter-spacing: -.055em; }
+  .brand-mark { display: none; }
+  .wordmark-full { display: none; }
+  .primary { display: flex; font: .58rem var(--font-mono); text-transform: uppercase; }
+  .primary a { display: flex; align-items: center; justify-content: center; gap: 1rem; padding-inline: .65rem; border-left: 1px solid var(--line); }
+  .primary a:hover, .utilities a:hover, button:hover { color: #171717; background: var(--pink); }
+  .utilities { display: flex; align-items: stretch; font: .6rem var(--font-mono); }
+  .utilities a, button { display: grid; place-items: center; min-width: 2.1rem; min-height: 2.75rem; border: 0; border-left: 1px solid var(--line); padding: .4rem; background: none; }
+  .nav-contact { display: none !important; }
+  .reading-progress { height: 2px; background: var(--fg); position: absolute; bottom: 0; left: var(--gutter); right: var(--gutter); transform: scaleX(0); transform-origin: left; }
+  @supports (animation-timeline: scroll()) { @media (--motion-ok) { .reading-progress { animation: progress linear both; animation-timeline: scroll(root); } @keyframes progress { to { transform: scaleX(1); } } } }
+  @media (--md) { .site-header { padding-top: 1.25rem; } .nav { min-height: 4rem; } .wordmark { padding-inline: 1.25rem; } .wordmark-full, .brand-mark { display: block; } .wordmark-short { display: none; } .primary { font-size: .65rem; } .primary a { padding-inline: 1.5rem; } .nav-contact { display: flex !important; background: var(--fg); color: var(--bg); } .utilities a, button { min-width: 3rem; } }
 </style>

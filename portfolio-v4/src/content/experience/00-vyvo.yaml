@@ -1,0 +1,18 @@
+# Source: linkedin.com/in/luisced/details/experience/ (September 2026).
+org: Vyvo Tech
+role:
+  en: "Co-Founder & CTO · Acquired"
+  es: "Cofundador y CTO · Adquirida"
+start: "2025-06"
+end: "2025-12"
+location: Mexico City
+highlights:
+  en:
+    - "Guided the technology vision, product direction and engineering roadmap of an AI-powered social network."
+    - "Built and mentored the engineering team, connecting architecture decisions with product releases."
+  es:
+    - "Dirigí la visión tecnológica, el producto y la hoja de ruta de ingeniería de una red social con IA."
+    - "Formé y acompañé al equipo de ingeniería, conectando las decisiones de arquitectura con las entregas de producto."
+tags: [Product, Architecture, Leadership]
+accent: brand
+order: 0

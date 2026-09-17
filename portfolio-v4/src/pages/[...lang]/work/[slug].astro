@@ -78,7 +78,7 @@ const { Content } = await render(project);
     <h1>{project.data.title}</h1>
     <p class="measure muted" style="font-size: var(--text-lg)">{project.data.outcome}</p>
 
-    <Picture fallbackFormat="webp" src={project.data.cover} alt={project.data.coverAlt} widths={[720, 1200, 1800]} sizes="100vw" formats={['avif', 'webp']} loading="eager" decoding="async" />
+    <Picture fallbackFormat="webp" src={project.data.gallery[0]?.src ?? project.data.cover} alt={project.data.gallery[0]?.alt ?? project.data.coverAlt} widths={[480, 800, 1200]} sizes="(min-width: 48em) 65vw, 90vw" formats={['avif', 'webp']} loading="eager" decoding="async" />
 
     <dl>
       <dt class="label">{t('work.role')}</dt><dd>{project.data.role}</dd>

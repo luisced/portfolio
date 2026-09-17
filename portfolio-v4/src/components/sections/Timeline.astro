@@ -1,30 +1,37 @@
 ---
 import { formatMonth, getExperience, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-
-interface Props {
-  locale: Locale;
-}
-
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const experience = await getExperience();
 ---
-
 <section id="timeline" class="section" aria-labelledby="timeline-title">
   <div class="container">
-    <p class="label">{t('timeline.kicker')}</p>
+    <p class="label section-label">{t('timeline.kicker')}</p>
     <h2 id="timeline-title">{t('timeline.title')}</h2>
-    <ol class="list">
+    <ol class="experience-list">
       {experience.map((e) => (
-        <li>
-          <p class="label">{formatMonth(locale, e.data.start)} — {e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}</p>
-          <h3>{e.data.role[locale]}</h3>
-          <p class="muted">{e.data.org} · {e.data.location}</p>
-          <ul>{e.data.highlights[locale].map((h) => <li>{h}</li>)}</ul>
-          <p>{e.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p>
+        <li data-reveal>
+          <p class="label experience-date">{formatMonth(locale, e.data.start)}<br/><span>— {e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}</span></p>
+          <div class="experience-role"><h3>{e.data.role[locale]}</h3><p class="muted">{e.data.org}</p></div>
+          <div class="experience-detail"><p>{e.data.highlights[locale][0]}</p>{e.data.highlights[locale].length > 1 && <details><summary>{t('timeline.more')} <span aria-hidden="true">+</span></summary><ul>{e.data.highlights[locale].slice(1).map((h) => <li>{h}</li>)}</ul><p>{e.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p></details>}</div>
         </li>
       ))}
     </ol>
   </div>
 </section>
+<style>
+  .experience-list { list-style: none; padding: 0; }
+  .experience-list > li { display: grid; gap: 1.25rem; padding-block: 2rem; border-top: 1px solid var(--line); }
+  .experience-date { line-height: 1.8; }
+  h3 { font-size: 1.35rem; line-height: 1.15; max-width: 24ch; margin-bottom: .5rem; }
+  .experience-role > p { font-size: .85rem; }
+  .experience-detail { font-size: .9rem; color: var(--fg-2); }
+  summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding-block: 1rem .5rem; font-size: .75rem; list-style: none; color: var(--fg); }
+  summary::-webkit-details-marker { display: none; }
+  summary span { font-size: 1.2rem; }
+  details[open] summary span { transform: rotate(45deg); }
+  details ul { padding: .5rem 0 .75rem 1rem; }
+  @media (--md) { .experience-list > li { grid-template-columns: 1fr 2fr 2fr; gap: 2.5rem; } }
+</style>
