@@ -17,7 +17,7 @@ const parallels = Array.from({ length: 18 }, (_, i) => Array.from({ length: 81 }
 const meridians = Array.from({ length: 32 }, (_, i) => Array.from({ length: 33 }, (_, j) => `${j ? 'L' : 'M'}${point(i / 32 * Math.PI * 2, j / 32 * Math.PI * 2)}`).join('') + 'Z');
 const principles = [
   { title: t('hero.principle1'), body: t('hero.principle1.body'), link: 'UPocket', href: '#project-upocket' },
-  { title: t('hero.principle2'), body: t('hero.principle2.body'), link: 'Flowlink', href: '#project-stackup-channel-manager' },
+  { title: t('hero.principle2'), body: t('hero.principle2.body'), link: 'Flowlink / StackUp', href: '#project-stackup-channel-manager' },
   { title: t('hero.principle3'), body: t('hero.principle3.body'), link: 'Dopamina', href: '#project-dopamina' },
 ];
 ---
@@ -44,10 +44,43 @@ const principles = [
   <div class="hero-bottom label"><span>01 / {t('hero.disciplines')}</span><a href="#approach">{t('hero.scroll')} <span aria-hidden="true">↓</span></a></div>
 </section>
 <section id="approach" class="approach container" aria-labelledby="approach-title">
-  <div class="approach-header"><p class="label">{t('hero.approach.label')}</p><span class="approach-symbol" aria-hidden="true">✳</span></div>
-  <h2 id="approach-title">{t('hero.approach.line1')}<br/><span>{t('hero.approach.line2')}</span></h2>
-  <div class="principles">{principles.map((item, i) => <article data-reveal><p class="label">[0{i + 1}]</p><h3>{item.title}</h3><p>{item.body}</p><a class="text-link" href={item.href}>{item.link} <span aria-hidden="true">↗</span></a></article>)}</div>
-  <div class="approach-foot label"><span>{t('hero.approach.foot')}</span><span aria-hidden="true">↓ ↓ ↓</span></div>
+  <div class="approach-header"><p class="label">{t('hero.approach.label')}</p><svg class="approach-symbol" aria-hidden="true" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2"><path d="M40 0v80M0 40h80M12 12l56 56M12 68l56-56"/></svg></div>
+  <h2 id="approach-title"><span class="approach-lead">{t('hero.approach.line1')}</span><span class="approach-statement">{t('hero.approach.line2')}</span></h2>
+  <div class="principles">{principles.map((item, i) => <article>
+    <div class="principle-register label"><span>[0{i + 1}]</span><span>{item.link}</span><span aria-hidden="true">↘</span></div>
+    <div class="principle-graphic" aria-hidden="true">
+      <svg viewBox="0 0 360 280" fill="none" stroke="currentColor" stroke-width="1">
+        <path class="diagram-guides" d="M0 140h360M180 0v280M16 16h16m-8-8v16M328 264h16m-8-8v16"/>
+        {i === 0 && <>
+          <g class="flower-petals">{Array.from({ length: 12 }, (_, n) => <ellipse cx="180" cy="108" rx="38" ry="78" transform={`rotate(${n * 30} 180 140)`}/>)}</g>
+          <circle cx="180" cy="140" r="26" fill="currentColor"/>
+          <path d="M168 140h24m-12-12v24" stroke="#171717" stroke-width="2"/>
+        </>}
+        {i === 1 && <>
+          <path class="diagram-guides" d="M75 80v96M285 80v96M180 28v96M180 132v96" stroke-dasharray="3 5"/>
+          {[2, 1, 0].map((layer) => <g transform={`translate(0 ${layer * 48})`}>
+            <g class="stack-layer" style={`--layer: ${layer - 1}`}>
+              <path d="m180 28 105 52-105 52L75 80Z" fill="#171717"/>
+              {Array.from({ length: 5 }, (_, n) => {
+                const x = (n + 1) * 17.5;
+                const y = (n + 1) * 52 / 6;
+                return <path d={`M${180 + x} ${28 + y}L${75 + x} ${80 + y}M${75 + x} ${80 - y}L${180 + x} ${132 - y}`} opacity=".55"/>;
+              })}
+              <path d="m180 62 36 18-36 18-36-18Z" fill="currentColor"/>
+            </g>
+          </g>)}
+        </>}
+        {i === 2 && <>
+          <g class="signal-rays">{Array.from({ length: 60 }, (_, n) => <path d={`M180 ${n % 5 === 0 ? 18 : 30}V78`} transform={`rotate(${n * 6} 180 140)`} stroke-width={n % 5 === 0 ? 2 : 1}/>)}</g>
+          <circle cx="180" cy="140" r="48"/>
+          <path d="m180 102 9 29 29 9-29 9-9 29-9-29-29-9 29-9Z" fill="currentColor"/>
+        </>}
+      </svg>
+    </div>
+    <h3>{item.title}</h3><p class="principle-description">{item.body}</p>
+    <a class="principle-link label" href={item.href}><span>{item.link}</span><span class="principle-arrow" aria-hidden="true">↗</span></a>
+  </article>)}</div>
+  <div class="approach-foot label"><span>{t('hero.approach.foot')}</span><a href="#work">{t('hero.cta.work')} <span aria-hidden="true">↓</span></a></div>
 </section>
 <script>
   const stage = document.querySelector<HTMLElement>('.hero-stage');
@@ -131,17 +164,29 @@ const principles = [
   .current-window:hover { background: var(--pink); color: #171717; }
   .hero-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border-top: 1px solid var(--line); font-size: .55rem; }
   .hero-bottom a { display: flex; align-items: center; gap: 2rem; min-height: 2rem; }
-  .approach { position: relative; border: 1px solid #171717; border-top: 0; background: var(--pink); color: #171717; padding: 1.5rem 1.25rem 0; --fg: #171717; --fg-2: #383234; --fg-3: #383234; --line: #9c647a; --accent: #171717; }
-  .approach-header { display: flex; justify-content: space-between; align-items: center; }
-  .approach-symbol { font-size: 2.75rem; line-height: 1; }
-  .approach h2 { font-size: clamp(2.75rem, 7.1vw, 7.5rem); line-height: .98; letter-spacing: -.065em; margin-block: 3rem; font-weight: 650; }
-  .approach h2 > span { font-weight: 400; }
-  .principles { display: grid; border-top: 1px solid var(--line); }
-  .principles article { padding-block: 2rem; border-bottom: 1px solid var(--line); }
-  .principles h3 { font-size: 1.65rem; max-width: 14ch; margin-block: 1rem; font-weight: 600; }
-  .principles article > p:not(.label) { max-width: 35ch; font-size: .9rem; line-height: 1.6; }
-  .principles .text-link { margin-top: .5rem; font-family: var(--font-mono); font-size: .65rem; }
-  .approach-foot { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: 1rem; font-size: .55rem; }
+  .approach { position: relative; border: 1px solid #171717; border-top: 0; background: var(--pink); color: #171717; --fg: #171717; --fg-2: #383234; --fg-3: #383234; --line: #9c647a; --accent: #171717; }
+  .approach-header { display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding: 1.5rem 1.25rem; }
+  .approach-header .label { font-size: .6rem; }
+  .approach-symbol { width: 3rem; flex: 0 0 3rem; }
+  .approach h2 { padding: 1rem 1.25rem 2.5rem; letter-spacing: -.065em; }
+  .approach-lead { display: block; font-size: clamp(1.5rem, 3vw, 3rem); line-height: 1.15; font-weight: 400; letter-spacing: -.045em; margin-bottom: .75rem; }
+  .approach-statement { display: block; font-size: clamp(2.5rem, 12vw, 5rem); line-height: .92; font-weight: 750; text-transform: uppercase; max-width: 19ch; }
+  .principles { display: grid; background: #171717; color: #f7f7f2; --fg: #f7f7f2; --fg-2: #c9c9c1; --fg-3: #c9c9c1; --bg: #171717; --line: #53534e; --accent: #ef92b1; }
+  .principles article { display: flex; flex-direction: column; min-width: 0; padding: 1.25rem; border-top: 1px solid var(--line); }
+  .principle-register { display: flex; align-items: center; justify-content: space-between; gap: .75rem; font-size: .55rem; color: #c9c9c1; }
+  .principle-register > span:last-child { font-size: 1.2rem; line-height: 1; color: var(--pink); }
+  .principle-graphic { display: grid; place-items: center; margin-block: .5rem; color: var(--pink); overflow: clip; }
+  .principle-graphic svg { display: block; width: 100%; height: clamp(13rem, 21vw, 21rem); }
+  .diagram-guides { stroke: #53534e; }
+  .principles h3 { font-size: clamp(1.75rem, 2.7vw, 2.75rem); max-width: 13ch; margin-block: .75rem 1rem; font-weight: 550; line-height: 1.05; letter-spacing: -.045em; }
+  .principle-description { max-width: 37ch; font-size: .875rem; line-height: 1.65; color: #c9c9c1; margin-bottom: 2rem; }
+  .principle-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.5rem; margin-top: auto; border-top: 1px solid var(--line); font-size: .65rem; text-decoration: none; }
+  .principle-arrow { display: grid; place-items: center; font: 2rem var(--font-body); width: 2.75rem; height: 2.75rem; }
+  .principle-link:is(:hover, :focus-visible) { color: var(--pink); }
+  .principle-link:is(:hover, :focus-visible) .principle-arrow { background: var(--pink); color: #171717; }
+  .approach-foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem 1.5rem; padding: .5rem 1.25rem; font-size: .55rem; }
+  .approach-foot a { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 2.75rem; }
+  .approach-foot a > span { font: 1.5rem var(--font-body); }
   @media (--md) {
     .hero-register, .hero-bottom { padding-inline: 2rem; }
     .hero-stage { min-height: min(46rem, 79svh); padding: 5rem 2rem 3.5rem; display: flex; align-items: center; }
@@ -152,13 +197,15 @@ const principles = [
     .sculpture { aspect-ratio: 1; }
     .art-caption { margin-top: -3rem; }
     .current-window { position: absolute; right: 2.5rem; top: 2rem; margin: 0; }
-    .approach { padding-inline: 2rem; }
+    .approach-header { padding: 2rem; }
+    .approach-symbol { width: 5rem; flex-basis: 5rem; }
+    .approach h2 { padding: 0 2rem 3.5rem; }
+    .approach-statement { font-size: clamp(3rem, 8.4vw, 8.75rem); }
     .principles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .principles article { border-bottom: 0; padding: 2rem; }
-    .principles article:first-child { padding-left: 0; }
+    .principles article { padding: 1.5rem 2rem .5rem; }
     .principles article + article { border-left: 1px solid var(--line); }
-    .principles article:last-child { padding-right: 0; }
-    .approach-foot { border-top: 1px solid var(--line); }
+    .principles h3 { min-height: 2.1em; }
+    .approach-foot { padding-inline: 2rem; }
   }
   @media (--lg) { .hero-stage { padding-block: 6rem 4rem; } .hero-art { top: 1%; right: -3%; width: 49%; } }
   @media (--motion-ok) {
@@ -171,7 +218,13 @@ const principles = [
       @keyframes sculpture-scroll { to { transform: translateY(15%) rotate(18deg); } }
       .approach { view-timeline: --approach block; }
       .approach-symbol { animation: symbol-turn linear both; animation-timeline: --approach; animation-range: entry 0% exit 100%; }
+      .principles { view-timeline: --principles block; }
+      .flower-petals, .signal-rays { transform-origin: 50% 50%; animation: diagram-turn linear both; animation-timeline: --principles; animation-range: entry 0% exit 100%; }
+      .signal-rays { animation-direction: reverse; }
+      .stack-layer { animation: stack-assemble linear both; animation-timeline: --principles; animation-range: entry 0% cover 55%; }
       @keyframes symbol-turn { to { transform: rotate(180deg); } }
+      @keyframes diagram-turn { from { transform: rotate(-30deg); } to { transform: rotate(60deg); } }
+      @keyframes stack-assemble { from { transform: translateY(calc(var(--layer) * 28px)); } to { transform: translateY(0); } }
     }
   }
 </style>
