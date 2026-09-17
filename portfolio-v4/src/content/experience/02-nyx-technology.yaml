@@ -3,17 +3,20 @@ role:
   en: "Tech Lead"
   es: "Líder técnico"
 start: "2024-08"
-end: "2025-01"
+end: "2025-05"
 location: Mexico City
 highlights:
   en:
     - "Led Flowlink for Marriott and City Express, removing most of the manual re-entry between channels."
     - "Built a backend with FastAPI, RDS, Lambda and Svelte."
-    - "Maintained 99% system uptime."
+    - "Reported 99% system uptime on LinkedIn."
   es:
     - "Lideré Flowlink para Marriott y City Express, eliminando la mayor parte de la recaptura manual entre canales."
     - "Construí un backend con FastAPI, RDS, Lambda y Svelte."
-    - "Mantuve 99% de disponibilidad del sistema."
+    - "Reporté 99% de disponibilidad del sistema en LinkedIn."
+links:
+  - label: { en: Role and reported outcomes on LinkedIn, es: Rol y resultados reportados en LinkedIn }
+    url: https://www.linkedin.com/in/luisced/details/experience/
 tags: [Backend, Architecture, AWS, Leadership]
 accent: brand
 order: 2

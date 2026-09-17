@@ -1,5 +1,5 @@
 /**
- * JSON-LD builders. Every object describes visible, accurate page content only —
+ * JSON-LD builders. Every object describes visible, accurate page content only:
  * no types added merely to chase rich results (web-quality-skills/seo).
  */
 import type { Locale } from '@/i18n/ui';
@@ -30,7 +30,7 @@ export function person(profile: Profile, locale: Locale): JsonLd {
     address: { '@type': 'PostalAddress', addressLocality: p.location, addressCountry: 'MX' },
     sameAs: p.socials.map((s) => s.url),
     knowsLanguage: p.languages.map((l) => l.name.en),
-    alumniOf: p.education
+    affiliation: p.education
       .filter((e) => e.institution === 'Universidad Panamericana')
       .map((e) => ({ '@type': 'CollegeOrUniversity', name: e.institution })),
   };

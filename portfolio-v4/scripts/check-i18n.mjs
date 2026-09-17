@@ -67,7 +67,7 @@ for (const file of walk('src')) {
   const src = readFileSync(file, 'utf8');
   for (const m of src.matchAll(/@media\s+([^{]+)\{/g)) {
     const q = m[1].trim();
-    if (/\d+(px|em|rem)/.test(q)) errors.push(`${file}: raw breakpoint in "@media ${q}" — use --sm/--md/--lg/--xl`);
+    if (/\d+(px|em|rem)/.test(q)) errors.push(`${file}: raw breakpoint in "@media ${q}": use --sm/--md/--lg/--xl`);
   }
 }
 

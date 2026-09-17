@@ -1,0 +1,45 @@
+---
+import './HeroCloud.css';
+import './ShapeWaves.css';
+---
+<div class="hero-cloud" aria-hidden="true">
+  <div class="shape-waves" data-ready="false">
+    <canvas class="shape-waves__canvas"></canvas>
+  </div>
+</div>
+
+<script>
+  import ShapeWaves from './ShapeWaves';
+
+  const root = document.querySelector<HTMLElement>('.hero-cloud .shape-waves');
+  if (root) {
+    const background = () => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+    const cloud = ShapeWaves(root, {
+      shapes: 'circles',
+      cellSize: 2.5,
+      dotSize: 1,
+      color: '#e84f98',
+      hoverColor: '#f02f91',
+      backgroundColor: background(),
+      scale: 3.5,
+      speed: .5,
+      flow: 2,
+      direction: -15,
+      contrast: 1.1,
+      brightness: .58,
+      fade: 0,
+      glow: 0,
+      interactive: true,
+      splashRadius: 55,
+      splashStrength: .18,
+      introDuration: 1.6,
+      paused: false,
+    });
+    const themeObserver = new MutationObserver(() => cloud.setBackgroundColor(background()));
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    if (import.meta.hot) import.meta.hot.dispose(() => {
+      themeObserver.disconnect();
+      cloud.destroy();
+    });
+  }
+</script>

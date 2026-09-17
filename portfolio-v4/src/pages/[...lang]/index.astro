@@ -2,6 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/sections/Hero.astro';
 import Work from '@/components/sections/Work.astro';
+import Recognition from '@/components/sections/Recognition.astro';
 import Timeline from '@/components/sections/Timeline.astro';
 import About from '@/components/sections/About.astro';
 import Notes from '@/components/sections/Notes.astro';
@@ -21,6 +22,7 @@ const { locale } = Astro.props;
 <Base locale={locale} path="/">
   <Hero locale={locale} />
   <Work locale={locale} />
+  <Recognition locale={locale} />
   <Timeline locale={locale} />
   <About locale={locale} />
   <Notes locale={locale} />

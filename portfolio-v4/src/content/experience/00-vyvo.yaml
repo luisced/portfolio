@@ -13,6 +13,13 @@ highlights:
   es:
     - "Dirigí la visión tecnológica, el producto y la hoja de ruta de ingeniería de una red social con IA."
     - "Formé y acompañé al equipo de ingeniería, conectando las decisiones de arquitectura con las entregas de producto."
+links:
+  - label: { en: Vyvo website, es: Sitio de Vyvo }
+    url: https://www.vyvo.tech/
+  - label: { en: Vyvo on the App Store, es: Vyvo en la App Store }
+    url: https://apps.apple.com/mx/app/vyvo-ai/id6749719082?l=en-GB
+  - label: { en: Acquisition listed on LinkedIn, es: Adquisición publicada en LinkedIn }
+    url: https://www.linkedin.com/in/luisced/details/experience/
 tags: [Product, Architecture, Leadership]
 accent: brand
 order: 0

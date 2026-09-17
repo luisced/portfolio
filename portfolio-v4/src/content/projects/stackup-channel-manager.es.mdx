@@ -1,11 +1,11 @@
 ---
 slug: stackup-channel-manager
 locale: es
-title: "StackUp / Flowlink Channel Manager"
-role: "Desarrollador backend"
+title: "Flowlink / StackUp"
+role: "Desarrollador backend · Nyx Technology"
 category: web
 timeframe: "2024–2025"
-outcome: "Los operadores de hotel administran cuartos, precios y disponibilidad en Booking, Expedia y su propio sitio desde una sola pantalla."
+outcome: "El channel manager de Nyx Technology permite administrar cuartos, precios y disponibilidad en Booking, Expedia y el sitio del hotel desde una sola pantalla."
 summary: "Construí el backend de un channel manager que normaliza el inventario, los precios y las promociones de un hotel entre varias OTAs. Un servicio con FastAPI, un modelo en PostgreSQL y una interfaz administrativa en Svelte coordinan los cambios, mientras Docker y AWS hacen repetible el despliegue."
 stack:
   - Svelte
@@ -34,7 +34,7 @@ order: 1
 
 ## Contexto
 
-Los equipos de hotel capturaban el mismo inventario, las tarifas y las promociones en varios lugares. StackUp, también presentado como Flowlink, les dio una superficie administrativa para canales como Booking.com y Expedia. El reto no era dibujar una tabla de cuartos. Cada socio tenía campos, tiempos y formas de fallar distintas, pero el operador necesitaba una respuesta clara sobre qué estaba vigente.
+Flowlink y StackUp son dos nombres del mismo proyecto de channel manager, propiedad de Nyx Technology. Los equipos de hotel capturaban el mismo inventario, las tarifas y las promociones en varios lugares; este producto les dio una superficie administrativa para canales como Booking.com y Expedia. El reto no era dibujar una tabla de cuartos. Cada socio tenía campos, tiempos y formas de fallar distintas, pero el operador necesitaba una respuesta clara sobre qué estaba vigente.
 
 Me integré a Nyx Technology como desarrollador backend del proyecto durante 2024–2025. El trabajo conectaba un dashboard en Svelte con un servicio en FastAPI, PostgreSQL, Docker y AWS. El objetivo de negocio era concreto: quitar la captura repetitiva sin esconder una actualización fallida detrás de un estado verde. Por eso traté el proyecto primero como un problema de sincronización y después como uno de interfaz.
 
@@ -55,6 +55,8 @@ Cuando un cambio afectaba varios canales, lo seguí desde la acción del operado
 ## Resultado
 
 El sistema Flowlink en producción ofrece un solo lugar para administrar listados, precios, disponibilidad y promociones. Quitó la mayor parte de la recaptura entre canales y deja un camino visible para resolver una falla del socio, en vez de ocultarla.
+
+El proyecto dio soporte a los flujos de Marriott y City Express, con AWS RDS y Lambda junto con FastAPI y Svelte. Mi [experiencia en LinkedIn](https://www.linkedin.com/in/luisced/details/experience/) reporta 99% de disponibilidad; es una cifra publicada en el perfil, no una medición auditada de forma independiente.
 
 ## Qué haría diferente
 

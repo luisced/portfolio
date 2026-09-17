@@ -13,9 +13,15 @@ const titles = new Map((await getProjects(locale)).map((x) => [x.data.slug, x.da
     <div class="about-intro"><p class="label section-label">{t('about.kicker')}</p><h2 id="about-title">{t('about.title')}</h2><figure class="about-portrait"><Picture fallbackFormat="webp" src={p.portrait} alt={p.portraitAlt[locale]} widths={[400,640,900]} sizes="(min-width: 48em) 35vw, 90vw" formats={['avif','webp']} loading="lazy"/><figcaption class="label">{t('hero.portrait')} <span aria-hidden="true">↗</span></figcaption></figure><p class="label">{p.location}<br/>{p.timezone}</p></div>
     <div class="about-body">
       <p class="bio">{p.bio[locale]}</p>
+      <a class="recognition-link" href="#recognition">{t('about.recognition')} <span aria-hidden="true">↗</span></a>
       <div class="belief" data-reveal><p class="label">{t('manifesto.kicker')}</p><p>{p.manifesto[locale]}</p></div>
       <div class="about-tools"><h3>{t('about.skills')}</h3>{p.skills.map((g) => <details><summary>{g.group[locale]} <span aria-hidden="true">+</span></summary><ul>{g.items.map((i) => <li><span>{i.name}</span>{i.evidence.length > 0 && <span class="evidence">{i.evidence.map((slug, idx) => <>{idx > 0 && ', '}<a href={localizePath(locale, `/work/${slug}/`)}>{titles.get(slug)}</a></>)}</span>}</li>)}</ul></details>)}</div>
       <div class="about-facts"><div><h3 class="label">{t('about.education')}</h3><ul>{p.education.map((e) => <li><span>{e.credential[locale]}</span><small>{e.institution} · {e.year}</small></li>)}</ul></div><div><h3 class="label">{t('about.languages')}</h3><ul>{p.languages.map((l) => <li>{l.name[locale]}<small>{l.level[locale]}</small></li>)}</ul></div></div>
+      <div class="academic-activities" data-reveal>
+        <h3 class="label">{t('about.activities')}</h3>
+        <ul>{p.academicActivities[locale].map((activity) => <li>{activity}</li>)}</ul>
+        <a href="https://www.linkedin.com/in/luisced/" target="_blank" rel="noopener noreferrer">{t('about.activities.source')} <span aria-hidden="true">↗</span></a>
+      </div>
       <a class="btn" href={p.cv} download>{t('about.cv')} <span aria-hidden="true">↓</span></a>
     </div>
   </div>
@@ -43,5 +49,11 @@ const titles = new Map((await getProjects(locale)).map((x) => [x.data.slug, x.da
   .about-facts ul { list-style: none; padding: 0; font-size: .875rem; }
   .about-facts li { padding-top: 1rem; }
   small { display: block; color: var(--fg-2); font-size: .75rem; }
+  .recognition-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-top: 1rem; font-size: .85rem; }
+  .academic-activities { margin-bottom: 2.5rem; font-size: .875rem; color: var(--fg-2); }
+  .academic-activities h3 { color: var(--fg); }
+  .academic-activities ul { padding-left: 1rem; margin-block: 1rem; }
+  .academic-activities li + li { margin-top: .75rem; }
+  .academic-activities a { display: inline-flex; align-items: center; min-height: 44px; gap: .5rem; font-size: .75rem; }
   @media (--md) { .about-layout { grid-template-columns: 1fr 1.5fr; gap: 10%; } .about-facts { grid-template-columns: 2fr 1fr; } }
 </style>

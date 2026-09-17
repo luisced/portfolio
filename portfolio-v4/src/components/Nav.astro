@@ -10,7 +10,7 @@ const alt = otherLocale(locale);
 ---
 <header class="site-header">
   <div class="nav container">
-    <a class="wordmark" href={home} aria-label={`LC — ${profile.data.shortName}`}><svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M1 1h11v11H1zm15 0h11v11H16zM1 16h11v11H1z" fill="currentColor"/><path d="M16 16h11v11H16z" fill="var(--pink)"/></svg><span class="wordmark-full">Luis Cedillo</span><span class="wordmark-short">LC</span></a>
+    <a class="wordmark" href={home} aria-label={`LC | ${profile.data.shortName}`}><svg class="brand-mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M1 1h11v11H1zm15 0h11v11H16zM1 16h11v11H1z" fill="currentColor"/><path d="M16 16h11v11H16z" fill="var(--pink)"/></svg><span class="wordmark-full">Luis Cedillo</span><span class="wordmark-short">LC</span></a>
     <nav class="primary" aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'}>
       <a href={`${home}#work`}>{t('nav.work')}</a><a href={`${home}#about`}>{t('nav.about')}</a><a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a><a class="nav-contact" href={`${home}#contact`}>{t('nav.contact')} <span aria-hidden="true">↗</span></a>
     </nav>

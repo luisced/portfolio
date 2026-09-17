@@ -1,24 +1,31 @@
 name: Luis Cedillo Maldonado
 shortName: Luis Cedillo
 headline:
-  en: Software engineer · Co-Founder & CTO
-  es: Ingeniero de software · Cofundador y CTO
+  en: Data Intelligence & Cybersecurity student · Co-Founder & CTO
+  es: Estudiante de Inteligencia de Datos y Ciberseguridad · Cofundador y CTO
 positioning:
-  en: I build AI systems that do real work. Co-Founder & CTO at iLuk, with a background in backend engineering, iOS products and leading the teams behind them.
-  es: Construyo sistemas de IA que hacen trabajo real. Cofundador y CTO de iLuk, con experiencia en ingeniería backend, productos iOS y liderazgo de equipos.
+  en: I build AI systems that do real work, as Co-Founder & CTO at Dopamina and iLuk.
+  es: Construyo sistemas de IA que hacen trabajo real, como cofundador y CTO de Dopamina y de iLuk.
 bio:
   en: >-
-    I'm a software engineer and Co-Founder & CTO at iLuk, based in Mexico City.
-    I build the infrastructure and orchestration behind AI employees, connecting
-    acquisition, onboarding, KYC, payments and collections. Before iLuk, I co-founded
-    Vyvo Tech, led hospitality engineering at Nyx Technology, and built mobile
-    products with Universidad Panamericana's iOS Development Lab.
+    I'm a software engineer and Co-Founder & CTO at Dopamina, focused on making
+    marketing work move from a message to published action. I build the AI
+    workspace and agent orchestration behind Content Studio, social publishing,
+    community management and paid ads. I also lead iLuk's infrastructure and
+    orchestration for AI employees across acquisition, onboarding, KYC, payments
+    and collections. Before these ventures, I co-founded Vyvo Tech, led hospitality
+    engineering at Nyx Technology, and built mobile products with Universidad
+    Panamericana's iOS Development Lab.
   es: >-
-    Soy ingeniero de software y cofundador y CTO de iLuk, en la Ciudad de México.
-    Construyo la infraestructura y la orquestación de empleados de IA, conectando
-    adquisición, onboarding, KYC, pagos y cobranza. Antes de iLuk, cofundé Vyvo Tech,
-    lideré ingeniería para hotelería en Nyx Technology y construí productos móviles
-    en el iOS Development Lab de la Universidad Panamericana.
+    Soy ingeniero de software y cofundador y CTO de Dopamina, enfocado en
+    convertir el marketing de un mensaje en una acción publicada. Construyo el
+    espacio de trabajo de IA y la orquestación de agentes detrás de Content
+    Studio, publicación en redes, gestión de comunidad y anuncios pagados.
+    También lidero la infraestructura y orquestación de empleados de IA de iLuk
+    para adquisición, onboarding, KYC, pagos y cobranza. Antes de estos proyectos,
+    cofundé Vyvo Tech, lideré ingeniería para hotelería en Nyx Technology y
+    construí productos móviles en el iOS Development Lab de la Universidad
+    Panamericana.
 portrait: ../../assets/portrait.webp
 portraitAlt:
   en: Portrait of Luis Cedillo
@@ -28,8 +35,8 @@ timezone: CST (UTC−6)
 email: me@luiscedillo.com
 whatsapp: "+525571967146"
 availability:
-  en: Building iLuk · Let's talk systems, products and collaboration
-  es: Construyendo iLuk · Hablemos de sistemas, productos y colaboración
+  en: Building Dopamina · Let's talk AI products, systems and collaboration
+  es: Construyendo Dopamina · Hablemos de productos de IA, sistemas y colaboración
 socials:
   - id: github
     label: GitHub
@@ -80,19 +87,159 @@ skills:
 education:
   - institution: Universidad Panamericana
     credential:
-      en: B.Sc. Data Intelligence & Cybersecurity
-      es: Ing. en Inteligencia de Datos y Ciberseguridad
-    year: "2025"
-  - institution: AWS Academy
-    credential:
-      en: Cloud Foundations graduate
-      es: Graduado de Cloud Foundations
-    year: "2023"
-  - institution: Apple
-    credential:
-      en: App Development with Swift Associate
-      es: App Development with Swift Associate
-    year: "2023"
+      en: B.Sc. Data Intelligence & Cybersecurity · In progress
+      es: Ing. en Inteligencia de Datos y Ciberseguridad · En curso
+    year: "2022–2027"
+academicActivities:
+  en:
+    - "Mentor at university hackathons, supporting Python/backend development and technical project design."
+    - "Research activities include graph-based optimization of school processes and collaboration on gamification and learning theses."
+  es:
+    - "Mentor en hackatones universitarios, con apoyo en desarrollo Python/backend y diseño técnico de proyectos."
+    - "Actividades de investigación en optimización de procesos escolares mediante grafos y colaboración en tesis sobre gamificación y aprendizaje."
+recognition:
+  - kind: award
+    title: { en: BimboNecta, es: BimboNecta }
+    distinction: { en: 1st place nationally, es: Primer lugar nacional }
+    context:
+      en: "Swift Change Makers · Enactus México · May 2026"
+      es: "Swift Change Makers · Enactus México · Mayo 2026"
+    summary:
+      en: "An iOS copilot for Grupo Bimbo's route salespeople, built with the iOS Development Lab UPMX. Shelf photos become practical sales guidance through on-device AI."
+      es: "Un copiloto iOS para los vendedores de ruta de Grupo Bimbo, creado con el iOS Development Lab UPMX. Las fotos del anaquel se convierten en orientación práctica mediante IA en el dispositivo."
+    details:
+      en:
+        - "Apple Vision and Foundation Models analyze shelf gaps, near-expiry stock and layout issues, with confidence scores for each suggestion."
+        - "AI-assisted orders remain editable before syncing. Mexican Spanish voice input and local visit history keep the workflow useful while prioritizing privacy."
+        - "Team: Luis Cedillo Maldonado, Rafael Nuñez Arellano and Daniel Emiliano Peláez Romero."
+      es:
+        - "Apple Vision y Foundation Models analizan faltantes, productos próximos a caducar y distribución del anaquel, con niveles de confianza para cada sugerencia."
+        - "Los pedidos asistidos por IA se pueden editar antes de sincronizar. La entrada por voz en español de México y el historial local de visitas priorizan utilidad y privacidad."
+        - "Equipo: Luis Cedillo Maldonado, Rafael Nuñez Arellano y Daniel Emiliano Peláez Romero."
+    media:
+      - src: ../../assets/recognition/swift-change-makers-2026.webp
+        alt:
+          en: "Luis holding the 2026 first-place Bimbo challenge award at Universidad Panamericana"
+          es: "Luis con el reconocimiento de primer lugar del reto Bimbo 2026 en la Universidad Panamericana"
+        caption:
+          en: "First place · Swift Change Makers 2026 · Photo from LinkedIn"
+          es: "Primer lugar · Swift Change Makers 2026 · Foto de LinkedIn"
+        source: https://www.linkedin.com/in/luisced/details/honors/
+      - src: ../../assets/recognition/bimbonecta-shelf-detection.webp
+        alt:
+          en: "BimboNecta shelf analysis screen with product markers and a gap alert"
+          es: "Pantalla de análisis de anaquel de BimboNecta con marcadores de productos y una alerta de faltante"
+        caption: { en: Shelf analysis · LinkedIn, es: Análisis de anaquel · LinkedIn }
+        source: https://www.linkedin.com/in/luisced/details/honors/
+      - src: ../../assets/recognition/bimbonecta-dashboard.webp
+        alt:
+          en: "BimboNecta dashboard with delivery, route history and current store visit"
+          es: "Panel de BimboNecta con entregas, historial de ruta y visita actual a la tienda"
+        caption: { en: Route dashboard · LinkedIn, es: Panel de ruta · LinkedIn }
+        source: https://www.linkedin.com/in/luisced/details/honors/
+    links:
+      - label: { en: Award on LinkedIn, es: Premio en LinkedIn }
+        url: https://www.linkedin.com/in/luisced/details/honors/
+      - label: { en: Team announcement, es: Anuncio del equipo }
+        url: https://www.linkedin.com/feed/update/urn:li:activity:7458941414412804097/
+  - kind: award
+    title: { en: Swift Change Makers, es: Swift Change Makers }
+    distinction: { en: Best Prototype, es: Mejor prototipo }
+    context:
+      en: "Enactus México · Grupo Bimbo challenge · May 2025"
+      es: "Enactus México · Reto Grupo Bimbo · Mayo 2025"
+    summary:
+      en: "A SwiftUI app that encourages environmental awareness and sustainable habits through gamification, developed with the iOS Development Lab UPMX."
+      es: "Una app en SwiftUI que fomenta la conciencia ambiental y los hábitos sostenibles mediante gamificación, desarrollada con el iOS Development Lab UPMX."
+    details: { en: [], es: [] }
+    media:
+      - src: ../../assets/recognition/swift-change-makers-2025.webp
+        alt:
+          en: "Luis with the Best Prototype award beside the Swift Change Makers 2025 event display"
+          es: "Luis con el premio de Mejor Prototipo junto al letrero de Swift Change Makers 2025"
+        caption:
+          en: "Best Prototype · Swift Change Makers 2025 · Photo from LinkedIn"
+          es: "Mejor Prototipo · Swift Change Makers 2025 · Foto de LinkedIn"
+        source: https://www.linkedin.com/in/luisced/details/honors/
+    links:
+      - label: { en: Award on LinkedIn, es: Premio en LinkedIn }
+        url: https://www.linkedin.com/in/luisced/details/honors/
+  - kind: publication
+    title:
+      en: "Development of a Mobile Application for Dermatological Diagnosis Using Image Recognition: The DermAware Case Study"
+      es: "Development of a Mobile Application for Dermatological Diagnosis Using Image Recognition: The DermAware Case Study"
+    distinction:
+      en: First-listed author · Book chapter
+      es: Primer autor · Capítulo de libro
+    context:
+      en: "Springer · Online October 11, 2025 · Citation year 2026"
+      es: "Springer · En línea el 11 de octubre de 2025 · Año bibliográfico 2026"
+    summary:
+      en: "A mobile skin-health research project combining SwiftUI, Django and image recognition. Published in Machine Learning Methods in Biomedical Field, Studies in Computational Intelligence, vol. 1218, pp. 25–47."
+      es: "Un proyecto de investigación sobre salud cutánea que combina SwiftUI, Django y reconocimiento de imágenes. Publicado en Machine Learning Methods in Biomedical Field, Studies in Computational Intelligence, vol. 1218, pp. 25–47."
+    details:
+      en:
+        - "The study combines CoreML/ResNet50, HealthKit, real-time messaging, patient history and secure authentication. LinkedIn lists the research project from September 2023 to October 2025."
+        - "The publisher's abstract reports 85% model accuracy on public dermatological datasets. This is a research result, not clinical diagnostic validation."
+        - "Authors, in publication order: Luis Cedillo-Maldonado, Iñaki Sigüenza-Noriega, Sara Rocio Miranda-Mateos, Lorenzo Reinoso-Fuentes, Mauricio Pérez-Aguirre, Daisy Escobar-Castillejos and David Escobar-Castillejos."
+        - "DOI: 10.1007/978-3-031-96328-5_2."
+      es:
+        - "El estudio integra CoreML/ResNet50, HealthKit, mensajería en tiempo real, historial de pacientes y autenticación segura. LinkedIn sitúa el proyecto de investigación entre septiembre de 2023 y octubre de 2025."
+        - "El resumen de la editorial reporta 85% de precisión del modelo en conjuntos públicos de imágenes dermatológicas. Es un resultado de investigación, no una validación diagnóstica clínica."
+        - "Autores, en orden de publicación: Luis Cedillo-Maldonado, Iñaki Sigüenza-Noriega, Sara Rocio Miranda-Mateos, Lorenzo Reinoso-Fuentes, Mauricio Pérez-Aguirre, Daisy Escobar-Castillejos y David Escobar-Castillejos."
+        - "DOI: 10.1007/978-3-031-96328-5_2."
+    media:
+      - src: ../../assets/recognition/dermaware-book-cover.webp
+        alt:
+          en: "Cover of Machine Learning Methods in Biomedical Field, the Springer book containing the DermAware chapter"
+          es: "Portada de Machine Learning Methods in Biomedical Field, el libro de Springer que incluye el capítulo de DermAware"
+        caption: { en: Book cover · Springer, es: Portada del libro · Springer }
+        source: https://link.springer.com/chapter/10.1007/978-3-031-96328-5_2
+    links:
+      - label: { en: Read on Springer, es: Leer en Springer }
+        url: https://link.springer.com/chapter/10.1007/978-3-031-96328-5_2
+      - label: { en: DermAware source code, es: Código de DermAware }
+        url: https://github.com/ios-lab-up/DermAware
+  - kind: credential
+    title:
+      en: App Development with Swift - Associate
+      es: App Development with Swift - Associate
+    distinction: { en: Apple, es: Apple }
+    context: { en: June 2023, es: Junio 2023 }
+    summary:
+      en: "Apple's associate-level app development credential, with a publicly verifiable badge on Credly."
+      es: "Credencial de desarrollo de apps de Apple de nivel Associate, con una insignia verificable en Credly."
+    details: { en: [], es: [] }
+    media:
+      - src: ../../assets/recognition/swift-associate-badge.webp
+        alt:
+          en: Apple App Development with Swift Associate badge
+          es: Insignia App Development with Swift Associate de Apple
+        caption: { en: Official badge · Credly, es: Insignia oficial · Credly }
+        source: https://www.credly.com/badges/99ab0677-e09a-4dd5-bed9-d7c3ff782450/public_url
+    links:
+      - label: { en: Verify Apple credential, es: Verificar credencial de Apple }
+        url: https://www.credly.com/badges/99ab0677-e09a-4dd5-bed9-d7c3ff782450/public_url
+  - kind: credential
+    title:
+      en: AWS Academy Graduate - Cloud Foundations
+      es: AWS Academy Graduate - Cloud Foundations
+    distinction: { en: AWS Academy, es: AWS Academy }
+    context: { en: October 2023, es: Octubre 2023 }
+    summary:
+      en: "Cloud Foundations course-completion badge from AWS Training and Certification. This is an AWS Academy training credential, not the AWS Certified Cloud Practitioner exam certification."
+      es: "Insignia de finalización del curso Cloud Foundations de AWS Training and Certification. Es una credencial de formación de AWS Academy, no la certificación por examen AWS Certified Cloud Practitioner."
+    details: { en: [], es: [] }
+    media:
+      - src: ../../assets/recognition/aws-cloud-foundations-badge.webp
+        alt:
+          en: AWS Academy Cloud Foundations training badge
+          es: Insignia de formación AWS Academy Cloud Foundations
+        caption: { en: Official training badge · Credly, es: Insignia oficial de formación · Credly }
+        source: https://www.credly.com/badges/6aec56ea-7ae0-49ce-a4b8-0bf501ba388d/public_url
+    links:
+      - label: { en: Verify AWS training badge, es: Verificar insignia de AWS }
+        url: https://www.credly.com/badges/6aec56ea-7ae0-49ce-a4b8-0bf501ba388d/public_url
 languages:
   - name: { en: Spanish, es: Español }
     level: { en: Native, es: Nativo }

@@ -7,11 +7,14 @@ end: "2023-04"
 location: Mexico City
 highlights:
   en:
-    - "Automated Airbnb reservations through a WhatsApp bot."
-    - "Reduced reply time from 5 minutes to 30 seconds."
+    - "Automated Airbnb reservations through a Twilio WhatsApp bot with message tracking."
+    - "Reported on LinkedIn: reply time reduced from 5 minutes to 30 seconds, with a 25% improvement in efficiency."
   es:
-    - "Automaticé reservas de Airbnb mediante un bot de WhatsApp."
-    - "Reduje el tiempo de respuesta de 5 minutos a 30 segundos."
+    - "Automaticé reservas de Airbnb mediante un bot de WhatsApp con Twilio y seguimiento de mensajes."
+    - "Resultados reportados en LinkedIn: tiempo de respuesta de 5 minutos a 30 segundos y una mejora del 25% en eficiencia."
+links:
+  - label: { en: Project outcomes on LinkedIn, es: Resultados del proyecto en LinkedIn }
+    url: https://www.linkedin.com/in/luisced/details/experience/
 tags: [Chatbot, Twilio, Automation]
 accent: violet
 order: 4

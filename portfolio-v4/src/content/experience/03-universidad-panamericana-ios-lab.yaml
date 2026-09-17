@@ -12,6 +12,9 @@ highlights:
   es:
     - "Desarrollé 4 aplicaciones iOS para estudiantes y personal."
     - "Lideré sprints Agile y acorté la entrega en 3 semanas."
+links:
+  - label: { en: Role and reported outcomes on LinkedIn, es: Rol y resultados reportados en LinkedIn }
+    url: https://www.linkedin.com/in/luisced/details/experience/
 tags: [iOS, Swift, Agile]
 accent: sky
 order: 3

@@ -1,0 +1,18 @@
+# Source: github.com/iluk-ai/dopamina-fe commit history (Orca workspace); not listed on LinkedIn.
+org: Dopamina
+role:
+  en: "Co-Founder & CTO"
+  es: "Cofundador y CTO"
+start: "2026-07"
+end: null
+location: Mexico City
+highlights:
+  en:
+    - "Leading engineering for an AI-powered marketing workspace: on-brand image generation, social publishing, an AI community manager and paid ads in one product."
+    - "Building Ergo, a WhatsApp-first AI agent that routes requests across Content Studio, Publishing, the shared inbox and Ads."
+  es:
+    - "Lidero la ingeniería de un espacio de trabajo de marketing con IA: generación de imágenes de marca, publicación en redes, un community manager con IA y anuncios pagados en un solo producto."
+    - "Construyo a Ergo, un agente de IA por WhatsApp que enruta solicitudes entre Content Studio, Publicación, la bandeja compartida y Anuncios."
+tags: [Agentic AI, Product, Architecture]
+accent: brand
+order: -3

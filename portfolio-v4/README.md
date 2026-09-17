@@ -1,4 +1,4 @@
-# luiscedillo.com — Portfolio V4
+# luiscedillo.com - Portfolio V4
 
 A graphic, reference-led developer portfolio built with Astro 7, static HTML and native scrolling. Oversized Archivo typography, monochrome framing, a pink narrative section and an original wireframe sculpture draw on PortalOne and TypeSafe AI without copying their assets. English and Spanish routes share a light/dark design system.
 
@@ -16,11 +16,12 @@ pnpm check
 
 ## Design and content
 
-- `src/content/`: localized project case studies, notes, profile and professional experience. The September 2026 profile refresh uses the owner's signed-in LinkedIn profile for iLuk and Vyvo roles; older project details remain from the repository. The existing downloadable CV is retained, not regenerated.
+- `src/content/`: localized project case studies, notes, profile and professional experience. The September 2026 profile refresh uses the owner's signed-in LinkedIn profile for iLuk and Vyvo roles, plus repository evidence from `dopamina-fe` for the Dopamina role; older project details remain from the repository. The existing downloadable CV is retained, not regenerated.
 - `src/i18n/ui.ts`: bilingual interface copy. `utils.ts` localizes page and feed URLs.
 - `src/components/sections/`: graphic hero and three-part approach, framed project showcases, experience, portrait and background, writing and contact. Project images show actual product captures rather than promotional covers.
 - `src/styles/`: shared design tokens, typography, focus states and article styling. Use the custom breakpoints in `postcss.config.mjs`.
-- `Hero.astro`: an original torus wireframe is generated as SVG at build time. Native CSS ties the sculpture and section marker to scroll where supported; no WebGL, video, animation runtime, client framework or loading screen is required.
+- `Hero.astro`: an original torus wireframe is generated as SVG at build time, draws on entry and tilts subtly with the cursor. Native CSS ties the sculpture and section marker to scroll where supported.
+- `HeroCloud.astro` and `ShapeWaves.js`: a native Astro adaptation of React Bits' ShapeWaves, using `vgpu` without React or Preact. Pink clouds drift slowly in the hero's four corners and respond to the cursor. Rendering stops offscreen, and reduced motion disables the entrance, drift and pointer ripples. A CSS stipple remains visible without WebGPU or JavaScript. Upstream licensing is preserved in `ShapeWaves.LICENSE`.
 - `src/scripts/story.ts`: IntersectionObserver updates the active project and triggers short positional reveals. Content is never hidden while waiting for an animation. Native CSS adds reading progress and a scroll-linked workflow line; scrolling is never intercepted.
 - Content and navigation remain usable without JavaScript. Reduced motion disables scroll-linked and entrance animations.
 
@@ -28,7 +29,7 @@ pnpm check
 
 `Base.astro` emits localized titles, descriptions, canonicals, hreflang, social metadata and linked Person/WebSite structured data. Case studies and notes add their own entities and breadcrumbs. Fonts are self-hosted; project images load lazily.
 
-The build checks translation parity, custom media tokens, raster size (200 KB, social images 80 KB), landing JavaScript (60 KB gzip ceiling, including inline scripts) and font count (four-file ceiling). This design currently uses two font files and approximately 1.7 KB gzip of executable JavaScript.
+The build checks translation parity, custom media tokens, raster size (200 KB, social images 80 KB), landing JavaScript (60 KB gzip ceiling, including inline scripts) and font count (four-file ceiling). This design currently uses two font files and approximately 56 KB gzip of executable JavaScript, including the optional WebGPU background.
 
 `postbuild.mjs` adds exact SHA-256 hashes for emitted inline scripts to `dist/_headers`. Keep the source policy strict: do not add `unsafe-inline` to `script-src`.
 

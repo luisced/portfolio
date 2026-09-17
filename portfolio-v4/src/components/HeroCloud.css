@@ -1,0 +1,40 @@
+.hero-cloud {
+  position: absolute;
+  --cloud-depth: 14rem;
+  inset: 0;
+  opacity: .8;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image:
+    radial-gradient(ellipse 46% var(--cloud-depth) at 0% 0%, #000 35%, transparent 100%),
+    radial-gradient(ellipse 49% var(--cloud-depth) at 100% 0%, #000 35%, transparent 100%),
+    radial-gradient(ellipse 49% var(--cloud-depth) at 0% 100%, #000 35%, transparent 100%),
+    radial-gradient(ellipse 46% var(--cloud-depth) at 100% 100%, #000 35%, transparent 100%);
+}
+
+/* A static stippled cloud is visible before hydration and without WebGPU. */
+.hero-cloud::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #e84f98 1px, transparent 1.25px) 0 0 / 2.5px 2.5px;
+  mask-image:
+    radial-gradient(ellipse 40% var(--cloud-depth) at 7% 0%, #000, transparent),
+    radial-gradient(ellipse 38% var(--cloud-depth) at 92% 0%, #000, transparent),
+    radial-gradient(ellipse 40% var(--cloud-depth) at 7% 100%, #000, transparent),
+    radial-gradient(ellipse 38% var(--cloud-depth) at 92% 100%, #000, transparent);
+  transition: opacity .6s ease;
+}
+
+.hero-cloud .shape-waves { background-color: transparent !important; }
+.hero-cloud:has(.shape-waves[data-ready='true'])::before { opacity: 0; }
+
+
+@media (--md) {
+  .hero-cloud { --cloud-depth: clamp(14rem, 28vw, 26rem); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cloud::before { transition: none; }
+}

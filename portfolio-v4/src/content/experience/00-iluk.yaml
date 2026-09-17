@@ -10,9 +10,14 @@ highlights:
   en:
     - "Leading the architecture of a multi-agent platform for acquisition, onboarding, KYC, payments and collections."
     - "Building orchestration systems where AI and humans collaborate in regulated financial workflows."
+    - "Company milestones reported on LinkedIn: official Meta Tech Partner and ElevenLabs grant recipient."
   es:
     - "Lidero la arquitectura de una plataforma multiagente para adquisición, onboarding, KYC, pagos y cobranza."
     - "Construyo sistemas de orquestación donde IA y humanos colaboran en procesos financieros regulados."
+    - "Hitos de la empresa reportados en LinkedIn: Meta Tech Partner oficial y beneficiaria de una subvención de ElevenLabs."
+links:
+  - label: { en: Company milestones on LinkedIn, es: Hitos de la empresa en LinkedIn }
+    url: https://www.linkedin.com/in/luisced/details/experience/
 tags: [Agentic AI, Architecture, Leadership]
 accent: brand
 order: -2

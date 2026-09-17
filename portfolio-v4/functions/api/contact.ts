@@ -120,7 +120,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         from: contactFrom,
         to: [contactTo],
         reply_to: email,
-        subject: `Note from ${name.replace(/[\r\n]/g, ' ')} — luiscedillo.com`,
+        subject: `Note from ${name.replace(/[\r\n]/g, ' ')} - luiscedillo.com`,
         text: `${name}\n${email}\n\n${message}`,
       }),
     });

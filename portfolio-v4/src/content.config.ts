@@ -57,6 +57,7 @@ const experience = defineCollection({
     end: z.string().regex(/^\d{4}-\d{2}$/).nullable(),
     location: z.string(),
     highlights: localizedList,
+    links: z.array(z.object({ label: localized, url: z.url() })).default([]),
     tags: z.array(z.string()),
     /** Token name from tokens.css (e.g. "brand", "amber", "rose"); never a hex. */
     accent: z.enum(['brand', 'amber', 'rose', 'sky', 'violet']),
@@ -120,6 +121,24 @@ const profile = defineCollection({
           institution: z.string(),
           credential: localized,
           year: z.string(),
+        }),
+      ),
+      academicActivities: localizedList,
+      recognition: z.array(
+        z.object({
+          kind: z.enum(['award', 'publication', 'credential']),
+          title: localized,
+          distinction: localized,
+          context: localized,
+          summary: localized,
+          details: localizedList,
+          links: z.array(z.object({ label: localized, url: z.url() })).min(1),
+          media: z.array(z.object({
+            src: image(),
+            alt: localized,
+            caption: localized,
+            source: z.url(),
+          })).default([]),
         }),
       ),
       languages: z.array(z.object({ name: localized, level: localized })),

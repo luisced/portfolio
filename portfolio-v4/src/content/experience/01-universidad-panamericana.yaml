@@ -1,17 +1,22 @@
 org: Universidad Panamericana
 role:
-  en: "President – Engineering Student Council"
-  es: "Presidente – Consejo Estudiantil de Ingeniería"
-start: "2024-01"
-end: null
+  en: "President – Engineering & Data Intelligence and Cybersecurity Student Councils"
+  es: "Presidente – Consejos Estudiantiles de Ingeniería e Inteligencia de Datos y Ciberseguridad"
+start: "2024-05"
+end: "2025-08"
 location: Mexico City
 highlights:
   en:
     - "Led the organization of 5+ academic and social events."
     - "Established mentorships for 30+ students."
+    - "Represented students and connected academic and technical initiatives with faculty and industry."
   es:
     - "Lideré la organización de más de 5 eventos académicos y sociales."
     - "Establecí mentorías para más de 30 estudiantes."
+    - "Representé al alumnado y conecté iniciativas académicas y técnicas con profesores y la industria."
+links:
+  - label: { en: Role on LinkedIn, es: Rol en LinkedIn }
+    url: https://www.linkedin.com/in/luisced/details/experience/
 tags: [Leadership, Community, Mentorship]
 accent: amber
 order: 1

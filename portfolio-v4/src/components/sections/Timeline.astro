@@ -13,9 +13,13 @@ const experience = await getExperience();
     <ol class="experience-list">
       {experience.map((e) => (
         <li data-reveal>
-          <p class="label experience-date">{formatMonth(locale, e.data.start)}<br/><span>— {e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}</span></p>
+          <p class="label experience-date">{formatMonth(locale, e.data.start)}<br/><span>- {e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}</span></p>
           <div class="experience-role"><h3>{e.data.role[locale]}</h3><p class="muted">{e.data.org}</p></div>
-          <div class="experience-detail"><p>{e.data.highlights[locale][0]}</p>{e.data.highlights[locale].length > 1 && <details><summary>{t('timeline.more')} <span aria-hidden="true">+</span></summary><ul>{e.data.highlights[locale].slice(1).map((h) => <li>{h}</li>)}</ul><p>{e.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p></details>}</div>
+          <div class="experience-detail">
+            <p>{e.data.highlights[locale][0]}</p>
+            {e.data.highlights[locale].length > 1 && <details><summary>{t('timeline.more')} <span aria-hidden="true">+</span></summary><ul>{e.data.highlights[locale].slice(1).map((h) => <li>{h}</li>)}</ul><p>{e.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p></details>}
+            {e.data.links.length > 0 && <ul class="experience-links">{e.data.links.map((link) => <li><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label[locale]} <span aria-hidden="true">↗</span></a></li>)}</ul>}
+          </div>
         </li>
       ))}
     </ol>
@@ -28,6 +32,8 @@ const experience = await getExperience();
   h3 { font-size: 1.35rem; line-height: 1.15; max-width: 24ch; margin-bottom: .5rem; }
   .experience-role > p { font-size: .85rem; }
   .experience-detail { font-size: .9rem; color: var(--fg-2); }
+  .experience-links { list-style: none; padding: .5rem 0 0; display: flex; flex-wrap: wrap; gap: .25rem 1rem; font-size: .75rem; }
+  .experience-links a { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; }
   summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding-block: 1rem .5rem; font-size: .75rem; list-style: none; color: var(--fg); }
   summary::-webkit-details-marker { display: none; }
   summary span { font-size: 1.2rem; }

@@ -1,11 +1,11 @@
 ---
 slug: stackup-channel-manager
 locale: en
-title: "StackUp / Flowlink Channel Manager"
-role: "Backend developer"
+title: "Flowlink / StackUp"
+role: "Backend developer · Nyx Technology"
 category: web
 timeframe: "2024–2025"
-outcome: "Hotel operators manage rooms, prices and availability across Booking, Expedia and their own site from one screen."
+outcome: "Nyx Technology's channel manager lets hotel operators manage rooms, prices and availability across Booking, Expedia and their own site from one screen."
 summary: "I built the backend for a channel manager that normalizes hotel inventory, pricing and promotions across several OTAs. A FastAPI service, PostgreSQL data model and Svelte administration surface coordinate updates while Docker and AWS keep the deployment repeatable."
 stack:
   - Svelte
@@ -34,7 +34,7 @@ order: 1
 
 ## Context
 
-Hotel teams were maintaining the same inventory, rates and promotions in several places. StackUp, also presented as Flowlink, gave them one administration surface for channels such as Booking.com and Expedia. The difficult part was not drawing a table of rooms. Each partner exposed different fields, timing and failure behavior, while an operator still needed one answer about what was currently true.
+Flowlink and StackUp are two names for the same channel-manager project, owned by Nyx Technology. Hotel teams were maintaining the same inventory, rates and promotions in several places; this product gave them one administration surface for channels such as Booking.com and Expedia. The difficult part was not drawing a table of rooms. Each partner exposed different fields, timing and failure behavior, while an operator still needed one answer about what was currently true.
 
 I joined Nyx Technology as the backend developer for the 2024–2025 project. The work connected a Svelte dashboard to a FastAPI service, PostgreSQL, Docker and AWS. The existing business goal was clear: remove repetitive copying without hiding a failed update behind a green status. I treated the project as a synchronization problem first and an interface problem second.
 
@@ -55,6 +55,8 @@ When an update touched several channels, I followed it from the operator action 
 ## Result
 
 The live Flowlink system gives hotel operators a single place to manage listings, prices, availability and promotions. It removed most of the manual re-entry between channels, while the status model leaves a visible path for an operator to resolve a partner failure instead of silently overwriting it.
+
+The project supported Marriott and City Express workflows, with AWS RDS and Lambda alongside FastAPI and Svelte. My [LinkedIn experience entry](https://www.linkedin.com/in/luisced/details/experience/) reports 99% system uptime; this is a profile-reported figure, not an independently audited availability measurement.
 
 ## What I would do differently
 
