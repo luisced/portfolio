@@ -1,3 +1,7 @@
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   color-scheme: light;
   --bg: #f7f7f2;
@@ -57,13 +61,35 @@
   }
 
   :root { view-transition-name: root; }
+  ::view-transition-old(root) {
+    animation: page-out .18s ease-in both;
+    mix-blend-mode: normal;
+    z-index: 1;
+  }
+  ::view-transition-new(root) {
+    animation: page-in .48s cubic-bezier(.22,1,.36,1) both;
+    mix-blend-mode: normal;
+    z-index: 2;
+  }
+  html[data-theme-transition]::view-transition-old(root),
+  html[data-theme-transition]::view-transition-new(root) {
+    animation: none;
+  }
+  html[data-theme-transition]::view-transition-new(root) { z-index: 9999; }
+
+  @keyframes page-out {
+    to { opacity: 0; transform: translateY(-.4rem); }
+  }
+  @keyframes page-in {
+    from { opacity: 0; transform: translateY(.65rem); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
-    mix-blend-mode: normal;
   }
-  ::view-transition-old(root) { z-index: 1; }
-  ::view-transition-new(root) { z-index: 9999; }
 }
 
 [data-theme='dark'] {

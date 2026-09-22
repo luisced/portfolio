@@ -43,6 +43,75 @@ function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => htmlEntities[character] ?? character);
 }
 
+function contactEmailHtml(name: string, email: string, message: string) {
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeMessage = escapeHtml(message).replace(/\r?\n/g, '<br>');
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>New portfolio message</title>
+  </head>
+  <body style="margin:0;padding:0;background:#e9e8df;color:#171717;font-family:Arial,Helvetica,sans-serif;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${safeName} sent a new message through luiscedillo.com.</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#e9e8df;">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:640px;background:#f7f7f2;border:1px solid #171717;">
+            <tr>
+              <td style="padding:18px 24px;background:#171717;color:#f7f7f2;font:700 11px/1.4 'Courier New',monospace;letter-spacing:1.4px;text-transform:uppercase;">
+                LUIS CEDILLO&nbsp;&nbsp;/&nbsp;&nbsp;PORTFOLIO CONTACT
+              </td>
+            </tr>
+            <tr><td style="height:8px;background:#f5a6c2;font-size:0;line-height:0;">&nbsp;</td></tr>
+            <tr>
+              <td style="padding:48px 40px 16px;">
+                <p style="margin:0 0 14px;color:#66665f;font:700 11px/1.4 'Courier New',monospace;letter-spacing:1.3px;text-transform:uppercase;">INCOMING / NEW NOTE</p>
+                <h1 style="margin:0;font:700 48px/.96 Arial,Helvetica,sans-serif;letter-spacing:-2.4px;">A new idea<br>just landed.</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:28px 40px 12px;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td style="padding:0 0 8px;color:#66665f;font:700 10px/1.4 'Courier New',monospace;letter-spacing:1.2px;text-transform:uppercase;">FROM</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:0 0 4px;font:700 24px/1.2 Arial,Helvetica,sans-serif;">${safeName}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:0 0 24px;"><a href="mailto:${safeEmail}" style="color:#171717;font:15px/1.5 'Courier New',monospace;text-decoration:underline;">${safeEmail}</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 40px 36px;">
+                <div style="padding:28px;border-left:6px solid #f5a6c2;background:#ffffff;font:17px/1.65 Arial,Helvetica,sans-serif;">${safeMessage}</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 40px 48px;">
+                <a href="mailto:${safeEmail}" style="display:inline-block;padding:15px 22px;background:#171717;color:#f7f7f2;font:700 12px/1 'Courier New',monospace;letter-spacing:1px;text-decoration:none;text-transform:uppercase;">REPLY TO ${safeName}&nbsp;&nbsp;→</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:18px 24px;border-top:1px solid #aaa9a0;color:#66665f;font:10px/1.5 'Courier New',monospace;letter-spacing:.8px;text-transform:uppercase;">
+                Sent securely via luiscedillo.com / Resend
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
+
 function htmlResponse(locale: Locale, ok: boolean, contactTo: string, status: number) {
   const copy = ui[locale];
   const title = ok ? copy['contact.success.title'] : copy['contact.error.title'];
@@ -146,8 +215,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         from: contactFrom,
         to: [contactTo],
         reply_to: email,
-        subject: `Note from ${name.replace(/[\r\n]/g, ' ')} - luiscedillo.com`,
-        text: `${name}\n${email}\n\n${message}`,
+        subject: `New note from ${name.replace(/[\r\n]/g, ' ')} / luiscedillo.com`,
+        text: `NEW PORTFOLIO MESSAGE\n\nFrom: ${name}\nEmail: ${email}\n\n${message}\n\nReply directly to this email to continue the conversation.`,
+        html: contactEmailHtml(name, email, message),
       }),
     });
     if (!delivery.ok) return respond(request, locale, false, 502, 'delivery', contactTo);

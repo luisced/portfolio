@@ -79,11 +79,14 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   }
 
   .contact-intro {
+    display: grid;
     min-width: 0;
+    align-content: start;
+    gap: clamp(1.5rem, 2vw, 2.25rem);
   }
 
   h2 { white-space: pre-line; font-size: clamp(3.5rem, 10vw, 10rem); max-width: 14ch; font-weight: 600; line-height: .95; }
-  .contact-email { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: clamp(1.4rem, 4vw, 4rem); letter-spacing: -.04em; text-decoration: none; padding-block: 2rem; margin-block: 1rem 0; border-bottom: 1px solid var(--fg-3); }
+  .contact-email { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; font-size: clamp(1.4rem, 4vw, 4rem); letter-spacing: -.04em; text-decoration: none; padding-block: 2rem; margin-block: .25rem 0; border-bottom: 1px solid var(--fg-3); }
   .contact-email:hover { color: var(--accent); }
 
   .contact-panel {
@@ -114,7 +117,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     gap: var(--s-5);
     counter-reset: field;
   }
-  .field { min-width: 0; }
+  .field { min-width: 0; transition: opacity .25s ease; }
   .field .label {
     display: flex;
     align-items: baseline;
@@ -159,6 +162,8 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     color: var(--danger);
     font: .65rem/1.4 var(--font-mono);
   }
+  .field__error:not([hidden]) { animation: contact-error-in .28s cubic-bezier(.22,1,.36,1) both; }
+  .contact__form[aria-busy='true'] .field { opacity: .58; }
   .contact__form > .btn span { transition: transform .2s ease; }
   .contact__form > .btn:hover span { transform: translateX(.25rem); }
   .contact__form > .btn:disabled { cursor: wait; opacity: .72; }
@@ -171,12 +176,18 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     font: .7rem/1.4 var(--font-mono);
     text-transform: uppercase;
   }
+  .contact__status:not([hidden]) { animation: contact-status-in .3s cubic-bezier(.22,1,.36,1) both, contact-status-pulse 1.4s ease-in-out .3s infinite; }
+  .contact__status::before { content: '●'; margin-right: .65rem; color: var(--accent); }
 
   .contact__result {
     display: grid;
     gap: 1rem;
     outline: none;
   }
+  .contact__result:not([hidden]) { animation: contact-result-in .5s cubic-bezier(.22,1,.36,1) both; }
+  .contact__result:not([hidden]) > * { animation: contact-result-copy-in .55s cubic-bezier(.22,1,.36,1) both; }
+  .contact__result:not([hidden]) > :nth-child(2) { animation-delay: .08s; }
+  .contact__result:not([hidden]) > :nth-child(3) { animation-delay: .15s; }
   .contact__result--success {
     min-height: 22rem;
     align-content: center;
@@ -198,6 +209,27 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   .contact__result--error h3 { max-width: 16ch; font-size: clamp(1.75rem, 3vw, 2.75rem); }
   .contact__result a { color: var(--fg); }
 
+  @keyframes contact-error-in {
+    from { opacity: 0; transform: translateY(-.35rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes contact-status-in {
+    from { opacity: 0; transform: scaleX(.96); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes contact-status-pulse {
+    0%, 100% { border-color: var(--line); }
+    50% { border-color: var(--accent); }
+  }
+  @keyframes contact-result-in {
+    from { opacity: 0; transform: translateY(1.25rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes contact-result-copy-in {
+    from { opacity: 0; transform: translateY(.65rem); }
+    to { opacity: 1; transform: none; }
+  }
+
 
   .contact__verification {
     border: 0;
@@ -215,5 +247,12 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     .contact-layout { grid-template-columns: minmax(0, 5fr) minmax(22rem, 4fr); gap: 4rem; align-items: start; }
     .contact-email { font-size: clamp(1.4rem, 3vw, 3.25rem); padding-block: 1rem; margin-block: .5rem 0; }
     .contact__form textarea { min-height: 7rem; }
+  }
+  @media (--motion-reduce) {
+    .field,
+    .field__error,
+    .contact__status,
+    .contact__result,
+    .contact__result > * { animation: none !important; transition: none; }
   }
 </style>

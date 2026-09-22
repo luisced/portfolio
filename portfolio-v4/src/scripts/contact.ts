@@ -28,6 +28,24 @@ if (form) {
   const initialMarkup = submit?.innerHTML ?? '';
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const touched = new WeakSet<HTMLInputElement | HTMLTextAreaElement>();
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const animateFormOut = async () => {
+    if (reduceMotion) return;
+    const animation = form.animate(
+      [
+        { opacity: 1, transform: 'translateY(0)' },
+        { opacity: 0, transform: 'translateY(-14px)' },
+      ],
+      { duration: 260, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' },
+    );
+    try {
+      await animation.finished;
+    } catch {
+      // A navigation can cancel the animation while the request completes.
+    }
+    animation.cancel();
+  };
 
   const setError = (field: HTMLInputElement | HTMLTextAreaElement, message: string) => {
     const error = document.getElementById(`${field.id}-error`);
@@ -110,6 +128,7 @@ if (form) {
         throw new Error();
       }
 
+      await animateFormOut();
       form.hidden = true;
       setStatus('');
       success?.removeAttribute('hidden');
