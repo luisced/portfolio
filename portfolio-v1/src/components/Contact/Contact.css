@@ -1,0 +1,250 @@
+.contact-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Centering the button horizontally */
+	width: 100%;
+}
+
+.contact-form-container {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch; /* Ensure columns stretch to fill the container height */
+	justify-content: center;
+	padding: var(--spacing-large);
+	width: 70%;
+	background-color: var(--color-glass-card-background);
+	border-radius: var(--border-radius);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	box-shadow: var(--box-shadow);
+	margin: 5rem auto;
+	height: 80vh; /* Set a height for the container */
+}
+
+.contact-form-column {
+	flex: 1;
+	padding: var(--spacing-medium);
+	background-color: var(--color-card-background);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	margin: 0 var(--spacing-medium);
+	height: 100%; /* Set height to 100% to match the container */
+	display: flex;
+	flex-direction: column;
+}
+.contact-form-column h2 {
+	margin-bottom: var(--spacing-medium);
+	font-size: var(--font-size-large);
+}
+
+.contact-form label {
+	margin-bottom: var(--spacing-small);
+	font-weight: bold;
+	font-size: 1.1rem;
+	display: block;
+	width: 100%;
+}
+
+.contact-form input,
+.contact-form textarea {
+	width: 100%;
+	padding: var(--spacing-small);
+	margin-bottom: var(--spacing-medium);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius);
+	background-color: rgba(207, 202, 202, 0.3);
+	margin-top: var(--spacing-small);
+	box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+	border-color: var(--color-primary);
+	outline: none;
+}
+
+.contact-form input:not(:placeholder-shown),
+.contact-form textarea:not(:placeholder-shown) {
+	font-size: 1.1rem; /* Increase font size when filled */
+	color: #fff; /* Ensure text remains white when filled */
+}
+
+.contact-form button {
+	align-items: center;
+	appearance: none;
+	background-image: radial-gradient(
+		100% 100% at 100% 0,
+		#14efdc 0,
+		#0d9165 100%
+	);
+	border: 0;
+	border-radius: 6px;
+	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	display: inline-flex;
+	height: 60px; /* Reduced height */
+	width: 150px; /* Reduced width */
+	justify-content: center;
+	line-height: 1;
+	list-style: none;
+	overflow: hidden;
+	padding-left: 16px;
+	padding-right: 16px;
+	position: relative;
+	text-align: center; /* Centering text inside the button */
+	text-decoration: none;
+	transition: box-shadow 0.15s, transform 0.15s;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	white-space: nowrap;
+	will-change: box-shadow, transform;
+	font-size: 20px; /* Reduced font size */
+
+	margin-bottom: var(--spacing-small);
+}
+
+.contact-form button:hover {
+	box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #26c895 0 -3px 0 inset;
+	transform: translateY(-2px);
+}
+
+/* click */
+.contact-form button:active {
+	box-shadow: #198361 0 3px 7px inset;
+	transform: translateY(2px);
+}
+
+.lottie-container {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: var(--border-radius);
+	height: 100%; /* Set height to 100% to match the container */
+	background: linear-gradient(
+		65deg,
+		rgba(180, 108, 215, 1) 18%,
+		rgba(200, 121, 156, 1) 46%,
+		rgba(66, 149, 235, 1) 77%
+	);
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+	.contact-form-container {
+		flex-direction: column;
+		width: 90%;
+		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
+		height: auto; /* Allow height to adjust based on content */
+	}
+
+	.contact-form-column {
+		margin-bottom: var(--spacing-medium); /* Add spacing between columns */
+		height: auto; /* Allow height to adjust based on content */
+		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.contact-form-column h2 {
+		font-size: 2rem;
+	}
+
+	.contact-form {
+		width: 100%; /* Ensure the form takes full width */
+	}
+
+	.contact-form label,
+	.contact-form input,
+	.contact-form textarea {
+		font-size: 1rem; /* Adjust font size for better readability */
+	}
+
+	.contact-form button {
+		width: 100%; /* Make the button full width on smaller screens */
+		font-size: 16px; /* Increase font size for better readability on smaller screens */
+	}
+
+	.lottie-container {
+		display: none; /* Hide the lottie container on smaller screens */
+	}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media (min-width: 600px) and (max-width: 768px) {
+	.contact-form-container {
+		flex-direction: column;
+		width: 90%;
+		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
+		height: auto; /* Allow height to adjust based on content */
+	}
+
+	.contact-form-column {
+		margin-bottom: var(--spacing-medium); /* Add spacing between columns */
+		height: auto; /* Allow height to adjust based on content */
+		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.contact-form {
+		width: 100%; /* Ensure the form takes full width */
+	}
+
+	.contact-form label,
+	.contact-form input,
+	.contact-form textarea {
+		font-size: 1rem; /* Adjust font size for better readability */
+	}
+
+	.contact-form button {
+		width: 100%; /* Make the button full width on smaller screens */
+		font-size: 16px; /* Increase font size for better readability on smaller screens */
+	}
+
+	.lottie-container {
+		display: none; /* Hide the lottie container on smaller screens */
+	}
+}
+/* Medium devices (landscape tablets, 768px and up) */
+
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
+	.contact-form-container {
+		flex-direction: column;
+		width: 90%;
+		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
+		height: auto; /* Allow height to adjust based on content */
+	}
+
+	.contact-form-column {
+		margin-bottom: var(--spacing-medium); /* Add spacing between columns */
+		height: auto; /* Allow height to adjust based on content */
+		padding: var(--spacing-medium); /* Reduce padding for smaller screens */
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.contact-form {
+		width: 100%; /* Ensure the form takes full width */
+	}
+
+	.contact-form label,
+	.contact-form input,
+	.contact-form textarea {
+		font-size: 1rem; /* Adjust font size for better readability */
+	}
+
+	.contact-form button {
+		width: 100%; /* Make the button full width on smaller screens */
+		font-size: 16px; /* Increase font size for better readability on smaller screens */
+	}
+
+	.lottie-container {
+		display: none; /* Hide the lottie container on smaller screens */
+	}
+}

@@ -1,0 +1,99 @@
+.navbar {
+	height: 5rem;
+	position: sticky;
+	top: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 3.5vh;
+	background-color: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	color: var(--color-text);
+	font-family: var(--font-family-mono);
+	z-index: 10;
+}
+
+.navbar-links {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar-links li {
+	margin: 0 15px;
+}
+
+.navbar-links li a {
+	text-decoration: none;
+	font-size: 1.3rem;
+	font-weight: 600;
+	transition: color 0.3s;
+	display: flex;
+	padding: 0;
+}
+
+.default-link {
+	color: var(--color-text);
+}
+
+.default-link:hover {
+	color: var(--color-highlight);
+}
+
+.portfolio-link {
+	color: var(--color-secondary-text);
+}
+
+.portfolio-link:hover {
+	color: var(--color-secondary-highlight);
+}
+
+.hamburger {
+	display: none;
+	cursor: pointer;
+	font-size: 2rem;
+	z-index: 15;
+	position: relative;
+}
+
+.hamburger.black-icon svg {
+	color: black; /* Change the icon color to black */
+}
+
+@media only screen and (max-width: 600px), only screen and (max-width: 425px) {
+	.hamburger {
+		display: block;
+	}
+
+	.navbar-links {
+		display: none;
+		flex-direction: column;
+		width: 100%;
+		height: 100vh;
+		backdrop-filter: blur(10px) saturate(180%);
+		background-color: rgba(0, 0, 0, 0.8);
+		position: fixed;
+		top: 0;
+		left: 0;
+		padding: 10px 20px;
+		align-items: center;
+		justify-content: center;
+		z-index: 10;
+	}
+
+	.navbar-links.active {
+		display: flex;
+	}
+
+	.navbar-links li {
+		width: 100%;
+		margin: 25px 0;
+		text-align: center;
+	}
+
+	.navbar-links li a {
+		font-size: 1.5rem;
+	}
+}

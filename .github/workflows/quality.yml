@@ -2,7 +2,7 @@ name: quality
 
 on:
   push:
-    branches: [master, luisced/Portfolio-V4]
+    branches: [main, master, luisced/Portfolio-V4]
     paths: ['portfolio-v4/**', '.github/workflows/quality.yml']
   pull_request:
     paths: ['portfolio-v4/**']

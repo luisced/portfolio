@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "title": "Luis Cedillo | Full-Stack Developer & Tech Lead",
+    "description": "Full-stack developer and tech lead creating beautiful digital experiences with modern web technologies",
+    "siteName": "Luis Cedillo Portfolio",
+    "ogImageAlt": "Luis Cedillo - Full-Stack Developer Portfolio"
+  },
+  "navigation": {
+    "home": "Home",
+    "hero": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "skipToContent": "Skip to content"
+  },
+  "hero": {
+    "greeting": "Hi, I'm Luis Cedillo",
+    "title": "Full-Stack Developer & Tech Lead",
+    "tagline": "Creating beautiful digital experiences with modern web technologies",
+    "cta": "View my work",
+    "scrollIndicator": "Scroll to explore"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "Some of my recent work",
+    "filter": {
+      "all": "All",
+      "web": "Web Apps",
+      "mobile": "Mobile",
+      "backend": "Backend"
+    },
+    "viewProject": "View Project",
+    "viewCode": "View Code",
+    "github": "View on GitHub"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Who I am and what I do",
+    "bio": "Experienced full-stack developer passionate about creating scalable, user-focused applications.",
+    "readMore": "Read more",
+    "stats": {
+      "experience": "Years Experience",
+      "projects": "Projects Completed",
+      "commits": "Commits This Year"
+    },
+    "downloadCV": "Download CV",
+    "downloading": "Downloading..."
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Let's work together",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Failed to send message. Please try again.",
+    "socialLinks": "Connect with me"
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "backToTop": "Back to top"
+  },
+  "intro": {
+    "quote": "ANYONE CAN WRITE CODE. THE REAL ART LIES IN TRANSFORMING VISIONARY IDEAS INTO ELEGANT SOLUTIONS THAT RESHAPE HOW THE WORLD WORKS."
+  },
+  "skills": {
+    "heading": "MY SKILLS",
+    "tagline": "ALWAYS LEARNING, ALWAYS BUILDING",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Mobile",
+      "devops": "DevOps"
+    },
+    "names": {
+      "reactNextjs": "React & Next.js",
+      "typescript": "TypeScript",
+      "tailwind": "Tailwind CSS",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "databases": "Databases",
+      "reactNative": "React Native",
+      "awsCloud": "AWS & Cloud",
+      "gitCicd": "Git & CI/CD"
+    }
+  },
+  "timeline": {
+    "0": { "yearRange": "2019-2020", "title": "Intern Developer", "company": "StartUp Inc" },
+    "1": { "yearRange": "2020-2021", "title": "Junior Developer", "company": "Code Labs" },
+    "2": { "yearRange": "2021-2022", "title": "Mid Developer", "company": "Tech Startup" },
+    "3": { "yearRange": "2022-2023", "title": "Full Stack Dev", "company": "Digital Agency" },
+    "4": { "yearRange": "2023-2024", "title": "Senior Engineer", "company": "Tech Giant" },
+    "5": { "yearRange": "2024-Present", "title": "Tech Lead", "company": "Innovation Labs" },
+    "6": { "yearRange": "Future", "title": "VP Engineering", "company": "Future Corp" }
+  }
+}

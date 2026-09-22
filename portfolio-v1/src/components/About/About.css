@@ -1,0 +1,167 @@
+/* About.css */
+
+.about {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--color-text);
+	font-family: var(--font-family-mono);
+	padding: var(--spacing-large);
+	width: 100%;
+}
+
+.app-window {
+	margin: 5vh auto;
+	padding: 0;
+	background-color: var(--color-glass-card-background);
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: relative;
+	width: 90%;
+	border-radius: var(--border-radius);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.app-window > *:not(.header):not(.menu-circle) {
+	padding: 50px;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	height: 58px;
+	width: 100%;
+	border-bottom: 1px solid rgba(113, 119, 144, 0.25);
+	padding: 0 30px;
+	white-space: nowrap;
+}
+
+.menu-circle {
+	width: 15px;
+	height: 15px;
+	background-color: #f96057;
+	border-radius: 50%;
+	box-shadow: 24px 0 0 0 #f8ce52, 48px 0 0 0 #5fcf65;
+	margin-right: 195px;
+	flex-shrink: 0;
+}
+
+.intro {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center; /* Center items horizontally */
+}
+
+.intro-text {
+	flex: 1;
+	max-width: var(--max-width-content);
+	margin-right: var(--spacing-large);
+	font-size: 1.3rem;
+	background: var(--color-card-background);
+	padding: var(--spacing-medium);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	text-align: justify;
+}
+
+.profile-pic {
+	border-radius: 50%;
+	box-shadow: var(--box-shadow);
+	border: 5px solid #fff;
+	width: 100%;
+	max-width: 550px;
+	height: auto;
+	object-fit: cover;
+	align-self: center;
+	margin: var(--spacing-medium) auto;
+}
+
+.highlight {
+	color: var(--color-highlight);
+}
+
+.experience-description {
+	padding-top: var(--spacing-medium);
+	text-align: justify;
+}
+
+.scroll-cta {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+	margin-bottom: 2rem;
+	cursor: pointer;
+}
+
+.bounce {
+	font-size: 2rem;
+	animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+		transform: translateY(0);
+	}
+	40% {
+		transform: translateY(-30px);
+	}
+	60% {
+		transform: translateY(-15px);
+	}
+}
+
+/* Responsive Design */
+
+@media only screen and (max-width: 1200px) {
+	.app-window {
+		margin-top: 5rem;
+	}
+}
+
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+	.app-window {
+		margin-top: 5rem;
+	}
+}
+
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+	.app-window {
+		margin-top: 5rem;
+	}
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+	.app-window {
+		margin-top: 5rem;
+	}
+}
+
+/* Extra Small smartphones [320px and below] */
+@media only screen and (max-width: 320px) {
+	.app-window {
+		margin-top: 5rem;
+	}
+}
+
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
+}
+
+/* Big Tablets */
+
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
+}

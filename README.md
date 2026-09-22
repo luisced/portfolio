@@ -4,10 +4,10 @@ Monorepo for [luiscedillo.com](https://luiscedillo.com).
 
 | Directory | Status | Stack |
 |---|---|---|
-| `portfolio-v4/` | **current** — see `PLAN.md` and `portfolio-v4/README.md` | Astro 7, static, EN/ES, Cloudflare Pages |
-| `portfolio-v2/` | previous production site, kept until V4 cutover | React 19 + Vite + i18next |
-
-V1 (Create React App) lived in a submodule that no longer exists in this repo; its history is on the `dev` branch.
+| `portfolio-v4/` | **Current production version** — see `PLAN.md` and `portfolio-v4/README.md` | Astro 7, static, EN/ES, Cloudflare Pages |
+| `portfolio-v3/` | Archived third iteration | Next.js 16 |
+| `portfolio-v2/` | Archived second iteration | React 19, Vite, i18next |
+| `portfolio-v1/` | Archived first iteration, restored from the `dev` branch without legacy credentials | Create React App |
 
 ## Run V4
 

@@ -1,0 +1,278 @@
+.details {
+	margin-top: var(--spacing-medium);
+	display: flex;
+	flex-direction: column;
+}
+
+.skills-container {
+	display: flex;
+	width: 100%;
+	gap: 100px;
+}
+
+.skills-card {
+	background: var(--color-card-background);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 600px;
+	margin: 20px 0;
+}
+
+#skills li {
+	margin: 20px 0;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.bar_container {
+	height: 20px;
+	background: #d4d0d0;
+	border-radius: 8px;
+	margin-top: 5px;
+	overflow: hidden;
+}
+
+.bar {
+	display: block;
+	height: 100%;
+	width: 0;
+	border-radius: 8px;
+	position: relative;
+	transition: width 1s linear;
+}
+
+.pct {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	color: white;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+/* Large tablets and landscape orientation for smaller screens */
+@media only screen and (max-width: 1400px) and (orientation: landscape) {
+	.skills-container {
+		flex-direction: row;
+		justify-content: space-around;
+	}
+}
+
+/* Landscape orientation for tablets and small screens */
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
+	.skills-container {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.skills-card {
+		width: 45%;
+		max-width: none;
+	}
+}
+
+/* tablets */
+@media only screen and (max-width: 1024px) {
+	.details {
+		margin-top: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.skills-container {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.skills-card {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+	}
+
+	#skills li {
+		font-size: 16px;
+	}
+
+	.bar_container {
+		height: 16px;
+		width: 100%;
+	}
+
+	.pct {
+		font-size: 12px;
+	}
+}
+
+/* Large tablets and small screens */
+@media only screen and (max-width: 768px) {
+	.details {
+		margin-top: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.skills-container {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.skills-card {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+	}
+
+	#skills li {
+		font-size: 16px;
+	}
+
+	.bar_container {
+		height: 16px;
+		width: 100%;
+	}
+
+	.pct {
+		font-size: 12px;
+	}
+}
+
+/* Big smartphones [426px -> 600px] */
+@media only screen and (max-width: 600px) {
+	.details {
+		margin-top: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.skills-container {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.skills-card {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+	}
+
+	#skills li {
+		font-size: 16px;
+	}
+
+	.bar_container {
+		height: 16px;
+		width: 100%;
+	}
+
+	.pct {
+		font-size: 12px;
+	}
+}
+
+/* Medium Smartphones */
+@media only screen and (max-width: 500px) {
+	.details {
+		margin-top: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.skills-container {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.skills-card {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+	}
+
+	#skills li {
+		font-size: 16px;
+	}
+
+	.bar_container {
+		height: 16px;
+		width: 100%;
+	}
+
+	.pct {
+		font-size: 12px;
+	}
+}
+
+/* Small smartphones [325px -> 425px] */
+@media only screen and (max-width: 425px) {
+	.details {
+		margin-top: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.skills-container {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.skills-card {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+	}
+
+	#skills li {
+		font-size: 16px;
+	}
+
+	.bar_container {
+		height: 16px;
+		width: 100%;
+	}
+
+	.pct {
+		font-size: 12px;
+	}
+}
+
+/* Extra Small smartphones [320px and below] */
+@media only screen and (max-width: 320px) {
+	.details {
+		margin-top: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.skills-container {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.skills-card {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+	}
+
+	#skills li {
+		font-size: 16px;
+	}
+
+	.bar_container {
+		height: 16px;
+		width: 100%;
+	}
+
+	.pct {
+		font-size: 12px;
+	}
+}

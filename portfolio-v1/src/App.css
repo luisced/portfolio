@@ -1,0 +1,94 @@
+:root {
+	--font-family-mono: "Roboto Mono", monospace;
+	--font-family-sans: "Roboto", sans-serif;
+	--color-card-background: rgba(16 18 27 / 40%);
+	--color-glass-card-background: rgba(113 119 144 / 25%);
+	--color-glass-content-background: rgb(146 151 179 / 13%);
+	--color-background: #000000;
+	--color-text: #fff;
+	--color-secondary-text: #000;
+	--color-link-hover: #1ccabc;
+	--color-highlight: #29ae80;
+	--color-secondary-highlight: #55a68a;
+	--border-radius: 15px;
+	--box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	--max-width-content: 800px;
+	--font-size-large: 3rem;
+	--font-size-medium: 1.5rem;
+	--font-size-small: 1.2rem;
+	--spacing-small: 1rem;
+	--spacing-medium: 2.5rem;
+	--spacing-large: 5.5rem;
+	--popup-background: rgb(31, 31, 31, 0.8);
+	--link-color: var(--color-text);
+
+	/* Responsive */
+	--responsive-font-size-small: 1.1rem;
+	--responsive-font-size-large: 2rem;
+	--responsive-spacing-small: 0.5rem;
+	--responsive-spacing-medium: 1rem;
+	--responsive-spacing-large: 1.5rem;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+	outline: none;
+}
+
+body {
+	font-family: var(--font-family-sans);
+	background-color: transparent;
+	color: var(--color-text);
+	line-height: 1.6;
+}
+
+a {
+	color: var(--color-text);
+	text-decoration: none;
+	transition: color 0.3s;
+}
+a:hover {
+	color: var(--color-highlight);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-family-mono);
+	margin: 0 0 10px 0;
+}
+
+p {
+	margin: 0 0 10px 0;
+	font-family: var(--font-family-mono);
+}
+
+button {
+	font-family: var(--font-family-mono);
+	background: none;
+	border: 2px solid var(--color-primary);
+	color: var(--color-primary);
+	padding: 10px;
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+	background-color: var(--color-primary);
+	color: var(--color-text);
+}
+
+section {
+	margin: 0;
+}
+
+ul {
+	list-style: none;
+}
