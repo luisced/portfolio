@@ -50,6 +50,12 @@
     transition-duration: .15s;
   }
 
+  html[data-theme-transition] *,
+  html[data-theme-transition] *::before,
+  html[data-theme-transition] *::after {
+    transition: none !important;
+  }
+
   :root { view-transition-name: root; }
   ::view-transition-old(root),
   ::view-transition-new(root) {

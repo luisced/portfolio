@@ -6,5 +6,12 @@ pages_build_output_dir = "dist"
 CONTACT_TO = "me@luiscedillo.com"
 CONTACT_FROM = "Luis Cedillo <notes@luiscedillo.com>"
 
+[[ratelimits]]
+name = "CONTACT_RATE_LIMITER"
+namespace_id = "1001"
+  [ratelimits.simple]
+  limit = 3
+  period = 60
+
 # Set RESEND_API_KEY and TURNSTILE_SECRET with `wrangler pages secret put`.
 # PUBLIC_TURNSTILE_SITE_KEY is a build-time environment variable.

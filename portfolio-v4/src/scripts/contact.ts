@@ -16,13 +16,18 @@ declare global {
 const form = document.querySelector<HTMLFormElement>('[data-contact]');
 if (form) {
   const submit = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
-  const status = document.querySelector<HTMLElement>('[data-contact-status]');
+  const status = form.querySelector<HTMLElement>('[data-contact-status]');
   const success = document.querySelector<HTMLElement>('[data-contact-success]');
   const failure = document.querySelector<HTMLElement>('[data-contact-error]');
+  const defaultError = failure?.querySelector<HTMLElement>('[data-contact-error-default]');
+  const rateLimitError = failure?.querySelector<HTMLElement>('[data-contact-error-rate-limit]');
   const note = form.closest<HTMLElement>('.contact__note');
   const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')];
-  const initialLabel = submit?.textContent?.trim() ?? '';
+  const messageField = form.querySelector<HTMLTextAreaElement>('#contact-message');
+  const messageCount = form.querySelector<HTMLElement>('[data-message-count]');
+  const initialMarkup = submit?.innerHTML ?? '';
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const touched = new WeakSet<HTMLInputElement | HTMLTextAreaElement>();
 
   const setError = (field: HTMLInputElement | HTMLTextAreaElement, message: string) => {
     const error = document.getElementById(`${field.id}-error`);
@@ -34,56 +39,92 @@ if (form) {
     else field.removeAttribute('aria-invalid');
   };
 
+  const getError = (field: HTMLInputElement | HTMLTextAreaElement) => {
+    const value = field.value.trim();
+    if (!value) return form.dataset.msgRequired ?? '';
+    if (field.type === 'email' && !emailPattern.test(value)) return form.dataset.msgEmail ?? '';
+    if (field.minLength > 0 && value.length < field.minLength) return form.dataset.msgMinlength ?? '';
+    return '';
+  };
+
+  const validateField = (field: HTMLInputElement | HTMLTextAreaElement) => {
+    const message = getError(field);
+    setError(field, message);
+    return !message;
+  };
+
   const validate = () => {
     let firstInvalid: HTMLInputElement | HTMLTextAreaElement | undefined;
     for (const field of fields) {
-      const value = field.value.trim();
-      const message = !value
-        ? form.dataset.msgRequired ?? ''
-        : field.type === 'email' && !emailPattern.test(value)
-          ? form.dataset.msgEmail ?? ''
-          : field.minLength > 0 && field.value.length < field.minLength
-            ? form.dataset.msgMinlength ?? ''
-            : '';
-      setError(field, message);
-      if (message && !firstInvalid) firstInvalid = field;
+      touched.add(field);
+      if (!validateField(field) && !firstInvalid) firstInvalid = field;
     }
     firstInvalid?.focus();
     return !firstInvalid;
   };
 
-  fields.forEach((field) =>
+  const updateMessageCount = () => {
+    if (messageField && messageCount) messageCount.textContent = `${messageField.value.length} / ${messageField.maxLength}`;
+  };
+
+  fields.forEach((field) => {
+    field.addEventListener('blur', () => {
+      touched.add(field);
+      validateField(field);
+    });
     field.addEventListener('input', () => {
-      if (field.getAttribute('aria-invalid') === 'true') setError(field, '');
-    }),
-  );
+      if (touched.has(field)) validateField(field);
+      if (field === messageField) updateMessageCount();
+    });
+  });
+  updateMessageCount();
+
+  const setStatus = (message: string) => {
+    if (!status) return;
+    status.textContent = message;
+    status.hidden = !message;
+  };
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     failure?.setAttribute('hidden', '');
+    success?.setAttribute('hidden', '');
+    setStatus('');
     if (!validate() || !submit) return;
+
+    form.setAttribute('aria-busy', 'true');
     submit.disabled = true;
-    submit.textContent = form.dataset.sending ?? initialLabel;
+    submit.textContent = form.dataset.sending ?? '';
+    setStatus(form.dataset.sending ?? '');
+    let rateLimited = false;
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
       });
-      const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
-      if (!response.ok || !result?.ok) throw new Error();
+      const result = (await response.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+      if (!response.ok || !result?.ok) {
+        rateLimited = response.status === 429 || result?.error === 'rate_limit';
+        throw new Error();
+      }
+
       form.hidden = true;
+      setStatus('');
       success?.removeAttribute('hidden');
       note?.classList.add('is-pinned');
-      if (status) status.textContent = success?.querySelector('h3')?.textContent ?? '';
+      success?.focus();
     } catch {
+      defaultError?.toggleAttribute('hidden', rateLimited);
+      rateLimitError?.toggleAttribute('hidden', !rateLimited);
       failure?.removeAttribute('hidden');
-      if (status) {
-        status.textContent = failure?.querySelector('h3')?.textContent ?? '';
-        status.focus();
-      }
+      setStatus('');
+      failure?.focus();
+    } finally {
+      form.removeAttribute('aria-busy');
       submit.disabled = false;
-      submit.textContent = initialLabel;
+      submit.innerHTML = initialMarkup;
     }
   });
 

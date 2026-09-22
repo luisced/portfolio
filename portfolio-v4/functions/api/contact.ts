@@ -2,11 +2,16 @@ import { ui, type Locale } from '../../src/i18n/ui';
 
 type PagesFunction<E> = (ctx: { request: Request; env: E }) => Promise<Response>;
 
+type ContactRateLimiter = {
+  limit: (options: { key: string }) => Promise<{ success: boolean }>;
+};
+
 type Env = {
   RESEND_API_KEY: string;
   TURNSTILE_SECRET: string;
   CONTACT_TO: string;
   CONTACT_FROM: string;
+  CONTACT_RATE_LIMITER?: ContactRateLimiter;
 };
 
 type JsonResult = { ok: true } | { ok: false; error: string };
@@ -76,10 +81,31 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // Workers isolates do not share module state, so Turnstile + the honeypot are the spam controls here.
   if (text(fields.get('company'))) return respond(request, locale, true, 200, '', contactTo);
 
+  const forwardedFor = request.headers.get('CF-Connecting-IP')
+    ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim()
+    ?? 'unknown';
+  if (env.CONTACT_RATE_LIMITER) {
+    try {
+      const { success } = await env.CONTACT_RATE_LIMITER.limit({ key: `contact:${forwardedFor}` });
+      if (!success) return respond(request, locale, false, 429, 'rate_limit', contactTo);
+    } catch {
+      return respond(request, locale, false, 503, 'delivery', contactTo);
+    }
+  }
+
   const name = text(fields.get('name'));
   const email = text(fields.get('email'));
   const message = text(fields.get('message'));
-  if (!name || !email || !message || message.length < 20 || !emailPattern.test(email)) {
+  if (
+    !name
+    || name.length > 100
+    || !email
+    || email.length > 254
+    || !message
+    || message.length < 20
+    || message.length > 5000
+    || !emailPattern.test(email)
+  ) {
     return respond(request, locale, false, 400, 'invalid_form', contactTo);
   }
 

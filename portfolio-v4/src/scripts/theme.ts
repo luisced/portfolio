@@ -19,15 +19,17 @@ function toggleTheme(origin: { x: number; y: number }) {
     applyTheme(next);
     return;
   }
-  const endRadius = Math.hypot(
+  const endRadius = Math.ceil(Math.hypot(
     Math.max(origin.x, innerWidth - origin.x),
     Math.max(origin.y, innerHeight - origin.y),
-  );
+  )) + 8;
+  root.dataset.themeTransition = '';
   const transition = document.startViewTransition(() => applyTheme(next));
+  transition.finished.finally(() => delete root.dataset.themeTransition);
   transition.ready.then(() => {
     root.animate(
       { clipPath: [`circle(0px at ${origin.x}px ${origin.y}px)`, `circle(${endRadius}px at ${origin.x}px ${origin.y}px)`] },
-      { duration: 640, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' },
+      { duration: 720, easing: 'cubic-bezier(.22,1,.36,1)', pseudoElement: '::view-transition-new(root)' },
     );
   });
 }
