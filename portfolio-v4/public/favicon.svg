@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#f7f7f2"/><path d="M5 5h24v24H5zm30 0h24v24H35zM5 35h24v24H5z" fill="#171717"/><path d="M35 35h24v24H35z" fill="#ef92b1"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>LC</title>
+  <rect width="64" height="64" rx="4" fill="#171717"/>
+  <text x="32" y="39" fill="#f7f7f2" font-family="Archivo, Arial, sans-serif" font-size="28" font-weight="750" letter-spacing="-2" text-anchor="middle">LC</text>
+  <path d="M16 48h32" stroke="#ef92b1" stroke-width="4"/>
+</svg>

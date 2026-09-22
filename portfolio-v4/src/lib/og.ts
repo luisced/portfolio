@@ -2,10 +2,11 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
+import sharp from 'sharp';
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-// Satori uses static WOFF; the social card pairs the site's paper palette with its mono labels.
+// Satori embeds the same display/body family used by the site's technical labels.
 const monoBlack = readFileSync(
   resolve(process.cwd(), 'node_modules/@fontsource/azeret-mono/files/azeret-mono-latin-800-normal.woff'),
 );
@@ -20,16 +21,27 @@ export interface OgInput {
 }
 
 type OgNode = {
-  type: 'div' | 'span';
+  type: 'div' | 'span' | 'img';
   props: {
     style?: Record<string, string | number>;
     children?: string | OgNode | OgNode[];
+    src?: string;
+    width?: number;
+    height?: number;
   };
 };
 
 function truncate(value: string, max: number) {
   const text = value.trim();
   return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
+}
+
+function truncateWords(value: string, max: number) {
+  const text = value.trim();
+  if (text.length <= max) return text;
+  const clipped = text.slice(0, max - 1).trimEnd();
+  const boundary = clipped.lastIndexOf(' ');
+  return `${(boundary > max * .65 ? clipped.slice(0, boundary) : clipped).trimEnd()}…`;
 }
 
 function textNode(
@@ -40,65 +52,162 @@ function textNode(
 }
 
 export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Uint8Array<ArrayBuffer>> {
-  const INK = '#171717';
-  const PAPER = '#f7f7f2';
-  const BRAND = '#8f254c';
+  const INK = '#0b0b0a';
+  const PAPER = '#f6f5f0';
+  const rawTitle = truncate(title, 48).toUpperCase();
+  const words = rawTitle.split(' ');
+  const displayTitle = rawTitle.includes(' / ')
+    ? rawTitle.replace(' / ', ' /\n')
+    : words.length === 2 && rawTitle.length > 9
+      ? `${words[0]}\n${words[1]}`
+      : rawTitle;
+  const titleSize = rawTitle.length <= 16 ? 142 : rawTitle.length <= 28 ? 110 : 72;
+  const motifPaths = Array.from({ length: 6 }, (_, index) => {
+    const verticalX = 870 + index * 10;
+    const turnRadius = 20 + index * 10;
+    const upperY = 486 - turnRadius;
+    const lowerY = 486 + turnRadius;
+    const turnRight = 1090 + turnRadius;
+
+    return `<path d="M${verticalX} -20V361Q${verticalX} ${upperY} 975 ${upperY}H1090Q${turnRight} ${upperY} ${turnRight} 486Q${turnRight} ${lowerY} 1090 ${lowerY}H-20"/>`;
+  }).join('');
+  const motif = `data:image/svg+xml;utf8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
+      <g fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="square">
+        ${motifPaths}
+      </g>
+    </svg>
+  `)}`;
+
   const tree: OgNode = {
     type: 'div',
     props: {
       style: {
+        position: 'relative',
         width: WIDTH,
         height: HEIGHT,
         display: 'flex',
-        flexDirection: 'column',
+        overflow: 'hidden',
         color: INK,
         fontFamily: 'Azeret Mono',
         backgroundColor: PAPER,
-        border: `2px solid ${INK}`,
+        border: `1px solid ${INK}`,
       },
       children: [
         {
+          type: 'img',
+          props: {
+            src: motif,
+            width: WIDTH,
+            height: HEIGHT,
+            style: {
+              position: 'absolute',
+              inset: 0,
+              width: WIDTH,
+              height: HEIGHT,
+            },
+          },
+        },
+        {
           type: 'div',
           props: {
             style: {
+              position: 'absolute',
+              top: 38,
+              left: 46,
+              fontSize: 18,
+              letterSpacing: 4,
+              textTransform: 'uppercase',
+            },
+            children: 'LUIS CEDILLO / PORTFOLIO',
+          },
+        },
+        {
+          type: 'div',
+          props: {
+            style: {
+              position: 'absolute',
+              top: 83,
+              left: 46,
+              width: 812,
+              borderTop: `4px solid ${INK}`,
+            },
+          },
+        },
+        {
+          type: 'div',
+          props: {
+            style: {
+              position: 'absolute',
+              top: 38,
+              left: 950,
+              width: 204,
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '18px 32px',
-              borderBottom: `2px solid ${INK}`,
-              fontSize: 22,
+              fontSize: 16,
               letterSpacing: 2,
               textTransform: 'uppercase',
             },
             children: [
-              { type: 'span', props: { children: 'LUIS CEDILLO' } },
-              { type: 'span', props: { style: { color: BRAND }, children: 'ENGINEERING / PRODUCT' } },
+              { type: 'span', props: { children: 'MEXICO CITY' } },
+              { type: 'span', props: { children: '2026' } },
             ],
           },
         },
         {
           type: 'div',
           props: {
-            style: { display: 'flex', flexDirection: 'column', flex: 1, padding: '44px 32px 32px' },
+            style: {
+              position: 'absolute',
+              top: 83,
+              left: 932,
+              width: 222,
+              borderTop: `4px solid ${INK}`,
+            },
+          },
+        },
+        {
+          type: 'div',
+          props: {
+            style: {
+              position: 'absolute',
+              top: 128,
+              left: 44,
+              width: 810,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            },
             children: [
-              textNode(truncate(title, 56).toUpperCase(), {
+              textNode(displayTitle, {
+                width: 800,
+                maxHeight: 240,
+                overflow: 'hidden',
+                whiteSpace: 'pre-wrap',
                 fontFamily: 'Azeret Mono',
                 fontWeight: 800,
-                maxWidth: 1136,
-                maxHeight: 250,
-                overflow: 'hidden',
-                fontSize: 84,
-                lineHeight: 0.95,
-                letterSpacing: -4,
+                fontSize: titleSize,
+                lineHeight: .78,
+                letterSpacing: -7,
               }),
-              textNode(truncate(subtitle, 150), {
-                marginTop: 28,
-                maxWidth: 1000,
-                maxHeight: 84,
+              {
+                type: 'div',
+                props: {
+                  style: {
+                    width: 48,
+                    marginTop: 24,
+                    borderTop: `10px solid ${INK}`,
+                  },
+                },
+              },
+              textNode(truncateWords(subtitle, 90), {
+                width: 790,
+                maxHeight: 100,
+                marginTop: 17,
                 overflow: 'hidden',
-                color: '#55574e',
-                fontSize: 32,
-                lineHeight: 1.25,
+                fontSize: 27,
+                lineHeight: 1.35,
+                letterSpacing: 1,
               }),
             ],
           },
@@ -107,17 +216,29 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
           type: 'div',
           props: {
             style: {
+              position: 'absolute',
+              left: 46,
+              right: 46,
+              bottom: 30,
               display: 'flex',
+              alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '16px 32px',
-              borderTop: `2px solid ${INK}`,
-              fontSize: 22,
-              letterSpacing: 2,
+              fontSize: 16,
+              letterSpacing: 1.5,
               textTransform: 'uppercase',
             },
             children: [
-              textNode(truncate(kicker, 90).toUpperCase(), { color: BRAND }),
-              { type: 'span', props: { children: 'LUISCEDILLO.COM' } },
+              {
+                type: 'span',
+                props: { children: truncateWords(kicker, 58).toUpperCase() },
+              },
+              {
+                type: 'span',
+                props: {
+                  style: { marginRight: 70, fontWeight: 800 },
+                  children: 'LUISCEDILLO.COM',
+                },
+              },
             ],
           },
         },
@@ -133,6 +254,11 @@ export async function renderOg({ title, subtitle, kicker }: OgInput): Promise<Ui
       { name: 'Azeret Mono', data: mono, weight: 400, style: 'normal' },
     ],
   });
-  // `.slice()` re-backs the bytes with a plain ArrayBuffer, which is what `Response` accepts.
-  return new Uint8Array(new Resvg(svg, { fitTo: { mode: 'width', value: WIDTH } }).render().asPng()).slice();
+  const png = new Resvg(svg, { fitTo: { mode: 'width', value: WIDTH } }).render().asPng();
+  return new Uint8Array(await sharp(png).png({
+    compressionLevel: 9,
+    palette: true,
+    quality: 100,
+    effort: 10,
+  }).toBuffer()).slice();
 }

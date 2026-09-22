@@ -13,12 +13,28 @@
     radial-gradient(ellipse 46% var(--cloud-depth) at 100% 100%, #000 35%, transparent 100%);
 }
 
-/* A static stippled cloud is visible before hydration and without WebGPU. */
+.hero-cloud .shape-waves--accent {
+  position: absolute;
+  inset: 0;
+  opacity: .85;
+  mask-image:
+    radial-gradient(ellipse 46% var(--cloud-depth) at 100% 0%, #000 35%, transparent 100%),
+    radial-gradient(ellipse 46% var(--cloud-depth) at 0% 100%, #000 35%, transparent 100%);
+}
+
+/* Guaranteed-visible color wash: pure CSS, no WebGPU/JS required. Stays under
+   the animated canvas at reduced opacity once it confirms a real frame painted,
+   so a stalled/unsupported canvas never leaves the corners blank. */
 .hero-cloud::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, #e84f98 1px, transparent 1.25px) 0 0 / 2.5px 2.5px;
+  background:
+    radial-gradient(circle, #e84f98 1px, transparent 1.25px) 0 0 / 2.5px 2.5px,
+    radial-gradient(ellipse 40% var(--cloud-depth) at 7% 0%, color-mix(in srgb, #e84f98 55%, transparent), transparent 75%),
+    radial-gradient(ellipse 38% var(--cloud-depth) at 92% 0%, color-mix(in srgb, #e84f98 55%, transparent), transparent 75%),
+    radial-gradient(ellipse 40% var(--cloud-depth) at 7% 100%, color-mix(in srgb, #e84f98 55%, transparent), transparent 75%),
+    radial-gradient(ellipse 38% var(--cloud-depth) at 92% 100%, color-mix(in srgb, #e84f98 55%, transparent), transparent 75%);
   mask-image:
     radial-gradient(ellipse 40% var(--cloud-depth) at 7% 0%, #000, transparent),
     radial-gradient(ellipse 38% var(--cloud-depth) at 92% 0%, #000, transparent),
@@ -27,8 +43,29 @@
   transition: opacity .6s ease;
 }
 
+/* Second color layer, opposite diagonal: answers "another cloud layer, a
+   different color" without depending on the WebGPU path either. */
+.hero-cloud::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle, #4a1fff 1px, transparent 1.25px) 0 0 / 3px 3px,
+    radial-gradient(ellipse 34% var(--cloud-depth) at 92% 0%, color-mix(in srgb, #4a1fff 45%, transparent), transparent 75%),
+    radial-gradient(ellipse 34% var(--cloud-depth) at 7% 100%, color-mix(in srgb, #4a1fff 45%, transparent), transparent 75%);
+  mask-image:
+    radial-gradient(ellipse 34% var(--cloud-depth) at 92% 0%, #000, transparent),
+    radial-gradient(ellipse 34% var(--cloud-depth) at 7% 100%, #000, transparent);
+  transition: opacity .6s ease;
+}
+
 .hero-cloud .shape-waves { background-color: transparent !important; }
-.hero-cloud:has(.shape-waves[data-ready='true'])::before { opacity: 0; }
+/* Once a canvas confirms a real frame painted, dial the CSS wash down instead
+   of hiding it outright: a silently-broken canvas still leaves visible color. */
+.hero-cloud:has(.shape-waves[data-ready='true'])::before,
+.hero-cloud:has(.shape-waves[data-ready='true'])::after {
+  opacity: .3;
+}
 
 
 @media (--md) {
@@ -36,5 +73,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-cloud::before { transition: none; }
+  .hero-cloud::before, .hero-cloud::after { transition: none; }
 }
