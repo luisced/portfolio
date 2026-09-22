@@ -1,17 +1,16 @@
 ---
-import { getProfile, localizePath, useTranslations } from '@/i18n/utils';
+import { getProfile, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const { data: p } = await getProfile();
+const wa = p.whatsapp.replace(/[^\d]/g, '');
 ---
-<footer class="footer"><div class="container"><div class="footer-top"><p class="label">© {new Date().getFullYear()} {p.shortName}</p><p class="label">{t('footer.built')}</p><a class="label" href="#main">{t('footer.top')} ↑</a></div><nav aria-label={locale === 'es' ? 'Enlaces sociales' : 'Social links'}>{p.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label} ↗</a>)}<a href={localizePath(locale, '/rss.xml')}>{t('footer.rss')}</a></nav><p class="footer-name" aria-hidden="true">Luis Cedillo<span>.</span></p></div></footer>
+<footer class="footer"><div class="container"><div class="footer-top"><p class="label">© {new Date().getFullYear()} {p.shortName}</p><p class="label">{t('footer.built')}</p><a class="label" href="#main">{t('footer.top')} ↑</a></div><nav aria-label={locale === 'es' ? 'Enlaces sociales' : 'Social links'}><a href={`https://wa.me/${wa}`} rel="noopener" target="_blank">WhatsApp ↗</a>{p.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label} ↗</a>)}</nav></div></footer>
 <style>
-  .footer { padding-top: 2rem; border-top: 1px solid var(--line); overflow: hidden; }
+  .footer { padding-block: 2rem; border-top: 1px solid var(--line); background: #171717; color: #f7f7f2; --line: #53534e; --fg: #f7f7f2; --fg-3: #aaaaa1; }
   .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }
   nav { display: flex; flex-wrap: wrap; gap: 1.5rem; font-size: .75rem; margin-top: 1.5rem; }
   nav a { min-height: 2.75rem; display: inline-flex; align-items: center; text-decoration: none; }
-  .footer-name { font-size: clamp(3rem, 13vw, 13rem); font-weight: 750; letter-spacing: -.075em; line-height: 1.15; margin-top: 2rem; margin-bottom: -.22em; white-space: nowrap; text-transform: uppercase; }
-  .footer-name span { color: var(--fg); }
 </style>

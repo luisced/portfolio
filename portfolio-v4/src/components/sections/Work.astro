@@ -17,6 +17,7 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
         <figure class="system-figure system-figure--dopamina">
           <figcaption class="label">{t('work.dopamina.diagram')}</figcaption>
           <div class="brand-lockup brand-lockup--dopamina"><img src="/brand/dopamina-wordmark.png" alt="Dopamina" decoding="async" /><span class="brand-signal" aria-hidden="true">↗</span></div>
+          <div class="doppie-swarm" aria-hidden="true"><img class="doppie doppie--reviewer" src="/brand/doppie-reviewer.webp" alt="" /><img class="doppie doppie--producer" src="/brand/doppie-producer.webp" alt="" /><img class="doppie doppie--creator" src="/brand/doppie-creator.webp" alt="" /></div>
           <div class="system-rail" aria-hidden="true">{Array.from({length:6},()=> <span class="rail-dot"></span>)}</div>
           <ol class="system-nodes"><li>{t('work.dopamina.node1')}</li><li>{t('work.dopamina.node2')}</li><li>{t('work.dopamina.node3')}</li><li>{t('work.dopamina.node4')}</li><li>{t('work.dopamina.node5')}</li><li>{t('work.dopamina.node6')}</li></ol>
           <div class="system-human label"><span aria-hidden="true">↳</span> {t('work.dopamina.human')}</div>
@@ -30,6 +31,11 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
         <figure class="system-figure system-figure--iluk">
           <figcaption class="label">{t('work.iluk.diagram')}</figcaption>
           <div class="brand-lockup brand-lockup--iluk"><img src="/brand/iluk-logo.png" alt="iLuk" decoding="async" /><span class="brand-signal" aria-hidden="true">↗</span></div>
+          <div class="iluk-agents" aria-hidden="true">
+            <div class="iluk-agent"><img src="/brand/iluk-agent-acquire.webp" alt="" /><span>acquire</span></div>
+            <div class="iluk-agent iluk-agent--raised"><img src="/brand/iluk-agent-verify.webp" alt="" /><span>verify</span></div>
+            <div class="iluk-agent"><img src="/brand/iluk-agent-collect.webp" alt="" /><span>collect</span></div>
+          </div>
           <div class="system-rail" aria-hidden="true">{Array.from({length:5},()=> <span class="rail-dot"></span>)}</div>
           <ol class="system-nodes"><li>{t('work.iluk.node1')}</li><li>{t('work.iluk.node2')}</li><li>{t('work.iluk.node3')}</li><li>{t('work.iluk.node4')}</li><li>{t('work.iluk.node5')}</li></ol>
           <div class="system-human label"><span aria-hidden="true">↳</span> {t('work.iluk.human')}</div>
@@ -55,12 +61,14 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
   .work-heading h2 { font-size: clamp(3.25rem, 8.2vw, 8.5rem); margin-block: 2rem; font-weight: 650; max-width: 13ch; }
   .work-intro { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; align-items: end; }
   .work-intro p { max-width: 42ch; color: var(--fg-2); }
-  .chapters { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); background: var(--bg); }
-  .chapters a { display: flex; justify-content: space-between; align-items: center; padding: 1rem .75rem; gap: .5rem; text-decoration: none; font-size: .7rem; }
-  .chapters a:nth-child(even) { border-left: 1px solid var(--line); }
-  .chapters a:nth-child(n+3) { border-top: 1px solid var(--line); }
-  .chapters a > span:first-child { font: .55rem var(--font-mono); }
+  .chapters { display: flex; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; border: 1px solid var(--line); background: var(--bg); }
+  .chapters::-webkit-scrollbar { display: none; }
+  .chapters a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; flex: 1 0 10rem; min-height: 4.25rem; padding: .8rem 1rem; gap: .65rem; border-left: 1px solid var(--line); text-decoration: none; font-size: .7rem; }
+  .chapters a:first-child { border-left: 0; }
+  .chapters a > span:first-child { font: .55rem var(--font-mono); color: var(--fg-3); }
+  .chapters a > span:last-child { justify-self: end; font-size: 1.1rem; line-height: 1; }
   .chapters a[aria-current] { background: var(--fg); color: var(--bg); }
+  .chapters a[aria-current] > span:first-child { color: var(--pink); }
   .project { margin-top: 2rem; border: 1px solid var(--line); scroll-margin-top: 9rem; }
   .project-top { display: flex; justify-content: space-between; gap: 1.5rem; padding: 1rem; border-bottom: 1px solid var(--line); font-size: .6rem; }
   .project-layout { display: grid; }
@@ -70,19 +78,30 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
   .project h3 a { text-decoration: none; }
   .project-role { font-size: .6rem; }
   .project-description { max-width: 45ch; font-size: 1rem; line-height: 1.65; color: var(--fg-2); margin-top: 1.5rem; }
-  .project-stack { margin-top: 1.5rem; }
-  .project-stack .chip { font-size: .55rem; }
-  .project-copy > .btn { margin-top: 2rem; gap: 2rem; }
-  .project-image { width: 100%; display: grid; position: relative; place-items: center; padding: clamp(1.5rem,4vw,4rem); min-height: 19rem; background: #dfdfd8; overflow: hidden; }
+  .project-image { width: 100%; display: grid; position: relative; place-items: center; padding: clamp(1.5rem,4vw,4rem); min-height: 19rem; background: #dfdfd8; overflow: hidden; isolation: isolate; }
+  .project-image::before { content: ''; position: absolute; inset: 0; z-index: -1; background-position: center; background-size: cover; opacity: .9; filter: saturate(.7); }
   .project-image :global(picture) { width: 100%; position: relative; z-index: 1; }
   .project-image :global(img) { width: 100%; object-fit: contain; filter: drop-shadow(0 12px 15px #17171718); }
   .project--mobile .project-image { background: #e7bad0; }
+  .project--mobile .project-image::before { background-image: url('/brand/upocket-backdrop.webp'); }
   .project--mobile .project-image :global(picture) { width: 45%; max-width: 15.5rem; }
   .project--mobile .project-image :global(img) { max-height: 33rem; }
   .project:last-child .project-image { background: #c9d4c4; }
+  .project:last-child .project-image::before { background-image: url('/brand/genesis-backdrop.webp'); }
   .image-arrow { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 3rem; height: 3rem; border-bottom: 1px solid #8e8e84; border-left: 1px solid #8e8e84; color: #171717; }
-  .system-figure { display: flex; flex-direction: column; justify-content: center; padding: clamp(1.5rem,3vw,3rem); background: #171717; color: #f7f7f2; min-height: 24rem; --figure-accent: var(--pink); --figure-line: #7c7c73; }
+  .system-figure { position: relative; display: flex; flex-direction: column; justify-content: center; padding: clamp(1.5rem,3vw,3rem); background: #171717; color: #f7f7f2; min-height: 24rem; --figure-accent: var(--pink); --figure-line: #7c7c73; }
   .system-figure .label { color: #c5c5bc; font-size: .6rem; }
+  .doppie-swarm { position: absolute; right: 1.5rem; bottom: 6.7rem; display: flex; align-items: end; gap: .15rem; height: 8.5rem; pointer-events: none; }
+  .doppie { width: 4.8rem; height: 4.8rem; object-fit: contain; object-position: bottom; filter: drop-shadow(0 5px 0 rgba(25,25,20,.12)); animation: doppie-float 3.6s ease-in-out infinite; }
+  .doppie--reviewer { width: 6rem; height: 6rem; animation-delay: -.5s; }
+  .doppie--producer { animation-delay: -1.7s; }
+  .doppie--creator { width: 5.3rem; height: 5.3rem; animation-delay: -2.5s; }
+  .iluk-agents { display: flex; align-items: end; justify-content: center; gap: clamp(.6rem, 2vw, 1.5rem); min-height: 8.5rem; margin: -1rem 0 1.5rem; color: #4a1fff; }
+  .iluk-agent { display: grid; justify-items: center; gap: .2rem; width: clamp(3.7rem, 9vw, 6.5rem); font: .48rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #514c67; }
+  .iluk-agent img { display: block; width: 100%; height: auto; filter: drop-shadow(0 4px 0 rgba(74,31,255,.1)); }
+  .iluk-agent--raised { transform: translateY(-.9rem); }
+  @keyframes doppie-float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-.4rem) rotate(2deg); } }
+  @media (--motion-reduce) { .doppie { animation: none; } }
   .system-figure--dopamina { color: #191914; background: radial-gradient(circle at 89% 18%, rgba(244,201,78,.95) 0 2px, transparent 3px), radial-gradient(circle at 82% 25%, rgba(242,106,79,.65) 0 1px, transparent 2px), #f4f0e8; --figure-accent: #f26a4f; --figure-line: #b9ae9e; }
   .system-figure--dopamina .label { color: #6e665c; }
   .system-figure--iluk { position: relative; overflow: hidden; min-height: 20rem; background: #f6f3ff; color: #12101d; --figure-accent: #4a1fff; --figure-line: #b7acd9; }
@@ -103,9 +122,8 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
   .system-human > span { color: var(--figure-accent); }
   .project-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-block: 1px solid var(--line); padding-block: 1rem; margin-top: 1.5rem; }
   .project-metrics dt { font-size: 2.6rem; letter-spacing: -.065em; line-height: 1.3; }
-  .project-metrics dd { font-size: .65rem; color: var(--fg-2); }
+  @media (--md) { .chapters a { flex-basis: 0; padding-inline: 1.25rem; } }
   .metric-source { display: block; margin-top: .75rem; font-size: .6rem; color: var(--fg-3); }
-  @media (--md) { .chapters { grid-template-columns: repeat(4,minmax(0,1fr)); } .chapters a { padding-inline: 1.25rem; } .chapters a + a { border-left: 1px solid var(--line); border-top: 0; } }
   @media (--lg) { .chapters { position: sticky; top: 5.25rem; z-index: 5; } .project-layout { grid-template-columns: 1.3fr 1fr; } .project-copy { padding: 3rem; } .project-image { min-height: 38rem; } .project--mobile .project-image { min-height: 40rem; } .project-top { padding-inline: 1.5rem; } }
   @media (--pointer) { .project-image :global(picture) { transition: transform .4s; } .project-image:hover :global(picture) { transform: scale(1.025); } }
   @media (--motion-reduce) { .project-image :global(picture) { transition: none; } }

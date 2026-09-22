@@ -1,43 +1,433 @@
 ---
 import { formatMonth, getExperience, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-interface Props { locale: Locale; }
+
+interface Props {
+  locale: Locale;
+}
+
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const experience = await getExperience();
+const careerStart = Math.min(...experience.map((entry) => Number(entry.data.start.slice(0, 4))));
+const indexLabel = String(experience.length).padStart(2, '0');
 ---
+
 <section id="timeline" class="section" aria-labelledby="timeline-title">
-  <div class="container">
-    <p class="label section-label">{t('timeline.kicker')}</p>
-    <h2 id="timeline-title">{t('timeline.title')}</h2>
+  <div class="container timeline-container">
+    <header class="timeline-heading">
+      <div>
+        <p class="label section-label">{t('timeline.kicker')}</p>
+        <h2 id="timeline-title">{t('timeline.title')}</h2>
+      </div>
+
+      <div class="timeline-overview">
+        <p class="timeline-intro">{t('timeline.intro')}</p>
+        <div class="timeline-index">
+          <span class="index-number" aria-hidden="true">{indexLabel}</span>
+          <p class="label">
+            {t('timeline.chapters')}<br />
+            {careerStart}–{t('timeline.present')}
+          </p>
+        </div>
+        <div class="career-signal" style={`--steps: ${experience.length}`} aria-hidden="true">
+          {experience.map((entry) => <span class:list={{ current: !entry.data.end }}></span>)}
+        </div>
+      </div>
+    </header>
+
     <ol class="experience-list">
-      {experience.map((e) => (
-        <li data-reveal>
-          <p class="label experience-date">{formatMonth(locale, e.data.start)}<br/><span>- {e.data.end ? formatMonth(locale, e.data.end) : t('timeline.present')}</span></p>
-          <div class="experience-role"><h3>{e.data.role[locale]}</h3><p class="muted">{e.data.org}</p></div>
-          <div class="experience-detail">
-            <p>{e.data.highlights[locale][0]}</p>
-            {e.data.highlights[locale].length > 1 && <details><summary>{t('timeline.more')} <span aria-hidden="true">+</span></summary><ul>{e.data.highlights[locale].slice(1).map((h) => <li>{h}</li>)}</ul><p>{e.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p></details>}
-            {e.data.links.length > 0 && <ul class="experience-links">{e.data.links.map((link) => <li><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label[locale]} <span aria-hidden="true">↗</span></a></li>)}</ul>}
-          </div>
-        </li>
-      ))}
+      {experience.map((entry, index) => {
+        const current = !entry.data.end;
+        const additionalHighlights = entry.data.highlights[locale].slice(1);
+        const hasFieldNotes = additionalHighlights.length > 0 || entry.data.links.length > 0;
+
+        return (
+          <li
+            class:list={['experience-card', { 'is-current': current }]}
+            data-accent={entry.data.accent}
+            data-reveal
+          >
+            <article>
+              <div class="card-top">
+                <span class="sequence" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <p class="label experience-date">
+                  {formatMonth(locale, entry.data.start)}
+                  <span aria-hidden="true"> / </span>
+                  {entry.data.end ? formatMonth(locale, entry.data.end) : t('timeline.present')}
+                </p>
+                {current && <span class="current-status"><span aria-hidden="true"></span>{t('timeline.active')}</span>}
+              </div>
+
+              <div class="card-heading">
+                <p class="label organization">{entry.data.org}</p>
+                <h3>{entry.data.role[locale]}</h3>
+              </div>
+
+              <p class="impact">{entry.data.highlights[locale][0]}</p>
+
+              <ul class="tag-list">
+                {entry.data.tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+
+              {hasFieldNotes && (
+                <details>
+                  <summary aria-label={`${t('timeline.more')}: ${entry.data.role[locale]}, ${entry.data.org}`}>
+                    <span>{t('timeline.fieldNotes')}</span>
+                    <span aria-hidden="true">+</span>
+                  </summary>
+                  <div class="field-notes">
+                    {additionalHighlights.length > 0 && (
+                      <ul>{additionalHighlights.map((highlight) => <li>{highlight}</li>)}</ul>
+                    )}
+                    {entry.data.links.length > 0 && (
+                      <ul class="experience-links">
+                        {entry.data.links.map((link) => (
+                          <li>
+                            <a href={link.url} target="_blank" rel="noopener noreferrer">
+                              {link.label[locale]} <span aria-hidden="true">↗</span>
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </details>
+              )}
+            </article>
+          </li>
+        );
+      })}
     </ol>
   </div>
 </section>
+
 <style>
-  .experience-list { list-style: none; padding: 0; }
-  .experience-list > li { display: grid; gap: 1.25rem; padding-block: 2rem; border-top: 1px solid var(--line); }
-  .experience-date { line-height: 1.8; }
-  h3 { font-size: 1.35rem; line-height: 1.15; max-width: 24ch; margin-bottom: .5rem; }
-  .experience-role > p { font-size: .85rem; }
-  .experience-detail { font-size: .9rem; color: var(--fg-2); }
-  .experience-links { list-style: none; padding: .5rem 0 0; display: flex; flex-wrap: wrap; gap: .25rem 1rem; font-size: .75rem; }
-  .experience-links a { display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; }
-  summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding-block: 1rem .5rem; font-size: .75rem; list-style: none; color: var(--fg); }
-  summary::-webkit-details-marker { display: none; }
-  summary span { font-size: 1.2rem; }
-  details[open] summary span { transform: rotate(45deg); }
-  details ul { padding: .5rem 0 .75rem 1rem; }
-  @media (--md) { .experience-list > li { grid-template-columns: 1fr 2fr 2fr; gap: 2.5rem; } }
+  #timeline {
+    overflow: hidden;
+  }
+
+  .timeline-container {
+    display: grid;
+    gap: clamp(3rem, 7vw, 6rem);
+  }
+
+  .timeline-heading {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: clamp(2.5rem, 5vw, 5rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  h2 {
+    max-width: 10ch;
+    margin-top: 1.5rem;
+  }
+
+  .timeline-overview {
+    align-self: end;
+  }
+
+  .timeline-intro {
+    max-width: 34ch;
+    font-size: clamp(1.35rem, 2.2vw, 2.15rem);
+    font-weight: 560;
+    line-height: 1.18;
+    letter-spacing: -.035em;
+  }
+
+  .timeline-index {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .index-number {
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: .72;
+    letter-spacing: -.08em;
+  }
+
+  .timeline-index .label {
+    max-width: 30ch;
+  }
+
+  .career-signal {
+    display: grid;
+    height: 3.25rem;
+    grid-template-columns: repeat(var(--steps), 1fr);
+    align-items: end;
+    margin-top: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .career-signal span {
+    width: 1px;
+    height: .8rem;
+    justify-self: center;
+    background: var(--line);
+  }
+
+  .career-signal span.current {
+    height: 2.35rem;
+    background: var(--accent);
+  }
+
+  .experience-list {
+    display: grid;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .experience-card {
+    --card-accent: var(--brand);
+    position: relative;
+    min-width: 0;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .experience-card[data-accent='amber'] { --card-accent: var(--amber); }
+  .experience-card[data-accent='rose'] { --card-accent: var(--rose); }
+  .experience-card[data-accent='sky'] { --card-accent: var(--sky); }
+  .experience-card[data-accent='violet'] { --card-accent: var(--violet); }
+
+  .experience-card::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: .3rem;
+    background: var(--card-accent);
+    content: '';
+    opacity: 0;
+  }
+
+  .experience-card.is-current::before {
+    opacity: 1;
+  }
+
+  .experience-card article {
+    display: flex;
+    min-height: 22rem;
+    height: 100%;
+    flex-direction: column;
+    padding: clamp(1.35rem, 2.4vw, 2.25rem);
+  }
+
+  .card-top {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: .5rem 1rem;
+  }
+
+  .sequence {
+    grid-row: 1 / 3;
+    color: var(--line);
+    font-size: 3.4rem;
+    font-weight: 700;
+    line-height: .75;
+    letter-spacing: -.08em;
+  }
+
+  .experience-date {
+    color: var(--fg-2);
+    font-size: .62rem;
+  }
+
+  .current-status {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: .45rem;
+    font-family: var(--font-mono);
+    font-size: .6rem;
+    text-transform: uppercase;
+  }
+
+  .current-status > span {
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: var(--card-accent);
+  }
+
+  .card-heading {
+    margin-top: clamp(2rem, 5vw, 4rem);
+  }
+
+  .organization {
+    color: var(--card-accent);
+  }
+
+  h3 {
+    max-width: 18ch;
+    margin-top: .5rem;
+    font-size: clamp(1.75rem, 2.8vw, 3rem);
+    line-height: 1.02;
+  }
+
+  .impact {
+    max-width: 48ch;
+    margin-top: 1.25rem;
+    color: var(--fg-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+    margin-top: auto;
+    padding: 2rem 0 0;
+    color: var(--fg-3);
+    font-family: var(--font-mono);
+    font-size: .6rem;
+    list-style: none;
+    text-transform: uppercase;
+  }
+
+  .tag-list li {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+
+  .tag-list li::before {
+    width: .35rem;
+    height: .35rem;
+    background: var(--card-accent);
+    content: '';
+  }
+
+  details {
+    margin-top: 1.25rem;
+  }
+
+  summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--line);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    list-style: none;
+    text-transform: uppercase;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary > span:last-child {
+    font-size: 1rem;
+    transition: transform .2s ease;
+  }
+
+  details[open] summary > span:last-child {
+    transform: rotate(45deg);
+  }
+
+  .field-notes {
+    padding-block: .25rem 1rem;
+    color: var(--fg-2);
+    font-size: var(--text-sm);
+  }
+
+  .field-notes > ul {
+    padding-left: 1rem;
+  }
+
+  .field-notes > ul li + li {
+    margin-top: .75rem;
+  }
+
+  .experience-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1rem;
+    margin-top: 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .experience-links a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: .35rem;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    text-transform: uppercase;
+  }
+
+  @media (--md) {
+    .timeline-heading {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+      gap: 8%;
+    }
+
+    .experience-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (--lg) {
+    .experience-list {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .experience-card:nth-child(-n + 2) {
+      grid-column: span 6;
+    }
+
+    .experience-card:nth-child(n + 3):not(:last-child) {
+      grid-column: span 4;
+    }
+
+    .experience-card:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .experience-card:last-child article {
+      display: grid;
+      min-height: 14rem;
+      grid-template-columns: 1fr 1.25fr 1.5fr;
+      gap: 2rem;
+    }
+
+    .experience-card:last-child .card-heading {
+      margin-top: 0;
+    }
+
+    .experience-card:last-child .impact {
+      margin-top: 0;
+    }
+
+    .experience-card:last-child .tag-list,
+    .experience-card:last-child details {
+      grid-column: 2 / -1;
+    }
+  }
+
+  @media (--motion-ok) {
+    .experience-card {
+      transition: background-color .25s ease;
+    }
+  }
+
+  @media (--pointer) {
+    .experience-card:hover {
+      background: color-mix(in srgb, var(--card-accent) 6%, var(--bg));
+    }
+  }
 </style>

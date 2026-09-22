@@ -8,28 +8,21 @@ positioning:
   es: Construyo sistemas de IA que hacen trabajo real, como cofundador y CTO de Dopamina y de iLuk.
 bio:
   en: >-
-    I'm a software engineer and Co-Founder & CTO at Dopamina, focused on making
-    marketing work move from a message to published action. I build the AI
-    workspace and agent orchestration behind Content Studio, social publishing,
-    community management and paid ads. I also lead iLuk's infrastructure and
-    orchestration for AI employees across acquisition, onboarding, KYC, payments
-    and collections. Before these ventures, I co-founded Vyvo Tech, led hospitality
-    engineering at Nyx Technology, and built mobile products with Universidad
-    Panamericana's iOS Development Lab.
+    At Dopamina, I turn a message into coordinated marketing work across content,
+    publishing, community and ads. At iLuk, I build the orchestration layer for
+    AI employees handling acquisition, onboarding, KYC, payments and collections.
+    Both systems share the same standard: human direction, clear handoffs and
+    infrastructure that keeps working.
   es: >-
-    Soy ingeniero de software y cofundador y CTO de Dopamina, enfocado en
-    convertir el marketing de un mensaje en una acción publicada. Construyo el
-    espacio de trabajo de IA y la orquestación de agentes detrás de Content
-    Studio, publicación en redes, gestión de comunidad y anuncios pagados.
-    También lidero la infraestructura y orquestación de empleados de IA de iLuk
-    para adquisición, onboarding, KYC, pagos y cobranza. Antes de estos proyectos,
-    cofundé Vyvo Tech, lideré ingeniería para hotelería en Nyx Technology y
-    construí productos móviles en el iOS Development Lab de la Universidad
-    Panamericana.
-portrait: ../../assets/portrait.webp
+    En Dopamina convierto un mensaje en trabajo coordinado de marketing para
+    contenido, publicación, comunidad y anuncios. En iLuk construyo la capa de
+    orquestación para empleados de IA que gestionan adquisición, onboarding, KYC,
+    pagos y cobranza. Ambos sistemas comparten el mismo estándar: dirección humana,
+    entregas claras e infraestructura que sigue funcionando.
+portrait: ../../assets/sf-hero.webp
 portraitAlt:
-  en: Portrait of Luis Cedillo
-  es: Retrato de Luis Cedillo
+  en: Luis Cedillo in San Francisco
+  es: Luis Cedillo en San Francisco
 location: Mexico City
 timezone: CST (UTC−6)
 email: me@luiscedillo.com
@@ -51,13 +44,21 @@ socials:
     handle: "@lui._.cedm"
     url: https://instagram.com/lui._.cedm
 skills:
-  - group: { en: AI & systems, es: IA y sistemas }
+  - id: ai
+    group: { en: AI & systems, es: IA y sistemas }
+    summary:
+      en: Agent systems that turn an open-ended request into reliable, supervised work.
+      es: Sistemas de agentes que convierten una solicitud abierta en trabajo confiable y supervisado.
     items:
       - { name: Agentic AI, evidence: [] }
       - { name: Multi-agent orchestration, evidence: [] }
       - { name: Distributed systems, evidence: [] }
       - { name: Cloud architecture, evidence: [] }
-  - group: { en: Backend, es: Backend }
+  - id: backend
+    group: { en: Backend, es: Backend }
+    summary:
+      en: APIs and services designed to stay legible as products, traffic and teams grow.
+      es: APIs y servicios diseñados para mantenerse claros mientras crecen el producto, el tráfico y el equipo.
     items:
       - { name: Python, evidence: [stackup-channel-manager, upocket, dermaware-genesis] }
       - { name: FastAPI, evidence: [stackup-channel-manager, upocket] }
@@ -66,20 +67,32 @@ skills:
       - { name: Rust, evidence: [] }
       - { name: C++, evidence: [] }
       - { name: Bash, evidence: [] }
-  - group: { en: Mobile & frontend, es: Móvil y frontend }
+  - id: product
+    group: { en: Mobile & frontend, es: Móvil y frontend }
+    summary:
+      en: Product interfaces shaped from the first interaction through production behavior.
+      es: Interfaces de producto diseñadas desde la primera interacción hasta su comportamiento en producción.
     items:
       - { name: Swift / SwiftUI, evidence: [dermaware-genesis, homecare-nemesis, oxxo-corner, upocket] }
       - { name: Svelte, evidence: [stackup-channel-manager] }
       - { name: React, evidence: [] }
       - { name: TypeScript, evidence: [] }
-  - group: { en: Data & cloud, es: Datos y nube }
+  - id: data
+    group: { en: Data & cloud, es: Datos y nube }
+    summary:
+      en: Data, deployment and infrastructure layers that make dependable systems possible.
+      es: Capas de datos, despliegue e infraestructura que hacen posibles sistemas confiables.
     items:
       - { name: PostgreSQL, evidence: [stackup-channel-manager, upocket, homecare-nemesis] }
       - { name: MySQL, evidence: [] }
       - { name: AWS, evidence: [stackup-channel-manager, dermaware-genesis] }
       - { name: Docker, evidence: [stackup-channel-manager, upocket, homecare-nemesis] }
       - { name: Kubernetes, evidence: [upocket] }
-  - group: { en: Leading, es: Liderazgo }
+  - id: leading
+    group: { en: Leading, es: Liderazgo }
+    summary:
+      en: Product intent translated into priorities, decisions and momentum for small teams.
+      es: La intención de producto convertida en prioridades, decisiones e impulso para equipos pequeños.
     items:
       - { name: Agile / Scrum, evidence: [] }
       - { name: Mentoring, evidence: [] }

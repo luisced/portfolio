@@ -2,58 +2,565 @@
 import { Picture } from 'astro:assets';
 import { getProfile, getProjects, localizePath, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
-interface Props { locale: Locale; }
+
+interface Props {
+  locale: Locale;
+}
+
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const { data: p } = await getProfile();
-const titles = new Map((await getProjects(locale)).map((x) => [x.data.slug, x.data.title]));
+const titles = new Map((await getProjects(locale)).map((project) => [project.data.slug, project.data.title]));
 ---
+
 <section id="about" class="section" aria-labelledby="about-title">
   <div class="container about-layout">
-    <div class="about-intro"><p class="label section-label">{t('about.kicker')}</p><h2 id="about-title">{t('about.title')}</h2><figure class="about-portrait"><Picture fallbackFormat="webp" src={p.portrait} alt={p.portraitAlt[locale]} widths={[400,640,900]} sizes="(min-width: 48em) 35vw, 90vw" formats={['avif','webp']} loading="lazy"/><figcaption class="label">{t('hero.portrait')} <span aria-hidden="true">↗</span></figcaption></figure><p class="label">{p.location}<br/>{p.timezone}</p></div>
-    <div class="about-body">
-      <p class="bio">{p.bio[locale]}</p>
-      <a class="recognition-link" href="#recognition">{t('about.recognition')} <span aria-hidden="true">↗</span></a>
-      <div class="belief" data-reveal><p class="label">{t('manifesto.kicker')}</p><p>{p.manifesto[locale]}</p></div>
-      <div class="about-tools"><h3>{t('about.skills')}</h3>{p.skills.map((g) => <details><summary>{g.group[locale]} <span aria-hidden="true">+</span></summary><ul>{g.items.map((i) => <li><span>{i.name}</span>{i.evidence.length > 0 && <span class="evidence">{i.evidence.map((slug, idx) => <>{idx > 0 && ', '}<a href={localizePath(locale, `/work/${slug}/`)}>{titles.get(slug)}</a></>)}</span>}</li>)}</ul></details>)}</div>
-      <div class="about-facts"><div><h3 class="label">{t('about.education')}</h3><ul>{p.education.map((e) => <li><span>{e.credential[locale]}</span><small>{e.institution} · {e.year}</small></li>)}</ul></div><div><h3 class="label">{t('about.languages')}</h3><ul>{p.languages.map((l) => <li>{l.name[locale]}<small>{l.level[locale]}</small></li>)}</ul></div></div>
-      <div class="academic-activities" data-reveal>
-        <h3 class="label">{t('about.activities')}</h3>
-        <ul>{p.academicActivities[locale].map((activity) => <li>{activity}</li>)}</ul>
-        <a href="https://www.linkedin.com/in/luisced/" target="_blank" rel="noopener noreferrer">{t('about.activities.source')} <span aria-hidden="true">↗</span></a>
+    <header class="about-heading">
+      <div>
+        <p class="label section-label">{t('about.kicker')}</p>
+        <h2 id="about-title">{t('about.title')}</h2>
       </div>
-      <a class="btn" href={p.cv} download>{t('about.cv')} <span aria-hidden="true">↓</span></a>
+      <div class="about-lead">
+        <p class="positioning">{p.positioning[locale]}</p>
+        <p class="bio">{p.bio[locale]}</p>
+        <a class="recognition-link" href="#recognition">
+          {t('about.recognition')} <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="about-story-grid">
+      <aside class="portrait-column">
+        <figure class="about-portrait">
+          <Picture
+            fallbackFormat="webp"
+            src={p.portrait}
+            alt={p.portraitAlt[locale]}
+            widths={[400, 640, 900]}
+            sizes="(min-width: 64em) 34vw, 90vw"
+            formats={['avif', 'webp']}
+            loading="lazy"
+          />
+          <figcaption class="label">
+            {t('hero.portrait')} · San Francisco
+            <span aria-hidden="true">↗</span>
+          </figcaption>
+        </figure>
+
+        <dl class="portrait-meta">
+          <div>
+            <dt class="label">{t('about.location')}</dt>
+            <dd>{p.location}</dd>
+          </div>
+          <div>
+            <dt class="label">{t('about.timezone')}</dt>
+            <dd>{p.timezone}</dd>
+          </div>
+        </dl>
+
+        <a class="btn" href={p.cv} download>
+          {t('about.cv')} <span aria-hidden="true">↓</span>
+        </a>
+      </aside>
+
+      <div class="about-body">
+        <section class="capabilities" aria-labelledby="capabilities-title">
+          <p class="label">{t('about.skills')}</p>
+          <h3 id="capabilities-title">{t('about.capabilities.title')}</h3>
+
+          <ul class="capability-list">
+            {p.skills.map((group) => (
+              <li class="capability" data-reveal>
+                <div class="capability-heading">
+                  <span class="icon-shell" aria-hidden="true">
+                    {group.id === 'ai' && (
+                      <svg viewBox="0 0 32 32">
+                        <circle cx="7" cy="9" r="3"></circle>
+                        <circle cx="25" cy="8" r="3"></circle>
+                        <circle cx="17" cy="24" r="3"></circle>
+                        <path d="M10 10.5 22 9M8.5 11.5 15 21M23.5 10.5 19 21"></path>
+                      </svg>
+                    )}
+                    {group.id === 'backend' && (
+                      <svg viewBox="0 0 32 32">
+                        <rect x="5" y="5" width="22" height="8" rx="1"></rect>
+                        <rect x="5" y="19" width="22" height="8" rx="1"></rect>
+                        <path d="M9 9h.01M13 9h7M9 23h.01M13 23h7"></path>
+                      </svg>
+                    )}
+                    {group.id === 'product' && (
+                      <svg viewBox="0 0 32 32">
+                        <rect x="5" y="5" width="22" height="22" rx="2"></rect>
+                        <path d="M5 11h22M11 11v16M9 8h.01M14 8h.01"></path>
+                      </svg>
+                    )}
+                    {group.id === 'data' && (
+                      <svg viewBox="0 0 32 32">
+                        <ellipse cx="16" cy="8" rx="10" ry="4"></ellipse>
+                        <path d="M6 8v8c0 2.2 4.5 4 10 4s10-1.8 10-4V8M6 16v8c0 2.2 4.5 4 10 4s10-1.8 10-4v-8"></path>
+                      </svg>
+                    )}
+                    {group.id === 'leading' && (
+                      <svg viewBox="0 0 32 32">
+                        <circle cx="16" cy="16" r="11"></circle>
+                        <path d="m20.5 11.5-3 6-6 3 3-6 6-3Z"></path>
+                      </svg>
+                    )}
+                  </span>
+                  <div>
+                    <h4>{group.group[locale]}</h4>
+                    <p>{group.summary[locale]}</p>
+                  </div>
+                </div>
+
+                <details>
+                  <summary aria-label={`${t('about.capability.details')}: ${group.group[locale]}`}>
+                    {t('about.capability.details')}
+                    <span aria-hidden="true">+</span>
+                  </summary>
+                  <ul class="skill-list">
+                    {group.items.map((item) => (
+                      <li>
+                        <span>{item.name}</span>
+                        {item.evidence.length > 0 && (
+                          <span class="evidence">
+                            {t('about.evidence')}:
+                            {item.evidence.map((slug, index) => (
+                              <>
+                                {index > 0 && ', '}
+                                <a href={localizePath(locale, `/work/${slug}/`)}>{titles.get(slug)}</a>
+                              </>
+                            ))}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+      </div>
     </div>
+        <blockquote class="belief" data-reveal>
+          <p class="label">{t('manifesto.kicker')}</p>
+          <p>{p.manifesto[locale]}</p>
+        </blockquote>
+
+        <div class="about-facts">
+          <section>
+            <h3 class="label">{t('about.education')}</h3>
+            <ul>
+              {p.education.map((item) => (
+                <li>
+                  <span>{item.credential[locale]}</span>
+                  <small>{item.institution} · {item.year}</small>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section>
+            <h3 class="label">{t('about.languages')}</h3>
+            <ul>
+              {p.languages.map((language) => (
+                <li>
+                  <span>{language.name[locale]}</span>
+                  <small>{language.level[locale]}</small>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section class="academic-activities">
+            <h3 class="label">{t('about.activities')}</h3>
+            <ul>{p.academicActivities[locale].map((activity) => <li>{activity}</li>)}</ul>
+            <a href="https://www.linkedin.com/in/luisced/" target="_blank" rel="noopener noreferrer">
+              {t('about.activities.source')} <span aria-hidden="true">↗</span>
+            </a>
+          </section>
+        </div>
   </div>
 </section>
+
 <style>
-  .about-layout { display: grid; gap: 3rem; }
-  h2 { white-space: pre-line; margin-block: 1.5rem; }
-  .about-portrait { border: 1px solid var(--line); margin-top: 2rem; }
-  .about-portrait :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; }
-  .about-portrait figcaption { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem; border-top: 1px solid var(--line); font-size: .6rem; }
-  .about-intro > .label:last-child { margin-top: 1rem; }
-  .bio { font-size: clamp(1.15rem, 2vw, 1.55rem); line-height: 1.5; }
-  .belief { border: 1px solid var(--line); padding: 1.5rem; margin-block: 2.5rem; background: var(--bg-2); }
-  .belief > p:last-child { font-size: 1.3rem; color: var(--fg-2); margin-top: 1rem; }
-  .about-tools h3 { margin-bottom: 1rem; }
-  details { border-bottom: 1px solid var(--line); }
-  summary { cursor: pointer; padding-block: 1rem; display: flex; justify-content: space-between; list-style: none; }
-  summary::-webkit-details-marker { display: none; }
-  details[open] summary > span { transform: rotate(45deg); }
-  details ul { list-style: none; padding: 0 0 1rem; }
-  details li { display: grid; gap: .2rem; padding-block: .5rem; font-size: .875rem; }
-  .evidence { font-size: .75rem; color: var(--fg-2); }
-  .about-facts { display: grid; gap: 2rem; margin-block: 2.5rem; }
-  .about-facts h3 { letter-spacing: .05em; }
-  .about-facts ul { list-style: none; padding: 0; font-size: .875rem; }
-  .about-facts li { padding-top: 1rem; }
-  small { display: block; color: var(--fg-2); font-size: .75rem; }
-  .recognition-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-top: 1rem; font-size: .85rem; }
-  .academic-activities { margin-bottom: 2.5rem; font-size: .875rem; color: var(--fg-2); }
-  .academic-activities h3 { color: var(--fg); }
-  .academic-activities ul { padding-left: 1rem; margin-block: 1rem; }
-  .academic-activities li + li { margin-top: .75rem; }
-  .academic-activities a { display: inline-flex; align-items: center; min-height: 44px; gap: .5rem; font-size: .75rem; }
-  @media (--md) { .about-layout { grid-template-columns: 1fr 1.5fr; gap: 10%; } .about-facts { grid-template-columns: 2fr 1fr; } }
+  .about-layout {
+    display: grid;
+    gap: clamp(3rem, 7vw, 7rem);
+  }
+
+  .about-heading {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: clamp(2.5rem, 5vw, 5rem);
+    border-bottom: 1px solid var(--line);
+  }
+
+  h2 {
+    max-width: 8ch;
+    margin-top: 1.5rem;
+    white-space: pre-line;
+  }
+
+  .about-lead {
+    align-self: end;
+    max-width: 48rem;
+  }
+
+  .positioning {
+    max-width: 25ch;
+    font-size: clamp(1.6rem, 3.2vw, 3rem);
+    font-weight: 620;
+    line-height: 1.08;
+    letter-spacing: -.045em;
+  }
+
+  .bio {
+    max-width: 65ch;
+    margin-top: 1.5rem;
+    color: var(--fg-2);
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    line-height: 1.65;
+  }
+
+  .recognition-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    min-height: 44px;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+
+  .about-story-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .portrait-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-portrait {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+  }
+
+  .about-portrait :global(picture) {
+    display: block;
+  }
+
+  .about-portrait :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .about-portrait figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .8rem;
+    border-top: 1px solid var(--line);
+    font-size: .6rem;
+  }
+
+  .portrait-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--line);
+    border-top: 0;
+  }
+
+  .portrait-meta div {
+    padding: 1rem;
+  }
+
+  .portrait-meta div + div {
+    border-left: 1px solid var(--line);
+  }
+
+  .portrait-meta dt {
+    margin-bottom: .35rem;
+  }
+
+  .portrait-meta dd {
+    font-size: var(--text-sm);
+  }
+
+  .portrait-column .btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .about-body {
+    min-width: 0;
+  }
+
+  .capabilities > h3 {
+    max-width: 18ch;
+    margin-block: .85rem 2rem;
+    font-size: clamp(2rem, 4vw, 4.2rem);
+  }
+
+  .capability-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .capability {
+    display: flex;
+    min-height: 17rem;
+    flex-direction: column;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .capability-heading {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+
+  .icon-shell {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+
+  .icon-shell svg {
+    width: 1.55rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.4;
+  }
+
+  .capability h4 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.15;
+    letter-spacing: -.025em;
+  }
+
+  .capability-heading p {
+    margin-top: .7rem;
+    color: var(--fg-2);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
+  details {
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--line);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    list-style: none;
+    text-transform: uppercase;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary > span {
+    font-size: 1rem;
+    transition: transform .2s ease;
+  }
+
+  details[open] summary > span {
+    transform: rotate(45deg);
+  }
+
+  .skill-list {
+    display: grid;
+    gap: .75rem;
+    padding: .25rem 0 .5rem;
+    list-style: none;
+  }
+
+  .skill-list li {
+    display: grid;
+    gap: .2rem;
+    font-size: var(--text-sm);
+  }
+
+  .evidence {
+    color: var(--fg-3);
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  .evidence a {
+    margin-left: .3rem;
+  }
+
+  .belief {
+    position: relative;
+    margin-block: clamp(3rem, 6vw, 6rem);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--line);
+    border-left: .45rem solid var(--accent);
+    background: var(--bg-2);
+  }
+
+  .belief::after {
+    position: absolute;
+    top: .8rem;
+    right: 1.25rem;
+    color: var(--line);
+    content: '“';
+    font-family: var(--font-display);
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .belief > p:last-child {
+    position: relative;
+    max-width: 34ch;
+    margin-top: 1.25rem;
+    color: var(--fg);
+    font-size: clamp(1.35rem, 2.3vw, 2rem);
+    font-style: italic;
+    font-weight: 480;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+  }
+
+  .about-facts {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+
+  .about-facts > section {
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about-facts ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-facts h3 + ul {
+    margin-top: 1rem;
+  }
+
+  .about-facts li + li {
+    margin-top: .9rem;
+  }
+
+  .about-facts small {
+    display: block;
+    margin-top: .2rem;
+    color: var(--fg-3);
+    font-size: var(--text-xs);
+  }
+
+  .academic-activities {
+    color: var(--fg-2);
+    font-size: var(--text-sm);
+  }
+
+  .academic-activities ul {
+    padding-left: 1.1rem;
+    list-style: square;
+  }
+
+  .academic-activities a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: .62rem;
+    text-transform: uppercase;
+  }
+
+  @media (--sm) {
+    .capability-list {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .capability:last-child {
+      grid-column: 1 / -1;
+      min-height: 13rem;
+    }
+
+    .about-facts {
+      grid-template-columns: 1.4fr 1fr;
+      column-gap: 2rem;
+    }
+
+    .academic-activities {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (--md) {
+    .about-heading {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: 8%;
+    }
+
+    .about-story-grid {
+      grid-template-columns: minmax(18rem, 4fr) minmax(0, 7fr);
+      gap: 8%;
+    }
+
+    .portrait-column {
+      height: 100%;
+    }
+
+    .about-portrait {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .about-portrait :global(picture) {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .about-portrait :global(img) {
+      height: 100%;
+      aspect-ratio: auto;
+    }
+  }
+
+  @media (--motion-ok) {
+    .capability {
+      transition: background-color .2s ease;
+    }
+
+    .capability:hover {
+      background: color-mix(in srgb, var(--bg-2) 45%, transparent);
+    }
+  }
 </style>

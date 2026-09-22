@@ -83,17 +83,11 @@ const principles = [
   <div class="approach-foot label"><span>{t('hero.approach.foot')}</span><a href="#work">{t('hero.cta.work')} <span aria-hidden="true">↓</span></a></div>
 </section>
 <script>
-  const stage = document.querySelector<HTMLElement>('.hero-stage');
-  const art = stage?.querySelector<HTMLElement>('.hero-art');
-  const sculpture = art?.querySelector<SVGSVGElement>('.sculpture');
-  if (stage && art && sculpture) {
+  const art = document.querySelector<HTMLElement>('.hero-art');
+  if (art) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    const mouse = matchMedia('(hover: hover) and (pointer: fine)');
     let visible = false;
     let built = false;
-    let frame = 0;
-    let pointerX = 0;
-    let pointerY = 0;
 
     function build() {
       if (built || !visible || reduced.matches) return;
@@ -109,40 +103,14 @@ const principles = [
     art.querySelector('.wireframe path:last-child')?.addEventListener('animationend', () => {
       art.classList.remove('is-building');
     });
-
-    function resetTilt() {
-      cancelAnimationFrame(frame);
-      frame = 0;
-      sculpture!.style.setProperty('--tilt-x', '0deg');
-      sculpture!.style.setProperty('--tilt-y', '0deg');
-    }
-    function tilt() {
-      frame = 0;
-      const rect = art!.getBoundingClientRect();
-      const x = (pointerX - rect.left) / rect.width;
-      const y = (pointerY - rect.top) / rect.height;
-      if (x < 0 || x > 1 || y < 0 || y > 1) return resetTilt();
-      sculpture!.style.setProperty('--tilt-x', `${(0.5 - y) * 8}deg`);
-      sculpture!.style.setProperty('--tilt-y', `${(x - 0.5) * 12}deg`);
-    }
-    stage.addEventListener('pointermove', (event) => {
-      if (event.pointerType !== 'mouse' || reduced.matches || !mouse.matches) return;
-      pointerX = event.clientX;
-      pointerY = event.clientY;
-      if (!frame) frame = requestAnimationFrame(tilt);
-    }, { passive: true });
-    stage.addEventListener('pointerleave', resetTilt);
-    window.addEventListener('blur', resetTilt);
-    mouse.addEventListener('change', resetTilt);
     reduced.addEventListener('change', () => {
-      resetTilt();
       if (reduced.matches) art.classList.remove('is-building');
       else build();
     });
   }
 </script>
 <style>
-  .hero { border: 1px solid var(--line); border-top: 0; }
+  .hero { display: grid; grid-template-rows: auto 1fr auto; min-height: calc(100svh - 4.5rem); border: 1px solid var(--line); border-top: 0; }
   .hero-register { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem 2rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); font-size: .6rem; }
   .hero-stage { position: relative; isolation: isolate; padding: 2.5rem 1.25rem 1.5rem; overflow: clip; }
   .hero-copy { position: relative; z-index: 2; }
@@ -188,10 +156,11 @@ const principles = [
   .approach-foot a { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 2.75rem; }
   .approach-foot a > span { font: 1.5rem var(--font-body); }
   @media (--md) {
+    .hero { min-height: calc(100svh - 5.25rem); }
     .hero-register, .hero-bottom { padding-inline: 2rem; }
     .hero-stage { min-height: min(46rem, 79svh); padding: 5rem 2rem 3.5rem; display: flex; align-items: center; }
-    .hero-copy { width: 72%; }
-    h1 { font-size: clamp(4rem, 9.6vw, 10rem); }
+    .hero-copy { width: 78%; }
+    h1 { font-size: clamp(5rem, 12vw, 12rem); }
     .hero-description { max-width: 34ch; margin-top: 2.5rem; }
     .hero-art { position: absolute; right: -5%; top: 12%; width: 50%; margin: 0; z-index: -1; }
     .sculpture { aspect-ratio: 1; }
@@ -207,10 +176,9 @@ const principles = [
     .principles h3 { min-height: 2.1em; }
     .approach-foot { padding-inline: 2rem; }
   }
-  @media (--lg) { .hero-stage { padding-block: 6rem 4rem; } .hero-art { top: 1%; right: -3%; width: 49%; } }
+  @media (--lg) { .hero-stage { padding-block: 9rem 2rem; } .hero-copy { transform: translateY(4rem); } .hero-art { top: 12%; right: 0; width: 36%; } }
   @media (--motion-ok) {
     .is-building .wireframe path { stroke-dasharray: 1; animation: construct-ring 1.15s cubic-bezier(.22,.61,.36,1) var(--draw-delay) both; }
-    .sculpture { transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); transition: transform .45s ease-out; }
     @keyframes construct-ring { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
     @supports (animation-timeline: view()) {
       .hero { view-timeline: --hero block; }

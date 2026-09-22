@@ -106,7 +106,9 @@ const profile = defineCollection({
       ),
       skills: z.array(
         z.object({
+          id: z.enum(['ai', 'backend', 'product', 'data', 'leading']),
           group: localized,
+          summary: localized,
           items: z.array(
             z.object({
               name: z.string(),

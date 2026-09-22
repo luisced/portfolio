@@ -12,6 +12,11 @@
   --pink: #ef92b1;
   --danger: #a52222;
   --ok: #416441;
+  --brand: var(--accent);
+  --amber: #80520e;
+  --rose: #985067;
+  --sky: #2e6c86;
+  --violet: #6f4f9f;
   --font-display: 'Archivo Variable', sans-serif;
   --font-body: 'Archivo Variable', sans-serif;
   --font-mono: 'Azeret Mono', monospace;
@@ -47,4 +52,9 @@
   --accent-ink: #171717;
   --danger: #ffa094;
   --ok: #abd3a3;
+  --brand: var(--accent);
+  --amber: #e5b45b;
+  --rose: #e69ab0;
+  --sky: #83c7e0;
+  --violet: #bba1e8;
 }
