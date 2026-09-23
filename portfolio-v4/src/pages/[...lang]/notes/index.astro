@@ -17,6 +17,16 @@ const notes = await getNotes(locale);
 <Base locale={locale} title={t('notes.title')} description={t('notes.description')} path="/notes/">
   <section class="section container" aria-labelledby="notes-title">
     <h1 id="notes-title">{t('notes.title')}</h1>
+    <aside class="preferred-source">
+      <div>
+        <p class="label">{t('notes.preferred.kicker')}</p>
+        <h2 class="preferred-title">{t('notes.preferred.title')}</h2>
+        <p class="muted">{t('notes.preferred.body')}</p>
+      </div>
+      <a class="btn btn--primary" href="https://www.google.com/preferences/source?q=luiscedillo.com" target="_blank" rel="noopener">
+        {t('notes.preferred.action')} <span aria-hidden="true">↗</span>
+      </a>
+    </aside>
     {notes.length === 0 ? (
       <p class="muted">{t('notes.empty')}</p>
     ) : (
@@ -35,9 +45,14 @@ const notes = await getNotes(locale);
 
 <style>
   h1 { margin-bottom: 3rem; max-width: 14ch; }
+  .preferred-source { display: grid; gap: 1.5rem; margin-bottom: 4rem; padding: 1.5rem; border: 1px solid var(--line); border-left: .45rem solid var(--pink); background: var(--bg-2); }
+  .preferred-title { max-width: 16ch; margin-block: .75rem 1rem; font-size: clamp(2rem, 4vw, 3.75rem); line-height: 1; letter-spacing: -.05em; }
+  .preferred-source .muted { max-width: 55ch; }
+  .preferred-source .btn { align-self: end; width: fit-content; }
   h2 { font-size: clamp(1.75rem, 3vw, 3rem); max-width: 30ch; margin-block: 1rem; }
   h2 a { text-decoration: none; }
   h2 a:hover { color: var(--accent); }
   li { padding-top: 2rem; }
   li > .muted { max-width: 65ch; }
+  @media (--md) { .preferred-source { grid-template-columns: 1fr auto; align-items: end; padding: 2rem; } }
 </style>
