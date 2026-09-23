@@ -11,7 +11,7 @@ const [firstName, ...lastName] = profile.data.shortName.split(' ');
 ---
 <header class="site-header">
   <div class="nav container">
-    <a class="wordmark" href={home} aria-label={`LC | ${profile.data.shortName}`}><span class="wordmark-full"><span>{firstName}</span><strong>{lastName.join(' ')}</strong></span></a>
+    <a class="wordmark" href={home}><span class="wordmark-full"><span>{firstName}</span><strong>{lastName.join(' ')}</strong></span></a>
     <nav class="primary" aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'}>
       <a href={`${home}#work`}>{t('nav.work')}</a><a href={`${home}#about`}>{t('nav.about')}</a><a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a><a class="nav-contact" href={`${home}#contact`}>{t('nav.contact')} <span aria-hidden="true">↗</span></a>
     </nav>

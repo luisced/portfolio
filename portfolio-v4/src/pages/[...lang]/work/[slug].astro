@@ -104,7 +104,7 @@ const { Content } = await render(project);
         {project.data.gallery.map((image) => (
           <li>
             <figure>
-              <Picture fallbackFormat="webp" src={image.src} alt={image.alt} widths={[480, 960]} sizes="(min-width: 48em) 50vw, 100vw" formats={['avif', 'webp']} loading="lazy" />
+              <Picture fallbackFormat="webp" src={image.src} alt="" widths={[480, 960]} sizes="(min-width: 48em) 50vw, 100vw" formats={['avif', 'webp']} loading="lazy" />
               <figcaption class="label">{image.alt}</figcaption>
             </figure>
           </li>

@@ -12,61 +12,68 @@ import './ShapeWaves.css';
 </div>
 
 <script>
-  import ShapeWaves from './ShapeWaves';
-
   const primaryRoot = document.querySelector<HTMLElement>('.hero-cloud .shape-waves:not(.shape-waves--accent)');
   const accentRoot = document.querySelector<HTMLElement>('.hero-cloud .shape-waves--accent');
-  if (primaryRoot) {
-    const background = () => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
-    const clouds = [
-      ShapeWaves(primaryRoot, {
-        shapes: 'circles',
-        cellSize: 2.5,
-        dotSize: 1,
-        color: '#e84f98',
-        hoverColor: '#f02f91',
-        backgroundColor: background(),
-        scale: 3.5,
-        speed: .5,
-        flow: 2,
-        direction: -15,
-        contrast: 1.1,
-        brightness: .58,
-        fade: 0,
-        glow: 0,
-        interactive: true,
-        splashRadius: 55,
-        splashStrength: .18,
-        introDuration: 1.6,
-        paused: false,
-      }),
-    ];
-    if (accentRoot) {
-      clouds.push(ShapeWaves(accentRoot, {
-        shapes: 'circles',
-        cellSize: 3.5,
-        dotSize: .9,
-        color: '#4a1fff',
-        hoverColor: '#8b6bff',
-        backgroundColor: background(),
-        scale: 3.5,
-        speed: .35,
-        flow: 1.4,
-        direction: 145,
-        contrast: 1.1,
-        brightness: .5,
-        fade: 0,
-        glow: 0,
-        interactive: false,
-        introDuration: 1.9,
-        paused: false,
-      }));
-    }
-    const themeObserver = new MutationObserver(() => clouds.forEach((cloud) => cloud.setBackgroundColor(background())));
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    if (import.meta.hot) import.meta.hot.dispose(() => {
-      themeObserver.disconnect();
-      clouds.forEach((cloud) => cloud.destroy());
-    });
+  const canAnimate = matchMedia('(min-width: 48em) and (prefers-reduced-motion: no-preference)').matches;
+
+  if (primaryRoot && canAnimate) {
+    const start = async () => {
+      if (!primaryRoot.isConnected) return;
+      const { default: ShapeWaves } = await import('./ShapeWaves');
+      const background = () => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+      const clouds = [
+        ShapeWaves(primaryRoot, {
+          shapes: 'circles',
+          cellSize: 2.5,
+          dotSize: 1,
+          color: '#e84f98',
+          hoverColor: '#f02f91',
+          backgroundColor: background(),
+          scale: 3.5,
+          speed: .5,
+          flow: 2,
+          direction: -15,
+          contrast: 1.1,
+          brightness: .58,
+          fade: 0,
+          glow: 0,
+          interactive: true,
+          splashRadius: 55,
+          splashStrength: .18,
+          introDuration: 1.6,
+          paused: false,
+        }),
+      ];
+      if (accentRoot) {
+        clouds.push(ShapeWaves(accentRoot, {
+          shapes: 'circles',
+          cellSize: 3.5,
+          dotSize: .9,
+          color: '#4a1fff',
+          hoverColor: '#8b6bff',
+          backgroundColor: background(),
+          scale: 3.5,
+          speed: .35,
+          flow: 1.4,
+          direction: 145,
+          contrast: 1.1,
+          brightness: .5,
+          fade: 0,
+          glow: 0,
+          interactive: false,
+          introDuration: 1.9,
+          paused: false,
+        }));
+      }
+      const themeObserver = new MutationObserver(() => clouds.forEach((cloud) => cloud.setBackgroundColor(background())));
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      if (import.meta.hot) import.meta.hot.dispose(() => {
+        themeObserver.disconnect();
+        clouds.forEach((cloud) => cloud.destroy());
+      });
+    };
+
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
+    else setTimeout(start, 1500);
   }
 </script>

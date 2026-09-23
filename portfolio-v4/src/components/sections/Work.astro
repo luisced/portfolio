@@ -16,8 +16,8 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
       <div class="project-layout">
         <figure class="system-figure system-figure--dopamina">
           <figcaption class="label">{t('work.dopamina.diagram')}</figcaption>
-          <div class="brand-lockup brand-lockup--dopamina"><img src="/brand/dopamina-wordmark.png" alt="Dopamina" decoding="async" /><span class="brand-signal" aria-hidden="true">↗</span></div>
-          <div class="doppie-swarm" aria-hidden="true"><img class="doppie doppie--reviewer" src="/brand/doppie-reviewer.webp" alt="" /><img class="doppie doppie--producer" src="/brand/doppie-producer.webp" alt="" /><img class="doppie doppie--creator" src="/brand/doppie-creator.webp" alt="" /></div>
+          <div class="brand-lockup brand-lockup--dopamina"><img src="/brand/dopamina-wordmark.png" alt="Dopamina" width="4096" height="1194" loading="lazy" decoding="async" /><span class="brand-signal" aria-hidden="true">↗</span></div>
+          <div class="doppie-swarm" aria-hidden="true"><img class="doppie doppie--reviewer" src="/brand/doppie-reviewer.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async" /><img class="doppie doppie--producer" src="/brand/doppie-producer.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async" /><img class="doppie doppie--creator" src="/brand/doppie-creator.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async" /></div>
           <div class="system-rail" aria-hidden="true">{Array.from({length:6},()=> <span class="rail-dot"></span>)}</div>
           <ol class="system-nodes"><li>{t('work.dopamina.node1')}</li><li>{t('work.dopamina.node2')}</li><li>{t('work.dopamina.node3')}</li><li>{t('work.dopamina.node4')}</li><li>{t('work.dopamina.node5')}</li><li>{t('work.dopamina.node6')}</li></ol>
           <div class="system-human label"><span aria-hidden="true">↳</span> {t('work.dopamina.human')}</div>
@@ -30,11 +30,11 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
       <div class="project-layout">
         <figure class="system-figure system-figure--iluk">
           <figcaption class="label">{t('work.iluk.diagram')}</figcaption>
-          <div class="brand-lockup brand-lockup--iluk"><img src="/brand/iluk-logo.png" alt="iLuk" decoding="async" /><span class="brand-signal" aria-hidden="true">↗</span></div>
+          <div class="brand-lockup brand-lockup--iluk"><img src="/brand/iluk-logo.png" alt="iLuk" width="300" height="129" loading="lazy" decoding="async" /><span class="brand-signal" aria-hidden="true">↗</span></div>
           <div class="iluk-agents" aria-hidden="true">
-            <div class="iluk-agent"><img src="/brand/iluk-agent-acquire.webp" alt="" /><span>acquire</span></div>
-            <div class="iluk-agent iluk-agent--raised"><img src="/brand/iluk-agent-verify.webp" alt="" /><span>verify</span></div>
-            <div class="iluk-agent"><img src="/brand/iluk-agent-collect.webp" alt="" /><span>collect</span></div>
+            <div class="iluk-agent"><img src="/brand/iluk-agent-acquire.webp" alt="" width="295" height="342" loading="lazy" decoding="async" /><span>acquire</span></div>
+            <div class="iluk-agent iluk-agent--raised"><img src="/brand/iluk-agent-verify.webp" alt="" width="346" height="342" loading="lazy" decoding="async" /><span>verify</span></div>
+            <div class="iluk-agent"><img src="/brand/iluk-agent-collect.webp" alt="" width="292" height="388" loading="lazy" decoding="async" /><span>collect</span></div>
           </div>
           <div class="system-rail" aria-hidden="true">{Array.from({length:5},()=> <span class="rail-dot"></span>)}</div>
           <ol class="system-nodes"><li>{t('work.iluk.node1')}</li><li>{t('work.iluk.node2')}</li><li>{t('work.iluk.node3')}</li><li>{t('work.iluk.node4')}</li><li>{t('work.iluk.node5')}</li></ol>
