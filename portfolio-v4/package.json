@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/postbuild.mjs && node scripts/check-i18n.mjs && node scripts/check-assets.mjs && node scripts/check-style.mjs",
+    "build": "astro build && node scripts/postbuild.mjs && node scripts/check-i18n.mjs && node scripts/check-assets.mjs && node scripts/check-style.mjs && node scripts/check-home-content.mjs",
     "preview": "astro preview",
     "check": "astro check && node scripts/check-style.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",

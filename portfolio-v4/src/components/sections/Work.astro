@@ -44,7 +44,7 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
       </div>
     </article>
     {featured.map((p, i) => <article id={`project-${p.data.slug}`} class:list={['project', {'project--mobile': p.data.category === 'ios'}]} data-chapter>
-      <div class="project-top label"><span>[0{i + 1}] / {p.data.title.split(' / ')[0]}</span><span>{t(`work.category.${p.data.category}`)} / {p.data.timeframe}</span></div>
+      <div class="project-top label"><span>[0{i + 2}] / {p.data.title.split(' / ')[0]}</span><span>{t(`work.category.${p.data.category}`)} / {p.data.timeframe}</span></div>
       <div class="project-layout">
         <a class="project-image" href={localizePath(locale, `/work/${p.data.slug}/`)} aria-label={`${t('work.view')}: ${p.data.title}`}>
           <Picture fallbackFormat="webp" src={p.data.gallery[0]?.src ?? p.data.cover} alt={p.data.gallery[0]?.alt ?? p.data.coverAlt} widths={p.data.category === 'ios' ? [320,480,640] : [480,800,1200]} sizes={p.data.category === 'ios' ? '(min-width: 64em) 250px, 42vw' : '(min-width: 64em) 56vw, 90vw'} formats={['avif','webp']} loading="lazy" />

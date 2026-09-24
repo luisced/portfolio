@@ -11,6 +11,7 @@ const t = useTranslations(locale);
 const experience = await getExperience();
 const careerStart = Math.min(...experience.map((entry) => Number(entry.data.start.slice(0, 4))));
 const indexLabel = String(experience.length).padStart(2, '0');
+const experienceAnchor = (id: string) => `experience-${id.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase()}`;
 ---
 
 <section id="timeline" class="section" aria-labelledby="timeline-title">
@@ -30,11 +31,18 @@ const indexLabel = String(experience.length).padStart(2, '0');
             {careerStart}–{t('timeline.present')}
           </p>
         </div>
-        <div class="career-signal" style={`--steps: ${experience.length}`} aria-hidden="true">
-          {experience.map((entry) => <span class:list={{ current: !entry.data.end }}></span>)}
-        </div>
       </div>
     </header>
+
+    <nav class="career-map" aria-label={t('timeline.jump')}>
+      {experience.map((entry, index) => (
+        <a data-career-link href={`#${experienceAnchor(entry.id)}`} class:list={{ 'is-current': !entry.data.end }}>
+          <span class="career-map__sequence">[{String(index + 1).padStart(2, '0')}]</span>
+          <span class="career-map__org">{entry.data.org}</span>
+          <span class="career-map__role">{entry.data.role[locale]}</span>
+        </a>
+      ))}
+    </nav>
 
     <ol class="experience-list">
       {experience.map((entry, index) => {
@@ -44,8 +52,10 @@ const indexLabel = String(experience.length).padStart(2, '0');
 
         return (
           <li
+            id={experienceAnchor(entry.id)}
             class:list={['experience-card', { 'is-current': current }]}
             data-accent={entry.data.accent}
+            data-experience-card
             data-reveal
           >
             <article>
@@ -109,7 +119,7 @@ const indexLabel = String(experience.length).padStart(2, '0');
 
   .timeline-container {
     display: grid;
-    gap: clamp(3rem, 7vw, 6rem);
+    gap: 0;
   }
 
   .timeline-heading {
@@ -154,25 +164,62 @@ const indexLabel = String(experience.length).padStart(2, '0');
     max-width: 30ch;
   }
 
-  .career-signal {
+  .career-map {
+    display: flex;
+    margin-block: clamp(2rem, 4vw, 3.5rem);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    border: 1px solid var(--line);
+    scrollbar-width: thin;
+  }
+
+  .career-map a {
+    position: relative;
     display: grid;
-    height: 3.25rem;
-    grid-template-columns: repeat(var(--steps), 1fr);
-    align-items: end;
-    margin-top: 2rem;
-    border-bottom: 1px solid var(--line);
+    flex: 1 0 11rem;
+    grid-template-rows: auto auto 1fr;
+    gap: .45rem;
+    min-height: 7.25rem;
+    padding: 1rem;
+    border-left: 1px solid var(--line);
+    color: var(--fg);
+    text-decoration: none;
   }
 
-  .career-signal span {
-    width: 1px;
-    height: .8rem;
-    justify-self: center;
-    background: var(--line);
+  .career-map a:first-child {
+    border-left: 0;
   }
 
-  .career-signal span.current {
-    height: 2.35rem;
+  .career-map a.is-current::after {
+    position: absolute;
+    inset: 0 0 auto;
+    height: .25rem;
     background: var(--accent);
+    content: '';
+  }
+
+  .career-map__sequence,
+  .career-map__role {
+    color: var(--fg-3);
+    font: .55rem/1.4 var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  .career-map__org {
+    overflow: hidden;
+    font-size: .8rem;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .career-map__role {
+    align-self: end;
+    color: var(--fg-2);
+  }
+
+  .career-map a:is(:hover, :focus-visible) {
+    background: color-mix(in srgb, var(--accent) 8%, var(--bg));
   }
 
   .experience-list {
@@ -187,6 +234,7 @@ const indexLabel = String(experience.length).padStart(2, '0');
     --card-accent: var(--brand);
     position: relative;
     min-width: 0;
+    scroll-margin-top: 7rem;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     background: var(--bg);
