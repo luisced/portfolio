@@ -58,8 +58,8 @@ const titles = new Map((await getProjects(locale)).map((project) => [project.dat
           </div>
         </dl>
 
-        <a class="btn" href={p.cv} download>
-          {t('about.cv')} <span aria-hidden="true">↓</span>
+        <a class="btn" href={p.cv} target="_blank" rel="noopener">
+          {t('about.cv')} <span aria-hidden="true">↗</span>
         </a>
       </aside>
 

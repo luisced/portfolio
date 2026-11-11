@@ -75,7 +75,10 @@ for (const locale of Object.keys(pages)) {
   expectIncludes(locale, '2022–2026', 'degree years');
   expectIncludes(locale, locale === 'en' ? 'Specialization in Project Management · In progress' : 'Especialización en Gestión de Proyectos · En curso', 'specialization');
   if (html.includes('2022–2027')) failures.push(`${locale}: stale degree years`);
-  expectIncludes(locale, 'href="/resumee.pdf" download', 'shared short PDF download link');
+  const cvLink = html.match(/<a\b[^>]*href="\/resumee\.pdf"[^>]*>/)?.[0] || '';
+  if (!cvLink || /\bdownload(?:\s|=|>)/.test(cvLink)) failures.push(`${locale}: CV must open inline, not force a download`);
+  if (!cvLink.includes('target="_blank"') || !cvLink.includes('rel="noopener"')) failures.push(`${locale}: CV must open in a safe new tab`);
+  expectIncludes(locale, locale === 'en' ? 'View CV · PDF' : 'Ver CV · PDF', 'PDF viewer label');
   expectIncludes(locale, `<title>Luis Cedillo | ${expected[locale].headline}</title>`, 'SEO title');
   const projectIds = [...html.matchAll(/id="(project-[^"]+)"/g)].map(m => m[1]);
   if (projectIds.join(',') !== 'project-dopamina,project-iluk,project-stackup-channel-manager,project-upocket,project-dermaware-genesis') failures.push(`${locale}: project sequence changed`);
@@ -107,6 +110,9 @@ for (const locale of Object.keys(pages)) {
     if (!card.includes('Mexico City, Mexico')) failures.push(`${locale}: card missing work location`);
   }
 }
+
+const headers = readFileSync('dist/_headers', 'utf8');
+if (!/\/resumee\.pdf\s*\n\s*Content-Type: application\/pdf\s*\n\s*Content-Disposition: inline/.test(headers)) failures.push('short PDF path must use inline PDF response headers');
 
 if (failures.length) {
   console.error(`check-home-content failed:\n${failures.map((failure) => `  ${failure}`).join('\n')}`);
