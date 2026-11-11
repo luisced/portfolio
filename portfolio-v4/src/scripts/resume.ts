@@ -21,7 +21,7 @@ let task: RenderTask | undefined;
 const revisions = latestOnly();
 function failure() {
   root.dataset.pdfStatus = 'error';
-  message.textContent = es ? 'No se pudo mostrar el PDF. Abre o descarga el archivo con los enlaces de arriba.' : 'Could not display the PDF. Open or download the file using the links above.';
+  message.textContent = es ? 'No se pudo mostrar el PDF. Puedes descargarlo arriba o abrir el archivo original al final.' : 'Could not display the PDF. Download it above or open the original file below.';
 }
 async function render() {
   const revision = revisions.next();
@@ -60,6 +60,7 @@ async function render() {
     minus.disabled = scale <= .25;
     plus.disabled = scale >= 3;
     fit.disabled = false;
+    find('[data-page-nav]').hidden = pdf.numPages <= 1;
     prev.disabled = pageNumber <= 1;
     next.disabled = pageNumber >= pdf.numPages;
     message.textContent = '';

@@ -8,48 +8,94 @@ const { locale } = Astro.props;
 const es = locale === 'es';
 ---
 <Base locale={locale} title={es ? 'Currículum' : 'Resume'} path="/resume/" bare>
-  <section data-pdf-viewer data-pdf-status="loading" data-locale={locale} data-viewer-path={localizePath(locale, '/resume/')}>
+  <section class="document-viewer" data-pdf-viewer data-pdf-status="loading" data-locale={locale} data-viewer-path={localizePath(locale, '/resume/')}>
     <header class="pdf-toolbar">
-      <div class="pdf-row">
-        <a href={localizePath(locale, '/')}>{es ? '← Portafolio' : '← Portfolio'}</a>
-        <a href="/resumee.pdf" download="Luis-Cedillo-CV.pdf">{es ? 'Descargar' : 'Download'}</a>
-        <button data-share>{es ? 'Compartir' : 'Share'}</button>
-      </div>
-      <div class="pdf-row" role="group" aria-label={es ? 'Zoom del documento' : 'Document zoom'}>
-        <button data-zoom-out disabled aria-label={es ? 'Reducir zoom' : 'Zoom out'}>−</button>
-        <output data-zoom aria-label="Zoom">100%</output>
-        <button data-zoom-in disabled aria-label={es ? 'Ampliar zoom' : 'Zoom in'}>+</button>
-        <button data-fit disabled>{es ? 'Ajustar' : 'Fit width'}</button>
-      </div>
-      <div class="pdf-row" role="group" aria-label={es ? 'Páginas' : 'Pages'}>
-        <button data-prev disabled aria-label={es ? 'Página anterior' : 'Previous page'}>←</button>
-        <output data-page>{es ? 'Página' : 'Page'} 1 / …</output>
-        <button data-next disabled aria-label={es ? 'Página siguiente' : 'Next page'}>→</button>
-        <a href="/resumee.pdf" target="_blank" rel="noopener">{es ? 'Abrir PDF' : 'Open PDF'}</a>
-      </div>
+      <a class="icon-button back-link" href={localizePath(locale, '/')} aria-label={es ? 'Volver al portafolio' : 'Back to portfolio'} title={es ? 'Volver al portafolio' : 'Back to portfolio'}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="document-title"><h1><span class="full-title">{es ? 'Currículum' : 'Resume'}</span><span class="short-title">CV</span></h1><p>Luis Cedillo</p></div>
+      <a class="download-button" href="/resumee.pdf" download="Luis-Cedillo-CV.pdf" aria-label={es ? 'Descargar CV en PDF' : 'Download resume PDF'}>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>{es ? 'Descargar' : 'Download'}</span>
+      </a>
+      <button class="share-button" type="button" data-share aria-label={es ? 'Compartir currículum' : 'Share resume'} title={es ? 'Compartir' : 'Share'}>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M7 10H5v11h14V10h-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>{es ? 'Compartir' : 'Share'}</span>
+      </button>
     </header>
-    <p class="pdf-message" data-message role="status" aria-live="polite">{es ? 'Cargando PDF. Si no aparece, abre o descarga el PDF.' : 'Loading PDF. If it does not appear, open or download the PDF.'}</p>
-    <p class="pdf-message" data-share-message role="status" aria-live="polite"></p>
-    <noscript><p class="pdf-message">{es ? 'Activa JavaScript para usar el visor, o abre o descarga el PDF con los enlaces de arriba.' : 'Enable JavaScript to use the viewer, or open or download the PDF using the links above.'}</p></noscript>
-    <div data-pdf-pane tabindex="0" role="region" aria-label={es ? 'Documento PDF, desplazable' : 'PDF document, scrollable'}></div>
-    <details class="pdf-text" hidden data-text-panel><summary>{es ? 'Texto de esta página' : 'Text of this page'}</summary><div data-pdf-text></div></details>
+    <p class="pdf-message" data-message role="status" aria-live="polite">{es ? 'Cargando currículum…' : 'Loading resume…'}</p>
+    <p class="share-feedback" data-share-message role="status" aria-live="polite"></p>
+    <noscript><p class="pdf-message">{es ? 'Activa JavaScript para usar el visor. También puedes descargar el PDF o abrir el archivo original abajo.' : 'Enable JavaScript to use the viewer. You can also download the PDF or open the original file below.'}</p></noscript>
+    <div class="document-stage">
+      <div data-pdf-pane tabindex="0" role="region" aria-label={es ? 'Currículum PDF, desplazable' : 'Resume PDF, scrollable'}></div>
+      <div class="page-navigation" data-page-nav hidden role="group" aria-label={es ? 'Páginas del documento' : 'Document pages'}>
+        <button class="icon-button" type="button" data-prev disabled aria-label={es ? 'Página anterior' : 'Previous page'}>←</button>
+        <output data-page>{es ? 'Página' : 'Page'} 1 / …</output>
+        <button class="icon-button" type="button" data-next disabled aria-label={es ? 'Página siguiente' : 'Next page'}>→</button>
+      </div>
+    </div>
+    <div class="document-options">
+      <a class="original-file" href="/resumee.pdf" target="_blank" rel="noopener">{es ? 'Abrir PDF original' : 'Open original PDF'} <span aria-hidden="true">↗</span></a>
+      <details class="pdf-text" hidden data-text-panel><summary>{es ? 'Versión de texto' : 'Text version'}</summary><div data-pdf-text></div></details>
+    </div>
+    <div class="zoom-controls" data-zoom-controls role="group" aria-label={es ? 'Zoom del documento' : 'Document zoom'}>
+      <button type="button" data-zoom-out disabled aria-label={es ? 'Reducir zoom' : 'Zoom out'}>−</button>
+      <output data-zoom aria-label="Zoom">100%</output>
+      <button type="button" data-zoom-in disabled aria-label={es ? 'Ampliar zoom' : 'Zoom in'}>+</button>
+      <span class="control-separator" aria-hidden="true"></span>
+      <button class="fit-button" type="button" data-fit disabled>{es ? 'Ajustar' : 'Fit width'}</button>
+    </div>
   </section>
   <script>
     import '@/scripts/resume';
   </script>
 </Base>
 <style>
-  [data-pdf-viewer] { max-width: 70rem; margin: auto; }
-  .pdf-toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: .35rem .5rem; }
-  .pdf-row { display: flex; align-items: center; justify-content: space-between; gap: .25rem; }
-  .pdf-row button, .pdf-row a { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; padding: .4rem .55rem; font-size: .875rem; border: 1px solid var(--line); background: var(--bg); text-decoration: none; }
-  .pdf-row button:disabled { opacity: .45; cursor: default; }
-  output { font-size: .875rem; white-space: nowrap; }
-  .pdf-message { padding: .25rem .75rem; font-size: .875rem; }
-  .pdf-message:empty { display: none; }
-  [data-pdf-pane] { width: 100%; overflow: auto; padding: 8px; overscroll-behavior-x: contain; min-height: 10rem; background: var(--bg-2); }
-  [data-pdf-pane] :global(canvas) { display: block; margin-inline: auto; background: white; }
-  .pdf-text { margin: 1rem; }
-  .pdf-text summary { min-height: 44px; cursor: pointer; }
-  [data-pdf-text] { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .document-viewer { min-height: 100svh; background: var(--bg-2); padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)); }
+  .pdf-toolbar { position: sticky; top: 0; z-index: 5; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; align-items: center; gap: 8px; min-height: 64px; padding: 10px max(12px, calc((100vw - 78rem) / 2)); background: var(--bg); border-bottom: 1px solid var(--line); }
+  .pdf-toolbar a, .pdf-toolbar button, .zoom-controls button, .icon-button { appearance: none; -webkit-appearance: none; border: 0; border-radius: 5px; font-family: var(--font-body); font-size: 13px; font-weight: 550; line-height: 1; min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; touch-action: manipulation; }
+  .icon-button { background: transparent; padding: 10px; color: var(--fg); }
+  .back-link { color: var(--fg-2); }
+  .back-link:hover { background: var(--bg-2); }
+  .document-title { min-width: 0; padding-right: 4px; }
+  .document-title h1 { font-size: 15px; line-height: 1.2; letter-spacing: -.025em; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .document-title p { font-size: 11px; color: var(--fg-3); line-height: 1.5; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .document-title p span { padding-inline: 3px; }
+  .download-button { color: var(--accent-ink); background: var(--accent); padding: 10px 12px; }
+  .download-button:hover { filter: brightness(.93); }
+  .share-button { color: var(--fg); background: transparent; padding: 10px; }
+  .share-button:hover { background: var(--bg-2); }
+  .pdf-message { max-width: 54rem; margin-inline: auto; padding: 10px 16px; font-size: 13px; color: var(--fg-2); }
+  .pdf-message:empty, .share-feedback:empty { display: none; }
+  .share-feedback { position: fixed; z-index: 8; bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; font-size: 13px; text-align: center; }
+  .document-stage { padding-top: 14px; }
+  [data-pdf-pane] { width: min(100%, 54rem); margin-inline: auto; overflow: auto; padding: 8px; overscroll-behavior-x: contain; min-height: 10rem; }
+  [data-pdf-pane] :global(canvas) { display: block; margin-inline: auto; background: white; box-shadow: 0 1px 4px rgb(0 0 0 / 9%); }
+  .page-navigation { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 12px auto; font-size: 12px; color: var(--fg-3); }
+  .page-navigation button:disabled { opacity: .35; }
+  .document-options { width: min(calc(100% - 32px), 52rem); margin: 12px auto 0; color: var(--fg-2); font-size: 13px; }
+  .original-file { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--fg-3); }
+  .pdf-text { margin-top: 8px; border-top: 1px solid var(--line); }
+  .pdf-text summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; cursor: pointer; list-style: none; }
+  .pdf-text summary::-webkit-details-marker { display: none; }
+  .pdf-text summary::after { content: '+'; font-size: 18px; }
+  .pdf-text[open] summary::after { content: '−'; }
+  [data-pdf-text] { padding: 8px 0 20px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 15px; line-height: 1.7; }
+  .zoom-controls { position: fixed; z-index: 6; left: 50%; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: flex; align-items: center; gap: 0; padding: 4px; border: 1px solid var(--fg-2); border-radius: 12px; background: var(--fg); color: var(--bg); box-shadow: 0 4px 20px rgb(0 0 0 / 12%); }
+  .zoom-controls button { background: transparent; color: inherit; font-size: 20px; padding: 8px; }
+  .zoom-controls button:hover:not(:disabled) { background: var(--fg-2); }
+  .zoom-controls button:disabled { opacity: .4; cursor: default; }
+  .zoom-controls output { width: 52px; text-align: center; font-family: var(--font-mono); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .zoom-controls .fit-button { font-size: 12px; min-width: 74px; padding-inline: 12px; }
+  .control-separator { height: 18px; border-left: 1px solid var(--fg-3); margin-inline: 6px; }
+  .zoom-controls :focus-visible { outline-color: var(--signal); outline-offset: 1px; }
+  .share-button span, .full-title { display: none; }
+  @media (--sm) { .share-button span, .full-title { display: inline; } .short-title { display: none; } }
+  @media (--md) {
+    .pdf-toolbar { gap: 14px; }
+    .document-title h1 { font-size: 16px; }
+    .document-stage { padding-top: 22px; }
+    .zoom-controls { top: 5px; bottom: auto; background: var(--bg-2); color: var(--fg); border-color: var(--line); border-radius: 7px; box-shadow: none; }
+    .zoom-controls button:hover:not(:disabled) { background: var(--line); }
+  }
 </style>
