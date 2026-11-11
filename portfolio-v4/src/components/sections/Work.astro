@@ -124,7 +124,7 @@ const featured = (await getProjects(locale)).filter(p => p.data.featured);
   .project-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-block: 1px solid var(--line); padding-block: 1rem; margin-top: 1.5rem; }
   .project-metrics dt { font-size: 2.6rem; letter-spacing: -.065em; line-height: 1.3; }
   @media (--md) { .chapters a { flex-basis: 0; padding-inline: 1.25rem; } }
-  .metric-source { display: block; margin-top: .75rem; font-size: .6rem; color: var(--fg-3); }
+  .metric-source { display: flex; align-items: center; gap: .3em; min-height: 2.75rem; margin-top: .75rem; font-size: .6rem; color: var(--fg-3); }
   @media (--lg) { .chapters { position: sticky; top: 5.25rem; z-index: 5; } .project-layout { grid-template-columns: 1.3fr 1fr; } .project-copy { padding: 3rem; } .project-image { min-height: 38rem; } .project--mobile .project-image { min-height: 40rem; } .project-top { padding-inline: 1.5rem; } }
   @media (--pointer) { .project-image :global(picture) { transition: transform .4s; } .project-image:hover :global(picture) { transform: scale(1.025); } }
   @media (--motion-reduce) { .project-image :global(picture) { transition: none; } }

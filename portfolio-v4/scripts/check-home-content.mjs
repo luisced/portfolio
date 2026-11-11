@@ -30,6 +30,11 @@ for (const [locale, copy] of Object.entries(expected)) {
   expectIncludes(locale, copy.positioning, 'specific hero positioning');
   expectIncludes(locale, copy.contact, 'specific contact invitation');
 
+  const summaries = [...pages[locale].matchAll(/<summary\b[^>]*aria-label="([^"]+)"[^>]*>\s*<span[^>]*>([^<]+)<\/span>/g)];
+  if (summaries.length !== 8) failures.push(`${locale}: expected eight labeled role disclosures`);
+  for (const [, accessible, visible] of summaries) {
+    if (!accessible.includes(visible)) failures.push(`${locale}: disclosure accessible name must contain visible label ${visible}`);
+  }
   const careerLinks = [...pages[locale].matchAll(/data-career-link href="([^"]+)"/g)].map((match) => match[1]);
   const experienceCards = [...pages[locale].matchAll(/data-experience-card/g)];
   if (careerLinks.length !== 9) failures.push(`${locale}: expected 9 career-map links, found ${careerLinks.length}`);

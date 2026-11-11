@@ -84,7 +84,7 @@ const experienceAnchor = (id: string) => `experience-${id.replace(/[^a-z0-9]+/gi
 
               {hasFieldNotes && (
                 <details>
-                  <summary aria-label={`${t('timeline.more')}: ${entry.data.role[locale]}, ${entry.data.org}`}>
+                  <summary aria-label={`${t('timeline.fieldNotes')}: ${entry.data.role[locale]}, ${entry.data.org}`}>
                     <span>{t('timeline.fieldNotes')}</span>
                     <span aria-hidden="true">+</span>
                   </summary>
