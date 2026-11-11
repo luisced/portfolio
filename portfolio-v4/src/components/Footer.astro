@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { getProfile, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 interface Props { locale: Locale; }
@@ -7,7 +8,7 @@ const t = useTranslations(locale);
 const { data: p } = await getProfile();
 const wa = p.whatsapp.replace(/[^\d]/g, '');
 ---
-<footer class="footer"><div class="container"><div class="footer-top"><p class="label">© {new Date().getFullYear()} {p.shortName}</p><p class="label">{t('footer.built')}</p><a class="label" href="#main">{t('footer.top')} ↑</a></div><nav aria-label={locale === 'es' ? 'Enlaces sociales' : 'Social links'}><a href={`https://wa.me/${wa}`} rel="noopener" target="_blank">WhatsApp ↗</a>{p.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label} ↗</a>)}</nav></div></footer>
+<footer class="footer"><div class="container"><div class="footer-top"><p class="label">© {new Date().getFullYear()} {p.shortName}</p><p class="label">{t('footer.built')}</p><a class="label" href="#main">{t('footer.top')} <ArrowIcon direction="up" /></a></div><nav aria-label={locale === 'es' ? 'Enlaces sociales' : 'Social links'}><a href={`https://wa.me/${wa}`} rel="noopener" target="_blank">WhatsApp <ArrowIcon /></a>{p.socials.map((s) => <a href={s.url} rel="me noopener" target="_blank">{s.label} <ArrowIcon /></a>)}</nav></div></footer>
 <style>
   .footer { padding-block: 2rem; border-top: 1px solid var(--line); background: #171717; color: #f7f7f2; --line: #53534e; --fg: #f7f7f2; --fg-3: #aaaaa1; }
   .footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; }

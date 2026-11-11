@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { Picture } from 'astro:assets';
 import { getProfile, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
@@ -34,7 +35,7 @@ const kinds = ['award', 'publication', 'credential'] as const;
                         sizes={kind === 'award' ? '(min-width: 48em) 45vw, 90vw' : '240px'}
                         formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" decoding="async" />
                     </a>
-                    <figcaption>{entry.media[0].caption[locale]} <span aria-hidden="true">↗</span></figcaption>
+                    <figcaption>{entry.media[0].caption[locale]} <span aria-hidden="true"><ArrowIcon /></span></figcaption>
                   </figure>
                 )}
                 <p class="distinction">{entry.distinction[locale]}</p>
@@ -54,7 +55,7 @@ const kinds = ['award', 'publication', 'credential'] as const;
                             <a href={media.source} target="_blank" rel="noopener noreferrer">
                               <Picture src={media.src} alt={media.alt[locale]} widths={[160, 221]} sizes="(min-width: 48em) 160px, 38vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" decoding="async" />
                             </a>
-                            <figcaption>{media.caption[locale]} <span aria-hidden="true">↗</span></figcaption>
+                            <figcaption>{media.caption[locale]} <span aria-hidden="true"><ArrowIcon /></span></figcaption>
                           </figure>
                         ))}
                       </div>
@@ -63,7 +64,7 @@ const kinds = ['award', 'publication', 'credential'] as const;
                 )}
                 <ul class="source-links">
                   {entry.links.map((link) => (
-                    <li><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label[locale]} <span aria-hidden="true">↗</span></a></li>
+                    <li><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label[locale]} <span aria-hidden="true"><ArrowIcon /></span></a></li>
                   ))}
                 </ul>
               </div>

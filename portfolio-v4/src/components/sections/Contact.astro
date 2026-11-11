@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { getProfile, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -19,10 +20,11 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       <p class="label section-label">{t('contact.kicker')}</p>
       <h2 id="contact-title">{t('contact.title')}</h2>
       <p class="measure muted">{t('contact.lead')}</p>
-      <a class="contact-email" href={`mailto:${p.email}`}>{p.email}<span aria-hidden="true">↗</span></a>
+      <a class="contact-email" href={`mailto:${p.email}`}>{p.email}<span aria-hidden="true"><ArrowIcon /></span></a>
     </div>
 
     <div class="contact-panel">
+      <span class="contact-panel-arrow" aria-hidden="true"><ArrowIcon direction="right" /></span>
       <div class="contact__note">
         <form class="contact__form" method="post" action="/api/contact" data-contact data-sending={t('contact.sending')} data-msg-required={t('contact.required')} data-msg-email={t('contact.invalidEmail')} data-msg-minlength={t('contact.invalidMessage')} data-msg-rate-limit={t('contact.rateLimit')} novalidate>
           <div class="field">
@@ -47,7 +49,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
             <div class="cf-turnstile" data-sitekey={siteKey} data-theme="auto" data-size="flexible"></div>
           </fieldset>}
           <div class="contact__status" role="status" aria-live="polite" data-contact-status hidden></div>
-          <button class="btn btn--primary" type="submit" data-contact-submit>{t('contact.send')} <span aria-hidden="true">→</span></button>
+          <button class="btn btn--primary" type="submit" data-contact-submit>{t('contact.send')} <span aria-hidden="true"><ArrowIcon direction="right" /></span></button>
         </form>
 
         <div class="contact__result contact__result--success" role="status" tabindex="-1" data-contact-success hidden>
@@ -99,8 +101,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     overflow: hidden;
   }
 
-  .contact-panel::after {
-    content: '→';
+  .contact-panel-arrow {
     position: absolute;
     top: -1.5rem;
     right: -.5rem;

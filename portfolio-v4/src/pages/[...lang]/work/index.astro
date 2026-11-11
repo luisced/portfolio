@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { Picture } from 'astro:assets';
 import Base from '@/layouts/Base.astro';
 import { getProjects, localeStaticPaths, localizePath, useTranslations } from '@/i18n/utils';
@@ -12,7 +13,7 @@ const projects = await getProjects(locale);
 <Base locale={locale} title={t('work.all')} description={t('work.description')} path="/work/">
   <section class="section container" aria-labelledby="work-index-title">
     <p class="label section-label">{t('work.kicker')}</p><h1 id="work-index-title">{t('work.all')}</h1><p class="measure muted">{t('work.intro')}</p>
-    <ol class="project-index">{projects.map((p, i) => <li><a href={localizePath(locale, `/work/${p.data.slug}/`)}><div class="index-image"><span class="label">0{i + 1} / {p.data.timeframe}</span><Picture fallbackFormat="webp" src={p.data.gallery[0]?.src ?? p.data.cover} alt={p.data.gallery[0]?.alt ?? p.data.coverAlt} widths={[480, 800]} sizes="(min-width: 48em) 40vw, 85vw" formats={['avif', 'webp']} loading="lazy" /></div><p class="label">{p.data.role} · {t(`work.category.${p.data.category}`)}</p><h2>{p.data.title} <span aria-hidden="true">↗</span></h2></a><p class="muted">{p.data.outcome}</p></li>)}</ol>
+    <ol class="project-index">{projects.map((p, i) => <li><a href={localizePath(locale, `/work/${p.data.slug}/`)}><div class="index-image"><span class="label">0{i + 1} / {p.data.timeframe}</span><Picture fallbackFormat="webp" src={p.data.gallery[0]?.src ?? p.data.cover} alt={p.data.gallery[0]?.alt ?? p.data.coverAlt} widths={[480, 800]} sizes="(min-width: 48em) 40vw, 85vw" formats={['avif', 'webp']} loading="lazy" /></div><p class="label">{p.data.role} · {t(`work.category.${p.data.category}`)}</p><h2>{p.data.title} <span aria-hidden="true"><ArrowIcon /></span></h2></a><p class="muted">{p.data.outcome}</p></li>)}</ol>
   </section>
 </Base>
 <style>

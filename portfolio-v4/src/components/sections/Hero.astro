@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { getProfile, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 import HeroCloud from '@/components/HeroCloud.astro';
@@ -29,7 +30,7 @@ const principles = [
       <p class="hero-byline label">{t('hero.byline')}</p>
       <h1 id="hero-title"><span class="sr-only">Luis Cedillo: </span><span>{t('hero.line1')}</span>{' '}<span>{t('hero.line2')}</span></h1>
       <p class="hero-description">{p.positioning[locale]}</p>
-      <div class="hero-actions"><a class="btn btn--primary" href="#work">{t('hero.cta.work')} <span aria-hidden="true">↗</span></a><a class="text-link" href="#contact">{t('hero.cta.contact')} <span aria-hidden="true">↗</span></a></div>
+      <div class="hero-actions"><a class="btn btn--primary" href="#work">{t('hero.cta.work')} <span aria-hidden="true"><ArrowIcon /></span></a><a class="text-link" href="#contact">{t('hero.cta.contact')} <span aria-hidden="true"><ArrowIcon /></span></a></div>
     </div>
     <div class="hero-art" aria-hidden="true">
       <div class="art-coordinate label">LC / FIG. 001</div>
@@ -39,15 +40,15 @@ const principles = [
       </svg>
       <div class="art-caption label"><span>{t('hero.diagram')}</span><span>[∞]</span></div>
     </div>
-    <a class="current-window" href="https://dopamina.media/" target="_blank" rel="noopener"><span class="window-bar label">{t('hero.now')} <span aria-hidden="true">↗</span></span><span class="window-body"><span class="status-dot" aria-hidden="true"></span>{t('hero.current')}</span></a>
+    <a class="current-window" href="https://dopamina.media/" target="_blank" rel="noopener"><span class="window-bar label">{t('hero.now')} <span aria-hidden="true"><ArrowIcon /></span></span><span class="window-body"><span class="status-dot" aria-hidden="true"></span>{t('hero.current')}</span></a>
   </div>
-  <div class="hero-bottom label"><span>01 / {t('hero.disciplines')}</span><a href="#approach">{t('hero.scroll')} <span aria-hidden="true">↓</span></a></div>
+  <div class="hero-bottom label"><span>01 / {t('hero.disciplines')}</span><a href="#approach">{t('hero.scroll')} <span aria-hidden="true"><ArrowIcon direction="down" /></span></a></div>
 </section>
 <section id="approach" class="approach container" aria-labelledby="approach-title">
   <div class="approach-header"><p class="label">{t('hero.approach.label')}</p><svg class="approach-symbol" aria-hidden="true" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2"><path d="M40 0v80M0 40h80M12 12l56 56M12 68l56-56"/></svg></div>
   <h2 id="approach-title"><span class="approach-lead">{t('hero.approach.line1')}</span><span class="approach-statement">{t('hero.approach.line2')}</span></h2>
   <div class="principles">{principles.map((item, i) => <article>
-    <div class="principle-register label"><span>[0{i + 1}]</span><span>{item.link}</span><span aria-hidden="true">↘</span></div>
+    <div class="principle-register label"><span>[0{i + 1}]</span><span>{item.link}</span><span aria-hidden="true"><ArrowIcon direction="down-right" /></span></div>
     <div class="principle-graphic" aria-hidden="true">
       <svg viewBox="0 0 360 280" fill="none" stroke="currentColor" stroke-width="1">
         <path class="diagram-guides" d="M0 140h360M180 0v280M16 16h16m-8-8v16M328 264h16m-8-8v16"/>
@@ -78,9 +79,9 @@ const principles = [
       </svg>
     </div>
     <h3>{item.title}</h3><p class="principle-description">{item.body}</p>
-    <a class="principle-link label" href={item.href}><span>{item.link}</span><span class="principle-arrow" aria-hidden="true">↗</span></a>
+    <a class="principle-link label" href={item.href}><span>{item.link}</span><span class="principle-arrow" aria-hidden="true"><ArrowIcon /></span></a>
   </article>)}</div>
-  <div class="approach-foot label"><span>{t('hero.approach.foot')}</span><a href="#work">{t('hero.cta.work')} <span aria-hidden="true">↓</span></a></div>
+  <div class="approach-foot label"><span>{t('hero.approach.foot')}</span><a href="#work">{t('hero.cta.work')} <span aria-hidden="true"><ArrowIcon direction="down" /></span></a></div>
 </section>
 <script>
   const art = document.querySelector<HTMLElement>('.hero-art');

@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import Base from '@/layouts/Base.astro';
 import { formatDate, getNotes, localeStaticPaths, localizePath, readingMinutes, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
@@ -24,7 +25,7 @@ const notes = await getNotes(locale);
         <p class="muted">{t('notes.preferred.body')}</p>
       </div>
       <a class="btn btn--primary" href="https://www.google.com/preferences/source?q=luiscedillo.com" target="_blank" rel="noopener">
-        {t('notes.preferred.action')} <span aria-hidden="true">↗</span>
+        {t('notes.preferred.action')} <span aria-hidden="true"><ArrowIcon /></span>
       </a>
     </aside>
     {notes.length === 0 ? (

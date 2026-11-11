@@ -1,0 +1,40 @@
+---
+interface Props {
+  direction?: 'up-right' | 'down-right' | 'up-left' | 'down-left' | 'left' | 'right' | 'up' | 'down';
+  class?: string;
+}
+
+const { direction = 'up-right', class: className } = Astro.props;
+const paths = {
+  'up-right': 'M5 19 19 5M5 5h14v14',
+  'down-right': 'M5 5l14 14M5 19h14V5',
+  'up-left': 'M19 19 5 5M19 5H5v14',
+  'down-left': 'M19 5 5 19M5 5v14h14',
+  'left': 'M20 12H4m7-7-7 7 7 7',
+  'right': 'M4 12h16m-7-7 7 7-7 7',
+  'up': 'M12 20V4m-7 7 7-7 7 7',
+  'down': 'M12 4v16m-7-7 7 7 7-7',
+};
+---
+
+<svg
+  class={className}
+  data-arrow-icon={direction}
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="1em"
+  height="1em"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={paths[direction]} />
+</svg>
+
+<style>
+  svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+</style>

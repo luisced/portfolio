@@ -34,3 +34,4 @@ console.log(`postbuild: localized 404s + ${hashes.size} exact CSP script hashes`
 await import('./check-resume-viewer.mjs');
 await import('./test-resume-controls.mjs');
 await import('./check-resume-document.mjs');
+await import('./check-arrow-icons.mjs');

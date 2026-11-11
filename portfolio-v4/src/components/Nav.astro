@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { getProfile, localizePath, otherLocale, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 interface Props { locale: Locale; path: string; }
@@ -13,7 +14,7 @@ const [firstName, ...lastName] = profile.data.shortName.split(' ');
   <div class="nav container">
     <a class="wordmark" href={home}><span class="wordmark-full"><span>{firstName}</span><strong>{lastName.join(' ')}</strong></span></a>
     <nav class="primary" aria-label={locale === 'es' ? 'Navegación principal' : 'Primary navigation'}>
-      <a href={`${home}#work`}>{t('nav.work')}</a><a href={`${home}#about`}>{t('nav.about')}</a><a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a><a class="nav-contact" href={`${home}#contact`}>{t('nav.contact')} <span aria-hidden="true">↗</span></a>
+      <a href={`${home}#work`}>{t('nav.work')}</a><a href={`${home}#about`}>{t('nav.about')}</a><a href={localizePath(locale, '/notes/')}>{t('nav.notes')}</a><a class="nav-contact" href={`${home}#contact`}>{t('nav.contact')} <span aria-hidden="true"><ArrowIcon /></span></a>
     </nav>
     <div class="utilities"><a href={localizePath(alt, path)} hreflang={alt} lang={alt}>{t('lang.code')}<span class="sr-only"> · {t('lang.switch')}</span></a><button type="button" data-theme-toggle aria-label={t('theme.toggle')} title={t('theme.toggle')}><svg class="theme-icon" width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><circle class="theme-icon-core" cx="10" cy="10" r="3"/><path class="theme-icon-rays" d="M10 1.5v3M10 15.5v3M1.5 10h3M15.5 10h3M4 4l2.1 2.1M13.9 13.9 16 16M16 4l-2.1 2.1M6.1 13.9 4 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path class="theme-icon-moon" d="M14.7 3.9a6.8 6.8 0 1 0 1.4 12.9A7.2 7.2 0 0 1 14.7 3.9Z" fill="currentColor"/></svg></button></div>
   </div>

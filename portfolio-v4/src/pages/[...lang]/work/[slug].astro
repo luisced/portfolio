@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { Picture } from 'astro:assets';
 import { render } from 'astro:content';
 import Base from '@/layouts/Base.astro';
@@ -88,8 +89,8 @@ const { Content } = await render(project);
         <>
           <dt class="label">Links</dt>
           <dd>
-            {project.data.links.live && <a class="btn btn--primary" href={project.data.links.live} rel="noopener" target="_blank">{t('work.live')} ↗</a>}
-            {project.data.links.repo && <a class="btn" href={project.data.links.repo} rel="noopener" target="_blank">{t('work.repo')} ↗</a>}
+            {project.data.links.live && <a class="btn btn--primary" href={project.data.links.live} rel="noopener" target="_blank">{t('work.live')} <ArrowIcon /></a>}
+            {project.data.links.repo && <a class="btn" href={project.data.links.repo} rel="noopener" target="_blank">{t('work.repo')} <ArrowIcon /></a>}
           </dd>
         </>
       )}
@@ -113,8 +114,8 @@ const { Content } = await render(project);
     )}
 
     <nav aria-label={t('work.next')}>
-      <a href={previousPath}>← {t('work.prev')}: {previousProject.data.title}</a> ·
-      <a href={nextPath}>{t('work.next')}: {nextProject.data.title} →</a>
+      <a href={previousPath}><ArrowIcon direction="left" /> {t('work.prev')}: {previousProject.data.title}</a> ·
+      <a href={nextPath}>{t('work.next')}: {nextProject.data.title} <ArrowIcon direction="right" /></a>
     </nav>
   </article>
 </Base>

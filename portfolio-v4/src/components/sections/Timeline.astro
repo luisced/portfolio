@@ -1,4 +1,5 @@
 ---
+import ArrowIcon from '@/components/ArrowIcon.astro';
 import { formatMonth, getExperience, useTranslations } from '@/i18n/utils';
 import type { Locale } from '@/i18n/ui';
 
@@ -96,7 +97,7 @@ const experienceAnchor = (id: string) => `experience-${id.replace(/[^a-z0-9]+/gi
                         {entry.data.links.map((link) => (
                           <li>
                             <a href={link.url} target="_blank" rel="noopener noreferrer">
-                              {link.label[locale]} <span aria-hidden="true">↗</span>
+                              {link.label[locale]} <span aria-hidden="true"><ArrowIcon /></span>
                             </a>
                           </li>
                         ))}
