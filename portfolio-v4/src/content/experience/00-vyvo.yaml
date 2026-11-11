@@ -5,14 +5,16 @@ role:
   es: "Cofundador y CTO · Adquirida"
 start: "2025-06"
 end: "2025-12"
-location: Mexico City
+location: Mexico City, Mexico
 highlights:
   en:
     - "Guided the technology vision, product direction and engineering roadmap of an AI-powered social network."
     - "Built and mentored the engineering team, connecting architecture decisions with product releases."
+    - "Led a 15-person team and worked on Kubernetes microservices and AI-avatar workflows using LangGraph and ElevenLabs."
   es:
     - "Dirigí la visión tecnológica, el producto y la hoja de ruta de ingeniería de una red social con IA."
     - "Formé y acompañé al equipo de ingeniería, conectando las decisiones de arquitectura con las entregas de producto."
+    - "Lideré un equipo de 15 personas y trabajé en microservicios sobre Kubernetes y flujos de avatares de IA con LangGraph y ElevenLabs."
 links:
   - label: { en: Vyvo website, es: Sitio de Vyvo }
     url: https://www.vyvo.tech/

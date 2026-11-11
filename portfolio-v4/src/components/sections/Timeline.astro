@@ -72,6 +72,7 @@ const experienceAnchor = (id: string) => `experience-${id.replace(/[^a-z0-9]+/gi
               <div class="card-heading">
                 <p class="label organization">{entry.data.org}</p>
                 <h3>{entry.data.role[locale]}</h3>
+                <p class="label">{entry.data.location}</p>
               </div>
 
               <p class="impact">{entry.data.highlights[locale][0]}</p>

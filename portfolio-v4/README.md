@@ -16,7 +16,7 @@ pnpm check
 
 ## Design and content
 
-- `src/content/`: localized project case studies, notes, profile and professional experience. The September 2026 profile refresh uses the owner's signed-in LinkedIn profile for iLuk and Vyvo roles, plus repository evidence from `dopamina-fe` for the Dopamina role; older project details remain from the repository. The existing downloadable CV is retained, not regenerated.
+- `src/content/`: localized project case studies, notes, profile and professional experience. The September 2026 profile refresh uses the owner's signed-in LinkedIn profile for iLuk and Vyvo roles, plus repository evidence from `dopamina-fe` for the Dopamina role; older project details remain from the repository. The November 2026 refresh aligns the bilingual profile and experience with the approved general CV. Both locales download the same approved English PDF at `/resumee.pdf`; `/cv/Luis-Cedillo-Maldonado-CV.pdf` remains available for existing links.
 - `src/i18n/ui.ts`: bilingual interface copy. `utils.ts` localizes page and feed URLs.
 - `src/components/sections/`: graphic hero and three-part approach, framed project showcases, experience, portrait and background, writing and contact. Project images show actual product captures rather than promotional covers.
 - `src/styles/`: shared design tokens, typography, focus states and article styling. Use the custom breakpoints in `postcss.config.mjs`.

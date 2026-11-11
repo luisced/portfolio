@@ -4,7 +4,7 @@ role:
   es: "Desarrollador freelance"
 start: "2022-12"
 end: "2023-04"
-location: Mexico City
+location: Mexico City, Mexico
 highlights:
   en:
     - "Automated Airbnb reservations through a Twilio WhatsApp bot with message tracking."

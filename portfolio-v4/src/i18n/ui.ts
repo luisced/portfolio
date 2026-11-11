@@ -5,8 +5,8 @@ export const defaultLocale: Locale = 'en';
 /** Shared UI copy. Content collections hold the profile and project facts. */
 export const ui = {
   en: {
-    'site.title': 'Luis Cedillo | Software Engineer & Co-Founder of Dopamina',
-    'site.description': 'Luis Cedillo Maldonado, software engineer and Co-Founder & CTO at Dopamina, building AI-powered marketing systems in Mexico City alongside iLuk.',
+    'site.title': 'Luis Cedillo | AI Full-Stack Engineer & Technical Founder',
+    'site.description': 'Luis Cedillo Maldonado, AI full-stack engineer and technical founder building web, mobile, API and cloud products at Dopamina and iLuk in Mexico City.',
     'skip.main': 'Skip to content',
     'nav.work': 'Work',
     'nav.about': 'About',
@@ -22,7 +22,7 @@ export const ui = {
     'hero.line2': 'systems.',
     'hero.current': 'Currently building Dopamina',
     'hero.portrait': 'Away from the keyboard',
-    'hero.disciplines': 'AI systems / Backend / Product engineering',
+    'hero.disciplines': 'AI / Web & frontend / Mobile / APIs & cloud',
     'hero.byline': 'Built by Luis Cedillo',
     'hero.now': 'Currently / Mexico City',
     'hero.diagram': 'Connected by design',
@@ -157,8 +157,8 @@ export const ui = {
     'notFound.home': 'Back to the portfolio',
   },
   es: {
-    'site.title': 'Luis Cedillo | Ingeniero de Software y Cofundador de Dopamina',
-    'site.description': 'Luis Cedillo Maldonado, ingeniero de software y cofundador y CTO de Dopamina, construyendo sistemas de marketing con IA en Ciudad de México junto con iLuk.',
+    'site.title': 'Luis Cedillo | Ingeniero full-stack de IA y fundador técnico',
+    'site.description': 'Luis Cedillo Maldonado, ingeniero full-stack de IA y fundador técnico de productos web, móviles, APIs y nube en Dopamina e iLuk, en Ciudad de México.',
     'skip.main': 'Saltar al contenido',
     'nav.work': 'Trabajo',
     'nav.about': 'Sobre mí',
@@ -174,7 +174,7 @@ export const ui = {
     'hero.line2': 'sistemas.',
     'hero.current': 'Hoy, construyendo Dopamina',
     'hero.portrait': 'Lejos del teclado',
-    'hero.disciplines': 'Sistemas de IA / Backend / Ingeniería de producto',
+    'hero.disciplines': 'IA / Web y frontend / Móvil / APIs y nube',
     'hero.byline': 'Por Luis Cedillo',
     'hero.now': 'Hoy / Ciudad de México',
     'hero.diagram': 'Conectado por diseño',

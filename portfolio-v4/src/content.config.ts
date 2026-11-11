@@ -120,9 +120,9 @@ const profile = defineCollection({
       ),
       education: z.array(
         z.object({
-          institution: z.string(),
+          institution: z.string().optional(),
           credential: localized,
-          year: z.string(),
+          year: z.string().optional(),
         }),
       ),
       academicActivities: localizedList,

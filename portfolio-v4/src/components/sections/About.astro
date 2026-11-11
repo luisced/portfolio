@@ -156,7 +156,7 @@ const titles = new Map((await getProjects(locale)).map((project) => [project.dat
               {p.education.map((item) => (
                 <li>
                   <span>{item.credential[locale]}</span>
-                  <small>{item.institution} · {item.year}</small>
+                  {(item.institution || item.year) && <small>{[item.institution, item.year].filter(Boolean).join(' · ')}</small>}
                 </li>
               ))}
             </ul>

@@ -5,16 +5,22 @@ role:
   es: "Cofundador y CTO"
 start: "2026-05"
 end: null
-location: Mexico City
+location: Mexico City, Mexico
 highlights:
   en:
     - "Leading the architecture of a multi-agent platform for acquisition, onboarding, KYC, payments and collections."
     - "Building orchestration systems where AI and humans collaborate in regulated financial workflows."
     - "Company milestones reported on LinkedIn: official Meta Tech Partner and ElevenLabs grant recipient."
+    - "Lead a 25-person team building Kubernetes-based agents for financial workflows, from client solution scoping through delivery."
+    - "For client Fincluyente, the platform processed 100,000+ WhatsApp messages and deployed 200+ AI employees with human oversight."
+    - "Use ElevenLabs for collections and customer service."
   es:
     - "Lidero la arquitectura de una plataforma multiagente para adquisición, onboarding, KYC, pagos y cobranza."
     - "Construyo sistemas de orquestación donde IA y humanos colaboran en procesos financieros regulados."
     - "Hitos de la empresa reportados en LinkedIn: Meta Tech Partner oficial y beneficiaria de una subvención de ElevenLabs."
+    - "Lidero un equipo de 25 personas que desarrolla agentes sobre Kubernetes para procesos financieros, desde la definición de soluciones para clientes hasta la entrega."
+    - "Para el cliente Fincluyente, la plataforma procesó más de 100,000 mensajes de WhatsApp y desplegó más de 200 empleados de IA con supervisión humana."
+    - "Utilizo ElevenLabs para cobranza y atención al cliente."
 links:
   - label: { en: Company milestones on LinkedIn, es: Hitos de la empresa en LinkedIn }
     url: https://www.linkedin.com/in/luisced/details/experience/
