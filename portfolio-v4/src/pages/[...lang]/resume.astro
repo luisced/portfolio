@@ -1,0 +1,55 @@
+---
+import Base from '@/layouts/Base.astro';
+import { localeStaticPaths, localizePath } from '@/i18n/utils';
+import type { Locale } from '@/i18n/ui';
+export const getStaticPaths = localeStaticPaths;
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const es = locale === 'es';
+---
+<Base locale={locale} title={es ? 'Currículum' : 'Resume'} path="/resume/" bare>
+  <section data-pdf-viewer data-pdf-status="loading" data-locale={locale} data-viewer-path={localizePath(locale, '/resume/')}>
+    <header class="pdf-toolbar">
+      <div class="pdf-row">
+        <a href={localizePath(locale, '/')}>{es ? '← Portafolio' : '← Portfolio'}</a>
+        <a href="/resumee.pdf" download="Luis-Cedillo-CV.pdf">{es ? 'Descargar' : 'Download'}</a>
+        <button data-share>{es ? 'Compartir' : 'Share'}</button>
+      </div>
+      <div class="pdf-row" role="group" aria-label={es ? 'Zoom del documento' : 'Document zoom'}>
+        <button data-zoom-out disabled aria-label={es ? 'Reducir zoom' : 'Zoom out'}>−</button>
+        <output data-zoom aria-label="Zoom">100%</output>
+        <button data-zoom-in disabled aria-label={es ? 'Ampliar zoom' : 'Zoom in'}>+</button>
+        <button data-fit disabled>{es ? 'Ajustar' : 'Fit width'}</button>
+      </div>
+      <div class="pdf-row" role="group" aria-label={es ? 'Páginas' : 'Pages'}>
+        <button data-prev disabled aria-label={es ? 'Página anterior' : 'Previous page'}>←</button>
+        <output data-page>{es ? 'Página' : 'Page'} 1 / …</output>
+        <button data-next disabled aria-label={es ? 'Página siguiente' : 'Next page'}>→</button>
+        <a href="/resumee.pdf" target="_blank" rel="noopener">{es ? 'Abrir PDF' : 'Open PDF'}</a>
+      </div>
+    </header>
+    <p class="pdf-message" data-message role="status" aria-live="polite">{es ? 'Cargando PDF. Si no aparece, abre o descarga el PDF.' : 'Loading PDF. If it does not appear, open or download the PDF.'}</p>
+    <p class="pdf-message" data-share-message role="status" aria-live="polite"></p>
+    <noscript><p class="pdf-message">{es ? 'Activa JavaScript para usar el visor, o abre o descarga el PDF con los enlaces de arriba.' : 'Enable JavaScript to use the viewer, or open or download the PDF using the links above.'}</p></noscript>
+    <div data-pdf-pane tabindex="0" role="region" aria-label={es ? 'Documento PDF, desplazable' : 'PDF document, scrollable'}></div>
+    <details class="pdf-text" hidden data-text-panel><summary>{es ? 'Texto de esta página' : 'Text of this page'}</summary><div data-pdf-text></div></details>
+  </section>
+  <script>
+    import '@/scripts/resume';
+  </script>
+</Base>
+<style>
+  [data-pdf-viewer] { max-width: 70rem; margin: auto; }
+  .pdf-toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: .35rem .5rem; }
+  .pdf-row { display: flex; align-items: center; justify-content: space-between; gap: .25rem; }
+  .pdf-row button, .pdf-row a { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; padding: .4rem .55rem; font-size: .875rem; border: 1px solid var(--line); background: var(--bg); text-decoration: none; }
+  .pdf-row button:disabled { opacity: .45; cursor: default; }
+  output { font-size: .875rem; white-space: nowrap; }
+  .pdf-message { padding: .25rem .75rem; font-size: .875rem; }
+  .pdf-message:empty { display: none; }
+  [data-pdf-pane] { width: 100%; overflow: auto; padding: 8px; overscroll-behavior-x: contain; min-height: 10rem; background: var(--bg-2); }
+  [data-pdf-pane] :global(canvas) { display: block; margin-inline: auto; background: white; }
+  .pdf-text { margin: 1rem; }
+  .pdf-text summary { min-height: 44px; cursor: pointer; }
+  [data-pdf-text] { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>

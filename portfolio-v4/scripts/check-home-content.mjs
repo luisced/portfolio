@@ -75,7 +75,8 @@ for (const locale of Object.keys(pages)) {
   expectIncludes(locale, '2022–2026', 'degree years');
   expectIncludes(locale, locale === 'en' ? 'Specialization in Project Management · In progress' : 'Especialización en Gestión de Proyectos · En curso', 'specialization');
   if (html.includes('2022–2027')) failures.push(`${locale}: stale degree years`);
-  const cvLink = html.match(/<a\b[^>]*href="\/resumee\.pdf"[^>]*>/)?.[0] || '';
+  const viewerPath = locale === 'es' ? '/es/resume/' : '/resume/';
+  const cvLink = [...html.matchAll(/<a\b[^>]*>/g)].map(m => m[0]).find(tag => tag.includes(`href="${viewerPath}"`)) || '';
   if (!cvLink || /\bdownload(?:\s|=|>)/.test(cvLink)) failures.push(`${locale}: CV must open inline, not force a download`);
   if (!cvLink.includes('target="_blank"') || !cvLink.includes('rel="noopener"')) failures.push(`${locale}: CV must open in a safe new tab`);
   expectIncludes(locale, locale === 'en' ? 'View CV · PDF' : 'Ver CV · PDF', 'PDF viewer label');

@@ -29,3 +29,8 @@ const headers = readFileSync('public/_headers', 'utf8');
 if (!headers.includes("script-src 'self'")) throw new Error('Missing script-src policy in public/_headers');
 writeFileSync('dist/_headers', headers.replace("script-src 'self'", `script-src 'self' ${[...hashes].sort().join(' ')}`));
 console.log(`postbuild: localized 404s + ${hashes.size} exact CSP script hashes`);
+
+// Keep the owned PDF viewer contract in the existing package build pipeline.
+await import('./check-resume-viewer.mjs');
+await import('./test-resume-controls.mjs');
+await import('./check-resume-document.mjs');
