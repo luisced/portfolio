@@ -426,3 +426,8 @@ html.flat .top .links, html.flat .menu nav { display: none; }
 .snd:focus-visible::after { opacity: 1; translate: 0 0; }
 @media (hover: hover) and (pointer: fine) { .snd:hover::after { opacity: 1; translate: 0 0; transition-delay: .25s; } }
 @media (prefers-reduced-motion: reduce) { .snd::after { translate: 0 0; transition: opacity .14s; } }
+
+/* el acceso a la vista simple: un ícono en la barra (en pantallas angostas vive en el menú) y un enlace en el respaldo sin 3D */
+.top a.snd { padding: 0; }
+@media (max-width: 1240px) { .tools .list { display: none; } }
+.plain .all { color: var(--accent); text-underline-offset: 4px; }

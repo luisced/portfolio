@@ -115,14 +115,63 @@ function contactEmailHtml(name: string, email: string, message: string) {
 </html>`;
 }
 
-function htmlResponse(locale: Locale, ok: boolean, contactTo: string, status: number) {
+/* The page a visitor sees when the form is posted without JavaScript: the same postcard verdict, as a plain page that needs nothing else to load. */
+function htmlResponse(locale: Locale, ok: boolean, contactTo: string, status: number, error = '') {
   const copy = site.locales[locale].form;
   const title = ok ? copy.okTitle : copy.errTitle;
+  const stamp = ok ? copy.posted : copy.returned;
+  const mail = `<a href="mailto:${escapeHtml(contactTo)}">${escapeHtml(contactTo)}</a>`;
   const body = ok
     ? escapeHtml(copy.okBody)
-    : `${escapeHtml(copy.errBody)} <a href="mailto:${escapeHtml(contactTo)}">${escapeHtml(contactTo)}</a>.`;
+    : error === 'rate_limit'
+      ? escapeHtml(copy.rateLimit)
+      : error === 'invalid_form'
+        ? escapeHtml(copy.invalid)
+        : `${escapeHtml(copy.errBody)} ${mail}.`;
   const back = locale === 'es' ? '/es/#contact' : '/#contact';
-  const markup = `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escapeHtml(title)}</title></head><body><main><h1>${escapeHtml(title)}</h1><p>${body}</p><a href="${back}">${escapeHtml(copy.home)}</a></main></body></html>`;
+  const ink = ok ? '#251a2c' : '#a3271c';
+  const markup = `<!doctype html>
+<html lang="${locale}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08060d">
+<meta name="color-scheme" content="dark">
+<title>${escapeHtml(title)} — ${escapeHtml(site.shortName)}</title>
+<style>
+*{box-sizing:border-box}
+html{background:#08060d;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100svh;display:grid;grid-template-rows:auto 1fr;background:radial-gradient(ellipse at 50% 60%,#15111f 0%,#08060d 62%);color:#f4f1ea;font:400 17px/1.5 'Archivo Variable',Archivo,system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid #ffc46b;outline-offset:4px}
+header{padding:18px clamp(20px,5vw,72px)}
+.brand{display:inline-flex;align-items:center;gap:10px;padding:10px 0;font-weight:750;font-size:15px;line-height:1;letter-spacing:-.02em;text-transform:uppercase;text-decoration:none}
+.brand::before{content:'';width:8px;height:8px;background:#ffc46b}
+main{display:grid;place-items:center;padding:8px clamp(20px,5vw,72px) clamp(40px,10vh,96px)}
+.card{width:min(100%,520px);padding:clamp(22px,5vw,36px);background:#f1eadc;color:#251a2c;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.stamp{display:inline-block;padding:7px 10px;border:2px solid ${ink};color:${ink};font:400 12px/1 'Azeret Mono',ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em;text-transform:uppercase;transform:rotate(-3deg)}
+h1{margin:22px 0 10px;font-weight:700;font-size:clamp(30px,7vw,44px);line-height:.95;letter-spacing:-.05em}
+p{margin:0}
+.body{color:#4a3d52}
+.hint{margin-top:10px;font-size:15px;color:#6b5d72}
+.go{display:inline-flex;align-items:center;gap:22px;min-height:50px;margin-top:26px;padding:0 20px;background:#251a2c;color:#f4f1ea;font:400 12px/1 'Azeret Mono',ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase;text-decoration:none}
+.go:active{background:#ffc46b;color:#17110a}
+</style>
+</head>
+<body>
+<header><a class="brand" href="${locale === 'es' ? '/es/' : '/'}">${escapeHtml(site.shortName)}</a></header>
+<main>
+<div class="card" role="${ok ? 'status' : 'alert'}">
+<span class="stamp">${escapeHtml(stamp)}</span>
+<h1>${escapeHtml(title)}</h1>
+<p class="body">${body}</p>
+${ok ? '' : `<p class="hint">${escapeHtml(copy.backHint)}</p>`}
+<a class="go" href="${ok ? (locale === 'es' ? '/es/' : '/') : back}">${escapeHtml(ok ? copy.home : copy.retry)} <span aria-hidden="true">→</span></a>
+</div>
+</main>
+</body>
+</html>`;
   return new Response(markup, {
     status,
     headers: {
@@ -136,7 +185,7 @@ function respond(request: Request, locale: Locale, ok: boolean, status: number, 
   if (request.headers.get('Accept')?.includes('application/json')) {
     return jsonResponse(ok ? { ok: true } : { ok: false, error }, status);
   }
-  return htmlResponse(locale, ok, contactTo, status);
+  return htmlResponse(locale, ok, contactTo, status, error);
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {

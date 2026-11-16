@@ -215,7 +215,10 @@
         "postmark": "THE CAT'S ROOM · MEXICO CITY ·",
         "posted": "Postmarked and on its way",
         "returned": "Returned to sender",
-        "home": "Back to the portfolio"
+        "home": "Back to the portfolio",
+        "backHint": "Your browser's Back button brings your draft back.",
+        "invalid": "Something in the form was missing or too short: a name, a valid email and a message of at least 20 characters.",
+        "retry": "Back to the form"
       },
       "expTitle": "git log --career",
       "expNow": "HEAD",
@@ -232,7 +235,18 @@
       },
       "freeOn": "Free camera",
       "freeOff": "Back to the story",
-      "freeHint": "Free camera: drag to orbit, scroll or pinch to zoom."
+      "freeHint": "Free camera: drag to orbit, scroll or pinch to zoom.",
+      "simple": {
+        "name": "Simple view",
+        "title": "Luis Cedillo — everything on one page",
+        "desc": "Luis Cedillo, AI full-stack engineer and technical founder: work, experience, stack, awards and contact on one plain page, without the 3D room.",
+        "intro": "The same portfolio without the 3D room: everything on one page.",
+        "enter": "Enter the room",
+        "place": "Based in",
+        "education": "Education",
+        "students": "Student projects",
+        "all": "See them with photos and detail"
+      }
     },
     "es": {
       "path": "es/",
@@ -337,7 +351,10 @@
         "postmark": "EL CUARTO DEL GATO · CDMX ·",
         "posted": "Sellada y en camino",
         "returned": "Devuelta al remitente",
-        "home": "Volver al portafolio"
+        "home": "Volver al portafolio",
+        "backHint": "El botón Atrás de tu navegador recupera lo que escribiste.",
+        "invalid": "Faltó algo en el formulario o quedó corto: un nombre, un correo válido y un mensaje de al menos 20 caracteres.",
+        "retry": "Volver al formulario"
       },
       "expTitle": "git log --trayectoria",
       "expNow": "HEAD",
@@ -354,7 +371,18 @@
       },
       "freeOn": "Cámara libre",
       "freeOff": "Volver a la historia",
-      "freeHint": "Cámara libre: arrastra para girar; rueda o pellizco para acercar."
+      "freeHint": "Cámara libre: arrastra para girar; rueda o pellizco para acercar.",
+      "simple": {
+        "name": "Vista simple",
+        "title": "Luis Cedillo — todo en una página",
+        "desc": "Luis Cedillo, ingeniero full-stack de IA y fundador técnico: trabajo, experiencia, stack, premios y contacto en una página sencilla, sin el cuarto 3D.",
+        "intro": "El mismo portafolio sin el cuarto 3D: todo en una página.",
+        "enter": "Entrar al cuarto",
+        "place": "Ubicación",
+        "education": "Formación",
+        "students": "Proyectos de estudiante",
+        "all": "Verlos con fotos y detalle"
+      }
     }
   },
   "awards": [

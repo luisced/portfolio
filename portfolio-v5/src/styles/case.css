@@ -91,14 +91,15 @@ h1 { margin: 14px 0 22px; font: 650 clamp(48px, 9.5vw, 132px)/.9 var(--sans); le
 .record .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
 
 .index { list-style: none; margin: 0; padding: 0; }
-.index a { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.4fr) auto; align-items: baseline; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+.index a, .index .row { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.4fr) auto; align-items: baseline; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
 .index b { font: 650 clamp(22px, 2.6vw, 34px)/1 var(--sans); letter-spacing: -.05em; }
 .index .why { color: var(--soft); font-size: 16px; line-height: 1.4; }
 
 @media (max-width: 760px) {
   .record, .record.publication, .record.credential { grid-template-columns: minmax(0, 1fr); }
   .record.publication .cover, .record.credential .cover { max-width: 200px; }
-  .index a { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 12px; }
+  .index a, .index .row { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 12px; }
+  .index .row > .label:last-child { grid-column: 2; }
   .index .why, .index a > .label:last-child { grid-column: 2; }
 }
 
@@ -119,3 +120,23 @@ a:active, .index a:active b { color: var(--accent); }
 
 /* live/repo buttons sit right under the facts (outside the <dl>: a definition list may only hold terms and definitions) */
 .case-links { margin: 0; }
+
+/* The simple view: the whole portfolio as one plain page. */
+.simple h1 { font-size: clamp(44px, 8vw, 104px); }
+.simple .about { margin-top: clamp(36px, 6vw, 72px); }
+.simple .about > h2 { margin: 0 0 14px; color: var(--accent); }
+.simple .bio { margin: 0; max-width: 40em; color: var(--soft); text-wrap: pretty; }
+.simple .facts { margin-top: clamp(24px, 3vw, 36px); }
+.simple .facts .line { display: block; }
+.simple .facts .line + .line { margin-top: 4px; color: var(--soft); }
+.simple .records { margin-top: clamp(40px, 6vw, 80px); }
+.simple .stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(20px, 4vw, 56px); margin: 0; }
+.simple .stack > div { padding: 18px 0 20px; border-bottom: 1px solid var(--line); }
+.simple .stack dt { margin-bottom: 10px; }
+.simple .stack dd { margin: 0; }
+.simple .chips span { display: inline-flex; align-items: center; gap: 7px; }
+.simple .chips svg { fill: currentColor; opacity: .8; }
+.simple .ask .outcome { margin-top: 18px; }
+.simple .ask .links { margin-top: 22px; }
+.index .row { padding: 20px 0; border-bottom: 1px solid var(--line); }
+@media (max-width: 760px) { .simple .stack { grid-template-columns: minmax(0, 1fr); } }

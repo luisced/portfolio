@@ -1,0 +1,157 @@
+---
+// The whole portfolio as one plain page: /simple/ in English, /es/simple/ in Spanish.
+// For anyone in a hurry, on a device without a graphics card, or reading with a screen reader. The room links here from its menu.
+import * as icons from 'simple-icons';
+import site from '../../../content/site.json';
+import experience from '../../../content/experience.json';
+import { getProjects, getRecognition, localizePath, type Locale } from '../../../lib/projects';
+import '../../../styles/fonts.css';
+import '../../../styles/case.css';
+
+interface Props { locale: Locale }
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { locale: 'en' } },
+    { params: { lang: 'es' }, props: { locale: 'es' } },
+  ];
+}
+
+const { locale } = Astro.props;
+const t = site.locales[locale], s = t.simple;
+const other: Locale = locale === 'en' ? 'es' : 'en';
+const home = localizePath(locale, '/');
+const projects = await getProjects(locale);
+const work = projects.filter((p) => !p.data.student), student = projects.filter((p) => p.data.student);
+const recognition = await getRecognition();
+const canonical = new URL(localizePath(locale, '/simple/'), Astro.site);
+const cv = `${import.meta.env.BASE_URL.replace(/\/$/, '')}${site.cv}`;
+const loc = (v: string | { en: string; es: string }) => (typeof v === 'string' ? v : v[locale]);
+const icon = (name: string) => (icons as unknown as Record<string, { path: string }>)[name]?.path;
+const n = (i: number) => String(i + 1).padStart(2, '0');
+---
+<!doctype html>
+<html lang={locale}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0910">
+<meta name="color-scheme" content="dark">
+<title>{s.title}</title>
+<meta name="description" content={s.desc}>
+<link rel="canonical" href={canonical}>
+<link rel="alternate" hreflang="en" href={new URL(localizePath('en', '/simple/'), Astro.site)}>
+<link rel="alternate" hreflang="es" href={new URL(localizePath('es', '/simple/'), Astro.site)}>
+<link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', '/simple/'), Astro.site)}>
+<meta property="og:title" content={s.title}>
+<meta property="og:description" content={s.desc}>
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={new URL(locale === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+</head>
+<body>
+<header class="bar">
+  <a class="label back" href={home}><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>{s.enter}</a>
+  <a class="label" href={localizePath(other, '/simple/')} hreflang={other} lang={other}>{t.other}</a>
+</header>
+
+<main class="case simple">
+  <p class="label">{s.name}</p>
+  <h1>{site.shortName}</h1>
+  <p class="outcome">{t.headline}</p>
+
+  <section class="about" aria-labelledby="s-about">
+    <h2 class="label" id="s-about">{t.nav.about}</h2>
+    <p class="bio">{site.about.bio[locale]}</p>
+    <dl class="facts">
+      <div><dt class="label">{s.place}</dt><dd>{site.about.place[locale]}</dd></div>
+      <div><dt class="label">{s.education}</dt><dd>{site.about.education.map((e) => <span class="line">{e[locale]}</span>)}</dd></div>
+    </dl>
+    <p class="links case-links">
+      <a class="btn primary" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="btn" href={cv} download>{t.cvLabel} <span aria-hidden="true">↓</span></a>
+      {site.socials.map((x) => <a class="btn" href={x.url} rel="me noopener">{x.label} <span aria-hidden="true">↗</span></a>)}
+    </p>
+  </section>
+
+  <section class="records" aria-labelledby="s-work">
+    <h2 class="label" id="s-work">{t.nav.work}</h2>
+    <ul class="index">
+      {work.map((p, i) => (
+        <li><a href={localizePath(locale, `/work/${p.data.slug}/`)}>
+          <span class="label">{n(i)}</span>
+          <b>{p.data.title}</b>
+          <span class="why">{p.data.outcome}</span>
+          <span class="label">{p.data.role} · {p.data.when ?? p.data.timeframe}</span>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="records" aria-labelledby="s-exp">
+    <h2 class="label" id="s-exp">{t.nav.experience}</h2>
+    <ul class="index">
+      {experience.map((e, i) => {
+        const cells = <Fragment><span class="label">{n(i)}</span><b>{loc(e.org)}</b><span class="why">{e.role[locale]}</span><span class="label">{e.when[locale]}</span></Fragment>;
+        return <li>{e.slug ? <a href={localizePath(locale, `/work/${e.slug}/`)}>{cells}</a> : <span class="row">{cells}</span>}</li>;
+      })}
+    </ul>
+  </section>
+
+  <section class="records" aria-labelledby="s-stack">
+    <h2 class="label" id="s-stack">{t.nav.stack}</h2>
+    <dl class="stack">
+      {site.stack.map((g) => (
+        <div>
+          <dt class="label">{g.key[locale]}</dt>
+          <dd class="chips">{g.items.map((i) => <span>{icon(i.icon) && <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d={icon(i.icon)} /></svg>}{i.name}</span>)}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="records" aria-labelledby="s-rec">
+    <h2 class="label" id="s-rec">{t.recTitle}</h2>
+    <ul class="index">
+      {recognition.map((r, i) => (
+        <li><a href={localizePath(locale, `/recognition/#${r.data.slug}`)}>
+          <span class="label">{n(i)}</span>
+          <b>{r.data.title[locale]}</b>
+          <span class="why">{r.data.distinction[locale]} · {r.data.context[locale]}</span>
+          <span class="label">{t.recKinds[r.data.kind]}</span>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="records" aria-labelledby="s-student">
+    <h2 class="label" id="s-student">{s.students}</h2>
+    <ul class="index">
+      {student.map((p, i) => (
+        <li><a href={localizePath(locale, `/work/${p.data.slug}/`)}>
+          <span class="label">{n(i)}</span>
+          <b>{p.data.title}</b>
+          <span class="why">{p.data.outcome}</span>
+          <span class="label">{t.kinds[p.data.category]} · {p.data.when ?? p.data.timeframe}</span>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="records ask" aria-labelledby="s-contact">
+    <h2 class="label" id="s-contact">{t.nav.contact}</h2>
+    <p class="outcome">{t.form.lead}</p>
+    <p class="links case-links">
+      <a class="btn primary" href={`mailto:${site.email}`}>{t.write} <span aria-hidden="true">→</span></a>
+      <a class="btn" href={home}>{s.enter} <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+</main>
+</body>
+</html>
