@@ -115,7 +115,7 @@
     "en": {
       "path": "",
       "title": "Luis Cedillo — AI Full-Stack Engineer & Technical Founder",
-      "description": "I build AI products across web, mobile, APIs and cloud, from marketing execution to financial operations. A portfolio told as one night of work inside a 3D room.",
+      "description": "AI full-stack engineer and technical founder in Mexico City. I build AI products across web, mobile, APIs and cloud. A portfolio told inside a 3D room.",
       "headline": "AI Full-Stack Engineer & Technical Founder",
       "window": "I build AI products across web, mobile, APIs and cloud.",
       "boardTitle": "Selected work",
@@ -218,12 +218,13 @@
         "home": "Back to the portfolio"
       },
       "expTitle": "git log --career",
-      "expNow": "HEAD"
+      "expNow": "HEAD",
+      "caseStudy": "Case study"
     },
     "es": {
       "path": "es/",
       "title": "Luis Cedillo — Ingeniero full-stack de IA y fundador técnico",
-      "description": "Construyo productos de IA para web, móvil, APIs y nube, desde la ejecución de marketing hasta las operaciones financieras. Un portfolio contado como una noche de trabajo dentro de un cuarto en 3D.",
+      "description": "Ingeniero full-stack de IA y fundador técnico en Ciudad de México. Construyo productos de IA para web, móvil, APIs y nube. Un portafolio dentro de un cuarto 3D.",
       "headline": "Ingeniero full-stack de IA y fundador técnico",
       "window": "Construyo productos de IA para web, móvil, APIs y nube.",
       "boardTitle": "Trabajo seleccionado",
@@ -326,7 +327,8 @@
         "home": "Volver al portafolio"
       },
       "expTitle": "git log --trayectoria",
-      "expNow": "HEAD"
+      "expNow": "HEAD",
+      "caseStudy": "Caso de estudio"
     }
   },
   "awards": [

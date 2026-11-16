@@ -31,6 +31,21 @@ const home = localizePath(locale, '/');
 const lead = d.category === 'ai' ? undefined : (d.gallery[0] ?? (d.cover ? { src: d.cover, alt: d.coverAlt ?? '' } : undefined));
 const canonical = new URL(localizePath(locale, `/work/${d.slug}/`), Astro.site);
 const { Content } = await render(project);
+/* a title that says what the page is, and a description long enough to be useful in a results page */
+const pageTitle = `${d.title} — ${t.caseStudy} · ${site.shortName}`;
+const clip = (x: string) => (x.length <= 158 ? x : `${x.slice(0, 155).replace(/\s+\S*$/, '')}…`);
+const pageDesc = clip(d.outcome.length >= 90 ? d.outcome : `${d.outcome} ${d.summary}`);
+const work = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: d.title,
+  headline: d.outcome,
+  description: d.summary,
+  inLanguage: locale,
+  url: canonical.href,
+  keywords: d.stack.join(', '),
+  author: { '@type': 'Person', '@id': new URL('/#luis', Astro.site).href, name: site.name, url: new URL('/', Astro.site).href },
+};
 ---
 <!doctype html>
 <html lang={locale}>
@@ -39,13 +54,16 @@ const { Content } = await render(project);
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0b0910">
 <meta name="color-scheme" content="dark">
-<title>{d.title} — {site.shortName}</title>
-<meta name="description" content={d.outcome}>
+<title>{pageTitle}</title>
+<meta name="description" content={pageDesc}>
 <link rel="canonical" href={canonical}>
 <link rel="alternate" hreflang="en" href={new URL(localizePath('en', `/work/${d.slug}/`), Astro.site)}>
 <link rel="alternate" hreflang="es" href={new URL(localizePath('es', `/work/${d.slug}/`), Astro.site)}>
-<meta property="og:title" content={`${d.title} — ${site.shortName}`}>
-<meta property="og:description" content={d.outcome}>
+<link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', `/work/${d.slug}/`), Astro.site)}>
+<meta property="og:title" content={pageTitle}>
+<meta property="og:description" content={pageDesc}>
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'}>
 <meta property="og:type" content="article">
 <meta property="og:url" content={canonical}>
 <meta property="og:image" content={new URL(locale === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
@@ -53,6 +71,7 @@ const { Content } = await render(project);
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+<script type="application/ld+json" is:inline set:html={JSON.stringify(work)}></script>
 </head>
 <body>
 <header class="bar">
@@ -89,7 +108,7 @@ const { Content } = await render(project);
     <ol class:list={['gallery', d.category]}>
       {d.gallery.map((image) => (
         <li><figure>
-          <Picture src={image.src} alt="" widths={d.category === 'web' ? [480, 960] : [240, 480]} sizes={d.category === 'web' ? '(min-width: 48em) 50vw, 92vw' : '(min-width: 48em) 22vw, 44vw'} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+          <Picture src={image.src} alt={`${d.title}: ${image.alt}`} widths={d.category === 'web' ? [480, 960] : [240, 480]} sizes={d.category === 'web' ? '(min-width: 48em) 50vw, 92vw' : '(min-width: 48em) 22vw, 44vw'} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
           <figcaption class="label">{image.alt}</figcaption>
         </figure></li>
       ))}

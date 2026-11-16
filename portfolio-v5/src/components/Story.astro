@@ -19,6 +19,28 @@ const otherLang = lang === 'en' ? 'es' : 'en';
 const otherHref = `${import.meta.env.BASE_URL}${site.locales[otherLang].path}`;
 const poster = makePoster();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+/* structured data: who this site is about, for search engines */
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  inLanguage: lang,
+  url: new URL(`/${site.locales[lang].path}`, Astro.site).href,
+  mainEntity: {
+    '@type': 'Person',
+    '@id': new URL('/#luis', Astro.site).href,
+    name: site.name,
+    alternateName: site.shortName,
+    jobTitle: t.headline,
+    description: site.about.bio[lang],
+    url: new URL('/', Astro.site).href,
+    image: new URL('/og.png', Astro.site).href,
+    address: { '@type': 'PostalAddress', addressLocality: 'Mexico City', addressCountry: 'MX' },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad Panamericana' },
+    worksFor: { '@type': 'Organization', name: 'Dopamina' },
+    knowsAbout: site.stack.flatMap((g) => g.items.map((i) => i.name)),
+    sameAs: site.socials.map((x) => x.url),
+  },
+};
 const cv = `${base}${site.cv}`;
 const f = t.form;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
@@ -77,13 +99,17 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
 <link rel="alternate" hreflang="x-default" href={alt('en')}>
 <meta property="og:title" content={t.title}>
 <meta property="og:description" content={t.description}>
-<meta property="og:type" content="website">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={lang === 'es' ? 'es_MX' : 'en_US'}>
+<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_MX'}>
 <meta property="og:url" content={canonical}>
 <meta property="og:image" content={new URL(lang === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+<script type="application/ld+json" is:inline set:html={JSON.stringify(person)}></script>
 </head>
 <body>
 <main class="film" id="film" data-fit={FIT} data-worker={`${import.meta.env.BASE_URL}room.js`}>
@@ -170,7 +196,7 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
   </div>
 
   <div class="plain">
-    <h1>{site.shortName}</h1>
+    <p class="h">{site.shortName}</p>
     <p>{t.headline}. {t.plain}: {projects.map((p) => p.data.title).join(', ')}.</p>
     <p><Contact /></p>
   </div>

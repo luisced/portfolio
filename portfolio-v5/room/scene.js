@@ -662,8 +662,11 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
         const blink = Math.max(bump((time % 2.9) - 2.6, 0.09), bump((time % 7.3) - 4.1, 0.09)),
           ce2 = since('cat'), /* dormido no se levanta: entreabre un ojo y mueve las orejas */
           open = Math.max(0.08, Math.max(0.1, 1 - blink) * (1 - 0.65 * hk) * (1 - 0.86 * C.happy) * C.eye * awake, 0.5 * catK * sleep);
-        P['eye-l'] = { scale: [1, open, 1] };
-        P['eye-r'] = { scale: [1, Math.max(0.08, open * (1 - 0.9 * C.wink)), 1] };
+        /* dormido, los ojos se apagan del todo: aplastados seguían viéndose como una rendija amarilla (un splat no adelgaza más de un píxel).
+           Si lo tocan dormido, entreabre uno solo */
+        const shut = sleep > 0.6, peek = shut && catK > 0.1;
+        P['eye-l'] = shut ? { show: 0 } : { scale: [1, open, 1] };
+        P['eye-r'] = shut && !peek ? { show: 0 } : { scale: [1, Math.max(0.08, (peek ? 0.5 * catK : open) * (1 - 0.9 * C.wink)), 1] };
 
         /* orejas: un tic de vez en cuando */
         const flick = (period, off) => 22 * bump((time % period) - off, 0.12);

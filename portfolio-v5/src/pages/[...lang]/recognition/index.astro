@@ -24,6 +24,9 @@ const entries = await getRecognition();
 const projects = await getProjects(locale);
 const kinds = ['award', 'publication', 'credential'] as const;
 const canonical = new URL(localizePath(locale, '/recognition/'), Astro.site);
+/* the visible intro is short; the description for search results names what is on the page */
+const clip = (x: string) => (x.length <= 158 ? x : `${x.slice(0, 155).replace(/\s+\S*$/, '')}…`);
+const pageDesc = clip(`${site.shortName}: ${t.recIntro} ${entries.slice(0, 3).map((r) => r.data.title[locale]).join(', ')}.`);
 const arrow = 'M3 13 13 3M5 3h8v8';
 ---
 <!doctype html>
@@ -34,13 +37,16 @@ const arrow = 'M3 13 13 3M5 3h8v8';
 <meta name="theme-color" content="#0b0910">
 <meta name="color-scheme" content="dark">
 <title>{t.recTitle} — {site.shortName}</title>
-<meta name="description" content={t.recIntro}>
+<meta name="description" content={pageDesc}>
 <link rel="canonical" href={canonical}>
 <link rel="alternate" hreflang="en" href={new URL(localizePath('en', '/recognition/'), Astro.site)}>
 <link rel="alternate" hreflang="es" href={new URL(localizePath('es', '/recognition/'), Astro.site)}>
+<link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', '/recognition/'), Astro.site)}>
 <meta property="og:title" content={`${t.recTitle} — ${site.shortName}`}>
-<meta property="og:description" content={t.recIntro}>
+<meta property="og:description" content={pageDesc}>
 <meta property="og:type" content="website">
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'}>
 <meta property="og:url" content={canonical}>
 <meta property="og:image" content={new URL(locale === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
 <meta property="og:image:width" content="1200">

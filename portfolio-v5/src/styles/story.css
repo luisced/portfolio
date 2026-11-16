@@ -126,7 +126,7 @@
   .film.flat .plain { display: block; }
   .film.flat .cue { display: none; }
   .film.flat .lens { display: none; }
-  .plain h1 { margin: 0 0 6px; font: 700 clamp(22px, 4vw, 36px)/1.05 var(--sans); letter-spacing: -.04em; }
+  .plain .h { margin: 0 0 6px; color: #f4f1ea; font: 700 clamp(22px, 4vw, 36px)/1.05 var(--sans); letter-spacing: -.04em; }
   .plain p { margin: 4px auto; max-width: 34em; color: rgba(244, 241, 234, .8); }
 
   .track div { height: 130svh; }
