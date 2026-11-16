@@ -51,12 +51,17 @@ import { blip } from './sound.js';
   if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
 
 function boot() {
-  const gl = cv.getContext('webgl2', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'high-performance' });
+  /* sin tarjeta gráfica de verdad (WebGL emulado por software) el cuarto ahogaría el hilo principal: ahí se queda la imagen fija con el texto */
+  const gl = cv.getContext('webgl2', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true });
   if (!gl) return flat();
+  /* (algunos navegadores entregan el contexto emulado sin avisar: se reconoce por el nombre del renderizador) */
+  const dbg = gl.getExtension('WEBGL_debug_renderer_info'), renderer = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : '';
+  if (/swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer)) return flat();
   const TAN = Math.tan(38 * Math.PI / 360);
 
   const { ROW, P1, P2, U1, U2, vao, vbo, empty, tex, fbo, texD, texF, floats } = createGL(gl);
 
+  let level = 0, costSum = 0, costN = 0, strikes = 0, hdAsked = false, dead = false;
   let W = 0, H = 0, PX = 2, count = 0, capacity = 0, info = null, fit = 1, SHOTS = null;
   function view(yaw, pitch, dist, T) {
     const cp = Math.cos(pitch), sp = Math.sin(pitch),
@@ -73,7 +78,7 @@ function boot() {
     if (!info) return;
     const cw = film.clientWidth, ch = film.clientHeight;
     fit = layout();
-    const px = Math.max(2, Math.round(ch / 300)), /* unas 300 filas de arte: píxeles más finos que antes */
+    const px = Math.round(Math.max(2, Math.round(ch / 300)) * [1, 1.5, 2][level]), /* unas 300 filas de arte; si el equipo no da, píxeles más gruesos */
       w = Math.ceil(cw / px), h = Math.ceil(ch / px);
     if (w === W && h === H && px === PX) return;
     W = w; H = h; PX = px; cv.width = W; cv.height = H;
@@ -101,6 +106,7 @@ function boot() {
     window: { o: [-1.25, 3.56, -3.08], u: [1, 0, 0], v: [0, -1, 0], w: 2.1 },
     board: { o: [2.86, 4.1, -0.66], u: [0, 0, 1], v: [0, -1, 0], w: 3.12 },
     screen: { o: [1.53, 1.8, 0.83], u: [0, 0, 1], v: [0, -1, 0], w: 0.98 },
+    log: { o: [1.535, 2.21, -1.59], u: [0, 0, 1], v: [0, -1, 0], w: 0.62 },          /* la pantalla del monitor vertical */
     note: { o: [1.03, 1.0, 0.86], u: [0, 0, 1], v: [-1, 0, 0], w: 0.68 },
     award0: { o: [-1.85, 0.86, -2.39], u: [1, 0, 0], v: [0, -1, 0], w: 0.76 },   /* placas en el frente del mueble de trofeos */
     award1: { o: [-0.91, 0.86, -2.39], u: [1, 0, 0], v: [0, -1, 0], w: 0.76 },
@@ -167,6 +173,7 @@ function boot() {
       framed(-0.62, 0.38, [1.545, 1.5, 0], 0.72, 1.15, 0.94, 0.8),                   /* el saludo */
       framed(-0.3, 0.24, [-0.2, 2.9, -3.1], 2.9, 2.2),                               /* la ventana */
       framed(-1.36, 0.2, [2.87, 3.2, 0.9], 3.3, 1.9, 0.96),                          /* el pizarrón */
+      framed(-1.82, 0.12, [1.545, 1.66, -1.28], 0.7, 1.3, 0.94, 0.78),               /* la trayectoria, en el monitor vertical */
       framed(-1.3, 0.15, [1.53, 1.45, 1.32], 1.06, 0.8, 0.96),                       /* el monitor */
       framed(-1.42, 0.98, [0.9, 1.02, 1.3], 1.2, 0.62),                              /* la nota y el pato */
       framed(-0.25, 0.08, [-1.0, 1.12, -2.5], 2.0, 1.95, 0.96, 0.8),                 /* los trofeos */
@@ -178,6 +185,7 @@ function boot() {
       framed(-0.74, 0.38, [1.545, 1.5, 0], 1.6, 1.15),                               /* el saludo: desde el costado derecho del michi, lo bastante de lado para que su cabeza y sus bigotes no crucen por delante de la pantalla (el texto es HTML y se dibujaría encima de él) */
       framed(-0.3, 0.24, [-0.2, 2.9, -3.1], 2.9, 2.2),                               /* la ventana */
       framed(-1.24, 0.22, [2.87, 3.15, 0.9], 3.8, 2.5),                              /* el pizarrón */
+      framed(-1.82, 0.12, [1.545, 1.66, -1.28], 1.6, 1.3, 0.84, 0.74),               /* la trayectoria: desde la izquierda del michi, para que no se cruce */
       framed(-1.27, 0.15, [1.53, 1.47, 1.32], 1.22, 0.92),                           /* el monitor */
       framed(-1.42, 0.98, [0.9, 1.02, 1.3], 1.2, 0.62),                              /* la nota y el pato */
       framed(0, 0.08, [-1.0, 1.12, -2.5], 2.35, 1.95),                               /* el mueble de trofeos y sus placas */
@@ -259,25 +267,42 @@ function boot() {
         gl.bindTexture(gl.TEXTURE_2D, texD);
         gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, tailRow, ROW * 3, tailRows, gl.RGBA, gl.FLOAT, m.tail);
         spareIds = m.ids; spareTail = m.tail;
-        if (!shown) { shown = true; frame(performance.now(), true); film.classList.add('live'); spawn(HD); }
+        if (!shown) { shown = true; frame(performance.now(), true); film.classList.add('live'); }
       }
     };
     w.postMessage({ type: 'build', hd });
   }
   spawn(null);
 
+  /* calidad a la medida del equipo: se mide lo que cuesta cada cuadro en el hilo principal. Si sobra, se pide la versión con toda
+     la definición; si falta, los píxeles engordan (menos que dibujar); y si ni así, se apaga el 3D y queda la imagen fija */
+  let gapSum = 0;
+  function govern(cost, gap) {
+    costSum += cost; gapSum += gap; costN++;
+    if (costN < 40) return;
+    /* cuenta lo que tarda nuestro código y, si la página está al frente, también el tiempo real entre cuadros (ahí se nota una tarjeta lenta) */
+    const front = document.hasFocus(), avg = Math.max(costSum / costN, front ? gapSum / costN - 12 : 0); costSum = gapSum = costN = 0;
+    if (avg > 60 && level === 2) { if (++strikes >= 2) { dead = true; if (worker) worker.terminate(); film.classList.remove('live'); flat(); } return; }
+    strikes = 0;
+    if (avg > 22 && level < 2) { level++; W = 0; return; }
+    if (avg < 9 && level === 0 && !hdAsked) { hdAsked = true; spawn(HD); }
+  }
   function frame(now, once) {
+    if (dead) return;
     if (once !== true) requestAnimationFrame(frame);
     if (!info || document.hidden) { tNow = 0; return; }
+    const began = performance.now();
     const dt = tNow ? Math.min(0.1, (now - tNow) / 1000) : 0;
     tNow = now;
     if (!t0) t0 = now;
     resize();
     const c = progress();
+    /* el cuarto cuenta la noche en sus propios pasos (0 a 8): el capítulo de la trayectoria no la adelanta, la deja en pausa */
+    const night = c <= 3 ? c : c < 4 ? 3 : c - 1, career = smooth(1 - Math.abs(c - 4) / 0.8);
     target(c, goal);
     /* al llegar al plano de las pruebas, el michi celebra */
     const b = c - Math.floor(c) > 0.9 ? Math.ceil(c) : Math.floor(c);
-    if (b !== beat) { beat = b; lampOff = false; /* la luz vuelve sola al cambiar de capítulo: lo escrito nunca queda a oscuras */ if (b === 6 && worker) worker.postMessage({ type: 'cheer' }); }
+    if (b !== beat) { beat = b; lampOff = false; /* la luz vuelve sola al cambiar de capítulo: lo escrito nunca queda a oscuras */ if (b === 7 && worker) worker.postMessage({ type: 'cheer' }); }
     /* la cámara persigue al guion con suavidad: la rueda del ratón da saltos, la cámara no */
     const k = cam.set && !reduced ? 1 - Math.exp(-7 * dt) : 1;
     cam.set = true;
@@ -306,7 +331,7 @@ function boot() {
     if (!waiting) {
       waiting = true;
       const step = lastAsk ? Math.min(0.1, (now - lastAsk) / 1000) : 0, move = [];
-      const msg = { type: 'frame', dt: step, story: c, day: dayK, z: v.z, eye: v.e, ids: spareIds, tail: spareTail };
+      const msg = { type: 'frame', dt: step, story: night, career, day: dayK, z: v.z, eye: v.e, ids: spareIds, tail: spareTail };
       lastAsk = now; played += step;
       if (spareIds) move.push(spareIds.buffer);
       if (spareTail) move.push(spareTail.buffer);
@@ -333,13 +358,14 @@ function boot() {
     gl.useProgram(P2);
     if (now - dayAt > 30000) { dayAt = now; dayK = dayOf(); if ((dayK > 0.5) !== pal2Day && palDay) { pal2Day = dayK > 0.5; gl.uniform3fv(U2.uPal2, pal2Day ? palDay : palDawn); } }
     /* de noche, el scroll (o tocar la ventana) trae el amanecer; de día ya hay luz, y tocar la ventana deja ver la noche un rato */
-    const sunrise = dayK > 0.5 ? dayK * (1 - peekK) : Math.max(dayK, smooth((c - 7.45) / 0.5), peekK);
+    const sunrise = dayK > 0.5 ? dayK * (1 - peekK) : Math.max(dayK, smooth((night - 7.45) / 0.5), peekK);
     gl.uniform1f(U2.uDawn, sunrise);
     gl.uniform1f(U2.uOff, dark);
     film.style.setProperty('--dawn', sunrise.toFixed(3));
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
     gl.bindVertexArray(empty);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (once !== true && now - t0 > 600) govern(performance.now() - began, dt * 1000);
   }
 
   /* --- mirar alrededor arrastrando en horizontal (el scroll vertical sigue siendo del navegador) --- */

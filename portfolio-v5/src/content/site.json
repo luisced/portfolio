@@ -178,6 +178,7 @@
       "nav": {
         "about": "About",
         "work": "Work",
+        "experience": "Experience",
         "stack": "Stack",
         "awards": "Awards",
         "research": "Research",
@@ -196,7 +197,7 @@
         "name": "Name",
         "email": "Email",
         "message": "Message",
-        "send": "Send message",
+        "send": "Send postcard",
         "sending": "Sending…",
         "okTitle": "Message received.",
         "okBody": "Thanks for reaching out. I'll reply by email.",
@@ -207,8 +208,17 @@
         "invalidMessage": "Add a little more detail (at least 20 characters)",
         "rateLimit": "Too many attempts. Wait one minute, then try again.",
         "turnstile": "Verification",
+        "card": "Post card",
+        "to": "To",
+        "from": "From",
+        "placeholder": "Hi Luis, …",
+        "postmark": "THE CAT'S ROOM · MEXICO CITY ·",
+        "posted": "Postmarked and on its way",
+        "returned": "Returned to sender",
         "home": "Back to the portfolio"
-      }
+      },
+      "expTitle": "git log --career",
+      "expNow": "HEAD"
     },
     "es": {
       "path": "es/",
@@ -276,6 +286,7 @@
       "nav": {
         "about": "Sobre mí",
         "work": "Trabajo",
+        "experience": "Experiencia",
         "stack": "Stack",
         "awards": "Premios",
         "research": "Investigación",
@@ -294,7 +305,7 @@
         "name": "Nombre",
         "email": "Correo",
         "message": "Mensaje",
-        "send": "Enviar mensaje",
+        "send": "Enviar postal",
         "sending": "Enviando…",
         "okTitle": "Mensaje recibido.",
         "okBody": "Gracias por escribirme. Te responderé por correo.",
@@ -305,8 +316,17 @@
         "invalidMessage": "Añade un poco más de detalle (al menos 20 caracteres)",
         "rateLimit": "Demasiados intentos. Espera un minuto y vuelve a intentarlo.",
         "turnstile": "Verificación",
+        "card": "Tarjeta postal",
+        "to": "Para",
+        "from": "De",
+        "placeholder": "Hola Luis, …",
+        "postmark": "EL CUARTO DEL GATO · CDMX ·",
+        "posted": "Sellada y en camino",
+        "returned": "Devuelta al remitente",
         "home": "Volver al portafolio"
-      }
+      },
+      "expTitle": "git log --trayectoria",
+      "expNow": "HEAD"
     }
   },
   "awards": [

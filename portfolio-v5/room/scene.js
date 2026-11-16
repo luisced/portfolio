@@ -471,6 +471,9 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     W.hat = on => { hat = !!on; };
     /* W.day(k): cuánto de día es afuera (0 noche, 1 día): de día no hay luna */
     W.day = k => { day = k; };
+    /* W.career(k): la cámara está en el monitor vertical (la trayectoria): el michi voltea hacia él en vez de al pizarrón */
+    let career = 0;
+    W.career = k => { career = k; };
     /* las zonas que se pueden tocar: cajas alineadas a los ejes. `w` = cuelga de esa pared (si la pared está escondida, no cuenta) */
     W.hits = [
       { n: 'lamp', a: [2.1, 0, 2.5], b: [3.1, 2.95, 3.5] },
@@ -577,9 +580,9 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
         nowT = time;
         story += (storyT - story) * (1 - Math.exp(-5 * Math.min(0.05, Math.max(0, dt || 0))));
         const near = (at, w) => { const x = Math.max(0, 1 - Math.abs(story - at) / w); return x * x * (3 - 2 * x); },
-          lookBoard = near(3, 0.8), lookDuck = near(5, 0.8),
+          lookBoard = near(3, 0.8) * (1 - career), lookDuck = near(5, 0.8), lookLeft = career,
           sl = Math.max(0, Math.min(1, (story - 7.5) / 0.4)), sleep = sl * sl * (3 - 2 * sl), awake = 1 - sleep,
-          busy = (1 - lookBoard) * (1 - lookDuck) * awake;
+          busy = (1 - lookBoard) * (1 - lookDuck) * (1 - lookLeft) * awake;
         const ce = time - cheerAt,
           ck = ce < 1.8 ? Math.min(1, ce / 0.2) * Math.min(1, (1.8 - ce) / 0.3) : 0;
         const t = ((time % LOOP) + LOOP) % LOOP,
@@ -650,8 +653,8 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
         P.head = {
           rot: [
             3 * sin(time * 1.3) * awake + hk * 8 * sin(time * 9) + 14 * sleep + C.hx,
-            -10 - hk * 40 + (typing ? 5 * (lt - 0.5) * busy : 0) - 16 * lookBoard - 58 * lookDuck + 10 * sleep + C.hy - 88 * yarnK * awake * (1 - hk),
-            (typing ? (-6 - row * 0.9) * busy - burst * 1.2 * tap(0.6) : -4 * busy) + hk * 12 + 24 * lookBoard - 10 * lookDuck - 34 * sleep + C.hz
+            -10 - hk * 40 + (typing ? 5 * (lt - 0.5) * busy : 0) - 16 * lookBoard - 58 * lookDuck + 44 * lookLeft + 10 * sleep + C.hy - 88 * yarnK * awake * (1 - hk),
+            (typing ? (-6 - row * 0.9) * busy - burst * 1.2 * tap(0.6) : -4 * busy) + hk * 12 + 24 * lookBoard - 10 * lookDuck + 6 * lookLeft - 34 * sleep + C.hz
           ]
         };
 

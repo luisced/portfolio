@@ -3,7 +3,9 @@ const track = document.getElementById('track'), kids = [...track.children], N = 
 const menu = document.getElementById('menu'), burger = document.getElementById('burger');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const links = [...document.querySelectorAll('[data-go]')];
-const KEYS = { 1: 'about', 3: 'work', 4: 'stack', 6: 'awards', 7: 'research', 8: 'contact' };
+/* chapter number → its #name, read from the links themselves */
+const KEYS = Object.fromEntries(links.filter((a) => +a.dataset.go > 0).map((a) => [+a.dataset.go, a.getAttribute('href').slice(1)]));
+const STOPS = Object.keys(KEYS).map(Number).sort((a, b) => b - a);
 
 /* closing plays the curtain going back up before the dialog actually closes */
 let closing = 0;
@@ -31,7 +33,7 @@ function chapter() {
   return i;
 }
 /* the shortcut of the part on screen is marked */
-const part = (c) => (c >= 8 ? 8 : c >= 7 ? 7 : c >= 6 ? 6 : c >= 4 ? 4 : c >= 3 ? 3 : c >= 1 ? 1 : 0);
+const part = (c) => STOPS.find((b) => c >= b) || 0;
 let current = -1;
 function mark() {
   const p = part(chapter());
@@ -57,7 +59,13 @@ for (const a of links)
 
 /* arriving with #work in the address (from a case study's "back", or a shared link) lands on that chapter */
 const fromHash = Object.keys(KEYS).find((b) => '#' + KEYS[b] === location.hash);
-if (fromHash) addEventListener('load', () => go(+fromHash, true), { once: true });
+if (fromHash) {
+  /* the browser would otherwise put the page back where it was last time, after we have moved it */
+  history.scrollRestoration = 'manual';
+  const land = () => { go(+fromHash, true); mark(); };
+  if (document.readyState === 'complete') land(); else addEventListener('load', land, { once: true });
+  setTimeout(land, 400);
+}
 
 burger.addEventListener('click', () => { document.documentElement.classList.add('locked'); menu.showModal(); });
 menu.addEventListener('click', (e) => { if (e.target === menu || e.target.closest('[data-close]') || e.target.closest('.more a:not([data-open])')) shut(); });

@@ -6,6 +6,7 @@ import Contact from './Contact.astro';
 import { getImage } from 'astro:assets';
 import * as icons from 'simple-icons';
 import hello from '../content/hello.json';
+import experience from '../content/experience.json';
 import portraitSrc from '../assets/sf-hero.webp';
 import { getProjects, getRecognition, localizePath } from '../lib/projects';
 import '../styles/fonts.css';
@@ -28,13 +29,15 @@ const glyph = {
   work: 'M4 8h16v11H4zM9 8V5h6v3M4 13h16',
   stack: 'M12 4l8 4-8 4-8-4 8-4zM4 12l8 4 8-4M4 16l8 4 8-4',
   awards: 'M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5c0 3 1.2 4.5 3.3 4.8M16 6h3c0 3-1.2 4.5-3.3 4.8M12 13v4M8.5 20h7',
+  experience: 'M6 4v16M6 7h0M6 12h0M6 17h0M10 7h9M10 12h7M10 17h9',
   research: 'M12 6.5C10 5 7 4.6 4 5v13c3-.4 6 0 8 1.5 2-1.5 5-1.9 8-1.5V5c-3-.4-6 0-8 1.5zM12 6.5v13',
   contact: 'M3.5 6h17v12h-17zM3.5 7l8.5 6 8.500-6',
   write: 'M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3',
   cv: 'M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14',
   lang: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.500 2.600 3.600 5.600 3.600 9s-1.100 6.400-3.600 9c-2.500-2.600-3.600-5.600-3.600-9s1.100-6.400 3.600-9z',
 } as const;
-const nav = [['about', 1], ['work', 3], ['stack', 4], ['awards', 6], ['research', 7], ['contact', 8]] as const;
+const nav = [['about', 1], ['work', 3], ['experience', 4], ['stack', 5], ['awards', 7], ['research', 8], ['contact', 9]] as const;
+const loc = (v: string | { en: string; es: string }) => (typeof v === 'string' ? v : v[lang]);
 /* the chalkboard lists professional work; student projects keep their case studies and live in the full index */
 const projects = (await getProjects(lang)).filter((p) => !p.data.student);
 const recognition = await getRecognition();
@@ -119,29 +122,42 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
         ))}
       </ul>
     </div>
-    <!-- 4 · el monitor de la derecha -->
-    <div class="surf screen" data-s="screen" data-beat="4" style="width:490px;height:330px">
+    <!-- 4 · el monitor vertical: la trayectoria, de hoy hacia atrás, como un historial de git -->
+    <div class="surf log" data-s="log" data-beat="4" style="width:310px;height:550px">
+      <h2><span aria-hidden="true">$ </span>{t.expTitle}</h2>
+      <ol>
+        {experience.map((e, i) => (
+          <li class:list={{ now: e.now }}>
+            <b>{e.slug ? <a href={localizePath(lang, `/work/${e.slug}/`)}>{loc(e.org)}</a> : loc(e.org)}{i === 0 && <i>{t.expNow}</i>}</b>
+            <span>{e.role[lang]}</span>
+            <time>{e.when[lang]}</time>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <!-- 5 · el monitor de la derecha -->
+    <div class="surf screen" data-s="screen" data-beat="5" style="width:490px;height:330px">
       <p class="c">{t.stackComment}</p>
       {site.stack.map((g) => (
         <div class="group"><b>{g.key[lang]}</b><div class="chips">{g.items.map((i) => <span>{icon(i.icon) && <svg viewBox="0 0 24 24" aria-hidden="true"><path d={icon(i.icon)} /></svg>}{i.name}</span>)}</div></div>
       ))}
     </div>
     <!-- 5 · la nota junto al pato -->
-    <div class="surf ink" data-s="note" data-beat="5" style="width:340px;height:160px"><p>{t.note}</p></div>
+    <div class="surf ink" data-s="note" data-beat="6" style="width:340px;height:160px"><p>{t.note}</p></div>
     <!-- 6 · las placas del mueble de trofeos -->
     {site.awards.map((w, i) => (
-      <button type="button" class="surf ink award" data-s={`award${i}`} data-beat="6" data-open={w.slug} style="width:380px;height:240px">
+      <button type="button" class="surf ink award" data-s={`award${i}`} data-beat="7" data-open={w.slug} style="width:380px;height:240px">
         <p>{w.title[lang]}</p><small>{w.detail[lang]}</small><span class="tag">{t.open}</span>
       </button>
     ))}
     {site.awards.map((w, i) => (
-      <button type="button" class="surf hit" data-s={`cup${i}`} data-beat="6" data-open={w.slug} style="width:200px;height:170px" tabindex="-1" aria-hidden="true"></button>
+      <button type="button" class="surf hit" data-s={`cup${i}`} data-beat="7" data-open={w.slug} style="width:200px;height:170px" tabindex="-1" aria-hidden="true"></button>
     ))}
     <!-- 7 · el librero: tres objetos que se pueden abrir -->
     {shelf.map((it, i) => (
       <button type="button" class:list={['surf', 'item', i === 0 ? 'book' : 'frame']} data-s={`shelf${i}`} data-beat="all" data-open={it.data.slug}
         style={i === 0 ? `width:220px;height:${Math.round(220 * it.media.src.height / it.media.src.width)}px;--i:0` : `width:250px;height:165px;--i:${i}`}
-        aria-label={`${t.recKinds[it.data.kind]}: ${it.data.title[lang]}`}>
+        aria-label={`${t.open}: ${t.recKinds[it.data.kind]}, ${it.data.title[lang]}`}>
         <span class="obj">
           <span class="face"><img src={it.thumb.src} alt="" width={it.thumb.attributes.width} height={it.thumb.attributes.height} loading="lazy" decoding="async" /></span>
           <i class="side l"></i><i class="side r"></i><i class="side t"></i>
@@ -150,7 +166,7 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
       </button>
     ))}
     <!-- 8 · otra vez el suelo -->
-    <div class="surf plaque ask" data-s="floor" data-beat="8" style="width:1440px;height:330px"><h2>{t.ask}</h2><p><a href="#write" data-open="write" data-plain><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.2V21h3.8L18 9.8 14.2 6 3 17.2zM20.7 7a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.8 1.8L19 8.9 20.7 7z"/></svg>{t.write}</a> · <Contact /> · <a href={cv} download>{t.cv} ↓</a></p></div>
+    <div class="surf plaque ask" data-s="floor" data-beat="9" style="width:1440px;height:330px"><h2>{t.ask}</h2><p><a href="#write" data-open="write" data-plain><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.2V21h3.8L18 9.8 14.2 6 3 17.2zM20.7 7a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.8 1.8L19 8.9 20.7 7z"/></svg>{t.write}</a> · <Contact /> · <a href={cv} download>{t.cv} ↓</a></p></div>
   </div>
 
   <div class="plain">
@@ -169,7 +185,7 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
     </nav>
     <div class="tools">
       <a class="cv" href={cv} download aria-label={t.cvLabel}>{t.cv}<svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 1.5v7M2.8 5.6 6 8.8l3.2-3.2M2 10.5h8"/></svg></a>
-      <span class="lang"><b aria-hidden="true">{lang.toUpperCase()}</b><a href={otherHref} hreflang={otherLang} lang={otherLang} aria-label={t.other}>{otherLang.toUpperCase()}</a></span>
+      <span class="lang"><b aria-hidden="true">{lang.toUpperCase()}</b><a href={otherHref} hreflang={otherLang} lang={otherLang} aria-label={`${otherLang.toUpperCase()} · ${t.other}`}>{otherLang.toUpperCase()}</a></span>
       <button type="button" class="snd" id="snd" aria-pressed="false" aria-label={t.soundOn} data-on={t.soundOn} data-off={t.soundOff} hidden>
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path class="on" d="M15.5 9.2c1.6 1.6 1.6 4 0 5.6M18 6.8c3 3 3 7.4 0 10.4"/><path class="off" d="m15.5 9.5 5 5m0-5-5 5"/></svg>
       </button>
@@ -181,7 +197,7 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
   <div class="cue" id="cue">{t.cue}<small>{t.touch}</small><i aria-hidden="true"></i></div>
   <div class="reel"><i id="reel"></i></div>
 </main>
-<div class="track" id="track" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div class="track" id="track" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 <!-- la ficha que se abre al tomar un objeto del librero -->
 <dialog class="detail" id="detail" aria-label={t.recTitle}>
   <button type="button" class="x" data-close aria-label={t.close}><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
@@ -196,39 +212,69 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
       <p class="go"><a href="#write" data-open="write" data-plain>{t.write} →</a><Contact /><a href={cv} download>{t.cv} ↓</a></p>
     </div>
   </article>
-  <!-- el formulario de contacto (el mismo de V4: /api/contact, Resend y Turnstile) -->
+  <!-- el formulario de contacto: una postal sobre el papel del cuarto (el mismo backend de V4: /api/contact, Resend y Turnstile) -->
   <article data-id="write" class="write" hidden>
     <div class="copy">
       <p class="k">{f.kicker}</p>
       <h2>{f.title}</h2>
       <p class="sum">{f.lead}</p>
-      <form method="post" action={`${base}/api/contact`} data-contact data-sending={f.sending} data-msg-required={f.required} data-msg-email={f.invalidEmail} data-msg-minlength={f.invalidMessage} novalidate>
-        <div class="field">
-          <label for="c-name">{f.name}</label>
-          <input id="c-name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" aria-describedby="c-name-error" />
-          <p class="err" id="c-name-error" aria-live="polite" hidden></p>
+      <form class="card" method="post" action={`${base}/api/contact`} data-contact data-locale={lang} data-sending={f.sending} data-msg-required={f.required} data-msg-email={f.invalidEmail} data-msg-minlength={f.invalidMessage} novalidate>
+        <!-- el reverso de la postal: timbre, matasellos (cae al enviar) y destinatario -->
+        <div class="head">
+          <p class="pk">{f.card}</p>
+          <svg class="stamp" viewBox="0 0 64 78" width="64" height="78" aria-hidden="true" shape-rendering="crispEdges">
+            <rect width="64" height="78" fill="#ffc46b" />
+            <rect class="perf" x="0" y="0" width="64" height="78" fill="none" pathLength="71" shape-rendering="auto" />
+            <rect x="6.5" y="6.5" width="51" height="65" fill="none" stroke="#251a2c" />
+            {['.XX......XX.', '.XXX....XXX.', '.XXXXXXXXXX.', 'XXXXXXXXXXXX', 'XX..XXXX..XX', 'XXXXXWWXXXXX', '.XXWWXXWWXX.', '..XWWWWWWX..', '...WWWWWW...'].flatMap((row, y) => [...row].map((c, x) => (c === '.' ? null : <rect x={8 + x * 4} y={14 + y * 4} width="4" height="4" fill={c === 'X' ? '#251a2c' : '#f4f1ea'} />)))}
+            <text x="10" y="66" shape-rendering="auto">V5</text>
+            <text x="54" y="66" text-anchor="end" shape-rendering="auto">MX</text>
+          </svg>
+          <svg class="mark" viewBox="0 0 156 84" width="156" height="84" aria-hidden="true" fill="none" stroke="currentColor">
+            <circle cx="42" cy="42" r="39" stroke-width="1.6" />
+            <circle cx="42" cy="42" r="24" stroke-width="1" />
+            <path id="pm-arc" d="M42 70.500a28.500 28.500 0 1 1 .01 0" stroke="none" />
+            <text class="ring" stroke="none" fill="currentColor"><textPath href="#pm-arc" textLength="172" lengthAdjust="spacing">{f.postmark}</textPath></text>
+            <text class="day" x="42" y="41" text-anchor="middle" stroke="none" fill="currentColor" data-mark-day></text>
+            <text class="year" x="42" y="52" text-anchor="middle" stroke="none" fill="currentColor" data-mark-year></text>
+            <path stroke-width="1.6" d="M84 22q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 32q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 42q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 52q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 62q6-5 12 0t12 0 12 0 12 0 12 0 12 0" />
+          </svg>
+          <p class="to"><span class="pk">{f.to}</span><b>{site.name}</b><span>{site.about.place[lang]}</span></p>
         </div>
-        <div class="field">
-          <label for="c-email">{f.email}</label>
-          <input id="c-email" name="email" type="email" required maxlength="254" autocomplete="email" autocapitalize="none" autocorrect="off" enterkeyhint="next" aria-describedby="c-email-error" />
-          <p class="err" id="c-email-error" aria-live="polite" hidden></p>
-        </div>
-        <div class="field">
-          <label for="c-message">{f.message} <span data-count>0 / 5000</span></label>
-          <textarea id="c-message" name="message" rows="5" required minlength="20" maxlength="5000" aria-describedby="c-message-error"></textarea>
+        <div class="msg">
+          <div class="row"><label for="c-message">{f.message}</label><span class="pk" data-count>0 / 5000</span></div>
+          <textarea id="c-message" name="message" rows="6" required minlength="20" maxlength="5000" placeholder={f.placeholder} aria-describedby="c-message-error"></textarea>
           <p class="err" id="c-message-error" aria-live="polite" hidden></p>
+        </div>
+        <div class="from">
+          <p class="pk">{f.from}</p>
+          <div class="field">
+            <label for="c-name">{f.name}</label>
+            <input id="c-name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" aria-describedby="c-name-error" />
+            <p class="err" id="c-name-error" aria-live="polite" hidden></p>
+          </div>
+          <div class="field">
+            <label for="c-email">{f.email}</label>
+            <input id="c-email" name="email" type="email" required maxlength="254" autocomplete="email" autocapitalize="none" autocorrect="off" enterkeyhint="send" aria-describedby="c-email-error" />
+            <p class="err" id="c-email-error" aria-live="polite" hidden></p>
+          </div>
         </div>
         <input class="sr" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <input type="hidden" name="locale" value={lang} />
-        {siteKey && <fieldset class="verify"><legend class="sr">{f.turnstile}</legend><div class="cf-turnstile" data-sitekey={siteKey} data-theme="dark" data-size="flexible"></div></fieldset>}
-        <button class="send" type="submit" data-submit>{f.send} →</button>
+        <div class="foot">
+          <div class="result bad" role="alert" tabindex="-1" data-bad hidden>
+            <p class="pk">{f.returned}</p>
+            <h3>{f.errTitle}</h3>
+            <p data-bad-default>{f.errBody} <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+            <p data-bad-rate hidden>{f.rateLimit}</p>
+          </div>
+          <div class="act" data-actions>
+            {siteKey && <fieldset class="verify"><legend class="sr">{f.turnstile}</legend><div class="cf-turnstile" data-sitekey={siteKey} data-theme="light" data-size="flexible"></div></fieldset>}
+            <button class="send" type="submit" data-submit><span data-submit-label>{f.send}</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3.500 11.500 20 4l-6 16.500-3-7-7.500-2zM11 13.500 20 4" /></svg></button>
+          </div>
+          <div class="result ok" role="status" tabindex="-1" data-ok hidden><p class="pk">{f.posted}</p><h3>{f.okTitle}</h3><p>{f.okBody}</p></div>
+        </div>
       </form>
-      <div class="result ok" role="status" tabindex="-1" data-ok hidden><h3>✓ {f.okTitle}</h3><p>{f.okBody}</p></div>
-      <div class="result bad" role="alert" tabindex="-1" data-bad hidden>
-        <h3>! {f.errTitle}</h3>
-        <p data-bad-default>{f.errBody} <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
-        <p data-bad-rate hidden>{f.rateLimit}</p>
-      </div>
     </div>
   </article>
   {openable.map((it) => (

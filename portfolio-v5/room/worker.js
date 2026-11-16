@@ -38,6 +38,7 @@ function step(dt) {
 function frame(m) {
   world.story(m.story || 0);
   world.day(m.day || 0);
+  world.career(m.career || 0);
   step(Math.min(0.1, m.dt));
   world.cutaway(m.eye);
   const d = world.anim.bones

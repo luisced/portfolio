@@ -69,13 +69,13 @@ const { Content } = await render(project);
     <div><dt class="label">{t.role}</dt><dd>{d.role}</dd></div>
     <div><dt class="label">{t.when}</dt><dd>{d.timeframe}</dd></div>
     <div class="wide"><dt class="label">{t.stackLabel}</dt><dd class="chips">{d.stack.map((s) => <span>{s}</span>)}</dd></div>
-    {(d.links.live || d.links.repo) && (
-      <div class="wide links">
+  </dl>
+  {(d.links.live || d.links.repo) && (
+    <p class="links case-links">
         {d.links.live && <a class="btn primary" href={d.links.live} rel="noopener" target="_blank">{t.live}<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>}
         {d.links.repo && <a class="btn" href={d.links.repo} rel="noopener" target="_blank">{t.repo}<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>}
-      </div>
-    )}
-  </dl>
+    </p>
+  )}
 
   {lead && (
     <figure class:list={['lead', d.category]}>

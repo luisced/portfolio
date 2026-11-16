@@ -116,3 +116,6 @@ a:active, .index a:active b { color: var(--accent); }
 .btn.primary:active { background: var(--fg); border-color: var(--fg); color: #17110a; }
 .bar { padding-left: calc(var(--pad) + env(safe-area-inset-left, 0px)); padding-right: calc(var(--pad) + env(safe-area-inset-right, 0px)); }
 .bar:not(.foot) { padding-top: calc(20px + env(safe-area-inset-top, 0px)); }
+
+/* live/repo buttons sit right under the facts (outside the <dl>: a definition list may only hold terms and definitions) */
+.case-links { margin: 0; }
