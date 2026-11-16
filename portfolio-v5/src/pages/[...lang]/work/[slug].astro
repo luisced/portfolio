@@ -34,7 +34,7 @@ const { Content } = await render(project);
 /* a title that says what the page is, and a description long enough to be useful in a results page */
 const pageTitle = `${d.title} — ${t.caseStudy} · ${site.shortName}`;
 const clip = (x: string) => (x.length <= 158 ? x : `${x.slice(0, 155).replace(/\s+\S*$/, '')}…`);
-const pageDesc = clip(d.outcome.length >= 90 ? d.outcome : `${d.outcome} ${d.summary}`);
+const pageDesc = clip(d.outcome.length >= 120 ? d.outcome : `${d.outcome} ${d.summary}`);
 const work = {
   '@context': 'https://schema.org',
   '@type': 'CreativeWork',

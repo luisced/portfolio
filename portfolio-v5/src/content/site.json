@@ -219,7 +219,20 @@
       },
       "expTitle": "git log --career",
       "expNow": "HEAD",
-      "caseStudy": "Case study"
+      "caseStudy": "Case study",
+      "lost": {
+        "title": "Page not found",
+        "kicker": "Error 404",
+        "head": "This page isn't in the room.",
+        "body": "The address may be mistyped, or the page moved when the portfolio was rebuilt. The cat looked under the desk too.",
+        "noFile": "no such file or directory",
+        "duck": "Are you sure that route exists?",
+        "try": "Try one of these",
+        "home": "Back to the room"
+      },
+      "freeOn": "Free camera",
+      "freeOff": "Back to the story",
+      "freeHint": "Free camera: drag to orbit, scroll or pinch to zoom."
     },
     "es": {
       "path": "es/",
@@ -328,7 +341,20 @@
       },
       "expTitle": "git log --trayectoria",
       "expNow": "HEAD",
-      "caseStudy": "Caso de estudio"
+      "caseStudy": "Caso de estudio",
+      "lost": {
+        "title": "Página no encontrada",
+        "kicker": "Error 404",
+        "head": "Esta página no está en el cuarto.",
+        "body": "Puede que la dirección esté mal escrita, o que la página se haya movido al rehacer el portafolio. El michi también buscó debajo del escritorio.",
+        "noFile": "no existe el archivo o el directorio",
+        "duck": "¿Seguro que esa ruta existe?",
+        "try": "Prueba con una de estas",
+        "home": "Volver al cuarto"
+      },
+      "freeOn": "Cámara libre",
+      "freeOff": "Volver a la historia",
+      "freeHint": "Cámara libre: arrastra para girar; rueda o pellizco para acercar."
     }
   },
   "awards": [

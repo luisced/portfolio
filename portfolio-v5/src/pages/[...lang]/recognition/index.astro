@@ -27,6 +27,20 @@ const canonical = new URL(localizePath(locale, '/recognition/'), Astro.site);
 /* the visible intro is short; the description for search results names what is on the page */
 const clip = (x: string) => (x.length <= 158 ? x : `${x.slice(0, 155).replace(/\s+\S*$/, '')}…`);
 const pageDesc = clip(`${site.shortName}: ${t.recIntro} ${entries.slice(0, 3).map((r) => r.data.title[locale]).join(', ')}.`);
+/* structured data: this page as a list of what Luis has been recognised for */
+const list = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: t.recTitle,
+  description: t.recIntro,
+  inLanguage: locale,
+  url: canonical.href,
+  about: { '@type': 'Person', '@id': new URL('/#luis', Astro.site).href, name: site.name, url: new URL('/', Astro.site).href },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: entries.map((e, i) => ({ '@type': 'ListItem', position: i + 1, name: e.data.title[locale], description: e.data.distinction[locale], url: `${canonical.href}#${e.data.slug}` })),
+  },
+};
 const arrow = 'M3 13 13 3M5 3h8v8';
 ---
 <!doctype html>
@@ -53,6 +67,7 @@ const arrow = 'M3 13 13 3M5 3h8v8';
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+<script type="application/ld+json" is:inline set:html={JSON.stringify(list)}></script>
 </head>
 <body>
 <header class="bar">
