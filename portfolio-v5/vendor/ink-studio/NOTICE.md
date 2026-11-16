@@ -14,4 +14,4 @@ Only what the room needs is vendored, unmodified:
 | `src/kit/k0-math.js`, `k1-stage.js`, `k3-shapes.js`, `k7-particles.js`, `ki-deform.js` | stage, shapes, particles, puppet and bones |
 | `cli/render.js` | build time only: draws the poster frame |
 
-`build.js` concatenates the `src/` files into `dist/room.js`, so the published site ships them too.
+`src/lib/room.mjs` concatenates the `src/` files into `/room.js`, so the published site ships them too.

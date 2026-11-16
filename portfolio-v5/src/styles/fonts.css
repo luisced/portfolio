@@ -1,0 +1,10 @@
+/* The same two families as V4: Archivo for everything read, Azeret Mono for labels and code. Self-hosted. */
+@import '@fontsource/azeret-mono/latin-400.css';
+
+@font-face {
+  font-family: 'Archivo Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2') format('woff2');
+}

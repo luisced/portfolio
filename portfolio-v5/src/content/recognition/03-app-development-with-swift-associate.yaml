@@ -1,0 +1,32 @@
+slug: app-development-with-swift-associate
+order: 3
+kind: credential
+title:
+  en: App Development with Swift - Associate
+  es: App Development with Swift - Associate
+distinction:
+  en: Apple
+  es: Apple
+context:
+  en: June 2023
+  es: Junio 2023
+summary:
+  en: Apple's associate-level app development credential, with a publicly verifiable badge on Credly.
+  es: Credencial de desarrollo de apps de Apple de nivel Associate, con una insignia verificable en Credly.
+details:
+  en: []
+  es: []
+media:
+  - src: ../../assets/recognition/swift-associate-badge.webp
+    alt:
+      en: Apple App Development with Swift Associate badge
+      es: Insignia App Development with Swift Associate de Apple
+    caption:
+      en: Official badge · Credly
+      es: Insignia oficial · Credly
+    source: https://www.credly.com/badges/99ab0677-e09a-4dd5-bed9-d7c3ff782450/public_url
+links:
+  - label:
+      en: Verify Apple credential
+      es: Verificar credencial de Apple
+    url: https://www.credly.com/badges/99ab0677-e09a-4dd5-bed9-d7c3ff782450/public_url

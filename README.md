@@ -10,7 +10,7 @@ This repository preserves the five major iterations of [luiscedillo.com](https:/
 | V2 | `portfolio-v2/` | React 19, TypeScript, Vite, i18next, Three.js | Archived second iteration |
 | V3 | `portfolio-v3/` | Next.js 16, React 19, next-intl, GSAP, Tailwind CSS | Archived third iteration, restored from `portfolio-v3` |
 | V4 | `portfolio-v4/` | Astro 7, TypeScript, MDX, Satori, Cloudflare Pages | **Current production version** |
-| V5 | `portfolio-v5/` | Plain Node build, WebGL2, Web Workers, ink-studio (Gaussian splats) | In progress: a scroll-told 3D room; not yet in production |
+| V5 | `portfolio-v5/` | Astro 7, WebGL2, Web Workers, ink-studio (Gaussian splats) | In progress: a scroll-told 3D room; not yet in production |
 
 V1 introduced the original interactive portfolio and 3D presentation. V2 reorganized the application around TypeScript, feature modules, localization and richer WebGL effects. V3 explored a Next.js application architecture and a more expressive motion system. V4 returns to a static-first architecture, keeps bilingual content, adds case studies and writing, and enforces accessibility, performance and asset budgets during every build.
 
@@ -22,7 +22,7 @@ Legacy infrastructure credentials from V1 are intentionally not included. Its ar
 
 - A current Node.js LTS release
 - `npm` for V1–V3
-- `pnpm` 10 for V4
+- `pnpm` 10 for V4 and V5
 
 Clone the repository once, then enter the directory for the version you want to run.
 
@@ -123,10 +123,11 @@ For detailed V4 architecture, content, deployment and performance notes, see [`p
 
 ```bash
 cd portfolio-v5
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-Builds with plain Node (no install step) and serves `portfolio-v5/dist/` on `http://localhost:4325`. Production build only: `npm run build`. See `portfolio-v5/README.md` for how the scene, the content and the loading stages fit together, and `portfolio-v5/vendor/ink-studio/NOTICE.md` for the terms of the vendored renderer kit.
+Development server: `http://localhost:4325`. Production build: `pnpm build` (output in `portfolio-v5/dist/`). See `portfolio-v5/README.md` for how the scene, the content and the loading stages fit together, and `portfolio-v5/vendor/ink-studio/NOTICE.md` for the terms of the vendored renderer kit.
 
 ## License
 

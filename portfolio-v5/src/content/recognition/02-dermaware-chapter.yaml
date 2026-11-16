@@ -1,0 +1,44 @@
+slug: dermaware-chapter
+order: 2
+kind: publication
+title:
+  en: "Development of a Mobile Application for Dermatological Diagnosis Using Image Recognition: The DermAware Case Study"
+  es: "Development of a Mobile Application for Dermatological Diagnosis Using Image Recognition: The DermAware Case Study"
+distinction:
+  en: First-listed author · Book chapter
+  es: Primer autor · Capítulo de libro
+context:
+  en: Springer · Online October 11, 2025 · Citation year 2026
+  es: Springer · En línea el 11 de octubre de 2025 · Año bibliográfico 2026
+summary:
+  en: A mobile skin-health research project combining SwiftUI, Django and image recognition. Published in Machine Learning Methods in Biomedical Field, Studies in Computational Intelligence, vol. 1218, pp. 25–47.
+  es: Un proyecto de investigación sobre salud cutánea que combina SwiftUI, Django y reconocimiento de imágenes. Publicado en Machine Learning Methods in Biomedical Field, Studies in Computational Intelligence, vol. 1218, pp. 25–47.
+details:
+  en:
+    - The study combines CoreML/ResNet50, HealthKit, real-time messaging, patient history and secure authentication. LinkedIn lists the research project from September 2023 to October 2025.
+    - The publisher's abstract reports 85% model accuracy on public dermatological datasets. This is a research result, not clinical diagnostic validation.
+    - "Authors, in publication order: Luis Cedillo-Maldonado, Iñaki Sigüenza-Noriega, Sara Rocio Miranda-Mateos, Lorenzo Reinoso-Fuentes, Mauricio Pérez-Aguirre, Daisy Escobar-Castillejos and David Escobar-Castillejos."
+    - "DOI: 10.1007/978-3-031-96328-5_2."
+  es:
+    - El estudio integra CoreML/ResNet50, HealthKit, mensajería en tiempo real, historial de pacientes y autenticación segura. LinkedIn sitúa el proyecto de investigación entre septiembre de 2023 y octubre de 2025.
+    - El resumen de la editorial reporta 85% de precisión del modelo en conjuntos públicos de imágenes dermatológicas. Es un resultado de investigación, no una validación diagnóstica clínica.
+    - "Autores, en orden de publicación: Luis Cedillo-Maldonado, Iñaki Sigüenza-Noriega, Sara Rocio Miranda-Mateos, Lorenzo Reinoso-Fuentes, Mauricio Pérez-Aguirre, Daisy Escobar-Castillejos y David Escobar-Castillejos."
+    - "DOI: 10.1007/978-3-031-96328-5_2."
+media:
+  - src: ../../assets/recognition/dermaware-book-cover.webp
+    alt:
+      en: Cover of Machine Learning Methods in Biomedical Field, the Springer book containing the DermAware chapter
+      es: Portada de Machine Learning Methods in Biomedical Field, el libro de Springer que incluye el capítulo de DermAware
+    caption:
+      en: Book cover · Springer
+      es: Portada del libro · Springer
+    source: https://link.springer.com/chapter/10.1007/978-3-031-96328-5_2
+links:
+  - label:
+      en: Read on Springer
+      es: Leer en Springer
+    url: https://link.springer.com/chapter/10.1007/978-3-031-96328-5_2
+  - label:
+      en: DermAware source code
+      es: Código de DermAware
+    url: https://github.com/ios-lab-up/DermAware

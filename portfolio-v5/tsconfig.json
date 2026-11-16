@@ -1,0 +1,6 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "vendor", "room"],
+  "compilerOptions": { "allowJs": true, "resolveJsonModule": true }
+}
