@@ -9,9 +9,12 @@
     "build:v4": "pnpm --dir portfolio-v4 build",
     "check:v4": "pnpm --dir portfolio-v4 check",
     "install:v4": "pnpm --dir portfolio-v4 install",
+    "dev:v5": "pnpm --dir portfolio-v5 dev",
+    "build:v5": "pnpm --dir portfolio-v5 build",
     "dev:v2": "cd portfolio-v2 && npm run dev",
     "build:v2": "cd portfolio-v2 && npm run build",
-    "install:v2": "cd portfolio-v2 && npm install"
+    "install:v2": "cd portfolio-v2 && npm install",
+    "install:v5": "pnpm --dir portfolio-v5 install"
   },
   "repository": {
     "type": "git",

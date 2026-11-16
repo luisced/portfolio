@@ -1,0 +1,121 @@
+/* Case studies. Same voice as the room: near-black ground, bone ink, the lamp's amber as the only accent,
+   Archivo for reading and Azeret Mono for labels. Square corners, 1px rules, no gradients. */
+:root { --bg: #0b0910; --fg: #f4f1ea; --soft: rgba(244, 241, 234, .66); --line: rgba(244, 241, 234, .16); --accent: #ffc46b;
+  --sans: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', sans-serif; --mono: 'Azeret Mono', ui-monospace, Menlo, Consolas, monospace;
+  --pad: clamp(20px, 5vw, 72px); }
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+a, button { touch-action: manipulation; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 18px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+img { display: block; max-width: 100%; height: auto; }
+.label { font: 400 12px/1.6 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--soft); }
+
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px var(--pad); border-bottom: 1px solid var(--line); }
+.bar a { text-decoration: none; padding-block: 8px; }
+.bar .back { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); }
+.bar.foot { border-bottom: 0; border-top: 1px solid var(--line); padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+
+.case { max-width: 1240px; margin: 0 auto; padding: clamp(36px, 7vw, 96px) var(--pad) clamp(48px, 8vw, 112px); }
+h1 { margin: 14px 0 22px; font: 650 clamp(48px, 9.5vw, 132px)/.9 var(--sans); letter-spacing: -.06em; text-wrap: balance; }
+.outcome { margin: 0; max-width: 28em; font-size: clamp(21px, 2.3vw, 30px); line-height: 1.25; letter-spacing: -.02em; color: var(--soft); text-wrap: pretty; }
+
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: clamp(32px, 5vw, 64px) 0 0; border-top: 1px solid var(--line); }
+.facts > div { padding: 16px 0 18px; border-bottom: 1px solid var(--line); }
+.facts > div:nth-child(odd):not(.wide) { padding-right: 20px; }
+.facts .wide { grid-column: 1 / -1; }
+.facts dt { margin-bottom: 6px; }
+.facts dd { margin: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font: 400 12px/1 var(--mono); letter-spacing: .03em; padding: 8px 10px; border: 1px solid var(--line); }
+.links { display: flex; flex-wrap: wrap; gap: 12px; border-bottom: 0 !important; padding-top: 22px !important; }
+.btn { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 52px; padding: 0 20px; border: 1px solid var(--fg); text-decoration: none; font: 400 12px/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #17110a; }
+
+.lead { margin: clamp(36px, 6vw, 80px) 0 0; border: 1px solid var(--line); }
+.lead img { width: 100%; }
+.lead.ios { border: 0; display: grid; justify-content: start; }
+.lead.ios img { width: min(320px, 70vw); border: 1px solid var(--line); }
+
+.prose { max-width: 40em; margin-top: clamp(40px, 6vw, 88px); }
+.prose h2 { margin: 2.2em 0 .5em; font: 650 clamp(27px, 3.2vw, 40px)/1 var(--sans); letter-spacing: -.05em; }
+.prose h2:first-child { margin-top: 0; }
+.prose p { margin: 0 0 1.1em; color: var(--soft); }
+.prose strong { color: var(--fg); font-weight: 600; }
+.prose ul, .prose ol { margin: 0 0 1.2em; padding-left: 1.2em; color: var(--soft); }
+.prose li { margin-bottom: .7em; padding-left: .2em; }
+.prose li::marker { color: var(--accent); font-family: var(--mono); font-size: .8em; }
+
+.gallery { list-style: none; margin: clamp(40px, 6vw, 88px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2vw, 24px); }
+.gallery.ios, .gallery.ai { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.gallery.ai { grid-template-columns: repeat(3, minmax(0, 220px)); }
+.gallery figure { margin: 0; }
+.gallery img { width: 100%; border: 1px solid var(--line); }
+.gallery.ai img { border: 0; }
+.gallery figcaption { margin-top: 10px; }
+
+.pager { display: grid; grid-template-columns: 1fr 1fr; margin-top: clamp(48px, 8vw, 112px); border-top: 1px solid var(--line); }
+.pager a { display: grid; gap: 6px; padding: 22px 0 6px; text-decoration: none; }
+.pager a + a { text-align: right; border-left: 1px solid var(--line); padding-left: 20px; }
+.pager b { font: 650 clamp(22px, 3vw, 36px)/1 var(--sans); letter-spacing: -.05em; }
+
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  .facts { grid-template-columns: minmax(0, 1fr); }
+  .facts > div:nth-child(odd):not(.wide) { padding-right: 0; }
+  .gallery.ios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery.web { grid-template-columns: minmax(0, 1fr); }
+  .btn { flex: 1 1 auto; }
+}
+
+/* Recognition page: awards, research, credentials, then the index of projects. */
+.records { margin-top: clamp(48px, 8vw, 112px); }
+.records > h2 { margin: 0; padding-bottom: 12px; border-bottom: 1px solid var(--line); color: var(--accent); }
+.record { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 4vw, 56px); padding: clamp(28px, 4vw, 48px) 0; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
+.record.publication, .record.credential { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); }
+.record:target { border-bottom-color: var(--accent); }
+.record figure { margin: 0; }
+.record .cover img { width: 100%; border: 1px solid var(--line); }
+.record figcaption { margin-top: 10px; }
+.record h3 { margin: 8px 0 6px; font: 650 clamp(30px, 4.4vw, 60px)/.95 var(--sans); letter-spacing: -.055em; text-wrap: balance; }
+.record.publication h3, .record.credential h3 { font-size: clamp(24px, 2.8vw, 36px); }
+.record .what { margin: 0 0 16px; font-size: clamp(18px, 1.7vw, 22px); line-height: 1.3; letter-spacing: -.02em; }
+.record .summary, .record li { color: var(--soft); }
+.record .summary { margin: 0 0 14px; }
+.record ul { margin: 0 0 18px; padding-left: 1.1em; }
+.record li { margin-bottom: .55em; }
+.record li::marker { color: var(--accent); }
+.record .more { display: grid; grid-template-columns: repeat(2, minmax(0, 200px)); gap: 14px; margin: 4px 0 22px; }
+.record .more img { width: 100%; border: 1px solid var(--line); }
+.record .links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
+
+.index { list-style: none; margin: 0; padding: 0; }
+.index a { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.4fr) auto; align-items: baseline; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+.index b { font: 650 clamp(22px, 2.6vw, 34px)/1 var(--sans); letter-spacing: -.05em; }
+.index .why { color: var(--soft); font-size: 16px; line-height: 1.4; }
+
+@media (max-width: 760px) {
+  .record, .record.publication, .record.credential { grid-template-columns: minmax(0, 1fr); }
+  .record.publication .cover, .record.credential .cover { max-width: 200px; }
+  .index a { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 12px; }
+  .index .why, .index a > .label:last-child { grid-column: 2; }
+}
+
+/* hover only where there is a mouse (on touch it sticks after a tap); touch gets its answer on press */
+@media (hover: hover) and (pointer: fine) {
+  a:hover { color: var(--accent); }
+  .bar .back:hover { color: var(--accent); }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn.primary:hover { background: var(--fg); border-color: var(--fg); color: #17110a; }
+  .index a:hover b { color: var(--accent); }
+}
+a:active, .index a:active b { color: var(--accent); }
+.btn { transition: scale .12s ease-out; user-select: none; -webkit-user-select: none; }
+.btn:active { scale: .97; border-color: var(--accent); }
+.btn.primary:active { background: var(--fg); border-color: var(--fg); color: #17110a; }
+.bar { padding-left: calc(var(--pad) + env(safe-area-inset-left, 0px)); padding-right: calc(var(--pad) + env(safe-area-inset-right, 0px)); }
+.bar:not(.foot) { padding-top: calc(20px + env(safe-area-inset-top, 0px)); }
+
+/* live/repo buttons sit right under the facts (outside the <dl>: a definition list may only hold terms and definitions) */
+.case-links { margin: 0; }

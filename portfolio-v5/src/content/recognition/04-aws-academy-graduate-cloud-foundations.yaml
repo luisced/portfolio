@@ -1,0 +1,32 @@
+slug: aws-academy-graduate-cloud-foundations
+order: 4
+kind: credential
+title:
+  en: AWS Academy Graduate - Cloud Foundations
+  es: AWS Academy Graduate - Cloud Foundations
+distinction:
+  en: AWS Academy
+  es: AWS Academy
+context:
+  en: October 2023
+  es: Octubre 2023
+summary:
+  en: Cloud Foundations course-completion badge from AWS Training and Certification. This is an AWS Academy training credential, not the AWS Certified Cloud Practitioner exam certification.
+  es: Insignia de finalización del curso Cloud Foundations de AWS Training and Certification. Es una credencial de formación de AWS Academy, no la certificación por examen AWS Certified Cloud Practitioner.
+details:
+  en: []
+  es: []
+media:
+  - src: ../../assets/recognition/aws-cloud-foundations-badge.webp
+    alt:
+      en: AWS Academy Cloud Foundations training badge
+      es: Insignia de formación AWS Academy Cloud Foundations
+    caption:
+      en: Official training badge · Credly
+      es: Insignia oficial de formación · Credly
+    source: https://www.credly.com/badges/6aec56ea-7ae0-49ce-a4b8-0bf501ba388d/public_url
+links:
+  - label:
+      en: Verify AWS training badge
+      es: Verificar insignia de AWS
+    url: https://www.credly.com/badges/6aec56ea-7ae0-49ce-a4b8-0bf501ba388d/public_url

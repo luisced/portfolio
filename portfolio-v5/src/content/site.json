@@ -1,0 +1,383 @@
+{
+  "site": "https://luiscedillo.com",
+  "name": "Luis Cedillo Maldonado",
+  "shortName": "Luis Cedillo",
+  "email": "me@luiscedillo.com",
+  "socials": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/luisced"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://linkedin.com/in/luisced"
+    }
+  ],
+  "stack": [
+    {
+      "key": {
+        "en": "AI & systems",
+        "es": "IA y sistemas"
+      },
+      "items": [
+        {
+          "name": "LangGraph",
+          "icon": "siLanggraph"
+        },
+        {
+          "name": "LangChain",
+          "icon": "siLangchain"
+        },
+        {
+          "name": "MCP",
+          "icon": "siModelcontextprotocol"
+        },
+        {
+          "name": "ElevenLabs",
+          "icon": "siElevenlabs"
+        }
+      ]
+    },
+    {
+      "key": {
+        "en": "Backend",
+        "es": "Backend"
+      },
+      "items": [
+        {
+          "name": "Python",
+          "icon": "siPython"
+        },
+        {
+          "name": "FastAPI",
+          "icon": "siFastapi"
+        },
+        {
+          "name": "Django",
+          "icon": "siDjango"
+        },
+        {
+          "name": "Rust",
+          "icon": "siRust"
+        }
+      ]
+    },
+    {
+      "key": {
+        "en": "Mobile & frontend",
+        "es": "Móvil y frontend"
+      },
+      "items": [
+        {
+          "name": "Swift",
+          "icon": "siSwift"
+        },
+        {
+          "name": "React",
+          "icon": "siReact"
+        },
+        {
+          "name": "Svelte",
+          "icon": "siSvelte"
+        },
+        {
+          "name": "TypeScript",
+          "icon": "siTypescript"
+        }
+      ]
+    },
+    {
+      "key": {
+        "en": "Data & cloud",
+        "es": "Datos y nube"
+      },
+      "items": [
+        {
+          "name": "Postgres",
+          "icon": "siPostgresql"
+        },
+        {
+          "name": "Docker",
+          "icon": "siDocker"
+        },
+        {
+          "name": "Kubernetes",
+          "icon": "siKubernetes"
+        },
+        {
+          "name": "Redis",
+          "icon": "siRedis"
+        }
+      ]
+    }
+  ],
+  "locales": {
+    "en": {
+      "path": "",
+      "title": "Luis Cedillo — AI Full-Stack Engineer & Technical Founder",
+      "description": "AI full-stack engineer and technical founder in Mexico City. I build AI products across web, mobile, APIs and cloud. A portfolio told inside a 3D room.",
+      "headline": "AI Full-Stack Engineer & Technical Founder",
+      "window": "I build AI products across web, mobile, APIs and cloud.",
+      "boardTitle": "Selected work",
+      "stackComment": "Stack — what I build with",
+      "note": "If it doesn't add up, I explain it to the duck.",
+      "ask": "Shall we build something?",
+      "cue": "Scroll",
+      "touch": "tap things",
+      "found": "found",
+      "soundOn": "Turn sound on",
+      "soundOff": "Turn sound off",
+      "duck": [
+        "Did you read the whole error?",
+        "Explain it to me, line by line.",
+        "What changed since it last worked?",
+        "Print the value. Don't assume it.",
+        "Are you sure that code is even running?",
+        "Sleep on it. Tomorrow it's obvious."
+      ],
+      "other": "Español",
+      "posterAlt": "An isometric pixel-art room at night: a tuxedo cat codes in front of three monitors.",
+      "canvasLabel": "The room in 3D. The camera moves as you scroll; drag sideways to look around.",
+      "plain": "Selected work",
+      "back": "Back to the room",
+      "role": "Role",
+      "when": "When",
+      "stackLabel": "Stack",
+      "live": "Visit website",
+      "repo": "Source code",
+      "prev": "Previous",
+      "next": "Next",
+      "work": "Work",
+      "kinds": {
+        "ai": "AI",
+        "ios": "iOS",
+        "web": "Web",
+        "backend": "Backend"
+      },
+      "student": "Student project",
+      "seeAwards": "See the award",
+      "recTitle": "Awards & recognition",
+      "recIntro": "Hackathon wins, published research and credentials, with the work behind them.",
+      "recKinds": {
+        "award": "Hackathons",
+        "publication": "Published research",
+        "credential": "Credentials"
+      },
+      "allWork": "All projects",
+      "seeMore": "See more",
+      "open": "Open",
+      "close": "Close",
+      "hello": "hello",
+      "intro": [
+        "I'm Luis Cedillo.",
+        "AI full-stack engineer & technical founder.",
+        "Mexico City."
+      ],
+      "readMore": "read more",
+      "aboutK": "About me",
+      "nav": {
+        "about": "About",
+        "work": "Work",
+        "experience": "Experience",
+        "stack": "Stack",
+        "awards": "Awards",
+        "research": "Research",
+        "contact": "Contact"
+      },
+      "menu": "Menu",
+      "navLabel": "Shortcuts",
+      "cv": "CV",
+      "cvLabel": "Download CV (PDF)",
+      "write": "Write to me",
+      "prize": "You found all 12. The cat earned a party hat.",
+      "form": {
+        "kicker": "What's next?",
+        "title": "Let's make something real.",
+        "lead": "Building an AI product, untangling a complex system, or looking for a technical co-founder? Tell me what you have in mind.",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send postcard",
+        "sending": "Sending…",
+        "okTitle": "Message received.",
+        "okBody": "Thanks for reaching out. I'll reply by email.",
+        "errTitle": "Your message wasn't sent.",
+        "errBody": "Your draft is still here. Try again, or email me at",
+        "required": "Please complete this field",
+        "invalidEmail": "Enter a valid email address",
+        "invalidMessage": "Add a little more detail (at least 20 characters)",
+        "rateLimit": "Too many attempts. Wait one minute, then try again.",
+        "turnstile": "Verification",
+        "card": "Post card",
+        "to": "To",
+        "from": "From",
+        "placeholder": "Hi Luis, …",
+        "postmark": "THE CAT'S ROOM · MEXICO CITY ·",
+        "posted": "Postmarked and on its way",
+        "returned": "Returned to sender",
+        "home": "Back to the portfolio"
+      },
+      "expTitle": "git log --career",
+      "expNow": "HEAD",
+      "caseStudy": "Case study"
+    },
+    "es": {
+      "path": "es/",
+      "title": "Luis Cedillo — Ingeniero full-stack de IA y fundador técnico",
+      "description": "Ingeniero full-stack de IA y fundador técnico en Ciudad de México. Construyo productos de IA para web, móvil, APIs y nube. Un portafolio dentro de un cuarto 3D.",
+      "headline": "Ingeniero full-stack de IA y fundador técnico",
+      "window": "Construyo productos de IA para web, móvil, APIs y nube.",
+      "boardTitle": "Trabajo seleccionado",
+      "stackComment": "Stack — con qué construyo",
+      "note": "Si no cuadra, se lo explico al pato.",
+      "ask": "¿Hacemos algo juntos?",
+      "cue": "Desliza",
+      "touch": "toca las cosas",
+      "found": "encontrados",
+      "soundOn": "Activar sonido",
+      "soundOff": "Quitar sonido",
+      "duck": [
+        "¿Ya leíste el error completo?",
+        "Explícamelo, línea por línea.",
+        "¿Qué cambió desde que funcionaba?",
+        "Imprime el valor. No lo supongas.",
+        "¿Seguro que ese código sí se ejecuta?",
+        "Duerme. Mañana se ve obvio."
+      ],
+      "other": "English",
+      "posterAlt": "Un cuarto isométrico en pixel art, de noche: un gato de esmoquin programa frente a tres monitores.",
+      "canvasLabel": "El cuarto en 3D. La cámara avanza con el scroll; arrastra en horizontal para mirar alrededor.",
+      "plain": "Trabajo seleccionado",
+      "back": "Volver al cuarto",
+      "role": "Rol",
+      "when": "Cuándo",
+      "stackLabel": "Stack",
+      "live": "Visitar sitio",
+      "repo": "Código fuente",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "work": "Trabajo",
+      "kinds": {
+        "ai": "IA",
+        "ios": "iOS",
+        "web": "Web",
+        "backend": "Backend"
+      },
+      "student": "Proyecto de estudiante",
+      "seeAwards": "Ver el premio",
+      "recTitle": "Premios y reconocimientos",
+      "recIntro": "Hackatones, investigación publicada y credenciales, con el trabajo detrás de cada logro.",
+      "recKinds": {
+        "award": "Hackatones",
+        "publication": "Investigación publicada",
+        "credential": "Credenciales"
+      },
+      "allWork": "Todos los proyectos",
+      "seeMore": "Ver más",
+      "open": "Abrir",
+      "close": "Cerrar",
+      "hello": "hola",
+      "intro": [
+        "Soy Luis Cedillo.",
+        "Ingeniero full-stack de IA y fundador técnico.",
+        "Ciudad de México."
+      ],
+      "readMore": "leer más",
+      "aboutK": "Sobre mí",
+      "nav": {
+        "about": "Sobre mí",
+        "work": "Trabajo",
+        "experience": "Experiencia",
+        "stack": "Stack",
+        "awards": "Premios",
+        "research": "Investigación",
+        "contact": "Contacto"
+      },
+      "menu": "Menú",
+      "navLabel": "Accesos directos",
+      "cv": "CV",
+      "cvLabel": "Descargar CV (PDF)",
+      "write": "Escríbeme",
+      "prize": "Encontraste las 12. El michi se ganó un gorro de fiesta.",
+      "form": {
+        "kicker": "¿Qué sigue?",
+        "title": "Hagamos algo real.",
+        "lead": "¿Estás construyendo un producto de IA, resolviendo un sistema complejo o buscando un cofundador técnico? Cuéntame qué tienes en mente.",
+        "name": "Nombre",
+        "email": "Correo",
+        "message": "Mensaje",
+        "send": "Enviar postal",
+        "sending": "Enviando…",
+        "okTitle": "Mensaje recibido.",
+        "okBody": "Gracias por escribirme. Te responderé por correo.",
+        "errTitle": "Tu mensaje no se envió.",
+        "errBody": "Tu borrador sigue aquí. Inténtalo de nuevo o escríbeme a",
+        "required": "Completa este campo",
+        "invalidEmail": "Escribe un correo válido",
+        "invalidMessage": "Añade un poco más de detalle (al menos 20 caracteres)",
+        "rateLimit": "Demasiados intentos. Espera un minuto y vuelve a intentarlo.",
+        "turnstile": "Verificación",
+        "card": "Tarjeta postal",
+        "to": "Para",
+        "from": "De",
+        "placeholder": "Hola Luis, …",
+        "postmark": "EL CUARTO DEL GATO · CDMX ·",
+        "posted": "Sellada y en camino",
+        "returned": "Devuelta al remitente",
+        "home": "Volver al portafolio"
+      },
+      "expTitle": "git log --trayectoria",
+      "expNow": "HEAD",
+      "caseStudy": "Caso de estudio"
+    }
+  },
+  "awards": [
+    {
+      "title": {
+        "en": "1st place nationally",
+        "es": "Primer lugar nacional"
+      },
+      "detail": {
+        "en": "BimboNecta · Swift Change Makers 2026",
+        "es": "BimboNecta · Swift Change Makers 2026"
+      },
+      "slug": "bimbonecta"
+    },
+    {
+      "title": {
+        "en": "Best Prototype",
+        "es": "Mejor prototipo"
+      },
+      "detail": {
+        "en": "Swift Change Makers 2025",
+        "es": "Swift Change Makers 2025"
+      },
+      "slug": "swift-change-makers"
+    }
+  ],
+  "about": {
+    "bio": {
+      "en": "I build full-stack AI products across frontend, web, mobile, APIs and cloud. At Dopamina, I turn a message into coordinated marketing work across content, publishing, community and ads. At iLuk, I built the orchestration layer for AI employees handling acquisition, onboarding, KYC, payments and collections. Both systems share the same standard: human direction, clear handoffs and infrastructure that keeps working.",
+      "es": "Construyo productos full-stack de IA para frontend, web, móvil, APIs y nube. En Dopamina convierto un mensaje en trabajo coordinado de marketing para contenido, publicación, comunidad y anuncios. En iLuk construí la capa de orquestación para empleados de IA que gestionan adquisición, onboarding, KYC, pagos y cobranza. Ambos sistemas comparten el mismo estándar: dirección humana, entregas claras e infraestructura que sigue funcionando."
+    },
+    "place": {
+      "en": "Mexico City · CST (UTC−6)",
+      "es": "Ciudad de México · CST (UTC−6)"
+    },
+    "portraitAlt": {
+      "en": "Luis Cedillo in San Francisco",
+      "es": "Luis Cedillo en San Francisco"
+    },
+    "education": [
+      {
+        "en": "B.Sc. Data Intelligence & Cybersecurity · Universidad Panamericana · Completed 2026",
+        "es": "Ing. en Inteligencia de Datos y Ciberseguridad · Universidad Panamericana · Concluida en 2026"
+      },
+      {
+        "en": "Specialization in Project Management · In progress",
+        "es": "Especialización en Gestión de Proyectos · En curso"
+      }
+    ]
+  },
+  "cv": "/cv/Luis-Cedillo-Maldonado-CV.pdf"
+}

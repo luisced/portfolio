@@ -1,0 +1,24 @@
+# Addresses that existed in V4 and have no page of their own in V5. Cloudflare Pages reads this file.
+# The résumé viewer is now the PDF itself.
+/resume/ /cv/Luis-Cedillo-Maldonado-CV.pdf 301
+/resume /cv/Luis-Cedillo-Maldonado-CV.pdf 301
+/es/resume/ /cv/Luis-Cedillo-Maldonado-CV.pdf 301
+/es/resume /cv/Luis-Cedillo-Maldonado-CV.pdf 301
+/resumee.pdf /cv/Luis-Cedillo-Maldonado-CV.pdf 301
+
+# The list of projects lives at the end of the recognition page.
+/work/ /recognition/#work 301
+/work /recognition/#work 301
+/es/work/ /es/recognition/#work 301
+/es/work /es/recognition/#work 301
+
+# The notes are not part of V5 (temporary: they may come back).
+/notes/* / 302
+/notes / 302
+/es/notes/* /es/ 302
+/es/notes /es/ 302
+/rss.xml / 302
+/es/rss.xml /es/ 302
+
+# Share images: one for the whole site now.
+/og/* /og.png 301

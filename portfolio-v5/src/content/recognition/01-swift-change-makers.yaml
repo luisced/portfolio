@@ -1,0 +1,32 @@
+slug: swift-change-makers
+order: 1
+kind: award
+title:
+  en: Swift Change Makers
+  es: Swift Change Makers
+distinction:
+  en: Best Prototype
+  es: Mejor prototipo
+context:
+  en: Enactus México · Grupo Bimbo challenge · May 2025
+  es: Enactus México · Reto Grupo Bimbo · Mayo 2025
+summary:
+  en: A SwiftUI app that encourages environmental awareness and sustainable habits through gamification, developed with the iOS Development Lab UPMX.
+  es: Una app en SwiftUI que fomenta la conciencia ambiental y los hábitos sostenibles mediante gamificación, desarrollada con el iOS Development Lab UPMX.
+details:
+  en: []
+  es: []
+media:
+  - src: ../../assets/recognition/swift-change-makers-2025.webp
+    alt:
+      en: Luis with the Best Prototype award beside the Swift Change Makers 2025 event display
+      es: Luis con el premio de Mejor Prototipo junto al letrero de Swift Change Makers 2025
+    caption:
+      en: Best Prototype · Swift Change Makers 2025 · Photo from LinkedIn
+      es: Mejor Prototipo · Swift Change Makers 2025 · Foto de LinkedIn
+    source: https://www.linkedin.com/in/luisced/details/honors/
+links:
+  - label:
+      en: Award on LinkedIn
+      es: Premio en LinkedIn
+    url: https://www.linkedin.com/in/luisced/details/honors/

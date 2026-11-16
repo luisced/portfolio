@@ -1,0 +1,349 @@
+---
+// The whole experience: one fixed scene, with the content of src/content/site.json written onto the room's surfaces.
+import site from '../content/site.json';
+import { FIT, poster as makePoster } from '../lib/room.mjs';
+import Contact from './Contact.astro';
+import { getImage } from 'astro:assets';
+import * as icons from 'simple-icons';
+import hello from '../content/hello.json';
+import experience from '../content/experience.json';
+import portraitSrc from '../assets/sf-hero.webp';
+import { getProjects, getRecognition, localizePath } from '../lib/projects';
+import '../styles/fonts.css';
+import '../styles/story.css';
+
+interface Props { lang: 'en' | 'es' }
+const { lang } = Astro.props;
+const t = site.locales[lang];
+const otherLang = lang === 'en' ? 'es' : 'en';
+const otherHref = `${import.meta.env.BASE_URL}${site.locales[otherLang].path}`;
+const poster = makePoster();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+/* structured data: who this site is about, for search engines */
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  inLanguage: lang,
+  url: new URL(`/${site.locales[lang].path}`, Astro.site).href,
+  mainEntity: {
+    '@type': 'Person',
+    '@id': new URL('/#luis', Astro.site).href,
+    name: site.name,
+    alternateName: site.shortName,
+    jobTitle: t.headline,
+    description: site.about.bio[lang],
+    url: new URL('/', Astro.site).href,
+    image: new URL('/og.png', Astro.site).href,
+    address: { '@type': 'PostalAddress', addressLocality: 'Mexico City', addressCountry: 'MX' },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universidad Panamericana' },
+    worksFor: { '@type': 'Organization', name: 'Dopamina' },
+    knowsAbout: site.stack.flatMap((g) => g.items.map((i) => i.name)),
+    sameAs: site.socials.map((x) => x.url),
+  },
+};
+const cv = `${base}${site.cv}`;
+const f = t.form;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+/* the menu: a shortcut to each part of the story (the number is the chapter the camera flies to) */
+/* one line icon per shortcut, all on the same 24px grid and stroke as the sound button */
+const glyph = {
+  about: 'M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5',
+  work: 'M4 8h16v11H4zM9 8V5h6v3M4 13h16',
+  stack: 'M12 4l8 4-8 4-8-4 8-4zM4 12l8 4 8-4M4 16l8 4 8-4',
+  awards: 'M8 4h8v5a4 4 0 0 1-8 0V4zM8 6H5c0 3 1.2 4.5 3.3 4.8M16 6h3c0 3-1.2 4.5-3.3 4.8M12 13v4M8.5 20h7',
+  experience: 'M6 4v16M6 7h0M6 12h0M6 17h0M10 7h9M10 12h7M10 17h9',
+  research: 'M12 6.5C10 5 7 4.6 4 5v13c3-.4 6 0 8 1.5 2-1.5 5-1.9 8-1.5V5c-3-.4-6 0-8 1.5zM12 6.5v13',
+  contact: 'M3.5 6h17v12h-17zM3.5 7l8.5 6 8.500-6',
+  write: 'M4 20l1-4L16 5l3 3L8 19l-4 1zM14 7l3 3',
+  cv: 'M12 4v11M7.5 10.5 12 15l4.5-4.5M5 20h14',
+  lang: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.500 2.600 3.600 5.600 3.600 9s-1.100 6.400-3.600 9c-2.500-2.600-3.600-5.600-3.600-9s1.100-6.400 3.600-9z',
+} as const;
+const nav = [['about', 1], ['work', 3], ['experience', 4], ['stack', 5], ['awards', 7], ['research', 8], ['contact', 9]] as const;
+const loc = (v: string | { en: string; es: string }) => (typeof v === 'string' ? v : v[lang]);
+/* the chalkboard lists professional work; student projects keep their case studies and live in the full index */
+const projects = (await getProjects(lang)).filter((p) => !p.data.student);
+const recognition = await getRecognition();
+/* todo lo que se puede abrir: los premios (en el mueble de trofeos) y la investigación y las certificaciones (en el librero) */
+const openable = await Promise.all(
+  recognition.map(async ({ data }) => {
+    const media = data.media[0]!;
+    return {
+      data, media,
+      thumb: await getImage({ src: media.src, width: 480, format: 'webp' }),
+      full: await getImage({ src: media.src, width: 900, format: 'webp' }),
+      extra: await Promise.all(data.media.slice(1).map(async (m) => ({ m, img: await getImage({ src: m.src, width: 480, format: 'webp' }) }))),
+    };
+  }),
+);
+const shelf = openable.filter((o) => o.data.kind !== 'award');
+/* la intro: el saludo que se escribe a mano en el monitor (trazos del Apple Hello Effect, ver hello.json) y el retrato */
+const greet = hello[lang];
+const greetMs = Math.round(Math.max(...greet.paths.map((p) => p.dur + p.delay)) * 1000);
+const portrait = { thumb: await getImage({ src: portraitSrc, width: 480, format: 'webp' }), full: await getImage({ src: portraitSrc, width: 900, format: 'webp' }) };
+const icon = (name: string) => (icons as unknown as Record<string, { path: string }>)[name]?.path;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<title>{t.title}</title>
+<meta name="description" content={t.description}>
+<link rel="canonical" href={canonical}>
+<link rel="alternate" hreflang="en" href={alt('en')}>
+<link rel="alternate" hreflang="es" href={alt('es')}>
+<link rel="alternate" hreflang="x-default" href={alt('en')}>
+<meta property="og:title" content={t.title}>
+<meta property="og:description" content={t.description}>
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={lang === 'es' ? 'es_MX' : 'en_US'}>
+<meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_MX'}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={new URL(lang === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+<script type="application/ld+json" is:inline set:html={JSON.stringify(person)}></script>
+</head>
+<body>
+<main class="film" id="film" data-fit={FIT} data-worker={`${import.meta.env.BASE_URL}room.js`}>
+  <div class="dawn" aria-hidden="true"></div>
+  <img id="poster" src={poster.uri} alt={t.posterAlt} width={poster.side} height={poster.side} decoding="async">
+  <div class="lens" id="lens">
+    <canvas id="room-canvas" aria-label={t.canvasLabel}></canvas>
+
+    <!-- 1 · la luz baja y la computadora saluda: el saludo se escribe a mano en el monitor y debajo se teclea quién soy -->
+    <div class="surf boot" id="boot" data-s="main" data-beat="1" data-ms={greetMs} style="width:570px;height:420px">
+      <svg class="hello" viewBox={greet.viewBox} fill="none" stroke="currentColor" stroke-width={greet.strokeWidth} stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        {greet.paths.map((p) => <path d={p.d} pathLength="1" style={`--d:${p.dur};--w:${p.delay}`} />)}
+      </svg>
+      <p class="sr">{t.hello}. {t.intro.join(' ')}</p>
+      <div class="who" aria-hidden="true">{t.intro.map((line) => <p>{line}</p>)}</div>
+      <button type="button" class="more" data-open="about">{t.readMore} →</button>
+    </div>
+    <!-- el retrato, colgado junto a la ventana: está siempre en el cuarto y abre la misma ficha -->
+    <button type="button" class="surf item frame photo" data-s="photo" data-beat="all" data-open="about" style="width:248px;height:330px;--i:3" aria-label={`${t.aboutK}: ${site.name}`}>
+      <span class="obj">
+        <span class="face"><img src={portrait.thumb.src} alt="" width={portrait.thumb.attributes.width} height={portrait.thumb.attributes.height} loading="lazy" decoding="async" /></span>
+        <i class="side l"></i><i class="side r"></i><i class="side t"></i>
+      </span>
+      <span class="tag">{t.aboutK}</span>
+    </button>
+    <!-- 0 · el suelo delante del diorama -->
+    <div class="surf plaque" data-s="floor" data-beat="0" style="width:1440px;height:330px"><h1>{site.shortName}</h1><p>{t.headline}</p></div>
+    <!-- 2 · la ventana -->
+    <div class="surf glass" data-s="window" data-beat="2" style="width:420px;height:180px"><p>{t.window}</p></div>
+    <!-- 3 · el pizarrón -->
+    <div class="surf chalk" data-s="board" data-beat="3" style="width:780px;height:450px">
+      <h2>{t.boardTitle}</h2>
+      <ul>
+        {projects.map((p) => (
+          <li><a href={localizePath(lang, `/work/${p.data.slug}/`)}>{p.data.title}</a><span>{t.kinds[p.data.category]} · {p.data.when ?? p.data.timeframe}</span></li>
+        ))}
+      </ul>
+    </div>
+    <!-- 4 · el monitor vertical: la trayectoria, de hoy hacia atrás, como un historial de git -->
+    <div class="surf log" data-s="log" data-beat="4" style="width:310px;height:550px">
+      <h2><span aria-hidden="true">$ </span>{t.expTitle}</h2>
+      <ol>
+        {experience.map((e, i) => (
+          <li class:list={{ now: e.now }}>
+            <b>{e.slug ? <a href={localizePath(lang, `/work/${e.slug}/`)}>{loc(e.org)}</a> : loc(e.org)}{i === 0 && <i>{t.expNow}</i>}</b>
+            <span>{e.role[lang]}</span>
+            <time>{e.when[lang]}</time>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <!-- 5 · el monitor de la derecha -->
+    <div class="surf screen" data-s="screen" data-beat="5" style="width:490px;height:330px">
+      <p class="c">{t.stackComment}</p>
+      {site.stack.map((g) => (
+        <div class="group"><b>{g.key[lang]}</b><div class="chips">{g.items.map((i) => <span>{icon(i.icon) && <svg viewBox="0 0 24 24" aria-hidden="true"><path d={icon(i.icon)} /></svg>}{i.name}</span>)}</div></div>
+      ))}
+    </div>
+    <!-- 5 · la nota junto al pato -->
+    <div class="surf ink" data-s="note" data-beat="6" style="width:340px;height:160px"><p>{t.note}</p></div>
+    <!-- 6 · las placas del mueble de trofeos -->
+    {site.awards.map((w, i) => (
+      <button type="button" class="surf ink award" data-s={`award${i}`} data-beat="7" data-open={w.slug} style="width:380px;height:240px">
+        <p>{w.title[lang]}</p><small>{w.detail[lang]}</small><span class="tag">{t.open}</span>
+      </button>
+    ))}
+    {site.awards.map((w, i) => (
+      <button type="button" class="surf hit" data-s={`cup${i}`} data-beat="7" data-open={w.slug} style="width:200px;height:170px" tabindex="-1" aria-hidden="true"></button>
+    ))}
+    <!-- 7 · el librero: tres objetos que se pueden abrir -->
+    {shelf.map((it, i) => (
+      <button type="button" class:list={['surf', 'item', i === 0 ? 'book' : 'frame']} data-s={`shelf${i}`} data-beat="all" data-open={it.data.slug}
+        style={i === 0 ? `width:220px;height:${Math.round(220 * it.media.src.height / it.media.src.width)}px;--i:0` : `width:250px;height:165px;--i:${i}`}
+        aria-label={`${t.open}: ${t.recKinds[it.data.kind]}, ${it.data.title[lang]}`}>
+        <span class="obj">
+          <span class="face"><img src={it.thumb.src} alt="" width={it.thumb.attributes.width} height={it.thumb.attributes.height} loading="lazy" decoding="async" /></span>
+          <i class="side l"></i><i class="side r"></i><i class="side t"></i>
+        </span>
+        <span class="tag">{t.open}</span>
+      </button>
+    ))}
+    <!-- 8 · otra vez el suelo -->
+    <div class="surf plaque ask" data-s="floor" data-beat="9" style="width:1440px;height:330px"><h2>{t.ask}</h2><p><a href="#write" data-open="write" data-plain><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.2V21h3.8L18 9.8 14.2 6 3 17.2zM20.7 7a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.8 1.8L19 8.9 20.7 7z"/></svg>{t.write}</a> · <Contact /> · <a href={cv} download>{t.cv} ↓</a></p></div>
+  </div>
+
+  <div class="plain">
+    <p class="h">{site.shortName}</p>
+    <p>{t.headline}. {t.plain}: {projects.map((p) => p.data.title).join(', ')}.</p>
+    <p><Contact /></p>
+  </div>
+  <!-- lo que dice el pato cuando lo tocan: un globito que sigue al pato en la pantalla -->
+  <p class="bubble" id="bubble" data-tips={JSON.stringify(t.duck)} role="status"></p>
+  <!-- la barra de arriba: sonido, nombre y accesos directos a cada parte; en pantallas angostas los accesos van en un menú -->
+  <header class="top">
+    <a class="brand" href="#top" data-go="0">{site.shortName}</a>
+    <!-- los accesos son también el avance de la noche: lo ya recorrido queda marcado, lo que ves ahora va en ámbar -->
+    <nav class="links" aria-label={t.navLabel}>
+      {nav.map(([k, b], i) => <a href={`#${k}`} data-go={b}><span>{String(i + 1).padStart(2, '0')}</span>{t.nav[k]}</a>)}
+    </nav>
+    <div class="tools">
+      <a class="cv" href={cv} download aria-label={t.cvLabel}>{t.cv}<svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 1.5v7M2.8 5.6 6 8.8l3.2-3.2M2 10.5h8"/></svg></a>
+      <span class="lang"><b aria-hidden="true">{lang.toUpperCase()}</b><a href={otherHref} hreflang={otherLang} lang={otherLang} aria-label={`${otherLang.toUpperCase()} · ${t.other}`}>{otherLang.toUpperCase()}</a></span>
+      <button type="button" class="snd" id="snd" aria-pressed="false" aria-label={t.soundOn} data-on={t.soundOn} data-off={t.soundOff} hidden>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" aria-hidden="true"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path class="on" d="M15.5 9.2c1.6 1.6 1.6 4 0 5.6M18 6.8c3 3 3 7.4 0 10.4"/><path class="off" d="m15.5 9.5 5 5m0-5-5 5"/></svg>
+      </button>
+      <button type="button" class="burger" id="burger" aria-haspopup="dialog"><i aria-hidden="true"></i>{t.menu}</button>
+    </div>
+  </header>
+  <p class="toast" id="toast" role="status" data-prize={t.prize}></p>
+  <p class="found" id="found" aria-live="polite" hidden><b></b> {t.found}</p>
+  <div class="cue" id="cue">{t.cue}<small>{t.touch}</small><i aria-hidden="true"></i></div>
+  <div class="reel"><i id="reel"></i></div>
+</main>
+<div class="track" id="track" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<!-- la ficha que se abre al tomar un objeto del librero -->
+<dialog class="detail" id="detail" aria-label={t.recTitle}>
+  <button type="button" class="x" data-close aria-label={t.close}><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
+  <article data-id="about" class="about" hidden>
+    <figure><img src={portrait.full.src} alt={site.about.portraitAlt[lang]} width={portrait.full.attributes.width} height={portrait.full.attributes.height} loading="lazy" decoding="async" /></figure>
+    <div class="copy">
+      <p class="k">{t.aboutK}</p>
+      <h2>{site.name}</h2>
+      <p class="meta">{t.headline} · {site.about.place[lang]}</p>
+      <p class="sum">{site.about.bio[lang]}</p>
+      <ul>{site.about.education.map((e) => <li>{e[lang]}</li>)}</ul>
+      <p class="go"><a href="#write" data-open="write" data-plain>{t.write} →</a><Contact /><a href={cv} download>{t.cv} ↓</a></p>
+    </div>
+  </article>
+  <!-- el formulario de contacto: una postal sobre el papel del cuarto (el mismo backend de V4: /api/contact, Resend y Turnstile) -->
+  <article data-id="write" class="write" hidden>
+    <div class="copy">
+      <p class="k">{f.kicker}</p>
+      <h2>{f.title}</h2>
+      <p class="sum">{f.lead}</p>
+      <form class="card" method="post" action={`${base}/api/contact`} data-contact data-locale={lang} data-sending={f.sending} data-msg-required={f.required} data-msg-email={f.invalidEmail} data-msg-minlength={f.invalidMessage} novalidate>
+        <!-- el reverso de la postal: timbre, matasellos (cae al enviar) y destinatario -->
+        <div class="head">
+          <p class="pk">{f.card}</p>
+          <svg class="stamp" viewBox="0 0 64 78" width="64" height="78" aria-hidden="true" shape-rendering="crispEdges">
+            <rect width="64" height="78" fill="#ffc46b" />
+            <rect class="perf" x="0" y="0" width="64" height="78" fill="none" pathLength="71" shape-rendering="auto" />
+            <rect x="6.5" y="6.5" width="51" height="65" fill="none" stroke="#251a2c" />
+            {['.XX......XX.', '.XXX....XXX.', '.XXXXXXXXXX.', 'XXXXXXXXXXXX', 'XX..XXXX..XX', 'XXXXXWWXXXXX', '.XXWWXXWWXX.', '..XWWWWWWX..', '...WWWWWW...'].flatMap((row, y) => [...row].map((c, x) => (c === '.' ? null : <rect x={8 + x * 4} y={14 + y * 4} width="4" height="4" fill={c === 'X' ? '#251a2c' : '#f4f1ea'} />)))}
+            <text x="10" y="66" shape-rendering="auto">V5</text>
+            <text x="54" y="66" text-anchor="end" shape-rendering="auto">MX</text>
+          </svg>
+          <svg class="mark" viewBox="0 0 156 84" width="156" height="84" aria-hidden="true" fill="none" stroke="currentColor">
+            <circle cx="42" cy="42" r="39" stroke-width="1.6" />
+            <circle cx="42" cy="42" r="24" stroke-width="1" />
+            <path id="pm-arc" d="M42 70.500a28.500 28.500 0 1 1 .01 0" stroke="none" />
+            <text class="ring" stroke="none" fill="currentColor"><textPath href="#pm-arc" textLength="172" lengthAdjust="spacing">{f.postmark}</textPath></text>
+            <text class="day" x="42" y="41" text-anchor="middle" stroke="none" fill="currentColor" data-mark-day></text>
+            <text class="year" x="42" y="52" text-anchor="middle" stroke="none" fill="currentColor" data-mark-year></text>
+            <path stroke-width="1.6" d="M84 22q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 32q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 42q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 52q6-5 12 0t12 0 12 0 12 0 12 0 12 0M84 62q6-5 12 0t12 0 12 0 12 0 12 0 12 0" />
+          </svg>
+          <p class="to"><span class="pk">{f.to}</span><b>{site.name}</b><span>{site.about.place[lang]}</span></p>
+        </div>
+        <div class="msg">
+          <div class="row"><label for="c-message">{f.message}</label><span class="pk" data-count>0 / 5000</span></div>
+          <textarea id="c-message" name="message" rows="6" required minlength="20" maxlength="5000" placeholder={f.placeholder} aria-describedby="c-message-error"></textarea>
+          <p class="err" id="c-message-error" aria-live="polite" hidden></p>
+        </div>
+        <div class="from">
+          <p class="pk">{f.from}</p>
+          <div class="field">
+            <label for="c-name">{f.name}</label>
+            <input id="c-name" name="name" type="text" required maxlength="100" autocomplete="name" enterkeyhint="next" aria-describedby="c-name-error" />
+            <p class="err" id="c-name-error" aria-live="polite" hidden></p>
+          </div>
+          <div class="field">
+            <label for="c-email">{f.email}</label>
+            <input id="c-email" name="email" type="email" required maxlength="254" autocomplete="email" autocapitalize="none" autocorrect="off" enterkeyhint="send" aria-describedby="c-email-error" />
+            <p class="err" id="c-email-error" aria-live="polite" hidden></p>
+          </div>
+        </div>
+        <input class="sr" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="locale" value={lang} />
+        <div class="foot">
+          <div class="result bad" role="alert" tabindex="-1" data-bad hidden>
+            <p class="pk">{f.returned}</p>
+            <h3>{f.errTitle}</h3>
+            <p data-bad-default>{f.errBody} <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+            <p data-bad-rate hidden>{f.rateLimit}</p>
+          </div>
+          <div class="act" data-actions>
+            {siteKey && <fieldset class="verify"><legend class="sr">{f.turnstile}</legend><div class="cf-turnstile" data-sitekey={siteKey} data-theme="light" data-size="flexible"></div></fieldset>}
+            <button class="send" type="submit" data-submit><span data-submit-label>{f.send}</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3.500 11.500 20 4l-6 16.500-3-7-7.500-2zM11 13.500 20 4" /></svg></button>
+          </div>
+          <div class="result ok" role="status" tabindex="-1" data-ok hidden><p class="pk">{f.posted}</p><h3>{f.okTitle}</h3><p>{f.okBody}</p></div>
+        </div>
+      </form>
+    </div>
+  </article>
+  {openable.map((it) => (
+    <article data-id={it.data.slug} class:list={[it.data.kind]} hidden>
+      <figure><img src={it.full.src} alt={it.media.alt[lang]} width={it.full.attributes.width} height={it.full.attributes.height} loading="lazy" decoding="async" /></figure>
+      <div class="copy">
+        <p class="k">{t.recKinds[it.data.kind]}</p>
+        <h2>{it.data.title[lang]}</h2>
+        <p class="meta">{it.data.distinction[lang]} · {it.data.context[lang]}</p>
+        <p class="sum">{it.data.summary[lang]}</p>
+        {it.data.details[lang].length > 0 && <ul>{it.data.details[lang].map((line) => <li>{line}</li>)}</ul>}
+        {it.extra.length > 0 && <div class="more">{it.extra.map(({ m, img }) => <img src={img.src} alt={m.alt[lang]} width={img.attributes.width} height={img.attributes.height} loading="lazy" decoding="async" />)}</div>}
+        <p class="go">
+          {it.data.links.map((l) => <a href={l.url} target="_blank" rel="noopener noreferrer">{l.label[lang]} ↗</a>)}
+          <a href={localizePath(lang, `/recognition/#${it.data.slug}`)}>{t.recTitle} →</a>
+        </p>
+      </div>
+    </article>
+  ))}
+</dialog>
+<!-- el menú en pantallas angostas: los mismos accesos, grandes -->
+<dialog class="menu" id="menu" aria-label={t.navLabel}>
+  <button type="button" class="x" data-close aria-label={t.close}><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
+  <nav aria-label={t.navLabel}>
+    {nav.map(([k, b], i) => (
+      <a href={`#${k}`} data-go={b} style={`--i:${i}`}>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph[k]} /></svg>{t.nav[k]}<span>{String(i + 1).padStart(2, '0')}</span>
+      </a>
+    ))}
+  </nav>
+  <p class="more" style={`--i:${nav.length}`}>
+    <a href="#write" data-open="write" data-plain><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph.write} /></svg>{t.write}</a>
+    <a href={cv} download><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph.cv} /></svg>{t.cvLabel}</a>
+    <a href={otherHref} hreflang={otherLang} lang={otherLang}><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph.lang} /></svg>{t.other}</a>
+  </p>
+</dialog>
+
+<script>
+  import '../scripts/story.js';
+  import '../scripts/detail.js';
+  import '../scripts/intro.js';
+  import '../scripts/nav.js';
+  import '../scripts/contact.js';
+</script>
+</body>
+</html>

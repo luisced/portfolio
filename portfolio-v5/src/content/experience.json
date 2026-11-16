@@ -1,0 +1,100 @@
+[
+  {
+    "org": "Dopamina",
+    "role": {
+      "en": "Co-Founder & CTO",
+      "es": "Cofundador y CTO"
+    },
+    "when": {
+      "en": "Jul 2026 – now",
+      "es": "Jul 2026 – hoy"
+    },
+    "slug": "dopamina",
+    "now": true
+  },
+  {
+    "org": "iLuk.ai",
+    "role": {
+      "en": "Co-Founder & CTO, earlier Head of AI Engineering",
+      "es": "Cofundador y CTO, antes director de ingeniería de IA"
+    },
+    "when": {
+      "en": "Dec 2025 – Oct 2026",
+      "es": "Dic 2025 – Oct 2026"
+    },
+    "slug": "iluk"
+  },
+  {
+    "org": "Vyvo Tech",
+    "role": {
+      "en": "Co-Founder & CTO · Acquired",
+      "es": "Cofundador y CTO · Adquirida"
+    },
+    "when": {
+      "en": "Jun – Dec 2025",
+      "es": "Jun – Dic 2025"
+    },
+    "slug": "vyvo"
+  },
+  {
+    "org": "Nyx Technology",
+    "role": {
+      "en": "Tech Lead",
+      "es": "Líder técnico"
+    },
+    "when": {
+      "en": "Aug 2024 – May 2025",
+      "es": "Ago 2024 – May 2025"
+    },
+    "slug": "stackup-channel-manager"
+  },
+  {
+    "org": "Universidad Panamericana",
+    "role": {
+      "en": "President, Engineering student councils",
+      "es": "Presidente, consejos estudiantiles de Ingeniería"
+    },
+    "when": {
+      "en": "May 2024 – Aug 2025",
+      "es": "May 2024 – Ago 2025"
+    }
+  },
+  {
+    "org": "iOS Development Lab · UP",
+    "role": {
+      "en": "Technical Lead",
+      "es": "Líder técnico"
+    },
+    "when": {
+      "en": "Jan 2023 – now",
+      "es": "Ene 2023 – hoy"
+    },
+    "now": true
+  },
+  {
+    "org": {
+      "en": "Independent",
+      "es": "Independiente"
+    },
+    "role": {
+      "en": "Freelance Developer",
+      "es": "Desarrollador freelance"
+    },
+    "when": {
+      "en": "Dec 2022 – Apr 2023",
+      "es": "Dic 2022 – Abr 2023"
+    }
+  },
+  {
+    "org": "Zenco",
+    "role": {
+      "en": "Junior Backend Developer",
+      "es": "Desarrollador backend junior"
+    },
+    "when": {
+      "en": "Jan 2021 – Mar 2022",
+      "es": "Ene 2021 – Mar 2022"
+    },
+    "slug": "zenco"
+  }
+]

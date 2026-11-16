@@ -1,0 +1,124 @@
+---
+// Awards, research and credentials, then every project: /recognition/ in English, /es/recognition/ in Spanish.
+// The trophy cabinet in the room links here.
+import { Picture } from 'astro:assets';
+import site from '../../../content/site.json';
+import { getProjects, getRecognition, localizePath, type Locale } from '../../../lib/projects';
+import '../../../styles/fonts.css';
+import '../../../styles/case.css';
+
+interface Props { locale: Locale }
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined }, props: { locale: 'en' } },
+    { params: { lang: 'es' }, props: { locale: 'es' } },
+  ];
+}
+
+const { locale } = Astro.props;
+const t = site.locales[locale];
+const other: Locale = locale === 'en' ? 'es' : 'en';
+const home = localizePath(locale, '/');
+const entries = await getRecognition();
+const projects = await getProjects(locale);
+const kinds = ['award', 'publication', 'credential'] as const;
+const canonical = new URL(localizePath(locale, '/recognition/'), Astro.site);
+/* the visible intro is short; the description for search results names what is on the page */
+const clip = (x: string) => (x.length <= 158 ? x : `${x.slice(0, 155).replace(/\s+\S*$/, '')}…`);
+const pageDesc = clip(`${site.shortName}: ${t.recIntro} ${entries.slice(0, 3).map((r) => r.data.title[locale]).join(', ')}.`);
+const arrow = 'M3 13 13 3M5 3h8v8';
+---
+<!doctype html>
+<html lang={locale}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0910">
+<meta name="color-scheme" content="dark">
+<title>{t.recTitle} — {site.shortName}</title>
+<meta name="description" content={pageDesc}>
+<link rel="canonical" href={canonical}>
+<link rel="alternate" hreflang="en" href={new URL(localizePath('en', '/recognition/'), Astro.site)}>
+<link rel="alternate" hreflang="es" href={new URL(localizePath('es', '/recognition/'), Astro.site)}>
+<link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', '/recognition/'), Astro.site)}>
+<meta property="og:title" content={`${t.recTitle} — ${site.shortName}`}>
+<meta property="og:description" content={pageDesc}>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={new URL(locale === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+</head>
+<body>
+<header class="bar">
+  <a class="label back" href={home}><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>{t.back}</a>
+  <a class="label" href={localizePath(other, '/recognition/')} hreflang={other} lang={other}>{t.other}</a>
+</header>
+
+<main class="case">
+  <p class="label">{site.shortName}</p>
+  <h1>{t.recTitle}</h1>
+  <p class="outcome">{t.recIntro}</p>
+
+  {kinds.map((kind) => (
+    <section class="records" aria-labelledby={`kind-${kind}`}>
+      <h2 class="label" id={`kind-${kind}`}>{t.recKinds[kind]}</h2>
+      {entries.filter((e) => e.data.kind === kind).map(({ data: e }) => (
+        <article class:list={['record', kind]} id={e.slug}>
+          {e.media[0] && (
+            <figure class="cover">
+              <a href={e.media[0].source} target="_blank" rel="noopener noreferrer">
+                <Picture src={e.media[0].src} alt={e.media[0].alt[locale]} widths={kind === 'award' ? [360, 640, 960] : [240, 480]} sizes={kind === 'award' ? '(min-width: 48em) 42vw, 92vw' : '220px'} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+              </a>
+              <figcaption class="label">{e.media[0].caption[locale]}</figcaption>
+            </figure>
+          )}
+          <div class="body">
+            <p class="label">{e.context[locale]}</p>
+            <h3>{e.distinction[locale]}</h3>
+            <p class="what">{e.title[locale]}</p>
+            <p class="summary">{e.summary[locale]}</p>
+            {e.details[locale].length > 0 && <ul>{e.details[locale].map((line) => <li>{line}</li>)}</ul>}
+            {e.media.length > 1 && (
+              <div class="more">
+                {e.media.slice(1).map((m) => (
+                  <figure>
+                    <Picture src={m.src} alt={m.alt[locale]} widths={[240, 480]} sizes="(min-width: 48em) 200px, 44vw" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+                    <figcaption class="label">{m.caption[locale]}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
+            <p class="links">{e.links.map((l) => <a class="btn" href={l.url} target="_blank" rel="noopener noreferrer">{l.label[locale]}<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d={arrow}/></svg></a>)}</p>
+          </div>
+        </article>
+      ))}
+    </section>
+  ))}
+
+  <section class="records" id="work" aria-labelledby="all-work">
+    <h2 class="label" id="all-work">{t.allWork}</h2>
+    <ul class="index">
+      {projects.map((p, i) => (
+        <li><a href={localizePath(locale, `/work/${p.data.slug}/`)}>
+          <span class="label">{String(i + 1).padStart(2, '0')}</span>
+          <b>{p.data.title}</b>
+          <span class="why">{p.data.outcome}</span>
+          <span class="label">{p.data.student ? `${t.student} · ` : ''}{t.kinds[p.data.category]} · {p.data.when ?? p.data.timeframe}</span>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+</main>
+
+<footer class="bar foot">
+  <a class="label back" href={home}><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>{t.back}</a>
+  <a class="label" href={`mailto:${site.email}`}>{site.email}</a>
+</footer>
+</body>
+</html>

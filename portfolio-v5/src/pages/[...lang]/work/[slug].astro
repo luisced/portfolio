@@ -1,0 +1,129 @@
+---
+// A case study, carried over from V4's content: /work/{slug}/ in English, /es/work/{slug}/ in Spanish.
+import { Picture } from 'astro:assets';
+import { render } from 'astro:content';
+import site from '../../../content/site.json';
+import { getProjects, localizePath, type Locale, type Project } from '../../../lib/projects';
+import '../../../styles/fonts.css';
+import '../../../styles/case.css';
+
+interface Props { project: Project; locale: Locale }
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const locale of ['en', 'es'] as const) {
+    for (const project of await getProjects(locale)) {
+      paths.push({ params: { lang: locale === 'en' ? undefined : 'es', slug: project.data.slug }, props: { project, locale } });
+    }
+  }
+  return paths;
+}
+
+const { project, locale } = Astro.props;
+const d = project.data;
+const t = site.locales[locale];
+const projects = await getProjects(locale);
+const at = projects.findIndex((p) => p.data.slug === d.slug);
+const prev = projects[(at + projects.length - 1) % projects.length]!;
+const next = projects[(at + 1) % projects.length]!;
+const other: Locale = locale === 'en' ? 'es' : 'en';
+const home = localizePath(locale, '/');
+const lead = d.category === 'ai' ? undefined : (d.gallery[0] ?? (d.cover ? { src: d.cover, alt: d.coverAlt ?? '' } : undefined));
+const canonical = new URL(localizePath(locale, `/work/${d.slug}/`), Astro.site);
+const { Content } = await render(project);
+/* a title that says what the page is, and a description long enough to be useful in a results page */
+const pageTitle = `${d.title} — ${t.caseStudy} · ${site.shortName}`;
+const clip = (x: string) => (x.length <= 158 ? x : `${x.slice(0, 155).replace(/\s+\S*$/, '')}…`);
+const pageDesc = clip(d.outcome.length >= 90 ? d.outcome : `${d.outcome} ${d.summary}`);
+const work = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: d.title,
+  headline: d.outcome,
+  description: d.summary,
+  inLanguage: locale,
+  url: canonical.href,
+  keywords: d.stack.join(', '),
+  author: { '@type': 'Person', '@id': new URL('/#luis', Astro.site).href, name: site.name, url: new URL('/', Astro.site).href },
+};
+---
+<!doctype html>
+<html lang={locale}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0910">
+<meta name="color-scheme" content="dark">
+<title>{pageTitle}</title>
+<meta name="description" content={pageDesc}>
+<link rel="canonical" href={canonical}>
+<link rel="alternate" hreflang="en" href={new URL(localizePath('en', `/work/${d.slug}/`), Astro.site)}>
+<link rel="alternate" hreflang="es" href={new URL(localizePath('es', `/work/${d.slug}/`), Astro.site)}>
+<link rel="alternate" hreflang="x-default" href={new URL(localizePath('en', `/work/${d.slug}/`), Astro.site)}>
+<meta property="og:title" content={pageTitle}>
+<meta property="og:description" content={pageDesc}>
+<meta property="og:site_name" content={site.shortName}>
+<meta property="og:locale" content={locale === 'es' ? 'es_MX' : 'en_US'}>
+<meta property="og:type" content="article">
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={new URL(locale === 'es' ? '/es/og.png' : '/og.png', Astro.site)}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+<script type="application/ld+json" is:inline set:html={JSON.stringify(work)}></script>
+</head>
+<body>
+<header class="bar">
+  <a class="label back" href={home}><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>{t.back}</a>
+  <a class="label" href={localizePath(other, `/work/${d.slug}/`)} hreflang={other} lang={other}>{t.other}</a>
+</header>
+
+<main class="case">
+  <p class="label">{d.student ? t.student : t.work} / {t.kinds[d.category]} / {d.timeframe} · {String(at + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</p>
+  <h1>{d.title}</h1>
+  <p class="outcome">{d.outcome}</p>
+
+  <dl class="facts">
+    <div><dt class="label">{t.role}</dt><dd>{d.role}</dd></div>
+    <div><dt class="label">{t.when}</dt><dd>{d.timeframe}</dd></div>
+    <div class="wide"><dt class="label">{t.stackLabel}</dt><dd class="chips">{d.stack.map((s) => <span>{s}</span>)}</dd></div>
+  </dl>
+  {(d.links.live || d.links.repo) && (
+    <p class="links case-links">
+        {d.links.live && <a class="btn primary" href={d.links.live} rel="noopener" target="_blank">{t.live}<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>}
+        {d.links.repo && <a class="btn" href={d.links.repo} rel="noopener" target="_blank">{t.repo}<svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>}
+    </p>
+  )}
+
+  {lead && (
+    <figure class:list={['lead', d.category]}>
+      <Picture src={lead.src} alt={lead.alt} widths={d.category === 'ios' ? [320, 480, 720] : [640, 960, 1440]} sizes={d.category === 'ios' ? '(min-width: 48em) 320px, 70vw' : '(min-width: 64em) 1100px, 92vw'} formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" />
+    </figure>
+  )}
+
+  <div class="prose"><Content /></div>
+
+  {d.gallery.length > 0 && (
+    <ol class:list={['gallery', d.category]}>
+      {d.gallery.map((image) => (
+        <li><figure>
+          <Picture src={image.src} alt={`${d.title}: ${image.alt}`} widths={d.category === 'web' ? [480, 960] : [240, 480]} sizes={d.category === 'web' ? '(min-width: 48em) 50vw, 92vw' : '(min-width: 48em) 22vw, 44vw'} formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" />
+          <figcaption class="label">{image.alt}</figcaption>
+        </figure></li>
+      ))}
+    </ol>
+  )}
+
+  <nav class="pager" aria-label={t.work}>
+    <a href={localizePath(locale, `/work/${prev.data.slug}/`)}><span class="label">{t.prev}</span><b>{prev.data.title}</b></a>
+    <a href={localizePath(locale, `/work/${next.data.slug}/`)}><span class="label">{t.next}</span><b>{next.data.title}</b></a>
+  </nav>
+</main>
+
+<footer class="bar foot">
+  <a class="label back" href={home}><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>{t.back}</a>
+  <a class="label" href={`mailto:${site.email}`}>{site.email}</a>
+</footer>
+</body>
+</html>

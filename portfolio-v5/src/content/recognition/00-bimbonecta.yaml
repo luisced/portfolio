@@ -1,0 +1,58 @@
+slug: bimbonecta
+order: 0
+kind: award
+title:
+  en: BimboNecta
+  es: BimboNecta
+distinction:
+  en: 1st place nationally
+  es: Primer lugar nacional
+context:
+  en: Swift Change Makers · Enactus México · May 2026
+  es: Swift Change Makers · Enactus México · Mayo 2026
+summary:
+  en: An iOS copilot for Grupo Bimbo's route salespeople, built with the iOS Development Lab UPMX. Shelf photos become practical sales guidance through on-device AI.
+  es: Un copiloto iOS para los vendedores de ruta de Grupo Bimbo, creado con el iOS Development Lab UPMX. Las fotos del anaquel se convierten en orientación práctica mediante IA en el dispositivo.
+details:
+  en:
+    - Apple Vision and Foundation Models analyze shelf gaps, near-expiry stock and layout issues, with confidence scores for each suggestion.
+    - AI-assisted orders remain editable before syncing. Mexican Spanish voice input and local visit history keep the workflow useful while prioritizing privacy.
+    - "Team: Luis Cedillo Maldonado, Rafael Nuñez Arellano and Daniel Emiliano Peláez Romero."
+  es:
+    - Apple Vision y Foundation Models analizan faltantes, productos próximos a caducar y distribución del anaquel, con niveles de confianza para cada sugerencia.
+    - Los pedidos asistidos por IA se pueden editar antes de sincronizar. La entrada por voz en español de México y el historial local de visitas priorizan utilidad y privacidad.
+    - "Equipo: Luis Cedillo Maldonado, Rafael Nuñez Arellano y Daniel Emiliano Peláez Romero."
+media:
+  - src: ../../assets/recognition/swift-change-makers-2026.webp
+    alt:
+      en: Luis holding the 2026 first-place Bimbo challenge award at Universidad Panamericana
+      es: Luis con el reconocimiento de primer lugar del reto Bimbo 2026 en la Universidad Panamericana
+    caption:
+      en: First place · Swift Change Makers 2026 · Photo from LinkedIn
+      es: Primer lugar · Swift Change Makers 2026 · Foto de LinkedIn
+    source: https://www.linkedin.com/in/luisced/details/honors/
+  - src: ../../assets/recognition/bimbonecta-shelf-detection.webp
+    alt:
+      en: BimboNecta shelf analysis screen with product markers and a gap alert
+      es: Pantalla de análisis de anaquel de BimboNecta con marcadores de productos y una alerta de faltante
+    caption:
+      en: Shelf analysis · LinkedIn
+      es: Análisis de anaquel · LinkedIn
+    source: https://www.linkedin.com/in/luisced/details/honors/
+  - src: ../../assets/recognition/bimbonecta-dashboard.webp
+    alt:
+      en: BimboNecta dashboard with delivery, route history and current store visit
+      es: Panel de BimboNecta con entregas, historial de ruta y visita actual a la tienda
+    caption:
+      en: Route dashboard · LinkedIn
+      es: Panel de ruta · LinkedIn
+    source: https://www.linkedin.com/in/luisced/details/honors/
+links:
+  - label:
+      en: Award on LinkedIn
+      es: Premio en LinkedIn
+    url: https://www.linkedin.com/in/luisced/details/honors/
+  - label:
+      en: Team announcement
+      es: Anuncio del equipo
+    url: https://www.linkedin.com/feed/update/urn:li:activity:7458941414412804097/
