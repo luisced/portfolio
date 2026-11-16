@@ -6,7 +6,7 @@
   "description": "Luis Cedillo's portfolio, told as one night of work inside a 3D pixel-art room",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/mirror-404.mjs",
     "preview": "astro preview"
   },
   "dependencies": {

@@ -193,7 +193,7 @@ function boot() {
       wide
     ];
   }
-  const cam = { yaw: 0, pitch: 0, dist: 1, at: [0, 0, 0], look: 0, vlook: 0, tilt: 0, set: false }, goal = { yaw: 0, pitch: 0, dist: 1, at: [0, 0, 0] };
+  const cam = { yaw: 0, pitch: 0, dist: 1, at: [0, 0, 0], look: 0, vlook: 0, tilt: 0, zoom: 1, set: false }, goal = { yaw: 0, pitch: 0, dist: 1, at: [0, 0, 0] };
   function target(c, out) {
     const i = Math.min(N - 1, Math.floor(c)), j = Math.min(N - 1, i + 1), t = smooth((c - i - HOLD) / (1 - HOLD)), a = SHOTS[i], b = SHOTS[j];
     const turn = Math.min(1, Math.abs(b.yaw - a.yaw) / 1.5), arc = Math.sin(Math.PI * t);
@@ -209,6 +209,7 @@ function boot() {
   const HD = touch
     ? { fine: true }
     : { fine: true, focus: { p: [1.1, 1.4, 0.3], near: 2.2, far: 4.5, coarse: 1.3, fine: 0.55 } };
+  let free = false;
   let hits = [], wallsInfo = [], lastV = null, lampOff = false, lampK = 0, peekUntil = 0, peekK = 0, bubbleUntil = 0, tip = 0;
   const bubble = document.getElementById('bubble'), tips = JSON.parse(bubble.dataset.tips), DUCK = [0.9, 1.5, 1.8];
   /* la hora de verdad: de día el cuarto amanece ya con luz (0 de noche, 1 de día, con una rampa al amanecer y otra al anochecer) */
@@ -309,9 +310,16 @@ function boot() {
     cam.yaw += (goal.yaw - cam.yaw) * k; cam.pitch += (goal.pitch - cam.pitch) * k; cam.dist += (goal.dist - cam.dist) * k;
     for (let i = 0; i < 3; i++) cam.at[i] += (goal.at[i] - cam.at[i]) * k;
     /* mirar alrededor: el arrastre desvía la cámara y al soltar vuelve sola, como un resorte */
-    if (!drag) { cam.vlook += (-30 * cam.look - 11 * cam.vlook) * dt; cam.look += cam.vlook * dt; cam.tilt *= Math.exp(-5 * dt); }
+    if (free) {
+      /* cámara libre: nada vuelve a su sitio. Al soltar, el giro se va frenando solo */
+      if (!drag) { cam.look += cam.vlook * dt; cam.vlook *= Math.exp(-3.5 * dt); }
+    } else {
+      if (!drag) { cam.vlook += (-30 * cam.look - 11 * cam.vlook) * dt; cam.look += cam.vlook * dt; cam.tilt *= Math.exp(-5 * dt); }
+      cam.zoom += (1 - cam.zoom) * (1 - Math.exp(-6 * dt));
+    }
+    const dist = cam.dist * cam.zoom;
     const breathe = reduced ? 0 : 0.02 * Math.sin((now - t0) * 0.0005),
-      v = view(cam.yaw + cam.look + breathe, Math.max(0.06, Math.min(1.35, cam.pitch + cam.tilt)), cam.dist, cam.at);
+      v = view(cam.yaw + cam.look + breathe, Math.max(0.06, Math.min(1.45, cam.pitch + cam.tilt)), dist, cam.at);
 
     /* los objetos del cuarto (el retrato, el libro, las insignias) están siempre; solo esperan a que se prenda la luz */
     /* la luz baja al acercarse al monitor para el saludo (capítulo 1) y vuelve al salir */
@@ -347,7 +355,7 @@ function boot() {
     gl.uniformMatrix4fv(U1.uV, false, v.m);
     gl.uniform2f(U1.uRes, W, H);
     gl.uniform1f(U1.uFocal, H / 2 / TAN);
-    gl.uniform1f(U1.uNear, Math.max(0.3, Math.min(0.15 * cam.dist, 2)));
+    gl.uniform1f(U1.uNear, Math.max(0.3, Math.min(0.15 * dist, 2)));
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texD);
     gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, texF);
     gl.bindVertexArray(vao);
@@ -426,37 +434,66 @@ function boot() {
       }
     }
   }
+  /* --- cámara libre: un botón en la barra. Encendida, el cuarto se queda donde lo dejes; se inclina con cualquier puntero
+         y se acerca con la rueda o pellizcando. Apagada, todo vuelve a la historia --- */
+  const freeBtn = document.getElementById('free'), touches = new Map();
+  let pinch = 0;
+  freeBtn.hidden = false;
+  function setFree(on) {
+    free = on;
+    film.classList.toggle('free', on);
+    freeBtn.setAttribute('aria-pressed', on); freeBtn.setAttribute('aria-label', on ? freeBtn.dataset.off : freeBtn.dataset.on);
+    if (on) { toast.textContent = freeBtn.dataset.hint; toast.classList.add('on'); setTimeout(() => toast.classList.remove('on'), 4200); }
+    else { cam.look = Math.atan2(Math.sin(cam.look), Math.cos(cam.look)); cam.vlook = 0; }
+  }
+  freeBtn.addEventListener('click', () => setFree(!free));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && free && !document.querySelector('dialog[open]')) setFree(false); });
+  cv.addEventListener('wheel', e => {
+    if (!free) return;
+    e.preventDefault(); /* en cámara libre la rueda acerca y aleja; la historia se queda quieta */
+    cam.zoom = Math.max(0.35, Math.min(2.2, cam.zoom * Math.exp(e.deltaY * 0.0014)));
+  }, { passive: false });
   let down = null;
   cv.addEventListener('pointerdown', e => {
     if (e.button) return;
     cv.setPointerCapture(e.pointerId);
+    touches.set(e.pointerId, [e.clientX, e.clientY]);
+    if (free && touches.size === 2) { const [a, b] = [...touches.values()]; pinch = Math.hypot(a[0] - b[0], a[1] - b[1]); drag = null; down = null; return; }
     down = { x: e.clientX, y: e.clientY, t: performance.now() };
     drag = { x: e.clientX, y: e.clientY, t: performance.now() }; cam.vlook = 0; cv.classList.add('drag');
   });
   /* con ratón, el cursor avisa qué responde */
   cv.addEventListener('pointermove', e => { if (!drag && e.pointerType === 'mouse') cv.style.cursor = pick(e.clientX, e.clientY) ? 'pointer' : ''; });
   cv.addEventListener('pointermove', e => {
+    if (touches.has(e.pointerId)) touches.set(e.pointerId, [e.clientX, e.clientY]);
+    if (free && pinch && touches.size === 2) {
+      const [a, b] = [...touches.values()], gap = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (gap > 10) { cam.zoom = Math.max(0.35, Math.min(2.2, cam.zoom * pinch / gap)); pinch = gap; }
+      return;
+    }
     if (!drag) return;
     const now = performance.now(), d = -(e.clientX - drag.x) * (5 / Math.max(420, film.clientWidth));
     /* sin tope: el cuarto da la vuelta completa. Con ratón, arrastrar en vertical además lo inclina (en táctil ese gesto es el scroll) */
     cam.look += d;
     cam.vlook = d / Math.max(0.004, (now - drag.t) / 1000) * 0.3;
-    if (e.pointerType === 'mouse') cam.tilt = Math.max(-0.7, Math.min(0.7, cam.tilt + (e.clientY - drag.y) * (2.2 / film.clientHeight)));
+    if (free || e.pointerType === 'mouse') { const lim = free ? 1.2 : 0.7; cam.tilt = Math.max(-lim, Math.min(lim, cam.tilt + (e.clientY - drag.y) * (2.2 / film.clientHeight))); }
     drag = { x: e.clientX, y: e.clientY, t: now };
   });
   const release = () => {
     drag = null; cv.classList.remove('drag');
     /* al soltar vuelve por el camino corto, aunque haya dado más de media vuelta */
-    cam.look = Math.atan2(Math.sin(cam.look), Math.cos(cam.look));
+    if (!free) cam.look = Math.atan2(Math.sin(cam.look), Math.cos(cam.look));
   };
+  const lift = e => { touches.delete(e.pointerId); if (touches.size < 2) pinch = 0; };
   cv.addEventListener('pointerup', e => {
     /* un toque corto y sin arrastre es un toque a una cosa; lo demás fue girar el cuarto */
     const tap = down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 8 && performance.now() - down.t < 600;
     down = null;
+    lift(e);
     release();
     if (tap) { const name = pick(e.clientX, e.clientY); if (name) poke(name); }
   });
-  cv.addEventListener('pointercancel', release);
+  cv.addEventListener('pointercancel', e => { lift(e); release(); });
 }
 
 })();
