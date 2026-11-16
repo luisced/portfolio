@@ -53,7 +53,12 @@
   .ico { width: .92em; height: .92em; fill: currentColor; vertical-align: -.1em; margin-right: .28em; }
   .plaque a { text-decoration-thickness: 4px; text-underline-offset: 10px; }
   /* la ventana: escrito con el dedo en el vidrio */
-  .glass { color: rgba(226, 238, 255, .94); font: 600 41px/1.04 var(--sans); letter-spacing: -.035em; text-shadow: 0 0 3px rgba(8, 12, 30, .9), 0 0 14px rgba(8, 12, 30, .8), 0 0 26px rgba(120, 170, 255, .45); text-wrap: balance; }
+  .glass { display: grid; grid-template-columns: repeat(2, 250px); grid-template-rows: repeat(2, 189px); gap: 20px; }
+  .glass .pane { display: block; width: 250px; height: 189px; }
+  /* lo escrito con el dedo: trazo grueso y redondo, como una yema sobre el vaho */
+  .glass .finger text { font: 700 37px/1 var(--sans); letter-spacing: -.02em; fill: #000; stroke: #000; stroke-width: 3.5px; stroke-linejoin: round; paint-order: stroke; }
+  .glass .finger path { fill: none; stroke: #000; stroke-width: 7px; stroke-linecap: round; stroke-linejoin: round; }
+  .glass .finger .drip { stroke-width: 3.5px; }
   /* el pizarrón: gis */
   .chalk { color: #f3efe4; font-family: var(--sans); padding: 20px 32px; }
   .chalk h2 { font: 400 17px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; opacity: .6; margin-bottom: 12px; }
