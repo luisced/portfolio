@@ -1,0 +1,62 @@
+{
+  "site": "https://luiscedillo.com",
+  "name": "Luis Cedillo Maldonado",
+  "shortName": "Luis Cedillo",
+  "email": "me@luiscedillo.com",
+  "socials": [
+    { "label": "GitHub", "url": "https://github.com/luisced" },
+    { "label": "LinkedIn", "url": "https://linkedin.com/in/luisced" }
+  ],
+  "projects": [
+    { "title": "Flowlink / StackUp", "kind": "web", "when": { "en": "2024–2025", "es": "2024–2025" }, "url": "https://flowlink.stack-up.com/" },
+    { "title": "UPocket", "kind": "iOS", "when": { "en": "Ongoing", "es": "En curso" }, "url": "https://github.com/ios-lab-up/UPOCKET" },
+    { "title": "Dermaware / Genesis", "kind": "iOS", "when": { "en": "2023", "es": "2023" }, "url": "https://github.com/ios-lab-up/Genesis-API" },
+    { "title": "Homecare / Nemesis", "kind": "iOS", "when": { "en": "2023", "es": "2023" }, "url": "https://github.com/ios-lab-up/Homecare-Back" },
+    { "title": "Oxxo Corner / Femsa", "kind": "iOS", "when": { "en": "2023", "es": "2023" }, "url": null }
+  ],
+  "stack": [
+    { "key": { "en": "ai", "es": "ia" }, "items": "LangGraph · MCP · LiteLLM" },
+    { "key": { "en": "back", "es": "back" }, "items": "Python · FastAPI · Rust" },
+    { "key": { "en": "front", "es": "front" }, "items": "Swift · React · Svelte" },
+    { "key": { "en": "cloud", "es": "nube" }, "items": "AWS · Docker · Postgres" },
+    { "key": { "en": "now", "es": "ahora" }, "items": "Dopamina · iLuk" }
+  ],
+  "locales": {
+    "en": {
+      "path": "",
+      "title": "Luis Cedillo — AI Full-Stack Engineer & Technical Founder",
+      "description": "I build AI products across web, mobile, APIs and cloud, from marketing execution to financial operations. A portfolio told as one night of work inside a 3D room.",
+      "headline": "AI Full-Stack Engineer & Technical Founder",
+      "window": "I build AI products across web, mobile, APIs and cloud.",
+      "boardTitle": "Selected work",
+      "stackComment": "// what I work with",
+      "note": "If it doesn't add up, I explain it to the duck.",
+      "sticker": "1st place nationally",
+      "stickerSmall": "BimboNecta · Swift Change Makers 2026",
+      "ask": "Shall we build something?",
+      "cue": "Scroll",
+      "other": "Español",
+      "posterAlt": "An isometric pixel-art room at night: a tuxedo cat codes in front of three monitors.",
+      "canvasLabel": "The room in 3D. The camera moves as you scroll; drag sideways to look around.",
+      "plain": "Selected work"
+    },
+    "es": {
+      "path": "es/",
+      "title": "Luis Cedillo — Ingeniero full-stack de IA y fundador técnico",
+      "description": "Construyo productos de IA para web, móvil, APIs y nube, desde la ejecución de marketing hasta las operaciones financieras. Un portfolio contado como una noche de trabajo dentro de un cuarto en 3D.",
+      "headline": "Ingeniero full-stack de IA y fundador técnico",
+      "window": "Construyo productos de IA para web, móvil, APIs y nube.",
+      "boardTitle": "Trabajo seleccionado",
+      "stackComment": "// con qué trabajo",
+      "note": "Si no cuadra, se lo explico al pato.",
+      "sticker": "Primer lugar nacional",
+      "stickerSmall": "BimboNecta · Swift Change Makers 2026",
+      "ask": "¿Hacemos algo juntos?",
+      "cue": "Desliza",
+      "other": "English",
+      "posterAlt": "Un cuarto isométrico en pixel art, de noche: un gato de esmoquin programa frente a tres monitores.",
+      "canvasLabel": "El cuarto en 3D. La cámara avanza con el scroll; arrastra en horizontal para mirar alrededor.",
+      "plain": "Trabajo seleccionado"
+    }
+  }
+}

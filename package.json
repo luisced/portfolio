@@ -9,6 +9,8 @@
     "build:v4": "pnpm --dir portfolio-v4 build",
     "check:v4": "pnpm --dir portfolio-v4 check",
     "install:v4": "pnpm --dir portfolio-v4 install",
+    "dev:v5": "npm --prefix portfolio-v5 run dev",
+    "build:v5": "npm --prefix portfolio-v5 run build",
     "dev:v2": "cd portfolio-v2 && npm run dev",
     "build:v2": "cd portfolio-v2 && npm run build",
     "install:v2": "cd portfolio-v2 && npm install"
