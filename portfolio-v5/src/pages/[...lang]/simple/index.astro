@@ -29,6 +29,25 @@ const cv = `${import.meta.env.BASE_URL.replace(/\/$/, '')}${site.cv}`;
 const loc = (v: string | { en: string; es: string }) => (typeof v === 'string' ? v : v[locale]);
 const icon = (name: string) => (icons as unknown as Record<string, { path: string }>)[name]?.path;
 const n = (i: number) => String(i + 1).padStart(2, '0');
+/* structured data: the same person the home page describes, with the awards listed */
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  inLanguage: locale,
+  url: canonical.href,
+  mainEntity: {
+    '@type': 'Person',
+    '@id': new URL('/#luis', Astro.site).href,
+    name: site.name,
+    alternateName: site.shortName,
+    jobTitle: t.headline,
+    description: site.about.bio[locale],
+    url: new URL('/', Astro.site).href,
+    image: new URL('/og.png', Astro.site).href,
+    award: recognition.filter((r) => r.data.kind === 'award').map((r) => `${r.data.title[locale]} — ${r.data.distinction[locale]}`),
+    sameAs: [...site.socials.map((x) => x.url), site.photos.es],
+  },
+};
 ---
 <!doctype html>
 <html lang={locale}>
@@ -54,6 +73,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml">
+<script type="application/ld+json" is:inline set:html={JSON.stringify(person)}></script>
 </head>
 <body>
 <header class="bar">
@@ -77,6 +97,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
       <a class="btn primary" href={`mailto:${site.email}`}>{site.email}</a>
       <a class="btn" href={cv} download>{t.cvLabel} <span aria-hidden="true">↓</span></a>
       {site.socials.map((x) => <a class="btn" href={x.url} rel="me noopener">{x.label} <span aria-hidden="true">↗</span></a>)}
+      <a class="btn" href={site.photos[locale]} rel="me">{t.photos} <span aria-hidden="true">↗</span></a>
     </p>
   </section>
 

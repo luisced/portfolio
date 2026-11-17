@@ -40,10 +40,11 @@ const person = {
     worksFor: { '@type': 'Organization', name: 'Dopamina' },
     knowsAbout: site.stack.flatMap((g) => g.items.map((i) => i.name)),
     award: recognition.filter((r) => r.data.kind === 'award').map((r) => `${r.data.title[lang]} — ${r.data.distinction[lang]}`),
-    sameAs: site.socials.map((x) => x.url),
+    sameAs: [...site.socials.map((x) => x.url), site.photos.es],
   },
 };
 const cv = `${base}${site.cv}`;
+const photos = site.photos[lang];
 const simple = localizePath(lang, '/simple/');
 const paneLines = t.windowPanes;
 const f = t.form;
@@ -259,6 +260,7 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
     </div>
   </header>
   <p class="toast" id="toast" role="status" data-prize={t.prize}></p>
+  <a class="toast shot" id="shot" href={photos} rel="me" tabindex="-1">{t.shot} <span aria-hidden="true">↗</span></a>
   <p class="found" id="found" aria-live="polite" hidden><b></b> {t.found}</p>
   <div class="cue" id="cue">{t.cue}<small>{t.touch}</small><i aria-hidden="true"></i></div>
   <div class="reel"><i id="reel"></i></div>
@@ -374,6 +376,7 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
   <p class="more" style={`--i:${nav.length}`}>
     <a href="#write" data-open="write" data-plain><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph.write} /></svg>{t.write}</a>
     <a href={cv} download><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph.cv} /></svg>{t.cvLabel}</a>
+    <a href={photos} rel="me"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3.5l1.500-2h6l1.500 2H20v11H4zM12 16.500a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" /></svg>{t.photos}</a>
     <a href={simple}><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1" /></svg>{t.simple.name}</a>
     <a href={otherHref} hreflang={otherLang} lang={otherLang}><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d={glyph.lang} /></svg>{t.other}</a>
   </p>
