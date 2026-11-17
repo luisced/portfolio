@@ -399,7 +399,8 @@ function boot() {
   const NAMES = [...new Set(['lamp', 'cat', 'duck', 'cube', 'keys', 'rack', 'yarn', 'box', 'lights', 'neon', 'window', 'camera'])], seen = new Set();
   const found = document.getElementById('found'), snd = document.getElementById('snd'), flash = document.createElement('div');
   flash.className = 'flash'; film.append(flash);
-  let sound = false;
+  const shot = document.getElementById('shot');
+  let sound = false, shotT = 0;
   snd.hidden = false;
   snd.addEventListener('click', () => {
     sound = !sound;
@@ -412,6 +413,11 @@ function boot() {
     if (name === 'window') peekUntil = performance.now() + 4200;
     /* la cámara dispara: un destello que llena la pantalla un instante */
     if (name === 'camera' && !reduced) flash.animate([{ opacity: 0 }, { opacity: 0.85, offset: 0.12 }, { opacity: 0 }], { duration: 520, easing: 'ease-out' });
+    /* y deja a la mano el enlace a las fotos, unos segundos */
+    if (name === 'camera' && shot) {
+      shot.classList.add('on'); shot.tabIndex = 0;
+      clearTimeout(shotT); shotT = setTimeout(() => { shot.classList.remove('on'); shot.tabIndex = -1; }, 6500);
+    }
     if (name === 'duck') {
       bubble.textContent = tips[tip++ % tips.length];
       bubble.classList.add('on'); bubbleUntil = performance.now() + 3400;

@@ -397,6 +397,10 @@ html.flat .top .links, html.flat .menu nav { display: none; }
 /* el aviso del premio */
 .toast { position: absolute; left: 50%; bottom: calc(100vh - 100svh + 76px + env(safe-area-inset-bottom, 0px)); z-index: 5; width: max-content; max-width: calc(100vw - 32px); margin: 0; padding: 12px 16px; background: var(--accent); color: #17110a; font: 600 15px/1.25 var(--sans); letter-spacing: -.01em; text-align: center; text-wrap: balance; pointer-events: none; opacity: 0; translate: -50% 14px; transition: opacity .25s, translate .35s cubic-bezier(.23, 1, .32, 1); }
 .toast.on { opacity: 1; translate: -50% 0; }
+.toast.shot { text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.toast.shot.on { pointer-events: auto; }
+.toast.shot:active { scale: .97; }
+.toast.shot:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .toast { transition: opacity .25s; translate: -50% 0; } }
 
 /* el destello de la cámara */
