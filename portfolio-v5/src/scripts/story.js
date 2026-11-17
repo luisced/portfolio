@@ -103,7 +103,7 @@ function boot() {
       /* lo que puede taparlo al mirar de lado: el canto de la cortina (a su izquierda) y el del librero (a su derecha), como aristas verticales [x, z] */
       occ: [{ x: 1.5, z: -2.94, side: 'l' }, { x: 2.4, z: -2.89, side: 'r' }] },         /* el retrato, en la pared de la ventana */
     floor: { o: [-3.95, -0.84, -3.3], u: [0, 0, 1], v: [-1, 0, 0], w: 6.3, behind: e => e[0] > -3.4, t: { o: [-3.95, -0.84, -2.1], w: 5.2 } },   /* acostado en el suelo, delante de la cara izquierda */
-    window: { o: [-1.25, 3.56, -3.08], u: [1, 0, 0], v: [0, -1, 0], w: 2.1 },
+    window: { o: [-1.27, 3.57, -3.07], u: [1, 0, 0], v: [0, -1, 0], w: 2.14 },          /* los cuatro cristales, al ras del marco */
     board: { o: [2.86, 4.1, -0.66], u: [0, 0, 1], v: [0, -1, 0], w: 3.12 },
     screen: { o: [1.53, 1.8, 0.83], u: [0, 0, 1], v: [0, -1, 0], w: 0.98 },
     log: { o: [1.535, 2.21, -1.59], u: [0, 0, 1], v: [0, -1, 0], w: 0.62 },          /* la pantalla del monitor vertical */
@@ -171,7 +171,7 @@ function boot() {
     if (tall) return [
       framed(-1.15, 0.5, [-3.0, 0.75, 0.6], 10.6, 6.6, 0.98, 0.92),
       framed(-0.62, 0.38, [1.545, 1.5, 0], 0.72, 1.15, 0.94, 0.8),                   /* el saludo */
-      framed(-0.3, 0.24, [-0.2, 2.9, -3.1], 2.9, 2.2),                               /* la ventana */
+      framed(-0.22, 0.2, [-0.2, 2.72, -3.1], 2.5, 2.2, 0.97),                        /* la ventana: más cerca, para que lo escrito en el vaho se lea */
       framed(-1.36, 0.2, [2.87, 3.2, 0.9], 3.3, 1.9, 0.96),                          /* el pizarrón */
       framed(-1.82, 0.12, [1.545, 1.66, -1.28], 0.7, 1.3, 0.94, 0.78),               /* la trayectoria, en el monitor vertical */
       framed(-1.3, 0.15, [1.53, 1.45, 1.32], 1.06, 0.8, 0.96),                       /* el monitor */

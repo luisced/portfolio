@@ -45,6 +45,7 @@ const person = {
 };
 const cv = `${base}${site.cv}`;
 const simple = localizePath(lang, '/simple/');
+const paneLines = t.windowPanes;
 const f = t.form;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 /* the menu: a shortcut to each part of the story (the number is the chapter the camera flies to) */
@@ -140,7 +141,35 @@ const alt = (l: 'en' | 'es') => new URL(`/${site.locales[l].path}`, Astro.site);
     <!-- 0 · el suelo delante del diorama -->
     <div class="surf plaque" data-s="floor" data-beat="0" style="width:1440px;height:330px"><h1>{site.shortName}</h1><p>{t.headline}</p></div>
     <!-- 2 · la ventana -->
-    <div class="surf glass" data-s="window" data-beat="2" style="width:420px;height:180px"><p>{t.window}</p></div>
+    <div class="surf glass" data-s="window" data-beat="2" style="width:520px;height:398px">
+      <p class="sr">{t.window}</p>
+      {/* cada cristal está empañado y la frase está limpiada en el vaho con el dedo: las letras son huecos por los que se ve el cielo.
+          El hueco entre cristales deja ver los travesaños de la ventana. El cuarto cristal lleva un michi dibujado */}
+      {[0, 1, 2, 3].map((i) => (
+        <svg class="pane" viewBox="0 0 250 189" aria-hidden="true" style={`--i:${i}`}>
+          <defs>
+            <radialGradient id={`fog${i}`} cx="50%" cy="46%" r="75%"><stop offset="0" stop-color="#dfe8f6" stop-opacity=".66" /><stop offset="1" stop-color="#eef3fb" stop-opacity=".9" /></radialGradient>
+            <mask id={`wipe${i}`} maskUnits="userSpaceOnUse" x="0" y="0" width="250" height="189">
+              <rect width="250" height="189" fill="#fff" />
+              {i < 3 ? (
+                <g class="finger" transform={`rotate(${[-2.5, 1.5, -1.5][i]} 125 95)`}>
+                  {paneLines[i].map((line, k) => <text x="14" y={(paneLines[i].length === 3 ? 56 : 76) + k * 46}>{line}</text>)}
+                  {/* una gota que escurre desde la última letra */}
+                  <path class="drip" d={['M96 150v24', 'M176 126v34', 'M58 126v40'][i]} />
+                </g>
+              ) : (
+                <g class="finger doodle" transform="rotate(4 125 95)">
+                  <path d="M84 78 78 44l26 16M166 78l6-34-26 16M82 80c0-14 20-24 43-24s43 10 43 24v20c0 22-19 36-43 36s-43-14-43-36z" />
+                  <path d="M108 96v6M142 96v6M119 112l6 5 6-5M96 114H70M98 121l-24 8M154 114h26M152 121l24 8" />
+                  <path class="drip" d="M125 136v30" />
+                </g>
+              )}
+            </mask>
+          </defs>
+          <rect width="250" height="189" fill={`url(#fog${i})`} mask={`url(#wipe${i})`} />
+        </svg>
+      ))}
+    </div>
     <!-- 3 · el pizarrón -->
     <div class="surf chalk" data-s="board" data-beat="3" style="width:780px;height:450px">
       <h2>{t.boardTitle}</h2>
